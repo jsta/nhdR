@@ -7,7 +7,9 @@ Depends:
     R (>= 3.3.2)
 License: GPL
 Imports:
-    rappdirs
+    rappdirs,
+    rgdal,
+    sf
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 5.0.1

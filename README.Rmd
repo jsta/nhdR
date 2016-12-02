@@ -1,0 +1,55 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+# nhdR
+
+The goal of nhdR is to provide R tools for interacting with the National Hydrography Dataset.
+
+## Installation
+
+You can install nhdR from github with:
+
+```{r gh-installation, eval = FALSE}
+# install.packages("devtools")
+devtools::install_github("jsta/nhdR")
+```
+
+`nhdR` expects the NHD `.gdb` file to be located at the location returned by `gdb_path()`. This is ultimately a function of `rappdirs::user_data_dir`. On a Linux machine this will be something like:
+
+`~/.local/share/nhdR/NHDPlusV21_NationalData_National_Seamless_Geodatabase_02/NHDPlusNationalData/NHDPlusV21_National_Seamless.gdb`
+
+Getting the data to this location is a manual process for now in part because of the sizes of the files involved.
+
+## Load package
+
+```{r }
+library(nhdR)
+```
+
+## List layers
+
+```{r }
+nhd_list()
+```
+
+## Get layer info
+```{r eval=FALSE}
+nhd_info("NHDWaterbody")
+```
+
+```{r echo=FALSE}
+info <- capture.output(nhd_info("NHDWaterbody"))
+# gsub("/home/jose", "~", info)
+info[2:length(info)]
+```
