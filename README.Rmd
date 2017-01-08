@@ -25,11 +25,16 @@ You can install nhdR from github with:
 devtools::install_github("jsta/nhdR")
 ```
 
-`nhdR` expects the NHD `.gdb` file to be located at the location returned by `gdb_path()`. This is ultimately a function of `rappdirs::user_data_dir`. On a Linux machine this will be something like:
+`nhdR` expects the NHD Plus `.gdb` file to be located at the location returned by `gdb_plus_path()`. This is ultimately a function of `rappdirs::user_data_dir`. On a Linux machine this will be something like:
 
 `~/.local/share/nhdR/NHDPlusV21_NationalData_National_Seamless_Geodatabase_02/NHDPlusNationalData/NHDPlusV21_National_Seamless.gdb`
 
 Getting the data to this location is a manual process for now in part because of the sizes of the files involved.
+
+```{r eval=FALSE}
+# Copy NHD Plus gdb file to:
+nhdR:::gdb_plus_path()
+```
 
 ## Load package
 
@@ -40,16 +45,22 @@ library(nhdR)
 ## List layers
 
 ```{r }
-nhd_list()
+nhd_plus_list()
 ```
 
 ## Get layer info
 ```{r eval=FALSE}
-nhd_info("NHDWaterbody")
+nhd_plus_info("NHDWaterbody")
 ```
 
 ```{r echo=FALSE}
-info <- capture.output(nhd_info("NHDWaterbody"))
+info <- capture.output(nhd_plus_info("NHDWaterbody"))
 # gsub("/home/jose", "~", info)
 info[2:length(info)]
+```
+
+## Load layer
+
+```{r }
+dt <- nhd_plus_load("NHDWaterbody")
 ```

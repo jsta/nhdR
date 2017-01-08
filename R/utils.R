@@ -4,7 +4,7 @@ nhd_path <- function(){
                                  .Platform$file.sep)
 }
 
-gdb_path <- function(){
+gdb_plus_path <- function(){
   file.path(nhd_path(),
             "NHDPlusV21_NationalData_National_Seamless_Geodatabase_02",
             "NHDPlusNationalData",

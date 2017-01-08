@@ -1,4 +1,4 @@
-#' nhd_load
+#' nhd_plus_load
 #'
 #' @param layer_name character name of a NHD layer
 #'
@@ -7,8 +7,8 @@
 #' @export
 #'
 #' @examples \dontrun{
-#' nhd_load("NHDWaterbody")
+#' dt <- nhd_load("NHDWaterbody")
 #' }
-nhd_load <- function(layer_name){
-  sf::st_read(gdb_path(), layer_name)
+nhd_plus_load <- function(layer_name){
+  sf::st_read(gdb_plus_path(), layer_name)
 }
