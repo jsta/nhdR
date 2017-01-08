@@ -17,7 +17,7 @@ gdb_plus_path <- function(){
 
 get_if_not_exists <- function(url, destfile){
   if(!file.exists(destfile)){
-    curl::curl_download(url, destfile, quiet = FALSE)
+    curl::curl_download(url, destfile, quiet = TRUE)
   }else{
     message(paste0("A local copy of ", url, " already exists on disk"))
   }
