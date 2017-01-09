@@ -19,7 +19,7 @@ nhd_get <- function(state = NA){
 
     filename <- paste0("NHDH_", state, "_931v220.zip")
     url      <- paste0(baseurl, filename)
-    destfile <- paste0(nhd_path(), filename)
+    destfile <- file.path(nhd_path(), filename)
 
     get_if_not_exists(url, destfile)
     unzip(destfile, exdir = nhd_path())
