@@ -1,6 +1,7 @@
 #' nhd_list
 #'
 #' @export
+#' @param state character state abbreviation
 #' @importFrom rgdal ogrListLayers
 #'
 #' @examples \dontrun{

@@ -6,6 +6,9 @@
 \usage{
 nhd_list(state)
 }
+\arguments{
+\item{state}{character state abbreviation}
+}
 \description{
 nhd_list
 }
