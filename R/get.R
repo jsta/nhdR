@@ -5,6 +5,7 @@
 #' @import maps
 #' @examples \dontrun{
 #' nhd_get(state = c("DC", "HI"))
+  #' nhd_get(state = c("RI", "CT"))
 #' }
 nhd_get <- function(state = NA){
 

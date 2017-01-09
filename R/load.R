@@ -12,7 +12,7 @@
 #' }
 nhd_load <- function(state, layer_name){
   nhd_load_state <- function(state){
-    if(!file.exists(gdb_path(state))){
+    if(any(!file.exists(gdb_path(state)))){
       nhd_get(state = state)
       # stop(paste0(gdb_path(state), " not found. Try nhd_get()"))
     }
@@ -20,7 +20,7 @@ nhd_load <- function(state, layer_name){
       sf::st_read(gdb_path(state), layer_name)
   }
 
-  do.call("nhd_load_state", list(state))
+  do.call("rbind", lapply(state, nhd_load_state))
 }
 
 #' nhd_plus_load

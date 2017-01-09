@@ -19,7 +19,7 @@ nhd_load
 }
 \examples{
 \dontrun{
-dt <- nhd_load(c("DC", "VA"), "NHDWaterbody")
+dt <- nhd_load(c("CT", "RI"), "NHDWaterbody")
 }
 }
 

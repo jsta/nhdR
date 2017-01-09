@@ -15,6 +15,7 @@ nhd_get
 \examples{
 \dontrun{
 nhd_get(state = c("DC", "HI"))
+nhd_get(state = c("RI", "CT"))
 }
 }
 
