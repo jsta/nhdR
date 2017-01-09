@@ -1,7 +1,9 @@
 nhd_path <- function(){
-  paste0(rappdirs::user_data_dir(appname = "nhdR",
-                                 appauthor = "nhdR"),
-                                 .Platform$file.sep)
+  path <- paste0(rappdirs::user_data_dir(appname = "nhdR",
+                                      appauthor = "nhdR"),
+                                      .Platform$file.sep)
+  dir.create(path, showWarnings = FALSE)
+  path
 }
 
 gdb_path <- function(state){
