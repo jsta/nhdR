@@ -20,6 +20,7 @@ nhd_plus_load
 \examples{
 \dontrun{
 dt <- nhd_plus_load("NHDWaterbody")
+dt <- nhd_plus_load("NHDWaterbody", fpath = nhdR::gdb_plus_path())
 }
 }
 

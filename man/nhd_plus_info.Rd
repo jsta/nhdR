@@ -17,6 +17,7 @@ nhd_plus_info
 \examples{
 \dontrun{
 nhd_plus_info("Wall")
+nhd_plus_info("Wall", fpath = nhdR::gdb_plus_path())
 }
 }
 

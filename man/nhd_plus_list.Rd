@@ -15,6 +15,7 @@ nhd_plus_list
 \examples{
 \dontrun{
 nhd_plus_list()
+nhd_plus_list(fpath = nhdR::gdb_plus_path())
 }
 }
 
