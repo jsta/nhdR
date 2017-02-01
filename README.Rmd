@@ -53,7 +53,7 @@ nhd_load(state = "DC", layer_name = "NHDWaterbody")
 
 ### NHD Plus
 
-`nhdR` expects the NHD Plus `.gdb` file to be located at the location returned by `gdb_plus_path()`. Getting the data to this location is a manual process for now in part because of the sizes of the files involved.
+By default, `nhdR` expects the NHD Plus `.gdb` file to be located at the location returned by `nhdR:::gdb_plus_path()`. Getting the data to this location is a manual process for now in part because of the sizes of the files involved. You can also manually specify a path to the `.gdb` file with the `fpath` argument.
 
 ```{r eval=FALSE}
 # Copy the NHD Plus national coverage gdb file to:

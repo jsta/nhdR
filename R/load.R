@@ -26,6 +26,7 @@ nhd_load <- function(state, layer_name){
 #' nhd_plus_load
 #'
 #' @param layer_name character name of a NHD layer
+#' @param fpath file.path to nhd plus gdb file. optional.
 #'
 #' @return spatial object
 #' @importFrom sf st_read
@@ -33,7 +34,13 @@ nhd_load <- function(state, layer_name){
 #'
 #' @examples \dontrun{
 #' dt <- nhd_plus_load("NHDWaterbody")
+#' dt <- nhd_plus_load("NHDWaterbody", fpath = nhdR::gdb_plus_path())
 #' }
-nhd_plus_load <- function(layer_name){
-  sf::st_read(gdb_plus_path(), layer_name)
+nhd_plus_load <- function(layer_name, fpath = NA){
+
+  if(!is.na(fpath)){
+    sf::st_read(fpath, layer_name)
+  }else{
+    sf::st_read(gdb_plus_path(), layer_name)
+  }
 }

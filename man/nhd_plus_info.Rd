@@ -4,17 +4,19 @@
 \alias{nhd_plus_info}
 \title{nhd_plus_info}
 \usage{
-nhd_plus_info(layer_name)
+nhd_plus_info(layer_name, fpath = NA)
 }
 \arguments{
 \item{layer_name}{character}
+
+\item{fpath}{file.path to nhd plus gdb file. optional.}
 }
 \description{
 nhd_plus_info
 }
 \examples{
 \dontrun{
-nhd_info("Wall")
+nhd_plus_info("Wall")
 }
 }
 

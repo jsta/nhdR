@@ -4,14 +4,17 @@
 \alias{nhd_plus_list}
 \title{nhd_plus_list}
 \usage{
-nhd_plus_list()
+nhd_plus_list(fpath = NA)
+}
+\arguments{
+\item{fpath}{file.path to nhd plus gdb file. optional.}
 }
 \description{
 nhd_plus_list
 }
 \examples{
 \dontrun{
-nhd_list()
+nhd_plus_list()
 }
 }
 

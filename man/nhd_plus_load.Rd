@@ -4,10 +4,12 @@
 \alias{nhd_plus_load}
 \title{nhd_plus_load}
 \usage{
-nhd_plus_load(layer_name)
+nhd_plus_load(layer_name, fpath = NA)
 }
 \arguments{
 \item{layer_name}{character name of a NHD layer}
+
+\item{fpath}{file.path to nhd plus gdb file. optional.}
 }
 \value{
 spatial object
