@@ -16,10 +16,19 @@ gdb_plus_path <- function(){
             "NHDPlusV21_National_Seamless.gdb")
 }
 
+# zip_plus_path <- function(){
+#   file.path
+#
+# }
+
 get_if_not_exists <- function(url, destfile){
   if(!file.exists(destfile)){
     curl::curl_download(url, destfile, quiet = TRUE)
   }else{
     message(paste0("A local copy of ", url, " already exists on disk"))
   }
+}
+
+zero_pad <- function(x, digits){
+  paste0(paste0(rep(0, digits), collapse = ""), x, collapse = "")
 }

@@ -14,18 +14,20 @@ nhd_list <- function(state){
 #' nhd_plus_list
 #'
 #' @export
-#' @param fpath file.path to nhd plus gdb file. optional.
+#' @param vpu file.path to nhd plus gdb file. optional.
+#' @param component character component name
 #' @importFrom rgdal ogrListLayers
 #'
 #' @examples \dontrun{
-#' nhd_plus_list()
-#' nhd_plus_list(fpath = nhdR::gdb_plus_path())
+#' nhd_plus_list(vpu = 4)
 #' }
-nhd_plus_list <- function(fpath = NA){
-  if(!is.na(fpath)){
-    rgdal::ogrListLayers(fpath)
-  }else{
-    rgdal::ogrListLayers(gdb_plus_path())
-  }
+nhd_plus_list <- function(vpu, component = NA){
+
+  candidate_dirs <- list.dirs(file.path(nhd_path(), "NHDPlus"),
+                              full.names = TRUE, recursive = FALSE)
+  target_dir <- candidate_dirs[grep(
+                    paste0(zero_pad(vpu, 1), "|", component), candidate_dirs)]
+
+  list.files(target_dir, pattern = "shp$")
 }
 

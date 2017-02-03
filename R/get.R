@@ -29,3 +29,39 @@ nhd_get <- function(state = NA){
 
 }
 
+#' nhd_plus_get
+#' @param vpu numeric vector processing unit
+#' @param component character component name
+#' @export
+#' @importFrom utils unzip
+#' @importFrom rvest html_nodes html_attrs
+#' @importFrom xml2 read_html
+#' @examples \dontrun{
+#' nhd_plus_get(vpu = 4)
+#' }
+nhd_plus_get <- function(vpu = NA, component = "NHDSnapshot"){
+
+  if(!vpu %in% 1:22){
+    stop(paste0(state, " is not a valid vpu"))
+  }
+
+  get_plus_remotepath <- function(vpu){
+    baseurl <- paste0("http://www.horizon-systems.com/nhdplus/NHDPlusV2_",
+                      zero_pad(vpu, 1), ".php")
+    res <- rvest::html_attrs(rvest::html_nodes(xml2::read_html(baseurl), "a"))
+    unlist(res[grep(component, res)][1])
+  }
+
+  url <- get_plus_remotepath(vpu)
+
+  destdir <- file.path(nhd_path(), "NHDPlus")
+  destsubdir <- file.path(destdir, paste(
+                  strsplit(basename(url), "_")[[1]][2:4], collapse = "_"))
+  dir.create(destdir, showWarnings = FALSE)
+  dir.create(destsubdir, showWarnings = FALSE)
+  destfile <- file.path(destdir, basename(url))
+
+  get_if_not_exists(url, destfile)
+  system(paste0("7z e ", destfile, " -o", destsubdir))
+}
+
