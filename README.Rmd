@@ -53,30 +53,30 @@ nhd_load(state = "DC", layer_name = "NHDWaterbody")
 
 ### NHD Plus
 
-By default, `nhdR` expects the NHD Plus `.gdb` file to be located at the location returned by `nhdR:::gdb_plus_path()`. Getting the data to this location is a manual process for now in part because of the sizes of the files involved. You can also manually specify a path to the `.gdb` file with the `fpath` argument.
+Unlike the standard NHD, the NHD-Plus exports are organized by vector processing unit (vpu). A vpu map can be found [here](http://www.horizon-systems.com/NHDPlus/NHDPlusV2_data.php).
 
 ```{r eval=FALSE}
-# Copy the NHD Plus national coverage gdb file to:
-nhdR:::gdb_plus_path()
+# get a vpu export
+nhd_plus_get(vpu = 4)
 ```
 
 ```{r }
 # list layers
-nhd_plus_list()
+nhd_plus_list(vpu = 4)
 ```
 
 ```{r eval=FALSE}
 # get layer info
-nhd_plus_info("NHDWaterbody")
+nhd_plus_info(vpu = 4, "NHDWaterbody")
 ```
 
 ```{r echo=FALSE}
-info <- capture.output(nhd_plus_info("NHDWaterbody"))
+info <- capture.output(nhd_plus_info(vpu = 4, "NHDWaterbody"))
 # gsub("/home/jose", "~", info)
 info[2:length(info)]
 ```
 
 ```{r }
 # load layer
-dt <- nhd_plus_load("NHDWaterbody")
+dt <- nhd_plus_load(vpu = 4, "NHDWaterbody")
 ```

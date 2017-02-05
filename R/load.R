@@ -25,22 +25,17 @@ nhd_load <- function(state, layer_name){
 
 #' nhd_plus_load
 #'
-#' @param layer_name character name of a NHD layer
-#' @param fpath file.path to nhd plus gdb file. optional.
-#'
+#' @param vpu numeric vector processing unit
+#' @param component character component name
 #' @return spatial object
-#' @importFrom sf st_read
+#' @importFrom sf st_read st_zm
 #' @export
 #'
 #' @examples \dontrun{
-#' dt <- nhd_plus_load("NHDWaterbody")
-#' dt <- nhd_plus_load("NHDWaterbody", fpath = nhdR::gdb_plus_path())
+#' dt <- nhd_plus_load(4, "NHDWaterbody")
 #' }
-nhd_plus_load <- function(layer_name, fpath = NA){
-
-  if(!is.na(fpath)){
-    sf::st_read(fpath, layer_name)
-  }else{
-    sf::st_read(gdb_plus_path(), layer_name)
-  }
+nhd_plus_load <- function(vpu, component = NA){
+  candidate_files <- nhd_plus_list(vpu, full.names = TRUE)
+  res <- candidate_files[grep(component, candidate_files)]
+  sf::st_zm(sf::st_read(res))
 }

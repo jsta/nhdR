@@ -4,20 +4,19 @@
 \alias{nhd_plus_info}
 \title{nhd_plus_info}
 \usage{
-nhd_plus_info(layer_name, fpath = NA)
+nhd_plus_info(vpu, component = NA)
 }
 \arguments{
-\item{layer_name}{character}
+\item{vpu}{numeric vector processing unit}
 
-\item{fpath}{file.path to nhd plus gdb file. optional.}
+\item{component}{character component name}
 }
 \description{
 nhd_plus_info
 }
 \examples{
 \dontrun{
-nhd_plus_info("Wall")
-nhd_plus_info("Wall", fpath = nhdR::gdb_plus_path())
+nhd_plus_info(vpu = 4, component = "NHDWaterbody")
 }
 }
 

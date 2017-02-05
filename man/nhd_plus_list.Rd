@@ -4,18 +4,20 @@
 \alias{nhd_plus_list}
 \title{nhd_plus_list}
 \usage{
-nhd_plus_list(fpath = NA)
+nhd_plus_list(vpu, ...)
 }
 \arguments{
-\item{fpath}{file.path to nhd plus gdb file. optional.}
+\item{vpu}{numeric vector processing unit}
+
+\item{...}{arguments passed to list.files. optional.}
 }
 \description{
 nhd_plus_list
 }
 \examples{
 \dontrun{
-nhd_plus_list()
-nhd_plus_list(fpath = nhdR::gdb_plus_path())
+nhd_plus_list(vpu = 4)
+nhd_plus_list(vpu = 4, full.names = TRUE)
 }
 }
 

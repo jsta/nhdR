@@ -96,47 +96,47 @@ nhd_load(state = "DC", layer_name = "NHDWaterbody")
 #> proj4string:    +proj=longlat +datum=NAD83 +no_defs
 #> First 20 features:
 #>    Permanent_Identifier               FDate Resolution  GNIS_ID
-#> 1              51772167 2002-09-15 01:00:00          2         
-#> 2              46565431 2002-08-22 01:00:00          2         
-#> 3              51767181 2002-09-15 01:00:00          2         
-#> 4              51767223 2002-09-15 01:00:00          2         
-#> 5              51767287 2002-09-15 01:00:00          2         
-#> 6              51767709 2002-09-15 01:00:00          2         
-#> 7              51768273 2002-09-15 01:00:00          2         
-#> 8              51768749 2002-09-15 01:00:00          2         
-#> 9              51768883 2002-09-15 01:00:00          2         
-#> 10             51768891 2002-09-15 01:00:00          2         
+#> 1              51772167 2002-09-15 01:00:00          2     <NA>
+#> 2              46565431 2002-08-22 01:00:00          2     <NA>
+#> 3              51767181 2002-09-15 01:00:00          2     <NA>
+#> 4              51767223 2002-09-15 01:00:00          2     <NA>
+#> 5              51767287 2002-09-15 01:00:00          2     <NA>
+#> 6              51767709 2002-09-15 01:00:00          2     <NA>
+#> 7              51768273 2002-09-15 01:00:00          2     <NA>
+#> 8              51768749 2002-09-15 01:00:00          2     <NA>
+#> 9              51768883 2002-09-15 01:00:00          2     <NA>
+#> 10             51768891 2002-09-15 01:00:00          2     <NA>
 #> 11            120022347 2004-04-16 14:37:51          2 01712592
-#> 12             51768975 2002-09-15 01:00:00          2         
-#> 13             51769061 2002-09-15 01:00:00          2         
-#> 14             51769153 2002-09-15 01:00:00          2         
-#> 15             51769369 2002-09-15 01:00:00          2         
-#> 16             51769411 2002-09-15 01:00:00          2         
-#> 17             51769545 2002-09-15 01:00:00          2         
-#> 18             51769861 2002-09-15 01:00:00          2         
-#> 19             51769871 2002-09-15 01:00:00          2         
-#> 20             51770521 2002-09-15 01:00:00          2         
+#> 12             51768975 2002-09-15 01:00:00          2     <NA>
+#> 13             51769061 2002-09-15 01:00:00          2     <NA>
+#> 14             51769153 2002-09-15 01:00:00          2     <NA>
+#> 15             51769369 2002-09-15 01:00:00          2     <NA>
+#> 16             51769411 2002-09-15 01:00:00          2     <NA>
+#> 17             51769545 2002-09-15 01:00:00          2     <NA>
+#> 18             51769861 2002-09-15 01:00:00          2     <NA>
+#> 19             51769871 2002-09-15 01:00:00          2     <NA>
+#> 20             51770521 2002-09-15 01:00:00          2     <NA>
 #>       GNIS_Name AreaSqKm Elevation      ReachCode FType FCode Shape_Length
-#> 1                  0.005       0.0 02070008004787   436 43624 0.0032275838
-#> 2                  0.000       0.0 02070010004605   436 43624 0.0005402029
-#> 3                  0.002       0.0 02070008004808   390 39004 0.0017289109
-#> 4                  0.001       0.0 02070008004829   390 39004 0.0013369633
-#> 5                  0.001       0.0 02070008004860   390 39004 0.0011083831
-#> 6                  0.002       0.0 02070008005063   390 39004 0.0016429957
-#> 7                  0.001       0.0 02070008005335   390 39004 0.0012442057
-#> 8                  0.001       0.0 02070008005570   390 39004 0.0013918440
-#> 9                  0.001       0.0 02070008005638   390 39004 0.0021229169
-#> 10                 0.002       0.0 02070008005641   390 39004 0.0018972528
-#> 11 Clopper Lake    0.218       0.0 02070008005635   390 39004 0.0365330031
-#> 12                 0.001       0.0 02070008005681   390 39004 0.0017444391
-#> 13                 0.002       0.0 02070008005722   390 39004 0.0018785786
-#> 14                 0.005       0.0 02070008005764   390 39004 0.0029191491
-#> 15                 0.006       0.0 02070008005870   390 39004 0.0035214462
-#> 16                 0.000       0.0 02070008005892   390 39004 0.0009224733
-#> 17                 0.005       0.0 02070008005954   390 39004 0.0028753323
-#> 18                 0.002       0.0 02070008006103   390 39004 0.0019580771
-#> 19                 0.001       0.0 02070008006108   390 39004 0.0013311586
-#> 20                 0.023      80.8 02070008006400   390 39009 0.0072444361
+#> 1          <NA>    0.005        NA 02070008004787   436 43624 0.0032275838
+#> 2          <NA>    0.000        NA 02070010004605   436 43624 0.0005402029
+#> 3          <NA>    0.002        NA 02070008004808   390 39004 0.0017289109
+#> 4          <NA>    0.001        NA 02070008004829   390 39004 0.0013369633
+#> 5          <NA>    0.001        NA 02070008004860   390 39004 0.0011083831
+#> 6          <NA>    0.002        NA 02070008005063   390 39004 0.0016429957
+#> 7          <NA>    0.001        NA 02070008005335   390 39004 0.0012442057
+#> 8          <NA>    0.001        NA 02070008005570   390 39004 0.0013918440
+#> 9          <NA>    0.001        NA 02070008005638   390 39004 0.0021229169
+#> 10         <NA>    0.002        NA 02070008005641   390 39004 0.0018972528
+#> 11 Clopper Lake    0.218        NA 02070008005635   390 39004 0.0365330031
+#> 12         <NA>    0.001        NA 02070008005681   390 39004 0.0017444391
+#> 13         <NA>    0.002        NA 02070008005722   390 39004 0.0018785786
+#> 14         <NA>    0.005        NA 02070008005764   390 39004 0.0029191491
+#> 15         <NA>    0.006        NA 02070008005870   390 39004 0.0035214462
+#> 16         <NA>    0.000        NA 02070008005892   390 39004 0.0009224733
+#> 17         <NA>    0.005        NA 02070008005954   390 39004 0.0028753323
+#> 18         <NA>    0.002        NA 02070008006103   390 39004 0.0019580771
+#> 19         <NA>    0.001        NA 02070008006108   390 39004 0.0013311586
+#> 20         <NA>    0.023      80.8 02070008006400   390 39009 0.0072444361
 #>      Shape_Area                          Shape
 #> 1  5.164066e-07 MULTIPOLYGONZ(((-77.1138173...
 #> 2  1.879174e-08 MULTIPOLYGONZ(((-76.9963107...
@@ -162,67 +162,54 @@ nhd_load(state = "DC", layer_name = "NHDWaterbody")
 
 ### NHD Plus
 
-By default, `nhdR` expects the NHD Plus `.gdb` file to be located at the location returned by `nhdR:::gdb_plus_path()`. Getting the data to this location is a manual process for now in part because of the sizes of the files involved. You can also manually specify a path to the `.gdb` file with the `fpath` argument.
+Unlike the standard NHD, the NHD-Plus exports are organized by vector processing unit (vpu). A vpu map can be found [here](http://www.horizon-systems.com/NHDPlus/NHDPlusV2_data.php).
 
 ``` r
-# Copy the NHD Plus national coverage gdb file to:
-nhdR:::gdb_plus_path()
+# get a vpu export
+nhd_plus_get(vpu = 4)
 ```
 
 ``` r
 # list layers
-nhd_plus_list()
-#>  [1] "Gage"                     "BurnAddLine"             
-#>  [3] "BurnAddWaterbody"         "LandSea"                 
-#>  [5] "Sink"                     "Wall"                    
-#>  [7] "CatchmentSP"              "NHDArea"                 
-#>  [9] "NHDWaterbody"             "NHDPlusComponentVersions"
-#> [11] "PlusARPointEvent"         "PlusFlow"                
-#> [13] "PlusFlowAR"               "NHDFCode"                
-#> [15] "DivFracMP"                "BurnLineEvent"           
-#> [17] "NHDFlowline_Network"      "NHDFlowline_NonNetwork"  
-#> [19] "HUC12"                    "GeoNetwork_Junctions"    
-#> attr(,"driver")
-#> [1] "OpenFileGDB"
-#> attr(,"nlayers")
-#> [1] 20
+nhd_plus_list(vpu = 4)
+#> [1] "NHDAreaEventFC.shp"  "NHDArea.shp"         "NHDFlowline.shp"    
+#> [4] "NHDLineEventFC.shp"  "NHDLine.shp"         "NHDPointEventFC.shp"
+#> [7] "NHDPoint.shp"        "NHDWaterbody.shp"
 ```
 
 ``` r
 # get layer info
-nhd_plus_info("NHDWaterbody")
+nhd_plus_info(vpu = 4, "NHDWaterbody")
 ```
 
-    #>  [1] "Driver: OpenFileGDB; number of rows: 448512 "                     
-    #>  [2] "Feature type: wkbPolygon with 2 dimensions"                       
-    #>  [3] "Extent: (-124.6899 24.52142) - (-66.99787 49.38433)"              
-    #>  [4] "CRS: +proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs  "
-    #>  [5] "Number of fields: 15 "                                            
-    #>  [6] "           name type length typeName"                             
-    #>  [7] "1         COMID    0      0  Integer"                             
-    #>  [8] "2         FDATE   11      0 DateTime"                             
-    #>  [9] "3    RESOLUTION    4      7   String"                             
-    #> [10] "4       GNIS_ID    4     10   String"                             
-    #> [11] "5     GNIS_NAME    4     65   String"                             
-    #> [12] "6      AREASQKM    2      0     Real"                             
-    #> [13] "7     ELEVATION    2      0     Real"                             
-    #> [14] "8     REACHCODE    4     14   String"                             
-    #> [15] "9         FTYPE    4     24   String"                             
-    #> [16] "10        FCODE    0      0  Integer"                             
-    #> [17] "11 Shape_Length    2      0     Real"                             
-    #> [18] "12   Shape_Area    2      0     Real"                             
-    #> [19] "13     ONOFFNET    0      0  Integer"                             
-    #> [20] "14     PurpCode    4      2   String"                             
-    #> [21] "15     PurpDesc    4    254   String"
+    #>  [1] "Driver: ESRI Shapefile; number of rows: 31830 "     
+    #>  [2] "Feature type: wkbPolygon with 3 dimensions"         
+    #>  [3] "Extent: (-93.24332 40.43575) - (-73.61814 48.11344)"
+    #>  [4] "CRS: +proj=longlat +datum=NAD83 +no_defs  "         
+    #>  [5] "LDID: 87 "                                          
+    #>  [6] "Number of fields: 12 "                              
+    #>  [7] "         name type length typeName"                 
+    #>  [8] "1       COMID    0      9  Integer"                 
+    #>  [9] "2       FDATE    9     10     Date"                 
+    #> [10] "3  RESOLUTION    4      7   String"                 
+    #> [11] "4     GNIS_ID    4     10   String"                 
+    #> [12] "5   GNIS_NAME    4     65   String"                 
+    #> [13] "6    AREASQKM    2     19     Real"                 
+    #> [14] "7   ELEVATION    2     19     Real"                 
+    #> [15] "8   REACHCODE    4     14   String"                 
+    #> [16] "9       FTYPE    4     24   String"                 
+    #> [17] "10      FCODE    0      9  Integer"                 
+    #> [18] "11 SHAPE_LENG    2     19     Real"                 
+    #> [19] "12 SHAPE_AREA    2     19     Real"
 
 ``` r
 # load layer
-dt <- nhd_plus_load("NHDWaterbody")
-#> Reading layer `NHDWaterbody' from data source `/home/jose/.local/share/nhdR/NHDPlusV21_NationalData_National_Seamless_Geodatabase_02/NHDPlusNationalData/NHDPlusV21_National_Seamless.gdb' using driver `OpenFileGDB'
-#> Simple feature collection with 448512 features and 15 fields
-#> geometry type:  MULTIPOLYGON
-#> dimension:      XY
-#> bbox:           xmin: -124.6899 ymin: 24.52142 xmax: -66.99787 ymax: 49.38433
+dt <- nhd_plus_load(vpu = 4, "NHDWaterbody")
+#> Reading layer `NHDWaterbody' from data source `/home/jose/.local/share/nhdR/NHDPlus/GL_04_NHDSnapshot/NHDWaterbody.shp' using driver `ESRI Shapefile'
+#> Simple feature collection with 31830 features and 12 fields
+#> geometry type:  POLYGON
+#> dimension:      XYZ
+#> bbox:           xmin: -93.24332 ymin: 40.43575 xmax: -73.61814 ymax: 48.11344
 #> epsg (SRID):    4269
-#> proj4string:    +proj=longlat +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +no_defs
+#> proj4string:    +proj=longlat +datum=NAD83 +no_defs
 ```

@@ -4,12 +4,12 @@
 \alias{nhd_plus_load}
 \title{nhd_plus_load}
 \usage{
-nhd_plus_load(layer_name, fpath = NA)
+nhd_plus_load(vpu, component = NA)
 }
 \arguments{
-\item{layer_name}{character name of a NHD layer}
+\item{vpu}{numeric vector processing unit}
 
-\item{fpath}{file.path to nhd plus gdb file. optional.}
+\item{component}{character component name}
 }
 \value{
 spatial object
@@ -19,8 +19,7 @@ nhd_plus_load
 }
 \examples{
 \dontrun{
-dt <- nhd_plus_load("NHDWaterbody")
-dt <- nhd_plus_load("NHDWaterbody", fpath = nhdR::gdb_plus_path())
+dt <- nhd_plus_load(4, "NHDWaterbody")
 }
 }
 

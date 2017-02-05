@@ -14,8 +14,9 @@ library(wikilake)
 library(sf)
 library(nhdR)
 
-nhd_plus_list()
-wb <- nhd_plus_load("NHDWaterbody")
+nhd_plus_list(vpu = 4)
+wb <- nhd_plus_load(vpu = 4, "NHDWaterbody")
+nhd_plus_info(vpu = 4, "NHDFlowline")
 
 gull_meta <- wikilake::lake_wiki("Gull Lake (Michigan)")
 gull <- st_sfc(st_point(c(gull_meta$Lon, gull_meta$Lat)))

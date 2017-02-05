@@ -61,7 +61,8 @@ nhd_plus_get <- function(vpu = NA, component = "NHDSnapshot"){
   dir.create(destsubdir, showWarnings = FALSE)
   destfile <- file.path(destdir, basename(url))
 
-  get_if_not_exists(url, destfile)
-  system(paste0("7z e ", destfile, " -o", destsubdir))
+  if(get_if_not_exists(url, destfile)){
+    system(paste0("7z e ", destfile, " -o", destsubdir))
+  }
 }
 

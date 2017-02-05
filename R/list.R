@@ -14,20 +14,21 @@ nhd_list <- function(state){
 #' nhd_plus_list
 #'
 #' @export
-#' @param vpu file.path to nhd plus gdb file. optional.
-#' @param component character component name
+#' @param vpu numeric vector processing unit
+#' @param ... arguments passed to list.files. optional.
 #' @importFrom rgdal ogrListLayers
 #'
 #' @examples \dontrun{
 #' nhd_plus_list(vpu = 4)
+#' nhd_plus_list(vpu = 4, full.names = TRUE)
 #' }
-nhd_plus_list <- function(vpu, component = NA){
+nhd_plus_list <- function(vpu, ...){
 
   candidate_dirs <- list.dirs(file.path(nhd_path(), "NHDPlus"),
                               full.names = TRUE, recursive = FALSE)
   target_dir <- candidate_dirs[grep(
-                    paste0(zero_pad(vpu, 1), "|", component), candidate_dirs)]
+                    paste0(zero_pad(vpu, 1)), candidate_dirs)]
 
-  list.files(target_dir, pattern = "shp$")
+  list.files(target_dir, pattern = "shp$", ...)
 }
 
