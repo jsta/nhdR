@@ -39,7 +39,7 @@ nhd_load <- function(state, layer_name){
 #' }
 nhd_plus_load <- function(vpu, component = NA){
 
-  nhd_plus_load_vpu <- function(vpu){
+  nhd_plus_load_vpu <- function(vpu, ...){
     vpu_path <- file.path(nhd_path(), "NHDPlus",
                           basename(get_plus_remotepath(vpu)))
     if(any(!file.exists(vpu_path))){
@@ -48,8 +48,11 @@ nhd_plus_load <- function(vpu, component = NA){
 
     candidate_files <- nhd_plus_list(vpu, full.names = TRUE)
     res <- candidate_files[grep(tolower(component), tolower(candidate_files))]
-    sf::st_zm(sf::st_read(res))
+    sf::st_zm(sf::st_read(res, ...))
   }
 
-  do.call("rbind", lapply(vpu, nhd_plus_load_vpu))
+  invisible(prj <- sf::st_crs(nhd_plus_load_vpu(vpu[1], quiet = TRUE)))
+  res <- do.call("rbind", lapply(vpu, nhd_plus_load_vpu))
+  sf::st_crs(res) <- prj
+  res
 }
