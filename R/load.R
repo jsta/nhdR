@@ -11,15 +11,17 @@
 #' dt <- nhd_load(c("CT", "RI"), "NHDWaterbody")
 #' }
 nhd_load <- function(state, layer_name){
-  nhd_load_state <- function(state){
+  nhd_load_state <- function(state, ...){
     if(any(!file.exists(gdb_path(state)))){
       nhd_get(state = state)
     }
-
-      sf::st_read(gdb_path(state), layer_name)
+      sf::st_read(gdb_path(state), layer_name, ...)
   }
 
-  do.call("rbind", lapply(state, nhd_load_state))
+  invisible(prj <- sf::st_crs(nhd_load_state(state[1], quiet = TRUE)))
+  res <- do.call("rbind", lapply(state, nhd_load_state))
+  sf::st_crs(res) <- prj
+  res
 }
 
 #' nhd_plus_load
