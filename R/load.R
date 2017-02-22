@@ -14,7 +14,6 @@ nhd_load <- function(state, layer_name){
   nhd_load_state <- function(state){
     if(any(!file.exists(gdb_path(state)))){
       nhd_get(state = state)
-      # stop(paste0(gdb_path(state), " not found. Try nhd_get()"))
     }
 
       sf::st_read(gdb_path(state), layer_name)

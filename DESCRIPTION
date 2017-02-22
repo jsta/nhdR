@@ -21,6 +21,7 @@ Suggests: knitr,
     rmarkdown,
     wikilake,
     sp,
-    rgeos
+    rgeos,
+    testthat
 VignetteBuilder: knitr
 SystemRequirements: 7-zip command line tool (7z)
