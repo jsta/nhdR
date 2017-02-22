@@ -3,6 +3,8 @@
 nhdR
 ====
 
+[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/nhdR)](https://cran.r-project.org/package=nhdR) [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/nhdR)](https://cran.r-project.org/package=nhdR)
+
 The goal of nhdR is to provide R tools for interacting with the National Hydrography Dataset.
 
 Installation
@@ -23,6 +25,62 @@ Usage
 ``` r
 library(nhdR)
 #> Loading required package: maps
+```
+
+### NHD Plus
+
+Unlike the standard NHD, the NHD-Plus exports are organized by vector processing unit (vpu). See below for a low resolution vpu map (also `nhdR::vpu_shp`). A hi-res version can be found [here](http://www.horizon-systems.com/NHDPlus/NHDPlusV2_data.php).
+
+![](images/unnamed-chunk-3-1.png)
+
+``` r
+# get a vpu export
+nhd_plus_get(vpu = 4)
+```
+
+``` r
+# list layers
+nhd_plus_list(vpu = 4)
+#> [1] "NHDAreaEventFC.shp"  "NHDArea.shp"         "NHDFlowline.shp"    
+#> [4] "NHDLineEventFC.shp"  "NHDLine.shp"         "NHDPointEventFC.shp"
+#> [7] "NHDPoint.shp"        "NHDWaterbody.shp"
+```
+
+``` r
+# get layer info
+nhd_plus_info(vpu = 4, "NHDWaterbody")
+```
+
+    #>  [1] "Driver: ESRI Shapefile; number of rows: 31830 "     
+    #>  [2] "Feature type: wkbPolygon with 3 dimensions"         
+    #>  [3] "Extent: (-93.24332 40.43575) - (-73.61814 48.11344)"
+    #>  [4] "CRS: +proj=longlat +datum=NAD83 +no_defs  "         
+    #>  [5] "LDID: 87 "                                          
+    #>  [6] "Number of fields: 12 "                              
+    #>  [7] "         name type length typeName"                 
+    #>  [8] "1       COMID    0      9  Integer"                 
+    #>  [9] "2       FDATE    9     10     Date"                 
+    #> [10] "3  RESOLUTION    4      7   String"                 
+    #> [11] "4     GNIS_ID    4     10   String"                 
+    #> [12] "5   GNIS_NAME    4     65   String"                 
+    #> [13] "6    AREASQKM    2     19     Real"                 
+    #> [14] "7   ELEVATION    2     19     Real"                 
+    #> [15] "8   REACHCODE    4     14   String"                 
+    #> [16] "9       FTYPE    4     24   String"                 
+    #> [17] "10      FCODE    0      9  Integer"                 
+    #> [18] "11 SHAPE_LENG    2     19     Real"                 
+    #> [19] "12 SHAPE_AREA    2     19     Real"
+
+``` r
+# load layer
+dt <- nhd_plus_load(vpu = 4, "NHDWaterbody")
+#> Reading layer `NHDWaterbody' from data source `/home/jose/.local/share/nhdR/NHDPlus/GL_04_NHDSnapshot/NHDWaterbody.shp' using driver `ESRI Shapefile'
+#> Simple feature collection with 31830 features and 12 fields
+#> geometry type:  POLYGON
+#> dimension:      XYZ
+#> bbox:           xmin: -93.24332 ymin: 40.43575 xmax: -73.61814 ymax: 48.11344
+#> epsg (SRID):    4269
+#> proj4string:    +proj=longlat +datum=NAD83 +no_defs
 ```
 
 ### NHD
@@ -158,58 +216,4 @@ nhd_load(state = "DC", layer_name = "NHDWaterbody")
 #> 18 2.320902e-07 MULTIPOLYGONZ(((-77.2026457...
 #> 19 1.289019e-07 MULTIPOLYGONZ(((-77.1975565...
 #> 20 2.362901e-06 MULTIPOLYGONZ(((-77.1530661...
-```
-
-### NHD Plus
-
-Unlike the standard NHD, the NHD-Plus exports are organized by vector processing unit (vpu). A vpu map can be found [here](http://www.horizon-systems.com/NHDPlus/NHDPlusV2_data.php).
-
-``` r
-# get a vpu export
-nhd_plus_get(vpu = 4)
-```
-
-``` r
-# list layers
-nhd_plus_list(vpu = 4)
-#> [1] "NHDAreaEventFC.shp"  "NHDArea.shp"         "NHDFlowline.shp"    
-#> [4] "NHDLineEventFC.shp"  "NHDLine.shp"         "NHDPointEventFC.shp"
-#> [7] "NHDPoint.shp"        "NHDWaterbody.shp"
-```
-
-``` r
-# get layer info
-nhd_plus_info(vpu = 4, "NHDWaterbody")
-```
-
-    #>  [1] "Driver: ESRI Shapefile; number of rows: 31830 "     
-    #>  [2] "Feature type: wkbPolygon with 3 dimensions"         
-    #>  [3] "Extent: (-93.24332 40.43575) - (-73.61814 48.11344)"
-    #>  [4] "CRS: +proj=longlat +datum=NAD83 +no_defs  "         
-    #>  [5] "LDID: 87 "                                          
-    #>  [6] "Number of fields: 12 "                              
-    #>  [7] "         name type length typeName"                 
-    #>  [8] "1       COMID    0      9  Integer"                 
-    #>  [9] "2       FDATE    9     10     Date"                 
-    #> [10] "3  RESOLUTION    4      7   String"                 
-    #> [11] "4     GNIS_ID    4     10   String"                 
-    #> [12] "5   GNIS_NAME    4     65   String"                 
-    #> [13] "6    AREASQKM    2     19     Real"                 
-    #> [14] "7   ELEVATION    2     19     Real"                 
-    #> [15] "8   REACHCODE    4     14   String"                 
-    #> [16] "9       FTYPE    4     24   String"                 
-    #> [17] "10      FCODE    0      9  Integer"                 
-    #> [18] "11 SHAPE_LENG    2     19     Real"                 
-    #> [19] "12 SHAPE_AREA    2     19     Real"
-
-``` r
-# load layer
-dt <- nhd_plus_load(vpu = 4, "NHDWaterbody")
-#> Reading layer `NHDWaterbody' from data source `/home/jose/.local/share/nhdR/NHDPlus/GL_04_NHDSnapshot/NHDWaterbody.shp' using driver `ESRI Shapefile'
-#> Simple feature collection with 31830 features and 12 fields
-#> geometry type:  POLYGON
-#> dimension:      XYZ
-#> bbox:           xmin: -93.24332 ymin: 40.43575 xmax: -73.61814 ymax: 48.11344
-#> epsg (SRID):    4269
-#> proj4string:    +proj=longlat +datum=NAD83 +no_defs
 ```
