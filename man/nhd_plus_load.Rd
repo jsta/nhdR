@@ -20,6 +20,8 @@ nhd_plus_load
 \examples{
 \dontrun{
 dt <- nhd_plus_load(4, "NHDWaterbody")
+dt <- nhd_plus_load(c(1,2), "NHDWaterbody")
+dt <- nhd_plus_load(4, "NHDFlowline")
 }
 }
 

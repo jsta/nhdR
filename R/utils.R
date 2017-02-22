@@ -34,3 +34,12 @@ get_if_not_exists <- function(url, destfile){
 zero_pad <- function(x, digits){
   paste0(paste0(rep(0, digits), collapse = ""), x, collapse = "")
 }
+
+get_plus_remotepath <- function(vpu, component = "NHDSnapshot"){
+  baseurl <- paste0("http://www.horizon-systems.com/nhdplus/NHDPlusV2_",
+                    zero_pad(vpu, 1), ".php")
+  res <- rvest::html_attrs(rvest::html_nodes(xml2::read_html(baseurl), "a"))
+  res <- unlist(res[grep(component, res)])
+  res <- res[!(1:length(res) %in% grep("FGDB", res))][1]
+  res
+}

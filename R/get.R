@@ -42,18 +42,10 @@ nhd_get <- function(state = NA){
 nhd_plus_get <- function(vpu = NA, component = "NHDSnapshot"){
 
   if(!vpu %in% 1:22){
-    stop(paste0(state, " is not a valid vpu"))
+    stop(paste0(vpu, " is not a valid vpu"))
   }
 
-  get_plus_remotepath <- function(vpu){
-    baseurl <- paste0("http://www.horizon-systems.com/nhdplus/NHDPlusV2_",
-                      zero_pad(vpu, 1), ".php")
-    res <- rvest::html_attrs(rvest::html_nodes(xml2::read_html(baseurl), "a"))
-    res <- unlist(res[grep(component, res)])
-    res <- res[!(1:length(res) %in% grep("FGDB", res))][1]
-  }
-
-  url <- get_plus_remotepath(vpu)
+  url <- get_plus_remotepath(vpu, component = component)
 
   destdir <- file.path(nhd_path(), "NHDPlus")
   destsubdir <- file.path(destdir, paste(
