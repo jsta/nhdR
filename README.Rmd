@@ -112,5 +112,5 @@ nhd_info(state = "DC", layer_name = "NHDWaterbody")
 ```
 
 ```{r }
-nhd_load(state = "DC", layer_name = "NHDWaterbody")
+head(nhd_load(state = "DC", layer_name = "NHDWaterbody"))
 ```
