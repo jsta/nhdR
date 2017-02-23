@@ -4,7 +4,7 @@
 \alias{nhd_get}
 \title{nhd_get}
 \usage{
-nhd_get(state = NA)
+nhd_get(state = NA, quiet = TRUE)
 }
 \arguments{
 \item{state}{character state abbrevation includes "DC", "PR", and "VI"}
