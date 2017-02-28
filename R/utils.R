@@ -21,9 +21,12 @@ gdb_plus_path <- function(){
 #
 # }
 
-get_if_not_exists <- function(url, destfile, quiet = quiet){
+#' @importFrom httr GET write_disk progress
+get_if_not_exists <- function(url, destfile){
   if(!file.exists(destfile)){
-    curl::curl_download(url, destfile, quiet = quiet)
+    message(paste0("Downloading ", url))
+    suppressWarnings(
+      httr::GET(url, httr::write_disk(destfile), httr::progress()))
     TRUE
   }else{
     message(paste0("A local copy of ", url, " already exists on disk"))
