@@ -50,7 +50,7 @@
       <h1>Using nhdR</h1>
                         <h4 class="author">Joseph Stachelek</h4>
             
-            <h4 class="date">2017-02-23</h4>
+            <h4 class="date">2017-02-28</h4>
           </div>
 
     
@@ -61,34 +61,27 @@
 <span class="kw">library</span>(nhdR)
 
 gull_meta &lt;-<span class="st"> </span>wikilake::<span class="kw">lake_wiki</span>(<span class="st">"Gull Lake (Michigan)"</span>)
-gull &lt;-<span class="st"> </span><span class="kw">st_sfc</span>(<span class="kw">st_point</span>(<span class="kw">c</span>(gull_meta$Lon, gull_meta$Lat)))
-gull_buff &lt;-<span class="st"> </span><span class="kw">st_sfc</span>(<span class="kw">st_buffer</span>(gull, <span class="dt">dist =</span> <span class="fl">0.05</span>))
-<span class="kw">st_crs</span>(gull) &lt;-<span class="st"> </span><span class="kw">st_crs</span>(gull_buff) &lt;-<span class="st"> </span><span class="dv">4326</span> <span class="co">#wgs84 epsg</span>
+gull_point &lt;-<span class="st"> </span><span class="kw">st_sfc</span>(<span class="kw">st_point</span>(<span class="kw">c</span>(gull_meta$Lon, gull_meta$Lat)))
+gull_buff &lt;-<span class="st"> </span><span class="kw">st_sfc</span>(<span class="kw">st_buffer</span>(gull_point, <span class="dt">dist =</span> <span class="fl">0.05</span>))
+<span class="kw">st_crs</span>(gull_point) &lt;-<span class="st"> </span><span class="kw">st_crs</span>(gull_buff) &lt;-<span class="st"> </span><span class="dv">4326</span> <span class="co">#wgs84 epsg</span>
 
-<span class="kw"><a href="../reference/nhd_plus_list.html">nhd_plus_list</a></span>(<span class="dt">vpu =</span> <span class="dv">4</span>)</code></pre></div>
-<pre><code>## [1] "NHDAreaEventFC.shp"  "NHDArea.shp"         "NHDFlowline.shp"    
-## [4] "NHDLineEventFC.shp"  "NHDLine.shp"         "NHDPointEventFC.shp"
-## [7] "NHDPoint.shp"        "NHDWaterbody.shp"</code></pre>
+gull_point &lt;-<span class="st"> </span><span class="kw">st_transform</span>(gull_point, <span class="dt">crs =</span> <span class="st">"+proj=utm +zone=10 +datum=WGS84"</span>)  
+gull_buff  &lt;-<span class="st"> </span><span class="kw">st_transform</span>(gull_buff, <span class="dt">crs =</span> <span class="st">"+proj=utm +zone=10 +datum=WGS84"</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wb &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nhd_plus_load.html">nhd_plus_load</a></span>(<span class="dt">vpu =</span> <span class="dv">4</span>, <span class="st">"NHDWaterbody"</span>)
 fl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nhd_plus_load.html">nhd_plus_load</a></span>(<span class="dt">vpu =</span> <span class="dv">4</span>, <span class="dt">component =</span> <span class="st">"NHDFlowLine"</span>)
-
 <span class="kw">st_crs</span>(wb) &lt;-<span class="st"> </span><span class="kw">st_crs</span>(fl) &lt;-<span class="st"> </span><span class="dv">4269</span>
 
-gull      &lt;-<span class="st"> </span><span class="kw">st_transform</span>(gull, <span class="dt">crs =</span> <span class="st">"+proj=utm +zone=10 +datum=WGS84"</span>)  
-gull_buff &lt;-<span class="st"> </span><span class="kw">st_transform</span>(gull_buff, <span class="dt">crs =</span> <span class="st">"+proj=utm +zone=10 +datum=WGS84"</span>)  
-
-wb        &lt;-<span class="st"> </span><span class="kw">st_transform</span>(wb, <span class="dt">crs =</span> <span class="st">"+proj=utm +zone=10 +datum=WGS84"</span>)  
-fl        &lt;-<span class="st"> </span><span class="kw">st_transform</span>(fl, <span class="dt">crs =</span> <span class="st">"+proj=utm +zone=10 +datum=WGS84"</span>)  
+wb         &lt;-<span class="st"> </span><span class="kw">st_transform</span>(wb, <span class="dt">crs =</span> <span class="st">"+proj=utm +zone=10 +datum=WGS84"</span>)  
+fl         &lt;-<span class="st"> </span><span class="kw">st_transform</span>(fl, <span class="dt">crs =</span> <span class="st">"+proj=utm +zone=10 +datum=WGS84"</span>)  
   
 wb_intersecting &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">lapply</span>(<span class="kw">st_intersects</span>(wb, gull_buff), length)) &gt;<span class="st"> </span><span class="dv">0</span>
 wb_sub &lt;-<span class="st"> </span><span class="kw">st_geometry</span>(wb[wb_intersecting,])
 
 fl_intersecting &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">lapply</span>(<span class="kw">st_intersects</span>(fl, gull_buff), length)) &gt;<span class="st"> </span><span class="dv">0</span>
 fl_sub &lt;-<span class="st"> </span><span class="kw">st_geometry</span>(fl[fl_intersecting,])</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plot(gull_buff)</span>
-<span class="kw">plot</span>(wb_sub, <span class="dt">col =</span> <span class="st">"blue"</span>, <span class="dt">main =</span> <span class="st">"Gull Lake (Michigan)"</span>)
-<span class="kw">plot</span>(fl_sub, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">"cyan"</span>)
-<span class="kw">plot</span>(gull, <span class="dt">col =</span> <span class="st">"red"</span>, <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(wb_sub$geometry, <span class="dt">col =</span> <span class="st">"blue"</span>, <span class="dt">main =</span> <span class="st">"Gull Lake (Michigan)"</span>)
+<span class="kw">plot</span>(fl_sub$geometry, <span class="dt">add =</span> <span class="ot">TRUE</span>, <span class="dt">col =</span> <span class="st">"cyan"</span>)
+<span class="kw">plot</span>(gull_point, <span class="dt">col =</span> <span class="st">"red"</span>, <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)
 <span class="kw">axis</span>(<span class="dv">1</span>); <span class="kw">axis</span>(<span class="dv">2</span>)</code></pre></div>
 <p><img src="demo_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
 </div>
