@@ -22,7 +22,7 @@ st_crs(gull) <- st_crs(gull_buff) <- 4326 #wgs84 epsg
 nhd_plus_list(vpu = 4)
 ```
 
-```{r message=FALSE, eval=FALSE}
+```{r message=FALSE, eval=FALSE,cache=FALSE}
 wb <- nhd_plus_load(vpu = 4, "NHDWaterbody")
 fl <- nhd_plus_load(vpu = 4, component = "NHDFlowLine")
 

@@ -21,7 +21,6 @@ gdb_plus_path <- function(){
 #
 # }
 
-#' @importFrom httr GET write_disk progress
 get_if_not_exists <- function(url, destfile){
   if(!file.exists(destfile)){
     message(paste0("Downloading ", url))

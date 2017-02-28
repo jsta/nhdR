@@ -25,7 +25,7 @@ nhd_get <- function(state = NA){
     unzip(destfile, exdir = nhd_path())
   }
 
-  invisible(lapply(state, nhd_get_state, quiet))
+  invisible(lapply(state, nhd_get_state))
 }
 
 #' nhd_plus_get

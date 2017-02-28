@@ -11,7 +11,7 @@ Imports:
     rappdirs,
     rgdal,
     sf,
-    curl,
+    httr,
     rvest,
     xml2
 Encoding: UTF-8
