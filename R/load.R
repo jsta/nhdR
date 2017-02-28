@@ -2,6 +2,7 @@
 #'
 #' @param state character state abbreviation
 #' @param layer_name character name of a NHD layer
+#' @param ... arguments passed to sf::st_read
 #'
 #' @return spatial object
 #' @importFrom sf st_read
@@ -9,8 +10,9 @@
 #'
 #' @examples \dontrun{
 #' dt <- nhd_load(c("CT", "RI"), "NHDWaterbody")
+#' dt <- nhd_load(c("CT", "RI"), "NHDWaterbody", quiet = TRUE)
 #' }
-nhd_load <- function(state, layer_name){
+nhd_load <- function(state, layer_name, ...){
   nhd_load_state <- function(state, ...){
     if(any(!file.exists(gdb_path(state)))){
       nhd_get(state = state)
@@ -19,7 +21,9 @@ nhd_load <- function(state, layer_name){
   }
 
   invisible(prj <- sf::st_crs(nhd_load_state(state[1], quiet = TRUE)))
-  res <- do.call("rbind", lapply(state, nhd_load_state))
+
+  res <- do.call("rbind", lapply(state, nhd_load_state, ...))
+
   sf::st_crs(res) <- prj
   res
 }

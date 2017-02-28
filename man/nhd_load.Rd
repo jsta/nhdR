@@ -4,12 +4,14 @@
 \alias{nhd_load}
 \title{nhd_load}
 \usage{
-nhd_load(state, layer_name)
+nhd_load(state, layer_name, ...)
 }
 \arguments{
 \item{state}{character state abbreviation}
 
 \item{layer_name}{character name of a NHD layer}
+
+\item{...}{arguments passed to sf::st_read}
 }
 \value{
 spatial object
@@ -20,6 +22,7 @@ nhd_load
 \examples{
 \dontrun{
 dt <- nhd_load(c("CT", "RI"), "NHDWaterbody")
+dt <- nhd_load(c("CT", "RI"), "NHDWaterbody", quiet = TRUE)
 }
 }
 
