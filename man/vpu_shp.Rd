@@ -3,9 +3,9 @@
 \docType{data}
 \name{vpu_shp}
 \alias{vpu_shp}
-\title{vpu_shp}
+\title{Low-res simple features data frame of the NHDPlus vector processing units.}
 \description{
-Low-res simple features data frame of the NHDPlus vector processing units.
+vpu_shp
 }
 \keyword{datasets}
 

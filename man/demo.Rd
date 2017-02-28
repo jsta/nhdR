@@ -3,9 +3,9 @@
 \docType{data}
 \name{demo}
 \alias{demo}
-\title{demo}
+\title{List of simple features lake polygons and flowlines within a buffer around Gull Lake Michigan.}
 \description{
-List of simple features lake polygons and flowlines within a buffer around Gull Lake Michigan.
+demo
 }
 \keyword{datasets}
 
