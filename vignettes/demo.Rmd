@@ -15,43 +15,38 @@ library(sf)
 library(nhdR)
 
 gull_meta <- wikilake::lake_wiki("Gull Lake (Michigan)")
-gull <- st_sfc(st_point(c(gull_meta$Lon, gull_meta$Lat)))
-gull_buff <- st_sfc(st_buffer(gull, dist = 0.05))
-st_crs(gull) <- st_crs(gull_buff) <- 4326 #wgs84 epsg
+gull_point <- st_sfc(st_point(c(gull_meta$Lon, gull_meta$Lat)))
+gull_buff <- st_sfc(st_buffer(gull_point, dist = 0.05))
+st_crs(gull_point) <- st_crs(gull_buff) <- 4326 #wgs84 epsg
 
-nhd_plus_list(vpu = 4)
+gull_point <- st_transform(gull_point, crs = "+proj=utm +zone=10 +datum=WGS84")  
+gull_buff  <- st_transform(gull_buff, crs = "+proj=utm +zone=10 +datum=WGS84")
+
 ```
 
 ```{r message=FALSE, eval=FALSE,cache=FALSE}
 wb <- nhd_plus_load(vpu = 4, "NHDWaterbody")
 fl <- nhd_plus_load(vpu = 4, component = "NHDFlowLine")
-
 st_crs(wb) <- st_crs(fl) <- 4269
 
-gull      <- st_transform(gull, crs = "+proj=utm +zone=10 +datum=WGS84")  
-gull_buff <- st_transform(gull_buff, crs = "+proj=utm +zone=10 +datum=WGS84")  
-
-wb        <- st_transform(wb, crs = "+proj=utm +zone=10 +datum=WGS84")  
-fl        <- st_transform(fl, crs = "+proj=utm +zone=10 +datum=WGS84")  
+wb         <- st_transform(wb, crs = "+proj=utm +zone=10 +datum=WGS84")  
+fl         <- st_transform(fl, crs = "+proj=utm +zone=10 +datum=WGS84")  
   
 wb_intersecting <- unlist(lapply(st_intersects(wb, gull_buff), length)) > 0
 wb_sub <- st_geometry(wb[wb_intersecting,])
 
 fl_intersecting <- unlist(lapply(st_intersects(fl, gull_buff), length)) > 0
 fl_sub <- st_geometry(fl[fl_intersecting,])
-
 ```
 
 ```{r echo=FALSE}
-wb_sub <- demo$wb_sub
-fl_sub <- demo$fl_sub
+wb_sub <- gull$wb_sub
+fl_sub <- gull$fl_sub
 ```
 
 ```{r message=FALSE}
-
-# plot(gull_buff)
-plot(wb_sub, col = "blue", main = "Gull Lake (Michigan)")
-plot(fl_sub, add = TRUE, col = "cyan")
-plot(gull, col = "red", pch = 19, add = TRUE)
+plot(wb_sub$geometry, col = "blue", main = "Gull Lake (Michigan)")
+plot(fl_sub$geometry, add = TRUE, col = "cyan")
+plot(gull_point, col = "red", pch = 19, add = TRUE)
 axis(1); axis(2)
 ```

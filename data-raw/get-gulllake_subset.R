@@ -18,14 +18,12 @@ wb        <- st_transform(wb, crs = "+proj=utm +zone=10 +datum=WGS84")
 fl        <- st_transform(fl, crs = "+proj=utm +zone=10 +datum=WGS84")
 
 wb_intersecting <- unlist(lapply(st_intersects(wb, gull_buff), length)) > 0
-wb_sub <- st_geometry(wb[wb_intersecting,])
+wb_sub <- wb[wb_intersecting,]
 
 fl_intersecting <- unlist(lapply(st_intersects(fl, gull_buff), length)) > 0
-fl_sub <- st_geometry(fl[fl_intersecting,])
+fl_sub <- fl[fl_intersecting,]
 
-demo <- list(wb_intersecting = wb_intersecting,
-            wb_sub = wb_sub,
-            fl_intersecting = fl_intersecting,
+gull <- list(wb_sub = wb_sub,
             fl_sub = fl_sub)
 
-devtools::use_data(demo)
+devtools::use_data(gull)
