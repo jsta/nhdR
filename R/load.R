@@ -41,7 +41,7 @@ nhd_load <- function(state, layer_name, ...){
 #' dt <- nhd_plus_load(c(1,2), "NHDWaterbody")
 #' dt <- nhd_plus_load(4, "NHDFlowline")
 #' }
-nhd_plus_load <- function(vpu, component = NA){
+nhd_plus_load <- function(vpu, component){
 
   nhd_plus_load_vpu <- function(vpu, ...){
     vpu_path <- file.path(nhd_path(), "NHDPlus",

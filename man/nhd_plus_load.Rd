@@ -4,7 +4,7 @@
 \alias{nhd_plus_load}
 \title{nhd_plus_load}
 \usage{
-nhd_plus_load(vpu, component = NA)
+nhd_plus_load(vpu, component)
 }
 \arguments{
 \item{vpu}{numeric vector processing unit}
