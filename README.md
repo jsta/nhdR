@@ -24,6 +24,7 @@ Usage
 
 ``` r
 library(nhdR)
+#> Loading required package: maps
 ```
 
 ### NHD Plus

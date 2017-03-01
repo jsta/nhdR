@@ -4,10 +4,12 @@
 \alias{nhd_plus_list}
 \title{nhd_plus_list}
 \usage{
-nhd_plus_list(vpu, ...)
+nhd_plus_list(vpu, component = "NHDSnapshot", ...)
 }
 \arguments{
 \item{vpu}{numeric vector processing unit}
+
+\item{component}{character component name}
 
 \item{...}{arguments passed to list.files. optional.}
 }
@@ -18,6 +20,8 @@ nhd_plus_list
 \dontrun{
 nhd_plus_list(vpu = 4)
 nhd_plus_list(vpu = 4, full.names = TRUE)
+
+nhd_plus_list(vpu = 1, component = "NHDPlusAttributes")
 }
 }
 

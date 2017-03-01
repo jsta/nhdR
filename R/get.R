@@ -37,6 +37,7 @@ nhd_get <- function(state = NA){
 #' @importFrom xml2 read_html
 #' @examples \dontrun{
 #' nhd_plus_get(vpu = 4)
+#' nhd_plus_get(vpu = 1, component = "NHDPlusAttributes")
 #' }
 nhd_plus_get <- function(vpu = NA, component = "NHDSnapshot"){
 

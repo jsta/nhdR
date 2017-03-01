@@ -4,12 +4,14 @@
 \alias{nhd_plus_load}
 \title{nhd_plus_load}
 \usage{
-nhd_plus_load(vpu, component)
+nhd_plus_load(vpu, component, dsn)
 }
 \arguments{
 \item{vpu}{numeric vector processing unit}
 
 \item{component}{character component name}
+
+\item{dsn}{data source name}
 }
 \value{
 spatial object
@@ -19,9 +21,13 @@ nhd_plus_load
 }
 \examples{
 \dontrun{
-dt <- nhd_plus_load(4, "NHDWaterbody")
-dt <- nhd_plus_load(c(1,2), "NHDWaterbody")
-dt <- nhd_plus_load(4, "NHDFlowline")
+# Spatial
+dt <- nhd_plus_load(4, "NHDSnapshot", "NHDWaterbody")
+dt <- nhd_plus_load(c(1,2), "NHDSnapshot", "NHDWaterbody")
+dt <- nhd_plus_load(4, "NHDSnapshot", "NHDFlowline")
+
+# Non-spatial
+dt <- nhd_plus_load(1, "NHDPlusAttributes", "PlusFlow")
 }
 }
 

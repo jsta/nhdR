@@ -17,6 +17,7 @@ nhd_plus_get
 \examples{
 \dontrun{
 nhd_plus_get(vpu = 4)
+nhd_plus_get(vpu = 1, component = "NHDPlusAttributes")
 }
 }
 
