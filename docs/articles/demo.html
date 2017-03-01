@@ -50,7 +50,7 @@
       <h1>Using nhdR</h1>
                         <h4 class="author">Joseph Stachelek</h4>
             
-            <h4 class="date">2017-02-28</h4>
+            <h4 class="date">2017-03-01</h4>
           </div>
 
     
@@ -60,19 +60,19 @@
 <span class="kw">library</span>(sf)
 <span class="kw">library</span>(nhdR)
 
-gull_meta &lt;-<span class="st"> </span>wikilake::<span class="kw">lake_wiki</span>(<span class="st">"Gull Lake (Michigan)"</span>)
+gull_meta  &lt;-<span class="st"> </span>wikilake::<span class="kw">lake_wiki</span>(<span class="st">"Gull Lake (Michigan)"</span>)
 gull_point &lt;-<span class="st"> </span><span class="kw">st_sfc</span>(<span class="kw">st_point</span>(<span class="kw">c</span>(gull_meta$Lon, gull_meta$Lat)))
-gull_buff &lt;-<span class="st"> </span><span class="kw">st_sfc</span>(<span class="kw">st_buffer</span>(gull_point, <span class="dt">dist =</span> <span class="fl">0.05</span>))
+gull_buff  &lt;-<span class="st"> </span><span class="kw">st_sfc</span>(<span class="kw">st_buffer</span>(gull_point, <span class="dt">dist =</span> <span class="fl">0.05</span>))
 <span class="kw">st_crs</span>(gull_point) &lt;-<span class="st"> </span><span class="kw">st_crs</span>(gull_buff) &lt;-<span class="st"> </span><span class="dv">4326</span> <span class="co">#wgs84 epsg</span>
 
 gull_point &lt;-<span class="st"> </span><span class="kw">st_transform</span>(gull_point, <span class="dt">crs =</span> <span class="st">"+proj=utm +zone=10 +datum=WGS84"</span>)  
 gull_buff  &lt;-<span class="st"> </span><span class="kw">st_transform</span>(gull_buff, <span class="dt">crs =</span> <span class="st">"+proj=utm +zone=10 +datum=WGS84"</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wb &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nhd_plus_load.html">nhd_plus_load</a></span>(<span class="dt">vpu =</span> <span class="dv">4</span>, <span class="st">"NHDWaterbody"</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">wb &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nhd_plus_load.html">nhd_plus_load</a></span>(<span class="dt">vpu =</span> <span class="dv">4</span>, <span class="dt">component =</span> <span class="st">"NHDWaterbody"</span>)
 fl &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nhd_plus_load.html">nhd_plus_load</a></span>(<span class="dt">vpu =</span> <span class="dv">4</span>, <span class="dt">component =</span> <span class="st">"NHDFlowLine"</span>)
 <span class="kw">st_crs</span>(wb) &lt;-<span class="st"> </span><span class="kw">st_crs</span>(fl) &lt;-<span class="st"> </span><span class="dv">4269</span>
 
-wb         &lt;-<span class="st"> </span><span class="kw">st_transform</span>(wb, <span class="dt">crs =</span> <span class="st">"+proj=utm +zone=10 +datum=WGS84"</span>)  
-fl         &lt;-<span class="st"> </span><span class="kw">st_transform</span>(fl, <span class="dt">crs =</span> <span class="st">"+proj=utm +zone=10 +datum=WGS84"</span>)  
+wb &lt;-<span class="st"> </span><span class="kw">st_transform</span>(wb, <span class="dt">crs =</span> <span class="st">"+proj=utm +zone=10 +datum=WGS84"</span>)  
+fl &lt;-<span class="st"> </span><span class="kw">st_transform</span>(fl, <span class="dt">crs =</span> <span class="st">"+proj=utm +zone=10 +datum=WGS84"</span>)  
   
 wb_intersecting &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">lapply</span>(<span class="kw">st_intersects</span>(wb, gull_buff), length)) &gt;<span class="st"> </span><span class="dv">0</span>
 wb_sub &lt;-<span class="st"> </span><span class="kw">st_geometry</span>(wb[wb_intersecting,])
