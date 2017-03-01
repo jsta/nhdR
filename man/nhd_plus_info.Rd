@@ -4,19 +4,22 @@
 \alias{nhd_plus_info}
 \title{nhd_plus_info}
 \usage{
-nhd_plus_info(vpu, component = NA)
+nhd_plus_info(vpu, component, dsn)
 }
 \arguments{
 \item{vpu}{numeric vector processing unit}
 
 \item{component}{character component name}
+
+\item{dsn}{character data source name}
 }
 \description{
 nhd_plus_info
 }
 \examples{
 \dontrun{
-nhd_plus_info(vpu = 4, component = "NHDWaterbody")
+nhd_plus_info(vpu = 4, component = "NHDSnapshot", dsn = "NHDWaterbody")
+nhd_plus_info(vpu = 1, component = "NHDPlusAttributes", dsn = "PlusFlow")
 }
 }
 

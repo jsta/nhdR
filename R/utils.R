@@ -45,3 +45,7 @@ get_plus_remotepath <- function(vpu, component = "NHDSnapshot"){
   res <- res[!(1:length(res) %in% grep("FGDB", res))][1]
   res
 }
+
+is_spatial <- function(filename){
+  length(grep("shp$", filename)) > 0
+}

@@ -73,28 +73,28 @@ ggplot(dt) +
 
 ```{r eval=FALSE}
 # get a vpu export
-nhd_plus_get(vpu = 4)
+nhd_plus_get(vpu = 4, "NHDSnapshot")
 ```
 
 ```{r }
 # list layers
-nhd_plus_list(vpu = 4)
+nhd_plus_list(vpu = 4, "NHDSnapshot")
 ```
 
 ```{r eval=FALSE}
 # get layer info
-nhd_plus_info(vpu = 4, "NHDWaterbody")
+nhd_plus_info(vpu = 4, "NHDSnapshot", "NHDWaterbody")
 ```
 
 ```{r echo=FALSE}
-info <- capture.output(nhd_plus_info(vpu = 4, "NHDWaterbody"))
+info <- capture.output(nhd_plus_info(vpu = 4, "NHDSnapshot", "NHDWaterbody"))
 # gsub("/home/jose", "~", info)
 info[2:length(info)]
 ```
 
 ```{r }
 # load layer
-dt <- nhd_plus_load(vpu = 4, "NHDWaterbody")
+dt <- nhd_plus_load(vpu = 4, "NHDSnapshot", "NHDWaterbody")
 ```
 
 ### NHD

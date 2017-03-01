@@ -35,12 +35,12 @@ Unlike the standard NHD, the NHD-Plus exports are organized by vector processing
 
 ``` r
 # get a vpu export
-nhd_plus_get(vpu = 4)
+nhd_plus_get(vpu = 4, "NHDSnapshot")
 ```
 
 ``` r
 # list layers
-nhd_plus_list(vpu = 4)
+nhd_plus_list(vpu = 4, "NHDSnapshot")
 #> [1] "NHDAreaEventFC.shp"  "NHDArea.shp"         "NHDFlowline.shp"    
 #> [4] "NHDLineEventFC.shp"  "NHDLine.shp"         "NHDPointEventFC.shp"
 #> [7] "NHDPoint.shp"        "NHDWaterbody.shp"
@@ -48,7 +48,7 @@ nhd_plus_list(vpu = 4)
 
 ``` r
 # get layer info
-nhd_plus_info(vpu = 4, "NHDWaterbody")
+nhd_plus_info(vpu = 4, "NHDSnapshot", "NHDWaterbody")
 ```
 
     #>  [1] "Driver: ESRI Shapefile; number of rows: 31830 "     
@@ -73,7 +73,7 @@ nhd_plus_info(vpu = 4, "NHDWaterbody")
 
 ``` r
 # load layer
-dt <- nhd_plus_load(vpu = 4, "NHDWaterbody")
+dt <- nhd_plus_load(vpu = 4, "NHDSnapshot", "NHDWaterbody")
 #> Reading layer `NHDWaterbody' from data source `/home/jose/.local/share/nhdR/NHDPlus/GL_04_NHDSnapshot/NHDWaterbody.shp' using driver `ESRI Shapefile'
 #> Simple feature collection with 31830 features and 12 fields
 #> geometry type:  POLYGON

@@ -16,16 +16,24 @@ nhd_info <- function(state, layer_name){
 #'
 #' @param vpu numeric vector processing unit
 #' @param component character component name
+#' @param dsn character data source name
 #' @export
 #' @importFrom rgdal ogrInfo
 #'
 #' @examples \dontrun{
-#' nhd_plus_info(vpu = 4, component = "NHDWaterbody")
+#' nhd_plus_info(vpu = 4, component = "NHDSnapshot", dsn = "NHDWaterbody")
+#' nhd_plus_info(vpu = 1, component = "NHDPlusAttributes", dsn = "PlusFlow")
 #' }
-nhd_plus_info <- function(vpu, component = NA){
-  candidate_files <- nhd_plus_list(vpu, full.names = TRUE)
+nhd_plus_info <- function(vpu, component, dsn){
+  candidate_files <- nhd_plus_list(vpu, component = component, full.names = TRUE)
   res <- candidate_files[grep(component, candidate_files)]
-  rgdal::ogrInfo(res, component)
+  res <- res[grep(dsn, res)]
+
+  if(is_spatial(res)){
+    rgdal::ogrInfo(res, dsn)
+  }else{
+    summary(foreign::read.dbf(res))
+  }
 }
 
 

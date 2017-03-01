@@ -47,7 +47,7 @@ nhd_load <- function(state, layer_name, ...){
 #' # Non-spatial
 #' dt <- nhd_plus_load(1, "NHDPlusAttributes", "PlusFlow")
 #' }
-nhd_plus_load <- function(vpu, component, dsn){
+nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn){
 
   nhd_plus_load_vpu <- function(vpu, component, dsn, ...){
     vpu_path <- file.path(nhd_path(), "NHDPlus",
