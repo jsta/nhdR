@@ -76,12 +76,14 @@
     <p>nhd_plus_list</p>
     
 
-    <pre><span class='fu'>nhd_plus_list</span>(<span class='no'>vpu</span>, <span class='no'>...</span>)</pre>
+    <pre><span class='fu'>nhd_plus_list</span>(<span class='no'>vpu</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"NHDSnapshot"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>vpu</dt>
       <dd>numeric vector processing unit</dd>
+      <dt>component</dt>
+      <dd>character component name</dd>
       <dt>...</dt>
       <dd>arguments passed to list.files. optional.</dd>
     </dl>
@@ -91,6 +93,8 @@
     <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
 <span class='co'># nhd_plus_list(vpu = 4)</span>
 <span class='co'># nhd_plus_list(vpu = 4, full.names = TRUE)</span>
+<span class='co'># </span>
+<span class='co'># nhd_plus_list(vpu = 1, component = "NHDPlusAttributes")</span>
 <span class='co'>## ---------------------------------------------</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

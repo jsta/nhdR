@@ -76,7 +76,7 @@
     <p>nhd_plus_load</p>
     
 
-    <pre><span class='fu'>nhd_plus_load</span>(<span class='no'>vpu</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</pre>
+    <pre><span class='fu'>nhd_plus_load</span>(<span class='no'>vpu</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"NHDSnapshot"</span>, <span class='no'>dsn</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
@@ -84,6 +84,8 @@
       <dd>numeric vector processing unit</dd>
       <dt>component</dt>
       <dd>character component name</dd>
+      <dt>dsn</dt>
+      <dd>data source name</dd>
     </dl>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -93,9 +95,13 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># dt &lt;- nhd_plus_load(4, "NHDWaterbody")</span>
-<span class='co'># dt &lt;- nhd_plus_load(c(1,2), "NHDWaterbody")</span>
-<span class='co'># dt &lt;- nhd_plus_load(4, "NHDFlowline")</span>
+<span class='co'># # Spatial</span>
+<span class='co'># dt &lt;- nhd_plus_load(4, "NHDSnapshot", "NHDWaterbody")</span>
+<span class='co'># dt &lt;- nhd_plus_load(c(1,2), "NHDSnapshot", "NHDWaterbody")</span>
+<span class='co'># dt &lt;- nhd_plus_load(4, "NHDSnapshot", "NHDFlowline")</span>
+<span class='co'># </span>
+<span class='co'># # Non-spatial</span>
+<span class='co'># dt &lt;- nhd_plus_load(1, "NHDPlusAttributes", "PlusFlow")</span>
 <span class='co'>## ---------------------------------------------</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

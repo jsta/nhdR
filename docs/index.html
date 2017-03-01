@@ -78,14 +78,14 @@ devtools::<span class="kw">install_github</span>(<span class="st">"jsta/nhdR"</s
 <p>Unlike the standard NHD, the NHD-Plus exports are organized by vector processing unit (vpu). See below for a low resolution vpu map (also <code>nhdR::vpu_shp</code>). A hi-res version can be found <a href="http://www.horizon-systems.com/NHDPlus/NHDPlusV2_data.php">here</a>.</p>
 <p><img src="images/unnamed-chunk-3-1.png" width="672"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get a vpu export</span>
-<span class="kw"><a href="reference/nhd_plus_get.html">nhd_plus_get</a></span>(<span class="dt">vpu =</span> <span class="dv">4</span>)</code></pre></div>
+<span class="kw"><a href="reference/nhd_plus_get.html">nhd_plus_get</a></span>(<span class="dt">vpu =</span> <span class="dv">4</span>, <span class="st">"NHDSnapshot"</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># list layers</span>
-<span class="kw"><a href="reference/nhd_plus_list.html">nhd_plus_list</a></span>(<span class="dt">vpu =</span> <span class="dv">4</span>)
+<span class="kw"><a href="reference/nhd_plus_list.html">nhd_plus_list</a></span>(<span class="dt">vpu =</span> <span class="dv">4</span>, <span class="st">"NHDSnapshot"</span>)
 <span class="co">#&gt; [1] "NHDAreaEventFC.shp"  "NHDArea.shp"         "NHDFlowline.shp"    </span>
 <span class="co">#&gt; [4] "NHDLineEventFC.shp"  "NHDLine.shp"         "NHDPointEventFC.shp"</span>
 <span class="co">#&gt; [7] "NHDPoint.shp"        "NHDWaterbody.shp"</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get layer info</span>
-<span class="kw"><a href="reference/nhd_plus_info.html">nhd_plus_info</a></span>(<span class="dt">vpu =</span> <span class="dv">4</span>, <span class="st">"NHDWaterbody"</span>)</code></pre></div>
+<span class="kw"><a href="reference/nhd_plus_info.html">nhd_plus_info</a></span>(<span class="dt">vpu =</span> <span class="dv">4</span>, <span class="st">"NHDSnapshot"</span>, <span class="st">"NHDWaterbody"</span>)</code></pre></div>
 <pre><code>#&gt;  [1] "Driver: ESRI Shapefile; number of rows: 31830 "     
 #&gt;  [2] "Feature type: wkbPolygon with 3 dimensions"         
 #&gt;  [3] "Extent: (-93.24332 40.43575) - (-73.61814 48.11344)"
@@ -106,7 +106,7 @@ devtools::<span class="kw">install_github</span>(<span class="st">"jsta/nhdR"</s
 #&gt; [18] "11 SHAPE_LENG    2     19     Real"                 
 #&gt; [19] "12 SHAPE_AREA    2     19     Real"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load layer</span>
-dt &lt;-<span class="st"> </span><span class="kw"><a href="reference/nhd_plus_load.html">nhd_plus_load</a></span>(<span class="dt">vpu =</span> <span class="dv">4</span>, <span class="st">"NHDWaterbody"</span>)
+dt &lt;-<span class="st"> </span><span class="kw"><a href="reference/nhd_plus_load.html">nhd_plus_load</a></span>(<span class="dt">vpu =</span> <span class="dv">4</span>, <span class="st">"NHDSnapshot"</span>, <span class="st">"NHDWaterbody"</span>)
 <span class="co">#&gt; Reading layer `NHDWaterbody' from data source `/home/jose/.local/share/nhdR/NHDPlus/GL_04_NHDSnapshot/NHDWaterbody.shp' using driver `ESRI Shapefile'</span>
 <span class="co">#&gt; Simple feature collection with 31830 features and 12 fields</span>
 <span class="co">#&gt; geometry type:  POLYGON</span>

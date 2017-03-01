@@ -76,7 +76,7 @@
     <p>nhd_plus_info</p>
     
 
-    <pre><span class='fu'>nhd_plus_info</span>(<span class='no'>vpu</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</pre>
+    <pre><span class='fu'>nhd_plus_info</span>(<span class='no'>vpu</span>, <span class='no'>component</span>, <span class='no'>dsn</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
@@ -84,12 +84,15 @@
       <dd>numeric vector processing unit</dd>
       <dt>component</dt>
       <dd>character component name</dd>
+      <dt>dsn</dt>
+      <dd>character data source name</dd>
     </dl>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># nhd_plus_info(vpu = 4, component = "NHDWaterbody")</span>
+<span class='co'># nhd_plus_info(vpu = 4, component = "NHDSnapshot", dsn = "NHDWaterbody")</span>
+<span class='co'># nhd_plus_info(vpu = 1, component = "NHDPlusAttributes", dsn = "PlusFlow")</span>
 <span class='co'>## ---------------------------------------------</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
