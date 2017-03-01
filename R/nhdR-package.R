@@ -10,6 +10,7 @@ NULL
 #' gull
 #'
 #' @title List of simple features lake polygons and flowlines within a buffer around Gull Lake Michigan.
+#' @description Data from NHD Plus
 #' @docType data
 #' @keywords datasets
 #' @name gull
