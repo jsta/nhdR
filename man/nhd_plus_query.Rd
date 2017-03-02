@@ -4,7 +4,16 @@
 \alias{nhd_plus_query}
 \title{nhd_plus_query}
 \usage{
-nhd_plus_query(lon, lat, dsn)
+nhd_plus_query(lon, lat, dsn, buffer_dist = 0.05)
+}
+\arguments{
+\item{lon}{numeric longitude}
+
+\item{lat}{numeric latitude}
+
+\item{dsn}{character data source}
+
+\item{buffer_dist}{numeric buffer in units of coordinate degrees}
 }
 \description{
 nhd_plus_query
@@ -13,9 +22,10 @@ nhd_plus_query
 \dontrun{
 # Lake Lashaway
 wk <- wikilake::lake_wiki("Gull Lake (Michigan)")
-qry <- nhd_plus_query(wk$Lon, wk$Lat, dsn = "NHDWaterbody")
+qry <- nhd_plus_query(wk$Lon, wk$Lat, dsn = c("NHDWaterbody", "NHDFlowLine"))
 
-plot(qry$sp$geometry, col = "blue")
+plot(qry$sp$NHDWaterbody$geometry, col = "blue")
+plot(qry$sp$NHDFlowLine$geometry, col = "cyan", add = TRUE)
 plot(qry$pnt, col = "red", pch = 19, add = TRUE)
 axis(1); axis(2)
 }
