@@ -11,13 +11,14 @@
 #' @examples \dontrun{
 #' dt <- nhd_load(c("CT", "RI"), "NHDWaterbody")
 #' dt <- nhd_load(c("CT", "RI"), "NHDWaterbody", quiet = TRUE)
+#' dt <- nhd_load("MI", "NHDFlowline")
 #' }
 nhd_load <- function(state, layer_name, ...){
   nhd_load_state <- function(state, ...){
     if(any(!file.exists(gdb_path(state)))){
       nhd_get(state = state)
     }
-      sf::st_read(gdb_path(state), layer_name, ...)
+      sf::st_zm(sf::st_read(gdb_path(state), layer_name, ...))
   }
 
   invisible(prj <- sf::st_crs(nhd_load_state(state[1], quiet = TRUE)))
