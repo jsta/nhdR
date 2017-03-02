@@ -49,3 +49,40 @@ get_plus_remotepath <- function(vpu, component = "NHDSnapshot"){
 is_spatial <- function(filename){
   length(grep("shp$", filename)) > 0
 }
+
+find_vpu <- function(pnt){
+  vpu <- sf::st_covers(nhdR::vpu_shp$geometry, pnt)
+  vpu <- nhdR::vpu_shp[which(vpu == 1),]
+  vpu <- suppressWarnings(as.numeric(as.character(vpu$UnitID)))
+  vpu <- vpu[!is.na(vpu)]
+  vpu
+}
+
+find_state <- function(pnt){
+  state_data <- ggplot2::map_data("state")
+  state_data_sf <- lapply(unique(state_data$region),
+                    function(x)
+                      list(matrix(unlist(
+                      rbind(
+                        state_data[state_data$region == x,][,c("long", "lat")],
+                        state_data[state_data$region == x,][1, c("long", "lat")])),
+                      ncol = 2)))
+
+  # to only rbind the bad states rather than all:
+  # state_data_sf <- lapply(unique(state_data$region),
+  #                   function(x)
+  #                     list(matrix(unlist(
+  #                     state_data[state_data$region == x,][,c("long", "lat")]),
+  #                     ncol = 2)))
+  #
+  # state_data_sf[c(45, 46, 31, 32, 20, 21)] <- lapply(state_data_sf[c(45, 46, 31, 32, 20, 21)], function(x) list(rbind(x[[1]], x[[1]][1,])))
+
+  res <- sf::st_sfc(lapply(state_data_sf, sf::st_polygon))
+  sf::st_crs(res) <- sf::st_crs(pnt)
+
+  res_intersects <- sf::st_intersects(res, pnt)
+
+  state <- unique(state_data$region)[
+            which(unlist(lapply(res_intersects, length)) > 0)]
+  state
+}
