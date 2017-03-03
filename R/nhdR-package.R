@@ -3,6 +3,7 @@
 #' @aliases nhdR
 #' @docType package
 #' @importFrom httr GET write_disk progress
+#' @importFrom ggplot2 map_data
 #' @title R interface to the National Hydrography Dataset
 #' @author \email{stachel2@msu.edu}
 NULL

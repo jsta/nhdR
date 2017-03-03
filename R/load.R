@@ -64,7 +64,7 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn){
                                 tolower(candidate_files))]
 
     if(length(grep("shp$", res)) > 0){
-      res <- sf::st_read(res, ...)
+      res <- sf::st_zm(sf::st_read(res, ...))
       is_spatial <- TRUE
       list(res = res, is_spatial = is_spatial)
     }else{
