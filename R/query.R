@@ -5,9 +5,10 @@
 #' @param dsn character data source
 #' @param buffer_dist numeric buffer in units of coordinate degrees
 #' @examples \dontrun{
-#' # Lake Lashaway
-#' wk <- wikilake::lake_wiki("Gull Lake (Michigan)")
-#' qry <- nhd_plus_query(wk$Lon, wk$Lat, dsn = c("NHDWaterbody", "NHDFlowLine"))
+#'
+#' wk <- wikilake::lake_wiki("Lake Lashaway")
+#' qry <- nhd_plus_query(wk$Lon, wk$Lat,
+#'          dsn = c("NHDWaterbody", "NHDFlowLine"), buffer_dist = 0.02)
 #'
 #' plot(qry$sp$NHDWaterbody$geometry, col = "blue")
 #' plot(qry$sp$NHDFlowLine$geometry, col = "cyan", add = TRUE)
@@ -46,6 +47,7 @@ nhd_plus_query <- function(lon, lat, dsn, buffer_dist = 0.05){
 
 #' nhd_query
 #' @export
+#' @import datasets
 #' @param lon numeric longitude
 #' @param lat numeric latitude
 #' @param dsn character data source
@@ -68,7 +70,7 @@ nhd_query <- function(lon, lat, dsn, buffer_dist = 0.05){
   sf::st_crs(pnt_buff) <- sf::st_crs(pnt) <- sf::st_crs(nhdR::vpu_shp)
 
   state <- find_state(pnt)
-  state_abb <- state.abb[tolower(state.name) == state]
+  state_abb <- datasets::state.abb[tolower(datasets::state.name) == state]
 
   sp <- lapply(dsn, function(x) nhd_load(state = state_abb, layer_name = x))
 

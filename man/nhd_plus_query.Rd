@@ -20,9 +20,10 @@ nhd_plus_query
 }
 \examples{
 \dontrun{
-# Lake Lashaway
-wk <- wikilake::lake_wiki("Gull Lake (Michigan)")
-qry <- nhd_plus_query(wk$Lon, wk$Lat, dsn = c("NHDWaterbody", "NHDFlowLine"))
+
+wk <- wikilake::lake_wiki("Lake Lashaway")
+qry <- nhd_plus_query(wk$Lon, wk$Lat,
+         dsn = c("NHDWaterbody", "NHDFlowLine"), buffer_dist = 0.02)
 
 plot(qry$sp$NHDWaterbody$geometry, col = "blue")
 plot(qry$sp$NHDFlowLine$geometry, col = "cyan", add = TRUE)
