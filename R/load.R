@@ -93,7 +93,7 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn){
 
   if(any(is_spatial)){
     invisible(prj <- sf::st_crs(nhd_plus_load_vpu(vpu[1],
-                      component = component, dsn = dsn, quiet = TRUE)))
+                      component = component, dsn = dsn, quiet = TRUE)$res))
     sf::st_crs(res) <- prj
   }
 
