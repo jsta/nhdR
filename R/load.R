@@ -16,7 +16,13 @@
 nhd_load <- function(state, layer_name, ...){
   nhd_load_state <- function(state, ...){
     if(any(!file.exists(gdb_path(state)))){
-      nhd_get(state = state)
+      userconsents <- utils::menu(c("Yes", "No"),
+           title = paste0(state, " state gdb file not found. Download it?"))
+      if(userconsents == 1){
+        nhd_get(state = state)
+      }else{
+        stop("No file. Cannot load.")
+      }
     }
       sf::st_zm(sf::st_read(gdb_path(state), layer_name, ...))
   }
@@ -55,7 +61,13 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn){
                           basename(get_plus_remotepath(vpu, component)))
 
     if(any(!file.exists(vpu_path))){
-      nhd_plus_get(vpu = vpu, component = component)
+      userconsents <- utils::menu(c("Yes", "No"),
+        title = paste0(vpu, " vpu file not found. Download it?"))
+      if(userconsents == 1){
+        nhd_plus_get(vpu = vpu, component = component)
+      }else{
+        stop("No file. Cannot load.")
+      }
     }
 
     candidate_files <- nhd_plus_list(vpu, component = component,
