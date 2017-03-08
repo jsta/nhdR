@@ -18,6 +18,8 @@ nhd_plus_get
 \dontrun{
 nhd_plus_get(vpu = 4)
 nhd_plus_get(vpu = 1, component = "NHDPlusAttributes")
+
+nhd_plus_get(vpu = "National", component = "V1_To_V2_Crosswalk")
 }
 }
 

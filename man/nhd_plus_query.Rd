@@ -21,7 +21,7 @@ nhd_plus_query
 \examples{
 \dontrun{
 
-wk <- wikilake::lake_wiki("Lake Lashaway")
+wk <- wikilake::lake_wiki("Webster Lake (New Hampshire)")
 qry <- nhd_plus_query(wk$Lon, wk$Lat,
          dsn = c("NHDWaterbody", "NHDFlowLine"), buffer_dist = 0.02)
 

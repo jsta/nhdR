@@ -22,6 +22,8 @@ nhd_plus_list(vpu = 4)
 nhd_plus_list(vpu = 4, full.names = TRUE)
 
 nhd_plus_list(vpu = 1, component = "NHDPlusAttributes")
+nhd_plus_list(vpu = "National", component = "V1_To_V2_Crosswalk")
+
 }
 }
 

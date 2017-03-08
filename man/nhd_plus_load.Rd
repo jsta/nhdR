@@ -28,6 +28,7 @@ dt <- nhd_plus_load(4, "NHDSnapshot", "NHDFlowline")
 
 # Non-spatial
 dt <- nhd_plus_load(1, "NHDPlusAttributes", "PlusFlow")
+dt <- nhd_plus_load("National", "V1_To_V2_Crosswalk", "NHDPlusV1Network_V2Network_Crosswalk")
 }
 }
 

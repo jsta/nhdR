@@ -6,7 +6,7 @@
 #' @param buffer_dist numeric buffer in units of coordinate degrees
 #' @examples \dontrun{
 #'
-#' wk <- wikilake::lake_wiki("Lake Lashaway")
+#' wk <- wikilake::lake_wiki("Webster Lake (New Hampshire)")
 #' qry <- nhd_plus_query(wk$Lon, wk$Lat,
 #'          dsn = c("NHDWaterbody", "NHDFlowLine"), buffer_dist = 0.02)
 #'
@@ -53,9 +53,8 @@ nhd_plus_query <- function(lon, lat, dsn, buffer_dist = 0.05){
 #' @param dsn character data source
 #' @param buffer_dist numeric buffer in units of coordinate degrees
 #' @examples \dontrun{
-#' # Lake Lashaway
 #' wk <- wikilake::lake_wiki("Gull Lake (Michigan)")
-#' qry <- nhd_query(wk$Lon, wk$Lat, dsn = c("NHDWaterbody", "NHDFlowline"))
+#' qry <- nhd_query(-73.85745, 43.00238, dsn = c("NHDWaterbody", "NHDFlowline"))
 #'
 #' plot(sf::st_geometry(qry$sp$NHDWaterbody), col = "blue")
 #' plot(sf::st_geometry(qry$sp$NHDFlowline), col = "cyan", add = TRUE)

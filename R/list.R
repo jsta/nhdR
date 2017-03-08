@@ -24,14 +24,20 @@ nhd_list <- function(state){
 #' nhd_plus_list(vpu = 4, full.names = TRUE)
 #'
 #' nhd_plus_list(vpu = 1, component = "NHDPlusAttributes")
+#' nhd_plus_list(vpu = "National", component = "V1_To_V2_Crosswalk")
+#'
 #' }
 nhd_plus_list <- function(vpu, component = "NHDSnapshot", ...){
 
   candidate_dirs <- list.dirs(file.path(nhd_path(), "NHDPlus"),
                               full.names = TRUE, recursive = FALSE)
-  target_dir <- candidate_dirs[grep(
+  if(vpu == "National"){
+    target_dir <- candidate_dirs[grep(vpu, candidate_dirs)]
+  }else{
+    target_dir <- candidate_dirs[grep(
                     paste0(zero_pad(vpu, 1)), candidate_dirs)]
-  target_dir <- target_dir[grep(component, target_dir)]
+    target_dir <- target_dir[grep(component, target_dir)]
+  }
 
   # list.files(target_dir, pattern = "shp$", ...)
   res <- list.files(target_dir, pattern = "dbf|shp", ...)

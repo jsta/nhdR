@@ -4,8 +4,8 @@
 #' @importFrom utils unzip
 #' @import maps
 #' @examples \dontrun{
-#' nhd_get(state = c("DC", "HI"))
-  #' nhd_get(state = c("RI", "CT"))
+#' nhd_get(state = c("DC"))
+#' nhd_get(state = c("RI", "CT"))
 #' }
 nhd_get <- function(state = NA){
 
@@ -38,10 +38,12 @@ nhd_get <- function(state = NA){
 #' @examples \dontrun{
 #' nhd_plus_get(vpu = 4)
 #' nhd_plus_get(vpu = 1, component = "NHDPlusAttributes")
+#'
+#' nhd_plus_get(vpu = "National", component = "V1_To_V2_Crosswalk")
 #' }
 nhd_plus_get <- function(vpu = NA, component = "NHDSnapshot"){
 
-  if(!vpu %in% 1:22){
+  if(!vpu %in% c("National", 1:22)){
     stop(paste0(vpu, " is not a valid vpu"))
   }
 
