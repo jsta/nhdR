@@ -24,7 +24,8 @@ nhd_load <- function(state, layer_name, ...){
         stop("No file. Cannot load.")
       }
     }
-      sf::st_zm(sf::st_read(gdb_path(state), layer_name, ...))
+      sf::st_zm(sf::st_read(gdb_path(state), layer_name,
+                            stringsAsFactors = FALSE, ...))
   }
 
   invisible(prj <- sf::st_crs(nhd_load_state(state[1], quiet = TRUE)))
@@ -78,7 +79,7 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn){
                                 tolower(candidate_files))]
 
     if(length(grep("shp$", res)) > 0){
-      res <- sf::st_zm(sf::st_read(res, ...))
+      res <- sf::st_zm(sf::st_read(res, stringsAsFactors = FALSE, ...))
       is_spatial <- TRUE
       list(res = res, is_spatial = is_spatial)
     }else{
