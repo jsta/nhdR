@@ -53,7 +53,8 @@ nhd_load <- function(state, layer_name, ...){
 #'
 #' # Non-spatial
 #' dt <- nhd_plus_load(1, "NHDPlusAttributes", "PlusFlow")
-#' dt <- nhd_plus_load("National", "V1_To_V2_Crosswalk", "NHDPlusV1Network_V2Network_Crosswalk")
+#' dt <- nhd_plus_load("National", "V1_To_V2_Crosswalk",
+#'  "NHDPlusV1Network_V2Network_Crosswalk")
 #' }
 nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn){
 
@@ -81,7 +82,7 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn){
       is_spatial <- TRUE
       list(res = res, is_spatial = is_spatial)
     }else{
-      res <- lapply(res, foreign::read.dbf)
+      res <- lapply(res, foreign::read.dbf, as.is = TRUE)
       names(res) <- dsn
       is_spatial <- FALSE
       list(res = res[[dsn]], is_spatial = is_spatial)
