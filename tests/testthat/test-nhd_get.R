@@ -12,6 +12,7 @@ test_that("nhd_plus_get fails well", {
 
 test_that("remote urls are contructed correctly", {
   skip_on_cran()
+  skip_on_travis()
 
   expect_true(RCurl::url.exists(
     get_plus_remotepath(4, component = "NHDSnapshot")))
