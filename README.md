@@ -3,7 +3,7 @@
 nhdR
 ====
 
-[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/nhdR)](https://cran.r-project.org/package=nhdR) [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/nhdR)](https://cran.r-project.org/package=nhdR)
+[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/nhdR)](https://cran.r-project.org/package=nhdR) [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/nhdR)](https://cran.r-project.org/package=nhdR) [![Travis-CI Build Status](https://travis-ci.org/jsta/nhdR.svg?branch=master)](https://travis-ci.org/jsta/nhdR) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/jsta/nhdR?branch=master&svg=true)](https://ci.appveyor.com/project/jsta/nhdR)
 
 The goal of nhdR is to provide R tools for interacting with the National Hydrography Dataset.
 
@@ -24,6 +24,7 @@ Usage
 
 ``` r
 library(nhdR)
+#> Loading required package: maps
 ```
 
 ### NHD Plus
@@ -147,7 +148,7 @@ head(nhd_load(state = "DC", layer_name = "NHDWaterbody"))
 #> proj4string:    +proj=longlat +datum=NAD83 +no_defs
 #> Simple feature collection with 6 features and 12 fields
 #> geometry type:  MULTIPOLYGON
-#> dimension:      XYZ
+#> dimension:      XY
 #> bbox:           xmin: -77.5767 ymin: 38.68957 xmax: -76.99631 ymax: 39.5882
 #> epsg (SRID):    4269
 #> proj4string:    +proj=longlat +datum=NAD83 +no_defs
@@ -166,10 +167,10 @@ head(nhd_load(state = "DC", layer_name = "NHDWaterbody"))
 #> 5    0.001        NA 02070008004860   390 39004 0.0011083831 8.130533e-08
 #> 6    0.002        NA 02070008005063   390 39004 0.0016429957 1.745505e-07
 #>                            Shape
-#> 1 MULTIPOLYGONZ(((-77.1138173...
-#> 2 MULTIPOLYGONZ(((-76.9963107...
-#> 3 MULTIPOLYGONZ(((-77.5694207...
-#> 4 MULTIPOLYGONZ(((-77.5694721...
-#> 5 MULTIPOLYGONZ(((-77.5764423...
-#> 6 MULTIPOLYGONZ(((-77.4693297...
+#> 1 MULTIPOLYGON(((-77.11381732...
+#> 2 MULTIPOLYGON(((-76.99631072...
+#> 3 MULTIPOLYGON(((-77.56942072...
+#> 4 MULTIPOLYGON(((-77.56947212...
+#> 5 MULTIPOLYGON(((-77.57644239...
+#> 6 MULTIPOLYGON(((-77.46932972...
 ```
