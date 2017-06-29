@@ -22,4 +22,3 @@ nhd_plus_info(vpu = 4, component = "NHDSnapshot", dsn = "NHDWaterbody")
 nhd_plus_info(vpu = 1, component = "NHDPlusAttributes", dsn = "PlusFlow")
 }
 }
-

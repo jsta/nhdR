@@ -29,4 +29,3 @@ plot(qry$pnt, col = "red", pch = 19, add = TRUE)
 axis(1); axis(2)
 }
 }
-

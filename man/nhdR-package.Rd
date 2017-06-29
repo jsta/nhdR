@@ -2,8 +2,8 @@
 % Please edit documentation in R/nhdR-package.R
 \docType{package}
 \name{nhdR-package}
-\alias{nhdR}
 \alias{nhdR-package}
+\alias{nhdR}
 \title{R interface to the National Hydrography Dataset}
 \description{
 R interface to the National Hydrography Dataset
@@ -11,4 +11,3 @@ R interface to the National Hydrography Dataset
 \author{
 \email{stachel2@msu.edu}
 }
-

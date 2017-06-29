@@ -21,14 +21,19 @@ nhd_plus_query
 \examples{
 \dontrun{
 
-wk <- wikilake::lake_wiki("Webster Lake (New Hampshire)")
+wk <- wikilake::lake_wiki("Gull Lake (Michigan)")
 qry <- nhd_plus_query(wk$Lon, wk$Lat,
-         dsn = c("NHDWaterbody", "NHDFlowLine"), buffer_dist = 0.02)
+         dsn = c("NHDWaterbody", "NHDFlowLine"), buffer_dist = 0.05)
 
 plot(qry$sp$NHDWaterbody$geometry, col = "blue")
 plot(qry$sp$NHDFlowLine$geometry, col = "cyan", add = TRUE)
 plot(qry$pnt, col = "red", pch = 19, add = TRUE)
 axis(1); axis(2)
-}
-}
 
+library(ggplot2)
+st_crs(qry$sp$NHDWaterbody)
+qry$sp$NHDWaterbody <- st_transform(qry$sp$NHDWaterbody,
+                           "+init=epsg:4326")
+ggplot(qry$sp$NHDWaterbody) + geom_sf()
+}
+}
