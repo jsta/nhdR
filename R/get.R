@@ -37,13 +37,14 @@ nhd_get <- function(state = NA){
 #' @importFrom xml2 read_html
 #' @examples \dontrun{
 #' nhd_plus_get(vpu = 4)
+#' nhd_plus_get(vpu = "10L")
 #' nhd_plus_get(vpu = 1, component = "NHDPlusAttributes")
 #'
 #' nhd_plus_get(vpu = "National", component = "V1_To_V2_Crosswalk")
 #' }
 nhd_plus_get <- function(vpu = NA, component = "NHDSnapshot"){
 
-  if(!vpu %in% c("National", 1:22)){
+  if(!vpu %in% c("National", 1:22, "10L", "10U", "03N", "03W", "03S")){
     stop(paste0(vpu, " is not a valid vpu"))
   }
 
