@@ -9,6 +9,7 @@
 #' @export
 #'
 #' @examples \dontrun{
+#' dt <- nhd_load(c("RI"), "NHDWaterbody")
 #' dt <- nhd_load(c("CT", "RI"), "NHDWaterbody")
 #' dt <- nhd_load(c("CT", "RI"), "NHDWaterbody", quiet = TRUE)
 #' dt <- nhd_load("MI", "NHDFlowline")
@@ -49,9 +50,13 @@ nhd_load <- function(state, layer_name, ...){
                             yes_dl = first_state_exists[,"yes_dl"],
                                            quiet = TRUE)))
 
-  yes_dl_vec <- rbind(first_state_exists,
-        do.call("rbind", lapply(state[2:length(state)],
+  if(length(state) > 1){
+    yes_dl_vec <- rbind(first_state_exists,
+          do.call("rbind", lapply(state[2:length(state)],
               nhd_state_exists)))
+  }else{
+    yes_dl_vec <- first_state_exists
+  }
 
   res <- lapply(seq_len(nrow(yes_dl_vec)),
                 function(i) nhd_dl_state(state = state[i],
