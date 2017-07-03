@@ -3,6 +3,8 @@ Title: R tools for working with the National Hydrography Dataset
 Version: 0.2
 Authors@R: person("Joseph", "Stachelek", email = "stachel2@msu.edu", role = c("aut", "cre"))
 Description: R tools for working with the National Hydrography Dataset.
+URL: https://github.com/jsta/nhdR
+BugReports: https://github.com/jsta/nhdR/issues
 Depends:
     R (>= 3.3.2),
     maps

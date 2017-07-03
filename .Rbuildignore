@@ -6,3 +6,6 @@ nhd_downloader
 images
 ^\.travis\.yml$
 ^appveyor\.yml$
+data-raw
+docs
+postgis_vs_shp.R

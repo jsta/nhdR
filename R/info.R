@@ -25,7 +25,8 @@ nhd_info <- function(state, layer_name){
 #' nhd_plus_info(vpu = 1, component = "NHDPlusAttributes", dsn = "PlusFlow")
 #' }
 nhd_plus_info <- function(vpu, component, dsn){
-  candidate_files <- nhd_plus_list(vpu, component = component, full.names = TRUE)
+  candidate_files <- nhd_plus_list(vpu, component = component,
+                                   full.names = TRUE)
   res <- candidate_files[grep(component, candidate_files)]
   res <- res[grep(dsn, res)]
 
@@ -35,6 +36,3 @@ nhd_plus_info <- function(vpu, component, dsn){
     summary(foreign::read.dbf(res))
   }
 }
-
-
-

@@ -51,7 +51,7 @@ get_plus_remotepath <- function(vpu, component = "NHDSnapshot"){
 
   res <- rvest::html_attrs(rvest::html_nodes(xml2::read_html(baseurl), "a"))
   res <- unlist(res[grep(component, res)])
-  res <- res[!(1:length(res) %in% c(grep("FGDB", res), grep(".pdf", res)))][1]
+  res <- res[!(seq_len(length(res)) %in% c(grep("FGDB", res), grep(".pdf", res)))][1]
   res
 }
 

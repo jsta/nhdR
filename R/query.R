@@ -6,14 +6,20 @@
 #' @param buffer_dist numeric buffer in units of coordinate degrees
 #' @examples \dontrun{
 #'
-#' wk <- wikilake::lake_wiki("Webster Lake (New Hampshire)")
+#' wk <- wikilake::lake_wiki("Gull Lake (Michigan)")
 #' qry <- nhd_plus_query(wk$Lon, wk$Lat,
-#'          dsn = c("NHDWaterbody", "NHDFlowLine"), buffer_dist = 0.02)
+#'          dsn = c("NHDWaterbody", "NHDFlowLine"), buffer_dist = 0.05)
 #'
 #' plot(qry$sp$NHDWaterbody$geometry, col = "blue")
 #' plot(qry$sp$NHDFlowLine$geometry, col = "cyan", add = TRUE)
 #' plot(qry$pnt, col = "red", pch = 19, add = TRUE)
 #' axis(1); axis(2)
+#'
+#' library(ggplot2)
+#' st_crs(qry$sp$NHDWaterbody)
+#' qry$sp$NHDWaterbody <- st_transform(qry$sp$NHDWaterbody,
+#'                            "+init=epsg:4326")
+#' ggplot(qry$sp$NHDWaterbody) + geom_sf()
 #' }
 
 nhd_plus_query <- function(lon, lat, dsn, buffer_dist = 0.05){
@@ -25,7 +31,7 @@ nhd_plus_query <- function(lon, lat, dsn, buffer_dist = 0.05){
   vpu <- find_vpu(pnt)
 
   sp <- lapply(dsn, function(x) nhd_plus_load(vpu = vpu, dsn = x))
-  for(i in 1:length(sp)){
+  for(i in seq_len(length(sp))){
     sf::st_crs(sp[[i]]) <- 4269
   }
 
@@ -35,10 +41,12 @@ nhd_plus_query <- function(lon, lat, dsn, buffer_dist = 0.05){
   pnt_buff <- sf::st_transform(pnt_buff,
                 crs = "+proj=utm +zone=10 +datum=WGS84")
 
-  sp_intersecting <- lapply(sp, function(x) unlist(lapply(sf::st_intersects(x, pnt_buff), length)) > 0)
+  sp_intersecting <- lapply(sp,
+                  function(x) unlist(lapply(
+                    sf::st_intersects(x, pnt_buff), length)) > 0)
 
   # check if any(sp_intersecting)
-  sp_sub <- lapply(1:length(sp_intersecting),
+  sp_sub <- lapply(seq_len(length(sp_intersecting)),
                    function(x) sp[[x]][sp_intersecting[[x]],])
   names(sp_sub) <- dsn
 
@@ -73,7 +81,7 @@ nhd_query <- function(lon, lat, dsn, buffer_dist = 0.05){
 
   sp <- lapply(dsn, function(x) nhd_load(state = state_abb, layer_name = x))
 
-  for(i in 1:length(sp)){
+  for(i in seq_len(length(sp))){
     sf::st_crs(sp[[i]]) <- 4269
   }
 
@@ -83,13 +91,14 @@ nhd_query <- function(lon, lat, dsn, buffer_dist = 0.05){
   pnt_buff <- sf::st_transform(pnt_buff,
                                crs = "+proj=utm +zone=10 +datum=WGS84")
 
-  sp_intersecting <- lapply(sp, function(x) unlist(lapply(sf::st_intersects(x, pnt_buff), length)) > 0)
+  sp_intersecting <- lapply(sp,
+                        function(x) unlist(lapply(
+                          sf::st_intersects(x, pnt_buff), length)) > 0)
 
   # check if any(sp_intersecting)
-  sp_sub <- lapply(1:length(sp_intersecting),
+  sp_sub <- lapply(seq_len(length(sp_intersecting)),
                    function(x) sp[[x]][sp_intersecting[[x]],])
   names(sp_sub) <- dsn
 
   list(pnt = pnt, sp = sp_sub)
 }
-

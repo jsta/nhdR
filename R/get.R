@@ -9,11 +9,13 @@
 #' }
 nhd_get <- function(state = NA){
 
-  baseurl <- "ftp://nhdftp.usgs.gov/DataSets/Staged/States/FileGDB/HighResolution/"
+  baseurl <- paste0("ftp://nhdftp.usgs.gov/DataSets/Staged/",
+                    "States/FileGDB/HighResolution/")
 
   nhd_get_state <- function(state){
 
-    if(!state %in% c(as.character(maps::state.fips$abb), "DC", "PR", "VI", "HI")){
+    if(!state %in% c(as.character(maps::state.fips$abb),
+                     "DC", "PR", "VI", "HI")){
       stop(paste0(state, " is not a valid state abbreviation"))
     }
 
