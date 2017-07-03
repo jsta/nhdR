@@ -14,23 +14,52 @@
 #' dt <- nhd_load("MI", "NHDFlowline")
 #' }
 nhd_load <- function(state, layer_name, ...){
-  nhd_load_state <- function(state, ...){
+
+  nhd_state_exists <- function(state){
     if(any(!file.exists(gdb_path(state)))){
+      state_exists <- 0
       userconsents <- utils::menu(c("Yes", "No"),
-           title = paste0(state, " state gdb file not found. Download it?"))
+                        title = paste0(state,
+                        " state gdb file not found. Download it?"))
       if(userconsents == 1){
-        nhd_get(state = state)
+        yes_dl <- 1
       }else{
-        stop("No file. Cannot load.")
+        yes_dl <- 0
       }
+    }else{
+      state_exists <- 1
+      yes_dl <- 0
     }
-      sf::st_zm(sf::st_read(gdb_path(state), layer_name,
-                            stringsAsFactors = FALSE, ...))
+    data.frame(state_exists = state_exists, yes_dl = yes_dl)
   }
 
-  invisible(prj <- sf::st_crs(nhd_load_state(state[1], quiet = TRUE)))
+  nhd_dl_state <- function(state, state_exists, yes_dl, ...){
+      if(as.logical(yes_dl)){
+        nhd_get(state = state)
+      }
+      if(as.logical(state_exists) | as.logical(yes_dl)){
+        sf::st_zm(sf::st_read(gdb_path(state), layer_name,
+                            stringsAsFactors = FALSE, ...))
+      }
+  }
 
-  res <- do.call("rbind", lapply(state, nhd_load_state, ...))
+  first_state_exists <- nhd_state_exists(state[1])
+  invisible(prj <- sf::st_crs(nhd_dl_state(state = state[1],
+                            state_exists = first_state_exists[,"state_exists"],
+                            yes_dl = first_state_exists[,"yes_dl"],
+                                           quiet = TRUE)))
+
+  yes_dl_vec <- rbind(first_state_exists,
+        do.call("rbind", lapply(state[2:length(state)],
+              nhd_state_exists)))
+
+  res <- lapply(seq_len(nrow(yes_dl_vec)),
+                function(i) nhd_dl_state(state = state[i],
+                                yes_dl = yes_dl_vec[i, "yes_dl"],
+                                state_exists = yes_dl_vec[i, "state_exists"],
+                                ...))
+  res <- res[!unlist(lapply(res, is.null))]
+  res <- do.call("rbind", res)
 
   sf::st_crs(res) <- prj
   res
