@@ -6,6 +6,7 @@
 #'
 #' @return spatial object
 #' @importFrom sf st_read
+#' @importFrom gdalUtils ogr2ogr
 #' @export
 #'
 #' @examples \dontrun{
