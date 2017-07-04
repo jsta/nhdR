@@ -13,6 +13,7 @@
 #' dt <- nhd_load(c("CT", "RI"), "NHDWaterbody")
 #' dt <- nhd_load(c("CT", "RI"), "NHDWaterbody", quiet = TRUE)
 #' dt <- nhd_load("MI", "NHDFlowline")
+#' dt <- nhd_load("RI", "NHDReachCrossReference")
 #' }
 nhd_load <- function(state, layer_name, ...){
 
@@ -39,8 +40,14 @@ nhd_load <- function(state, layer_name, ...){
         nhd_get(state = state)
       }
       if(as.logical(state_exists) | as.logical(yes_dl)){
-        sf::st_zm(sf::st_read(gdb_path(state), layer_name,
-                            stringsAsFactors = FALSE, ...))
+        tryCatch({
+          sf::st_zm(sf::st_read(gdb_path(state), layer_name,
+            stringsAsFactors = FALSE, ...))},
+        error = function(e) {
+          temp_dir <- tempdir()
+          gdalUtils::ogr2ogr(gdb_path(state), temp_dir, layer_name)
+          read.dbf(file.path(temp_dir, paste0(layer_name, ".dbf")))
+        })
       }
   }
 
@@ -66,7 +73,9 @@ nhd_load <- function(state, layer_name, ...){
   res <- res[!unlist(lapply(res, is.null))]
   res <- do.call("rbind", res)
 
-  sf::st_crs(res) <- prj
+  if(class(res) != "data.frame"){
+    sf::st_crs(res) <- prj
+  }
   res
 }
 

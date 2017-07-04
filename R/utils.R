@@ -95,3 +95,9 @@ find_state <- function(pnt){
             which(unlist(lapply(res_intersects, length)) > 0)]
   state
 }
+
+handle_dbf <- function(state, layer_name){
+  temp_dir <- tempdir()
+  gdalUtils::ogr2ogr(gdb_path(state), temp_dir, layer_name)
+  read.dbf(file.path(temp_dir, paste0(layer_name, ".dbf")))
+}

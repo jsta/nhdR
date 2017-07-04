@@ -25,5 +25,6 @@ dt <- nhd_load(c("RI"), "NHDWaterbody")
 dt <- nhd_load(c("CT", "RI"), "NHDWaterbody")
 dt <- nhd_load(c("CT", "RI"), "NHDWaterbody", quiet = TRUE)
 dt <- nhd_load("MI", "NHDFlowline")
+dt <- nhd_load("RI", "NHDReachCrossReference")
 }
 }
