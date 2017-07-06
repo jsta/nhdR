@@ -4,12 +4,15 @@
 \alias{nhd_plus_list}
 \title{nhd_plus_list}
 \usage{
-nhd_plus_list(vpu, component = "NHDSnapshot", ...)
+nhd_plus_list(vpu, component = "NHDSnapshot", file_ext = NA, ...)
 }
 \arguments{
 \item{vpu}{numeric vector processing unit}
 
 \item{component}{character component name}
+
+\item{file_ext}{character choice of "shp" for spatial data and
+"dbf" for non-spatial. optional}
 
 \item{...}{arguments passed to list.files. optional.}
 }

@@ -4,7 +4,7 @@
 \alias{nhd_plus_load}
 \title{nhd_plus_load}
 \usage{
-nhd_plus_load(vpu, component = "NHDSnapshot", dsn)
+nhd_plus_load(vpu, component = "NHDSnapshot", dsn, file_ext = NA)
 }
 \arguments{
 \item{vpu}{numeric vector processing unit}
@@ -12,6 +12,9 @@ nhd_plus_load(vpu, component = "NHDSnapshot", dsn)
 \item{component}{character component name}
 
 \item{dsn}{data source name}
+
+\item{file_ext}{character choice of "shp" for spatial data and
+"dbf" for non-spatial. optional}
 }
 \value{
 spatial object
@@ -30,5 +33,6 @@ dt <- nhd_plus_load(4, "NHDSnapshot", "NHDFlowline")
 dt <- nhd_plus_load(1, "NHDPlusAttributes", "PlusFlow")
 dt <- nhd_plus_load("National", "V1_To_V2_Crosswalk",
  "NHDPlusV1Network_V2Network_Crosswalk")
+gridcode  <- nhd_plus_load(1, "NHDPlusCatchment", "featuregridcode")
 }
 }
