@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Using nhdR • nhdR</title>
+<title>Finding upstream-downstream • nhdR</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
@@ -72,8 +72,8 @@
       </header><div class="row">
   <div class="col-md-9">
     <div class="page-header toc-ignore">
-      <h1>Using nhdR</h1>
-                        <h4 class="author">Joseph Stachelek</h4>
+      <h1>Finding upstream-downstream</h1>
+                        <h4 class="author">Vignette Author</h4>
             
             <h4 class="date">2017-07-06</h4>
           </div>
@@ -81,16 +81,28 @@
     
     
 <div class="contents">
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(wikilake)
-<span class="kw">library</span>(nhdR)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gull_meta  &lt;-<span class="st"> </span>wikilake<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/wikilake/topics/lake_wiki">lake_wiki</a></span>(<span class="st">"Gull Lake (Michigan)"</span>)
-gull &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nhd_plus_query.html">nhd_plus_query</a></span>(gull_meta<span class="op">$</span>Lon, gull_meta<span class="op">$</span>Lat,
-              <span class="dt">dsn =</span> <span class="kw">c</span>(<span class="st">"NHDWaterbody"</span>, <span class="st">"NHDFlowLine"</span>), <span class="dt">buffer_dist =</span> <span class="fl">0.05</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(gull<span class="op">$</span>sp<span class="op">$</span>NHDWaterbody<span class="op">$</span>geometry, <span class="dt">col =</span> <span class="st">"blue"</span>, <span class="dt">main =</span> <span class="st">"Gull Lake (Michigan)"</span>)
-<span class="kw">plot</span>(gull<span class="op">$</span>sp<span class="op">$</span>NHDFlowLine<span class="op">$</span>geometry, <span class="dt">col =</span> <span class="st">"cyan"</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)
-<span class="kw">plot</span>(gull<span class="op">$</span>pnt, <span class="dt">col =</span> <span class="st">"red"</span>, <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)
-<span class="kw">axis</span>(<span class="dv">1</span>); <span class="kw">axis</span>(<span class="dv">2</span>)</code></pre></div>
-<p><img src="demo_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(nhdR)</code></pre></div>
+<pre><code>## Loading required package: maps</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flow      &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nhd_plus_load.html">nhd_plus_load</a></span>(<span class="dv">1</span>, <span class="st">"NHDPlusAttributes"</span>, <span class="st">"PlusFlow"</span>)
+lines &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nhd_plus_load.html">nhd_plus_load</a></span>(<span class="dv">1</span>, <span class="st">"NHDSnapshot"</span>, <span class="st">"NHDFlowline"</span>, <span class="dt">file_ext =</span> <span class="st">"dbf"</span>)
+vaa       &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nhd_plus_load.html">nhd_plus_load</a></span>(<span class="dv">1</span>, <span class="st">"NHDPlusAttributes"</span>, <span class="st">"PlusFlowlineVAA"</span>)
+gridcode  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nhd_plus_load.html">nhd_plus_load</a></span>(<span class="dv">1</span>, <span class="st">"NHDPlusCatchment"</span>, <span class="st">"featureidgridcode"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">get_nodes &lt;-<span class="st"> </span><span class="cf">function</span>(flow, vaa, lines){
+  flow &lt;-<span class="st"> </span>flow[, <span class="kw">c</span>(<span class="st">"TOCOMID"</span>, <span class="st">"FROMCOMID"</span>)]
+  
+  <span class="co"># find all connected nodes</span>
+  nodes &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(flow, FROMCOMID <span class="op">!=</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>TOCOMID <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>)
+  
+  <span class="co"># remove coastline nodes</span>
+  nodes &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(nodes, 
+                <span class="op">!</span>(FROMCOMID <span class="op">%in%</span><span class="st"> </span>lines[lines<span class="op">$</span>FCODE <span class="op">==</span><span class="st"> "56600"</span>, <span class="st">"COMID"</span>]) <span class="op">&amp;</span><span class="st"> </span>
+<span class="st">                </span><span class="op">!</span>(TOCOMID <span class="op">%in%</span><span class="st"> </span>lines[lines<span class="op">$</span>FCODE <span class="op">==</span><span class="st"> "56600"</span>, <span class="st">"COMID"</span>]))
+  
+  <span class="co"># join vaa to unique_comids</span>
+  unique_comids &lt;-<span class="st"> </span><span class="kw">unique</span>(<span class="kw">unlist</span>(nodes))
+  
+  
+}</code></pre></div>
 </div>
   </div>
 
