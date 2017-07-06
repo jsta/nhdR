@@ -85,6 +85,8 @@ nhd_load <- function(state, layer_name, ...){
 #' @param vpu numeric vector processing unit
 #' @param component character component name
 #' @param dsn data source name
+#' @param file_ext character choice of "shp" for spatial data and
+#' "dbf" for non-spatial
 #' @return spatial object
 #' @importFrom sf st_read st_zm
 #' @importFrom foreign read.dbf
@@ -101,7 +103,12 @@ nhd_load <- function(state, layer_name, ...){
 #' dt <- nhd_plus_load("National", "V1_To_V2_Crosswalk",
 #'  "NHDPlusV1Network_V2Network_Crosswalk")
 #' }
-nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn){
+nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
+                          file_ext = "shp"){
+
+  if(!(file_ext %in% c("shp", "dbf"))){
+    stop(paste0("file_ext must be set to either 'shp' or 'dbf'"))
+  }
 
   nhd_plus_load_vpu <- function(vpu, component, dsn, ...){
     vpu_path <- file.path(nhd_path(), "NHDPlus",
@@ -118,11 +125,11 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn){
     }
 
     candidate_files <- nhd_plus_list(vpu, component = component,
-                                     full.names = TRUE)
+                                     full.names = TRUE, file_ext = file_ext)
     res <- candidate_files[grep(paste0(tolower(dsn), "\\."),
                                 tolower(candidate_files))]
 
-    if(length(grep("shp$", res)) > 0){
+    if(length(grep(paste0("shp", "$"), res)) > 0){
       res <- sf::st_zm(sf::st_read(res, stringsAsFactors = FALSE, ...))
       is_spatial <- TRUE
       list(res = res, is_spatial = is_spatial)
