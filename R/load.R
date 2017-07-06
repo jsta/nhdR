@@ -86,7 +86,7 @@ nhd_load <- function(state, layer_name, ...){
 #' @param component character component name
 #' @param dsn data source name
 #' @param file_ext character choice of "shp" for spatial data and
-#' "dbf" for non-spatial
+#' "dbf" for non-spatial. optional
 #' @return spatial object
 #' @importFrom sf st_read st_zm
 #' @importFrom foreign read.dbf
@@ -102,11 +102,12 @@ nhd_load <- function(state, layer_name, ...){
 #' dt <- nhd_plus_load(1, "NHDPlusAttributes", "PlusFlow")
 #' dt <- nhd_plus_load("National", "V1_To_V2_Crosswalk",
 #'  "NHDPlusV1Network_V2Network_Crosswalk")
+#' gridcode  <- nhd_plus_load(1, "NHDPlusCatchment", "featuregridcode")
 #' }
 nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
-                          file_ext = "shp"){
+                          file_ext = NA){
 
-  if(!(file_ext %in% c("shp", "dbf"))){
+  if(!(file_ext %in% c(NA, "shp", "dbf"))){
     stop(paste0("file_ext must be set to either 'shp' or 'dbf'"))
   }
 
@@ -128,6 +129,10 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
                                      full.names = TRUE, file_ext = file_ext)
     res <- candidate_files[grep(paste0(tolower(dsn), "\\."),
                                 tolower(candidate_files))]
+    if(length(res) == 0){
+      stop(paste0("layer '", dsn, "' not found in component '",
+                  component, "'"))
+    }
 
     if(length(grep(paste0("shp", "$"), res)) > 0){
       res <- sf::st_zm(sf::st_read(res, stringsAsFactors = FALSE, ...))

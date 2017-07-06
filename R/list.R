@@ -17,7 +17,7 @@ nhd_list <- function(state){
 #' @param vpu numeric vector processing unit
 #' @param component character component name
 #' @param file_ext character choice of "shp" for spatial data and
-#' "dbf" for non-spatial
+#' "dbf" for non-spatial. optional
 #' @param ... arguments passed to list.files. optional.
 #' @importFrom rgdal ogrListLayers
 #'
@@ -29,7 +29,7 @@ nhd_list <- function(state){
 #' nhd_plus_list(vpu = "National", component = "V1_To_V2_Crosswalk")
 #'
 #' }
-nhd_plus_list <- function(vpu, component = "NHDSnapshot", file_ext = "shp", ...){
+nhd_plus_list <- function(vpu, component = "NHDSnapshot", file_ext = NA, ...){
 
   candidate_dirs <- list.dirs(file.path(nhd_path(), "NHDPlus"),
                               full.names = TRUE, recursive = FALSE)
@@ -43,7 +43,7 @@ nhd_plus_list <- function(vpu, component = "NHDSnapshot", file_ext = "shp", ...)
 
   res <- list.files(target_dir, pattern = "dbf|shp", ...)
 
-  if(length(grep(file_ext, res)) == 0){
+  if(length(grep(file_ext, res)) == 0 | is.na(file_ext)){
     res
   }else{
     res[grep(paste0(file_ext, "$"), res)]
