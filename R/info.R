@@ -17,7 +17,8 @@ nhd_info <- function(state, layer_name){
 #' @param vpu numeric vector processing unit
 #' @param component character component name
 #' @param dsn character data source name
-#' @param file_ext
+#' @param file_ext character choice of "shp" for spatial data and
+#' "dbf" for non-spatial. optional
 #' @export
 #' @importFrom rgdal ogrInfo
 #'

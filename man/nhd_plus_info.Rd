@@ -4,7 +4,7 @@
 \alias{nhd_plus_info}
 \title{nhd_plus_info}
 \usage{
-nhd_plus_info(vpu, component, dsn)
+nhd_plus_info(vpu, component, dsn, file_ext = NA)
 }
 \arguments{
 \item{vpu}{numeric vector processing unit}
@@ -12,6 +12,9 @@ nhd_plus_info(vpu, component, dsn)
 \item{component}{character component name}
 
 \item{dsn}{character data source name}
+
+\item{file_ext}{character choice of "shp" for spatial data and
+"dbf" for non-spatial. optional}
 }
 \description{
 nhd_plus_info
