@@ -36,14 +36,32 @@ Unlike the standard NHD, the NHD-Plus exports are organized by vector processing
 ``` r
 # get a vpu export
 nhd_plus_get(vpu = 4, "NHDSnapshot")
+nhd_plus_get(vpu = 4, "NHDPlusAttributes")
+nhd_plus_get(vpu = 4, "NHDPlusCatchment")
 ```
 
 ``` r
 # list layers
 nhd_plus_list(vpu = 4, "NHDSnapshot")
-#> [1] "NHDAreaEventFC.shp"  "NHDArea.shp"         "NHDFlowline.shp"    
-#> [4] "NHDLineEventFC.shp"  "NHDLine.shp"         "NHDPointEventFC.shp"
-#> [7] "NHDPoint.shp"        "NHDWaterbody.shp"
+#>  [1] "NHDArea.dbf"                "NHDAreaEventFC.dbf"        
+#>  [3] "NHDAreaEventFC.shp"         "NHDArea.shp"               
+#>  [5] "NHDFCode.dbf"               "NHDFlowline.dbf"           
+#>  [7] "NHDFlowline.shp"            "NHDFlowline.shp.xml"       
+#>  [9] "NHDLine.dbf"                "NHDLineEventFC.dbf"        
+#> [11] "NHDLineEventFC.shp"         "NHDLine.shp"               
+#> [13] "NHDPoint.dbf"               "NHDPointEventFC.dbf"       
+#> [15] "NHDPointEventFC.shp"        "NHDPoint.shp"              
+#> [17] "NHDReachCode_Comid.dbf"     "NHDReachCrossReference.dbf"
+#> [19] "NHDWaterbody.dbf"           "NHDWaterbody.shp"
+nhd_plus_list(vpu = 4, "NHDPlusAttributes")
+#>  [1] "CumulativeArea.dbf"              "DivFracMP.dbf"                  
+#>  [3] "elevslope.dbf"                   "HeadwaterNodeArea.dbf"          
+#>  [5] "MegaDiv.dbf"                     "PlusARPointEvent.dbf"           
+#>  [7] "PlusFlowAR.dbf"                  "PlusFlow.dbf"                   
+#>  [9] "PlusFlowlineLakeMorphology.dbf"  "PlusFlowlineVAA.dbf"            
+#> [11] "PlusWaterbodyLakeMorphology.dbf"
+nhd_plus_list(vpu = 4, "NHDPlusCatchment")
+#> [1] "Catchment.dbf"         "Catchment.shp"         "featureidgridcode.dbf"
 ```
 
 ``` r
@@ -74,13 +92,17 @@ nhd_plus_info(vpu = 4, "NHDSnapshot", "NHDWaterbody")
 ``` r
 # load layer
 dt <- nhd_plus_load(vpu = 4, "NHDSnapshot", "NHDWaterbody")
-#> Reading layer `NHDWaterbody' from data source `/home/jose/.local/share/nhdR/NHDPlus/GL_04_NHDSnapshot/NHDWaterbody.shp' using driver `ESRI Shapefile'
+#> Warning in if (file.exists(dsn)) dsn = normalizePath(dsn): the condition
+#> has length > 1 and only the first element will be used
+#> Reading layer `NHDWaterbody' from data source `/home/jose/.local/share/nhdR/NHDPlus/GL_04_NHDSnapshot/NHDWaterbody.dbf' using driver `ESRI Shapefile'
 #> Simple feature collection with 31830 features and 12 fields
 #> geometry type:  POLYGON
 #> dimension:      XYZ
 #> bbox:           xmin: -93.24332 ymin: 40.43575 xmax: -73.61814 ymax: 48.11344
 #> epsg (SRID):    4269
 #> proj4string:    +proj=longlat +datum=NAD83 +no_defs
+#> Warning in if (file.exists(dsn)) dsn = normalizePath(dsn): the condition
+#> has length > 1 and only the first element will be used
 ```
 
 ### NHD
@@ -146,6 +168,8 @@ head(nhd_load(state = "DC", layer_name = "NHDWaterbody"))
 #> bbox:           xmin: -78.07095 ymin: 38.52142 xmax: -76.82219 ymax: 39.64683
 #> epsg (SRID):    4269
 #> proj4string:    +proj=longlat +datum=NAD83 +no_defs
+#> Warning in if (class(res) != "data.frame") {: the condition has length > 1
+#> and only the first element will be used
 #> Simple feature collection with 6 features and 12 fields
 #> geometry type:  MULTIPOLYGON
 #> dimension:      XY
@@ -153,12 +177,12 @@ head(nhd_load(state = "DC", layer_name = "NHDWaterbody"))
 #> epsg (SRID):    4269
 #> proj4string:    +proj=longlat +datum=NAD83 +no_defs
 #>   Permanent_Identifier               FDate Resolution GNIS_ID GNIS_Name
-#> 1             51772167 2002-09-15 01:00:00          2    <NA>      <NA>
-#> 2             46565431 2002-08-22 01:00:00          2    <NA>      <NA>
-#> 3             51767181 2002-09-15 01:00:00          2    <NA>      <NA>
-#> 4             51767223 2002-09-15 01:00:00          2    <NA>      <NA>
-#> 5             51767287 2002-09-15 01:00:00          2    <NA>      <NA>
-#> 6             51767709 2002-09-15 01:00:00          2    <NA>      <NA>
+#> 1             51772167 2002-08-15 01:00:00          2    <NA>      <NA>
+#> 2             46565431 2002-07-22 01:00:00          2    <NA>      <NA>
+#> 3             51767181 2002-08-15 01:00:00          2    <NA>      <NA>
+#> 4             51767223 2002-08-15 01:00:00          2    <NA>      <NA>
+#> 5             51767287 2002-08-15 01:00:00          2    <NA>      <NA>
+#> 6             51767709 2002-08-15 01:00:00          2    <NA>      <NA>
 #>   AreaSqKm Elevation      ReachCode FType FCode Shape_Length   Shape_Area
 #> 1    0.005        NA 02070008004787   436 43624 0.0032275838 5.164066e-07
 #> 2    0.000        NA 02070010004605   436 43624 0.0005402029 1.879174e-08

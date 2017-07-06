@@ -76,11 +76,15 @@ ggplot(dt) +
 ```{r eval=FALSE}
 # get a vpu export
 nhd_plus_get(vpu = 4, "NHDSnapshot")
+nhd_plus_get(vpu = 4, "NHDPlusAttributes")
+nhd_plus_get(vpu = 4, "NHDPlusCatchment")
 ```
 
 ```{r }
 # list layers
 nhd_plus_list(vpu = 4, "NHDSnapshot")
+nhd_plus_list(vpu = 4, "NHDPlusAttributes")
+nhd_plus_list(vpu = 4, "NHDPlusCatchment")
 ```
 
 ```{r eval=FALSE}

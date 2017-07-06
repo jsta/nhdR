@@ -24,6 +24,7 @@ nhd_get <- function(state = NA){
     destfile <- file.path(nhd_path(), filename)
 
     get_if_not_exists(url, destfile)
+
     unzip(destfile, exdir = nhd_path())
   }
 
@@ -45,6 +46,12 @@ nhd_get <- function(state = NA){
 #' nhd_plus_get(vpu = "National", component = "V1_To_V2_Crosswalk")
 #' }
 nhd_plus_get <- function(vpu = NA, component = "NHDSnapshot"){
+
+  if(!(component %in% c("NHDSnapshot", "NHDPlusCatchment",
+                        "NHDPlusAttributes", "V1_To_V2_Crosswalk"))){
+    stop(paste0("Component '", component,
+                "' was not found. Is it misspelled?"))
+  }
 
   if(!vpu %in% c("National", 1:22, "10L", "10U", "03N", "03W", "03S",
                  paste0("0", 1:9))){
