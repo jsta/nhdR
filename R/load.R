@@ -135,6 +135,7 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
     }
 
     if(length(grep(paste0("shp", "$"), res)) > 0){
+      res <- res[grep("shp$", res)]
       res <- sf::st_zm(sf::st_read(res, stringsAsFactors = FALSE, ...))
       is_spatial <- TRUE
       list(res = res, is_spatial = is_spatial)
