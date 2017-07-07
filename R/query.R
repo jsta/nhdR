@@ -16,7 +16,6 @@
 #' axis(1); axis(2)
 #'
 #' library(ggplot2)
-#' sf::st_crs(qry$sp$NHDWaterbody)
 #' ggplot(qry$sp$NHDWaterbody) + geom_sf()
 #' }
 
