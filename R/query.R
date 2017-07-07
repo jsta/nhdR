@@ -82,6 +82,7 @@ nhd_query <- function(lon, lat, dsn, buffer_dist = 0.05){
 #'           function(x) nhd_plus_load(vpu = 4, dsn = x))
 #' names(sp) <- c("NHDWaterbody", "NHDFlowLine")
 #' qry <- select_point_overlay(pnt = pnt, sp = sp, buffer_dist = 0.05)
+#'
 #'}
 select_point_overlay <- function(pnt, sp, buffer_dist = 0.05){
 
@@ -91,17 +92,26 @@ select_point_overlay <- function(pnt, sp, buffer_dist = 0.05){
   utm_zone <- long2UTM(sf::st_coordinates(pnt)[1])
   crs <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
 
-  sp       <- lapply(sp, function(x) sf::st_transform(x, crs = crs))
   pnt      <- sf::st_transform(pnt, crs = crs)
   pnt_buff <- sf::st_transform(pnt_buff, crs = crs)
 
-  sp_intersecting <- lapply(sp,
-                            function(x) unlist(lapply(
-                              sf::st_intersects(x, pnt_buff), length)) > 0)
+  if(all(class(sp) == "list")){
+    sp    <- lapply(sp, function(x) sf::st_transform(x, crs = crs))
 
-  # check if any(sp_intersecting)
-  sp_sub <- lapply(seq_len(length(sp_intersecting)),
-                   function(x) sp[[x]][sp_intersecting[[x]],])
-  names(sp_sub) <- names(sp)
+    sp_intersecting <- lapply(sp,
+                              function(x) unlist(lapply(
+                                sf::st_intersects(x, pnt_buff), length)) > 0)
+
+    sp_sub <- lapply(seq_len(length(sp_intersecting)),
+                     function(x) sp[[x]][sp_intersecting[[x]],])
+    names(sp_sub) <- names(sp)
+  }else{
+    sp <- sf::st_transform(sp, crs = crs)
+    sp_intersecting <- unlist(lapply(
+                          sf::st_intersects(sp, pnt_buff), length)) > 0
+
+    sp_sub <- sp[sp_intersecting,]
+  }
+
   sp_sub
 }
