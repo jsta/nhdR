@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples \dontrun{
-#' dt <- nhd_load(c("RI"), "NHDWaterbody")
+#' dt <- nhd_load(c("RI"), c("NHDWaterbody", "NHDFlowline"))
 #' dt <- nhd_load(c("CT", "RI"), "NHDWaterbody")
 #' dt <- nhd_load(c("CT", "RI"), "NHDWaterbody", quiet = TRUE)
 #' dt <- nhd_load("MI", "NHDFlowline")
@@ -74,7 +74,7 @@ nhd_load <- function(state, layer_name, ...){
   res <- res[!unlist(lapply(res, is.null))]
   res <- do.call("rbind", res)
 
-  if(class(res) != "data.frame"){
+  if(!all(class(res) != "data.frame")){
     sf::st_crs(res) <- prj
   }
   res

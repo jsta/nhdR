@@ -31,9 +31,7 @@ plot(qry$pnt, col = "red", pch = 19, add = TRUE)
 axis(1); axis(2)
 
 library(ggplot2)
-st_crs(qry$sp$NHDWaterbody)
-qry$sp$NHDWaterbody <- st_transform(qry$sp$NHDWaterbody,
-                           "+init=epsg:4326")
+sf::st_crs(qry$sp$NHDWaterbody)
 ggplot(qry$sp$NHDWaterbody) + geom_sf()
 }
 }

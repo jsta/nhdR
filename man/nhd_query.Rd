@@ -20,8 +20,8 @@ nhd_query
 }
 \examples{
 \dontrun{
-wk <- wikilake::lake_wiki("Gull Lake (Michigan)")
-qry <- nhd_query(-73.85745, 43.00238, dsn = c("NHDWaterbody", "NHDFlowline"))
+wk <- wikilake::lake_wiki("Worden Pond")
+qry <- nhd_query(wk$Lon, wk$Lat, dsn = c("NHDWaterbody", "NHDFlowline"))
 
 plot(sf::st_geometry(qry$sp$NHDWaterbody), col = "blue")
 plot(sf::st_geometry(qry$sp$NHDFlowline), col = "cyan", add = TRUE)

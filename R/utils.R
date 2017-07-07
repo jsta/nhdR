@@ -68,30 +68,12 @@ find_vpu <- function(pnt){
 }
 
 find_state <- function(pnt){
-  state_data <- ggplot2::map_data("state")
-  state_data_sf <- lapply(unique(state_data$region),
-                    function(x)
-                      list(matrix(unlist(
-                      rbind(
-                        state_data[state_data$region == x,][,c("long", "lat")],
-                        state_data[state_data$region == x,][1, c("long", "lat")])),
-                      ncol = 2)))
-
-  # to only rbind the bad states rather than all:
-  # state_data_sf <- lapply(unique(state_data$region),
-  #                   function(x)
-  #                     list(matrix(unlist(
-  #                     state_data[state_data$region == x,][,c("long", "lat")]),
-  #                     ncol = 2)))
-  #
-  # state_data_sf[c(45, 46, 31, 32, 20, 21)] <- lapply(state_data_sf[c(45, 46, 31, 32, 20, 21)], function(x) list(rbind(x[[1]], x[[1]][1,])))
-
-  res <- sf::st_sfc(lapply(state_data_sf, sf::st_polygon))
-  sf::st_crs(res) <- sf::st_crs(pnt)
+  state_data_sf <- sf::st_as_sf(map("state", plot = FALSE, fill = TRUE))
+  res <- sf::st_transform(state_data_sf, sf::st_crs(pnt))
 
   res_intersects <- sf::st_intersects(res, pnt)
 
-  state <- unique(state_data$region)[
+  state <- res$ID[
             which(unlist(lapply(res_intersects, length)) > 0)]
   state
 }
