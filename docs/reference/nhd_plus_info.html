@@ -68,9 +68,6 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/accumulation.html">Finding upstream-downstream </a>
-    </li>
-    <li>
       <a href="../articles/demo.html">Using nhdR</a>
     </li>
   </ul>
@@ -102,7 +99,7 @@
     <p>nhd_plus_info</p>
     
 
-    <pre class="usage"><span class='fu'>nhd_plus_info</span>(<span class='no'>vpu</span>, <span class='no'>component</span>, <span class='no'>dsn</span>)</pre>
+    <pre class="usage"><span class='fu'>nhd_plus_info</span>(<span class='no'>vpu</span>, <span class='no'>component</span>, <span class='no'>dsn</span>, <span class='kw'>file_ext</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -118,6 +115,11 @@
     <tr>
       <th>dsn</th>
       <td><p>character data source name</p></td>
+    </tr>
+    <tr>
+      <th>file_ext</th>
+      <td><p>character choice of "shp" for spatial data and
+"dbf" for non-spatial. optional</p></td>
     </tr>
     </table>
     

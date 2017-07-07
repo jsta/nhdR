@@ -45,9 +45,6 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/accumulation.html">Finding upstream-downstream </a>
-    </li>
-    <li>
       <a href="articles/demo.html">Using nhdR</a>
     </li>
   </ul>
@@ -151,17 +148,13 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 #&gt; [19] "12 SHAPE_AREA    2     19     Real"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load layer</span>
 dt &lt;-<span class="st"> </span><span class="kw"><a href="reference/nhd_plus_load.html">nhd_plus_load</a></span>(<span class="dt">vpu =</span> <span class="dv">4</span>, <span class="st">"NHDSnapshot"</span>, <span class="st">"NHDWaterbody"</span>)
-<span class="co">#&gt; Warning in if (file.exists(dsn)) dsn = normalizePath(dsn): the condition</span>
-<span class="co">#&gt; has length &gt; 1 and only the first element will be used</span>
-<span class="co">#&gt; Reading layer `NHDWaterbody' from data source `/home/jose/.local/share/nhdR/NHDPlus/GL_04_NHDSnapshot/NHDWaterbody.dbf' using driver `ESRI Shapefile'</span>
+<span class="co">#&gt; Reading layer `NHDWaterbody' from data source `/home/jose/.local/share/nhdR/NHDPlus/GL_04_NHDSnapshot/NHDWaterbody.shp' using driver `ESRI Shapefile'</span>
 <span class="co">#&gt; Simple feature collection with 31830 features and 12 fields</span>
 <span class="co">#&gt; geometry type:  POLYGON</span>
 <span class="co">#&gt; dimension:      XYZ</span>
 <span class="co">#&gt; bbox:           xmin: -93.24332 ymin: 40.43575 xmax: -73.61814 ymax: 48.11344</span>
 <span class="co">#&gt; epsg (SRID):    4269</span>
-<span class="co">#&gt; proj4string:    +proj=longlat +datum=NAD83 +no_defs</span>
-<span class="co">#&gt; Warning in if (file.exists(dsn)) dsn = normalizePath(dsn): the condition</span>
-<span class="co">#&gt; has length &gt; 1 and only the first element will be used</span></code></pre></div>
+<span class="co">#&gt; proj4string:    +proj=longlat +datum=NAD83 +no_defs</span></code></pre></div>
 </div>
 <div id="nhd" class="section level3">
 <h3 class="hasAnchor">
@@ -217,8 +210,6 @@ dt &lt;-<span class="st"> </span><span class="kw"><a href="reference/nhd_plus_lo
 <span class="co">#&gt; bbox:           xmin: -78.07095 ymin: 38.52142 xmax: -76.82219 ymax: 39.64683</span>
 <span class="co">#&gt; epsg (SRID):    4269</span>
 <span class="co">#&gt; proj4string:    +proj=longlat +datum=NAD83 +no_defs</span>
-<span class="co">#&gt; Warning in if (class(res) != "data.frame") {: the condition has length &gt; 1</span>
-<span class="co">#&gt; and only the first element will be used</span>
 <span class="co">#&gt; Simple feature collection with 6 features and 12 fields</span>
 <span class="co">#&gt; geometry type:  MULTIPOLYGON</span>
 <span class="co">#&gt; dimension:      XY</span>

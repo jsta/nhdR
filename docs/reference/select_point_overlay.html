@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • nhdR</title>
+<title>select_point_overlay — select_point_overlay • nhdR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -37,7 +37,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -90,124 +90,54 @@
       </header>
 
       <div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>
-        Reference
-        <small>version&nbsp;0.2</small>
-      </h1>
+    <h1>select_point_overlay</h1>
     </div>
 
-    <div class="contents">
-      <table class="ref-index">
+    
+    <p>select_point_overlay</p>
+    
 
-      <colgroup>
-        <col class="alias" />
-        <col class="title" />
-      </colgroup>
+    <pre class="usage"><span class='fu'>select_point_overlay</span>(<span class='no'>pnt</span>, <span class='no'>sp</span>, <span class='kw'>buffer_dist</span> <span class='kw'>=</span> <span class='fl'>0.05</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>pnt</th>
+      <td><p>geographic point of class sfc</p></td>
+    </tr>
+    <tr>
+      <th>sp</th>
+      <td><p>list of sf data frames</p></td>
+    </tr>
+    <tr>
+      <th>buffer_dist</th>
+      <td><p>numeric buffer in units of coordinate degrees</p></td>
+    </tr>
+    </table>
+    
 
-      <tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p></p>
-          </td>
-          <td><p>List of simple features lake polygons and flowlines within a buffer around Gull Lake Michigan.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nhd_get.html">nhd_get</a></code> </p>
-          </td>
-          <td><p>nhd_get</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nhd_info.html">nhd_info</a></code> </p>
-          </td>
-          <td><p>nhd_info</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nhd_list.html">nhd_list</a></code> </p>
-          </td>
-          <td><p>nhd_list</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nhd_load.html">nhd_load</a></code> </p>
-          </td>
-          <td><p>nhd_load</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nhd_plus_get.html">nhd_plus_get</a></code> </p>
-          </td>
-          <td><p>nhd_plus_get</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nhd_plus_info.html">nhd_plus_info</a></code> </p>
-          </td>
-          <td><p>nhd_plus_info</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nhd_plus_list.html">nhd_plus_list</a></code> </p>
-          </td>
-          <td><p>nhd_plus_list</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nhd_plus_load.html">nhd_plus_load</a></code> </p>
-          </td>
-          <td><p>nhd_plus_load</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nhd_plus_query.html">nhd_plus_query</a></code> </p>
-          </td>
-          <td><p>nhd_plus_query</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nhd_query.html">nhd_query</a></code> </p>
-          </td>
-          <td><p>nhd_query</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p></p>
-          </td>
-          <td><p>R interface to the National Hydrography Dataset</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="select_point_overlay.html">select_point_overlay</a></code> </p>
-          </td>
-          <td><p>select_point_overlay</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p></p>
-          </td>
-          <td><p>Low-res simple features data frame of the NHDPlus vector processing units.</p></td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='no'>wk</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>wikilake</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/wikilake/topics/lake_wiki'>lake_wiki</a></span>(<span class='st'>"Gull Lake (Michigan)"</span>)
+<span class='no'>pnt</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/sf/topics/sfc'>st_sfc</a></span>(<span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/sf/topics/st'>st_point</a></span>(<span class='fu'>c</span>(<span class='no'>wk</span>$<span class='no'>Lon</span>, <span class='no'>wk</span>$<span class='no'>Lat</span>)))
+<span class='no'>sp</span> <span class='kw'>&lt;-</span> <span class='fu'>lapply</span>(<span class='fu'>c</span>(<span class='st'>"NHDWaterbody"</span>, <span class='st'>"NHDFlowLine"</span>),
+          <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='nhd_plus_load.html'>nhd_plus_load</a></span>(<span class='kw'>vpu</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>dsn</span> <span class='kw'>=</span> <span class='no'>x</span>))
+<span class='fu'>names</span>(<span class='no'>sp</span>) <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"NHDWaterbody"</span>, <span class='st'>"NHDFlowLine"</span>)
+<span class='no'>qry</span> <span class='kw'>&lt;-</span> <span class='fu'>select_point_overlay</span>(<span class='kw'>pnt</span> <span class='kw'>=</span> <span class='no'>pnt</span>, <span class='kw'>sp</span> <span class='kw'>=</span> <span class='no'>sp</span>, <span class='kw'>buffer_dist</span> <span class='kw'>=</span> <span class='fl'>0.05</span>)
+
+<span class='co'># }</span></pre>
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+            
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
   </div>
 </div>
 

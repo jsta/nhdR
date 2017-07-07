@@ -68,9 +68,6 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/accumulation.html">Finding upstream-downstream </a>
-    </li>
-    <li>
       <a href="../articles/demo.html">Using nhdR</a>
     </li>
   </ul>
@@ -138,9 +135,6 @@
 <span class='fu'>axis</span>(<span class='fl'>1</span>); <span class='fu'>axis</span>(<span class='fl'>2</span>)
 
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
-<span class='fu'>st_crs</span>(<span class='no'>qry</span>$<span class='no'>sp</span>$<span class='no'>NHDWaterbody</span>)
-<span class='no'>qry</span>$<span class='no'>sp</span>$<span class='no'>NHDWaterbody</span> <span class='kw'>&lt;-</span> <span class='fu'>st_transform</span>(<span class='no'>qry</span>$<span class='no'>sp</span>$<span class='no'>NHDWaterbody</span>,
-                           <span class='st'>"+init=epsg:4326"</span>)
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>qry</span>$<span class='no'>sp</span>$<span class='no'>NHDWaterbody</span>) + <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggsf'>geom_sf</a></span>()
 <span class='co'># }</span></pre>
   </div>

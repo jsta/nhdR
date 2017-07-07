@@ -92,17 +92,13 @@ nhd_plus_info(vpu = 4, "NHDSnapshot", "NHDWaterbody")
 ``` r
 # load layer
 dt <- nhd_plus_load(vpu = 4, "NHDSnapshot", "NHDWaterbody")
-#> Warning in if (file.exists(dsn)) dsn = normalizePath(dsn): the condition
-#> has length > 1 and only the first element will be used
-#> Reading layer `NHDWaterbody' from data source `/home/jose/.local/share/nhdR/NHDPlus/GL_04_NHDSnapshot/NHDWaterbody.dbf' using driver `ESRI Shapefile'
+#> Reading layer `NHDWaterbody' from data source `/home/jose/.local/share/nhdR/NHDPlus/GL_04_NHDSnapshot/NHDWaterbody.shp' using driver `ESRI Shapefile'
 #> Simple feature collection with 31830 features and 12 fields
 #> geometry type:  POLYGON
 #> dimension:      XYZ
 #> bbox:           xmin: -93.24332 ymin: 40.43575 xmax: -73.61814 ymax: 48.11344
 #> epsg (SRID):    4269
 #> proj4string:    +proj=longlat +datum=NAD83 +no_defs
-#> Warning in if (file.exists(dsn)) dsn = normalizePath(dsn): the condition
-#> has length > 1 and only the first element will be used
 ```
 
 ### NHD
@@ -168,8 +164,6 @@ head(nhd_load(state = "DC", layer_name = "NHDWaterbody"))
 #> bbox:           xmin: -78.07095 ymin: 38.52142 xmax: -76.82219 ymax: 39.64683
 #> epsg (SRID):    4269
 #> proj4string:    +proj=longlat +datum=NAD83 +no_defs
-#> Warning in if (class(res) != "data.frame") {: the condition has length > 1
-#> and only the first element will be used
 #> Simple feature collection with 6 features and 12 fields
 #> geometry type:  MULTIPOLYGON
 #> dimension:      XY

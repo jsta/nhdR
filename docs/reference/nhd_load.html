@@ -68,9 +68,6 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/accumulation.html">Finding upstream-downstream </a>
-    </li>
-    <li>
       <a href="../articles/demo.html">Using nhdR</a>
     </li>
   </ul>
@@ -128,7 +125,7 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fu'>nhd_load</span>(<span class='fu'>c</span>(<span class='st'>"RI"</span>), <span class='st'>"NHDWaterbody"</span>)
+<span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fu'>nhd_load</span>(<span class='fu'>c</span>(<span class='st'>"RI"</span>), <span class='fu'>c</span>(<span class='st'>"NHDWaterbody"</span>, <span class='st'>"NHDFlowline"</span>))
 <span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fu'>nhd_load</span>(<span class='fu'>c</span>(<span class='st'>"CT"</span>, <span class='st'>"RI"</span>), <span class='st'>"NHDWaterbody"</span>)
 <span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fu'>nhd_load</span>(<span class='fu'>c</span>(<span class='st'>"CT"</span>, <span class='st'>"RI"</span>), <span class='st'>"NHDWaterbody"</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fu'>nhd_load</span>(<span class='st'>"MI"</span>, <span class='st'>"NHDFlowline"</span>)
