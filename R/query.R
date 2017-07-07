@@ -31,15 +31,13 @@ nhd_plus_query <- function(lon, lat, dsn, buffer_dist = 0.05){
   vpu <- find_vpu(pnt)
 
   sp <- lapply(dsn, function(x) nhd_plus_load(vpu = vpu, dsn = x))
-  for(i in seq_len(length(sp))){
-    sf::st_crs(sp[[i]]) <- 4269
-  }
 
-  sp       <- lapply(sp, function(x) sf::st_transform(x,
-                crs = "+proj=utm +zone=10 +datum=WGS84"))
-  pnt      <- sf::st_transform(pnt, crs = "+proj=utm +zone=10 +datum=WGS84")
-  pnt_buff <- sf::st_transform(pnt_buff,
-                crs = "+proj=utm +zone=10 +datum=WGS84")
+  utm_zone <- long2UTM(lon)
+  crs <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
+
+  sp       <- lapply(sp, function(x) sf::st_transform(x, crs = crs))
+  pnt      <- sf::st_transform(pnt, crs = crs)
+  pnt_buff <- sf::st_transform(pnt_buff, crs = crs)
 
   sp_intersecting <- lapply(sp,
                   function(x) unlist(lapply(

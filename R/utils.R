@@ -101,3 +101,8 @@ handle_dbf <- function(state, layer_name){
   gdalUtils::ogr2ogr(gdb_path(state), temp_dir, layer_name)
   read.dbf(file.path(temp_dir, paste0(layer_name, ".dbf")))
 }
+
+# https://stackoverflow.com/a/9188972/3362993
+long2UTM <- function(long) {
+  (floor((long + 180)/6) %% 60) + 1
+}
