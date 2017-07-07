@@ -71,7 +71,7 @@ nhd_query <- function(lon, lat, dsn, buffer_dist = 0.05){
 }
 
 #' select_point_overlay
-#' @param pnt
+#' @param pnt geographic point of class sfc
 #' @param sp list of sf data frames
 #' @param buffer_dist numeric buffer in units of coordinate degrees
 #' @export
