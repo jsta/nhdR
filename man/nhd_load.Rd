@@ -4,12 +4,15 @@
 \alias{nhd_load}
 \title{nhd_load}
 \usage{
-nhd_load(state, layer_name, ...)
+nhd_load(state, layer_name, file_ext = NA, ...)
 }
 \arguments{
 \item{state}{character state abbreviation}
 
 \item{layer_name}{character name of a NHD layer}
+
+\item{file_ext}{character choice of "shp" for spatial data and
+"dbf" for non-spatial. optional}
 
 \item{...}{arguments passed to sf::st_read}
 }
@@ -21,10 +24,11 @@ nhd_load
 }
 \examples{
 \dontrun{
-dt <- nhd_load(c("RI"), c("NHDWaterbody", "NHDFlowline"))
+dt <- nhd_load(c("RI"), c("NHDWaterbody"))
 dt <- nhd_load(c("CT", "RI"), "NHDWaterbody")
 dt <- nhd_load(c("CT", "RI"), "NHDWaterbody", quiet = TRUE)
 dt <- nhd_load("MI", "NHDFlowline")
 dt <- nhd_load("RI", "NHDReachCrossReference")
+dt <- nhd_load("RI", "NHDWaterbody", file_ext = "dbf")
 }
 }

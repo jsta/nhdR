@@ -2,6 +2,8 @@
 #'
 #' @param state character state abbreviation
 #' @param layer_name character name of a NHD layer
+#' @param file_ext character choice of "shp" for spatial data and
+#' "dbf" for non-spatial. optional
 #' @param ... arguments passed to sf::st_read
 #'
 #' @return spatial object
@@ -10,13 +12,18 @@
 #' @export
 #'
 #' @examples \dontrun{
-#' dt <- nhd_load(c("RI"), c("NHDWaterbody", "NHDFlowline"))
+#' dt <- nhd_load(c("RI"), c("NHDWaterbody"))
 #' dt <- nhd_load(c("CT", "RI"), "NHDWaterbody")
 #' dt <- nhd_load(c("CT", "RI"), "NHDWaterbody", quiet = TRUE)
 #' dt <- nhd_load("MI", "NHDFlowline")
 #' dt <- nhd_load("RI", "NHDReachCrossReference")
+#' dt <- nhd_load("RI", "NHDWaterbody", file_ext = "dbf")
 #' }
-nhd_load <- function(state, layer_name, ...){
+nhd_load <- function(state, layer_name, file_ext = NA, ...){
+
+  if(!(file_ext %in% c(NA, "shp", "dbf"))){
+    stop(paste0("file_ext must be set to either 'shp' or 'dbf'"))
+  }
 
   nhd_state_exists <- function(state){
     if(any(!file.exists(gdb_path(state)))){
@@ -36,27 +43,31 @@ nhd_load <- function(state, layer_name, ...){
     data.frame(state_exists = state_exists, yes_dl = yes_dl)
   }
 
-  nhd_dl_state <- function(state, state_exists, yes_dl, ...){
+  nhd_dl_state <- function(state, state_exists, yes_dl, file_ext, ...){
+
       if(as.logical(yes_dl)){
         nhd_get(state = state)
       }
       if(as.logical(state_exists) | as.logical(yes_dl)){
-        tryCatch({
-          sf::st_zm(sf::st_read(gdb_path(state), layer_name,
-            stringsAsFactors = FALSE, ...))},
-        error = function(e) {
+
+        if(is.na(file_ext) | file_ext == "shp"){
+          tryCatch({
+            sf::st_zm(sf::st_read(gdb_path(state), layer_name,
+              stringsAsFactors = FALSE, ...))},
+          error = function(e) {
+            temp_dir <- tempdir()
+            gdalUtils::ogr2ogr(gdb_path(state), temp_dir, layer_name)
+            read.dbf(file.path(temp_dir, paste0(layer_name, ".dbf")))
+          })
+        }else{
           temp_dir <- tempdir()
           gdalUtils::ogr2ogr(gdb_path(state), temp_dir, layer_name)
           read.dbf(file.path(temp_dir, paste0(layer_name, ".dbf")))
-        })
+        }
       }
   }
 
   first_state_exists <- nhd_state_exists(state[1])
-  invisible(prj <- sf::st_crs(nhd_dl_state(state = state[1],
-                            state_exists = first_state_exists[,"state_exists"],
-                            yes_dl = first_state_exists[,"yes_dl"],
-                                           quiet = TRUE)))
 
   if(length(state) > 1){
     yes_dl_vec <- rbind(first_state_exists,
@@ -70,11 +81,16 @@ nhd_load <- function(state, layer_name, ...){
                 function(i) nhd_dl_state(state = state[i],
                                 yes_dl = yes_dl_vec[i, "yes_dl"],
                                 state_exists = yes_dl_vec[i, "state_exists"],
+                                file_ext = file_ext,
                                 ...))
   res <- res[!unlist(lapply(res, is.null))]
   res <- do.call("rbind", res)
 
-  if(!all(class(res) != "data.frame")){
+  if(!all(class(res) != "data.frame") & any(class(res) == "sf")){
+    invisible(prj <- sf::st_crs(nhd_dl_state(state = state[1],
+                        state_exists = first_state_exists[,"state_exists"],
+                        yes_dl = first_state_exists[,"yes_dl"],
+                        quiet = TRUE, file_ext = NA)))
     sf::st_crs(res) <- prj
   }
   res
