@@ -77,16 +77,18 @@ nhd_query <- function(lon, lat, dsn, buffer_dist = 0.05){
 #' @examples \dontrun{
 #' wk <- wikilake::lake_wiki("Gull Lake (Michigan)")
 #' pnt <- sf::st_sfc(sf::st_point(c(wk$Lon, wk$Lat)))
+#' sf::st_crs(pnt) <- 4326
 #' sp <- lapply(c("NHDWaterbody", "NHDFlowLine"),
 #'           function(x) nhd_plus_load(vpu = 4, dsn = x))
 #' names(sp) <- c("NHDWaterbody", "NHDFlowLine")
 #' qry <- select_point_overlay(pnt = pnt, sp = sp, buffer_dist = 0.05)
+#' plot(qry$NHDWaterbody$geometry)
 #'
 #'}
 select_point_overlay <- function(pnt, sp, buffer_dist = 0.05){
 
   pnt_buff  <- sf::st_sfc(sf::st_buffer(pnt, dist = buffer_dist))
-  sf::st_crs(pnt_buff) <- sf::st_crs(pnt) <- sf::st_crs(nhdR::vpu_shp)
+  sf::st_crs(pnt_buff) <- sf::st_crs(pnt) # <- sf::st_crs(nhdR::vpu_shp)
 
   utm_zone <- long2UTM(sf::st_coordinates(pnt)[1])
   crs <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
