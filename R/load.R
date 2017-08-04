@@ -9,6 +9,8 @@
 #' @return spatial object
 #' @importFrom sf st_read
 #' @importFrom gdalUtils ogr2ogr
+#' @importFrom rlang quo
+#' @importFrom dplyr tbl select src_sqlite
 #' @export
 #'
 #' @examples \dontrun{
@@ -21,7 +23,7 @@
 #' }
 nhd_load <- function(state, layer_name, file_ext = NA, ...){
 
-  if(!(file_ext %in% c(NA, "shp", "dbf"))){
+  if(!(file_ext %in% c(NA, "shp", "dbf", "gpkg"))){
     stop(paste0("file_ext must be set to either 'shp' or 'dbf'"))
   }
 
@@ -60,9 +62,22 @@ nhd_load <- function(state, layer_name, file_ext = NA, ...){
             read.dbf(file.path(temp_dir, paste0(layer_name, ".dbf")))
           })
         }else{
-          temp_dir <- tempdir()
-          gdalUtils::ogr2ogr(gdb_path(state), temp_dir, layer_name)
-          read.dbf(file.path(temp_dir, paste0(layer_name, ".dbf")))
+          if(file_ext == "gpkg"){
+            if(!is_gpkg_installed()){
+              stop("The geopackage driver is not installed.")
+            }
+            gpkg_path <- gsub(".gdb", ".gpkg", gdb_path(state))
+            if(!file.exists(gpkg_path)){
+              compile_gpkg(state)
+            }
+            res <- dplyr::tbl(dplyr::src_sqlite(gpkg_path), layer_name)
+            geom <- rlang::quo("geom")
+            data.frame(dplyr::select(res, -geom))
+          }else{
+            temp_dir <- tempdir()
+            gdalUtils::ogr2ogr(gdb_path(state), temp_dir, layer_name)
+            read.dbf(file.path(temp_dir, paste0(layer_name, ".dbf")))
+          }
         }
       }
   }

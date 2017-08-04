@@ -4,6 +4,7 @@
 #' @docType package
 #' @importFrom httr GET write_disk progress
 #' @importFrom ggplot2 map_data
+#' @importFrom sf st_drivers
 #' @title R interface to the National Hydrography Dataset
 #' @author \email{stachel2@msu.edu}
 NULL

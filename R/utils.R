@@ -88,3 +88,15 @@ handle_dbf <- function(state, layer_name){
 long2UTM <- function(long) {
   (floor((long + 180)/6) %% 60) + 1
 }
+
+compile_gpkg <- function(state){
+  gdalUtils::ogr2ogr(
+    src_datasource_name = gdb_path(state),
+    dst_datasource_name = gsub(".gdb", ".gpkg", gdb_path(state)),
+    f = "GPKG")
+}
+
+is_gpkg_installed <- function(){
+  name <- rlang::quo("name")
+  all(as.logical(dplyr::filter(sf::st_drivers(), name == "GPKG")[3:6]))
+}
