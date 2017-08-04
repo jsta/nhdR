@@ -30,5 +30,6 @@ dt <- nhd_load(c("CT", "RI"), "NHDWaterbody", quiet = TRUE)
 dt <- nhd_load("MI", "NHDFlowline")
 dt <- nhd_load("RI", "NHDReachCrossReference")
 dt <- nhd_load("RI", "NHDWaterbody", file_ext = "dbf")
+dt <- nhd_load(c("RI", "DC"), "NHDWaterbody", file_ext = "gpkg")
 }
 }
