@@ -3,7 +3,7 @@
 #' @param state character state abbreviation
 #' @param layer_name character name of a NHD layer
 #' @param file_ext character choice of "shp" for spatial data and
-#' "dbf" for non-spatial. optional
+#' "dbf" or "gpkg" for non-spatial. optional
 #' @param ... arguments passed to sf::st_read
 #'
 #' @return spatial object
