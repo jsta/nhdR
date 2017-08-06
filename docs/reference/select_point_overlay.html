@@ -123,10 +123,12 @@
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='no'>wk</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>wikilake</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/wikilake/topics/lake_wiki'>lake_wiki</a></span>(<span class='st'>"Gull Lake (Michigan)"</span>)
 <span class='no'>pnt</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/sf/topics/sfc'>st_sfc</a></span>(<span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/sf/topics/st'>st_point</a></span>(<span class='fu'>c</span>(<span class='no'>wk</span>$<span class='no'>Lon</span>, <span class='no'>wk</span>$<span class='no'>Lat</span>)))
+<span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/sf/topics/st_crs'>st_crs</a></span>(<span class='no'>pnt</span>) <span class='kw'>&lt;-</span> <span class='fl'>4326</span>
 <span class='no'>sp</span> <span class='kw'>&lt;-</span> <span class='fu'>lapply</span>(<span class='fu'>c</span>(<span class='st'>"NHDWaterbody"</span>, <span class='st'>"NHDFlowLine"</span>),
           <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='nhd_plus_load.html'>nhd_plus_load</a></span>(<span class='kw'>vpu</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>dsn</span> <span class='kw'>=</span> <span class='no'>x</span>))
 <span class='fu'>names</span>(<span class='no'>sp</span>) <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"NHDWaterbody"</span>, <span class='st'>"NHDFlowLine"</span>)
 <span class='no'>qry</span> <span class='kw'>&lt;-</span> <span class='fu'>select_point_overlay</span>(<span class='kw'>pnt</span> <span class='kw'>=</span> <span class='no'>pnt</span>, <span class='kw'>sp</span> <span class='kw'>=</span> <span class='no'>sp</span>, <span class='kw'>buffer_dist</span> <span class='kw'>=</span> <span class='fl'>0.05</span>)
+<span class='fu'>plot</span>(<span class='no'>qry</span>$<span class='no'>NHDWaterbody</span>$<span class='no'>geometry</span>)
 
 <span class='co'># }</span></pre>
   </div>

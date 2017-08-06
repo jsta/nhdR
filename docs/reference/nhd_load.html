@@ -99,7 +99,7 @@
     <p>nhd_load</p>
     
 
-    <pre class="usage"><span class='fu'>nhd_load</span>(<span class='no'>state</span>, <span class='no'>layer_name</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>nhd_load</span>(<span class='no'>state</span>, <span class='no'>layer_name</span>, <span class='kw'>file_ext</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -111,6 +111,11 @@
     <tr>
       <th>layer_name</th>
       <td><p>character name of a NHD layer</p></td>
+    </tr>
+    <tr>
+      <th>file_ext</th>
+      <td><p>character choice of "shp" for spatial data and
+"dbf" or "gpkg" for non-spatial. optional</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -125,11 +130,13 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fu'>nhd_load</span>(<span class='fu'>c</span>(<span class='st'>"RI"</span>), <span class='fu'>c</span>(<span class='st'>"NHDWaterbody"</span>, <span class='st'>"NHDFlowline"</span>))
+<span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fu'>nhd_load</span>(<span class='fu'>c</span>(<span class='st'>"RI"</span>), <span class='fu'>c</span>(<span class='st'>"NHDWaterbody"</span>))
 <span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fu'>nhd_load</span>(<span class='fu'>c</span>(<span class='st'>"CT"</span>, <span class='st'>"RI"</span>), <span class='st'>"NHDWaterbody"</span>)
 <span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fu'>nhd_load</span>(<span class='fu'>c</span>(<span class='st'>"CT"</span>, <span class='st'>"RI"</span>), <span class='st'>"NHDWaterbody"</span>, <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fu'>nhd_load</span>(<span class='st'>"MI"</span>, <span class='st'>"NHDFlowline"</span>)
 <span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fu'>nhd_load</span>(<span class='st'>"RI"</span>, <span class='st'>"NHDReachCrossReference"</span>)
+<span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fu'>nhd_load</span>(<span class='st'>"RI"</span>, <span class='st'>"NHDWaterbody"</span>, <span class='kw'>file_ext</span> <span class='kw'>=</span> <span class='st'>"dbf"</span>)
+<span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fu'>nhd_load</span>(<span class='fu'>c</span>(<span class='st'>"RI"</span>, <span class='st'>"DC"</span>), <span class='st'>"NHDWaterbody"</span>, <span class='kw'>file_ext</span> <span class='kw'>=</span> <span class='st'>"gpkg"</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
