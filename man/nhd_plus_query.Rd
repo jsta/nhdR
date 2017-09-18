@@ -22,6 +22,11 @@ nhd_plus_query
 \dontrun{
 
 wk <- wikilake::lake_wiki("Gull Lake (Michigan)")
+
+pnt <- st_as_sf(wk, coords = c("Lon", "Lat"), crs = 4326)
+pnt <- st_transform(pnt, st_crs(vpu_shp))
+nhd_plus_list(nhdR::find_vpu(pnt))
+
 qry <- nhd_plus_query(wk$Lon, wk$Lat,
          dsn = c("NHDWaterbody", "NHDFlowLine"), buffer_dist = 0.05)
 
