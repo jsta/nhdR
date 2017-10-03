@@ -22,21 +22,50 @@
 #'
 #' library(ggplot2)
 #' ggplot(qry$sp$NHDWaterbody) + geom_sf()
+#'
+#' bbox <- data.frame(xmin = -73.34628, ymin = 41.32372,
+#'                   xmax = -73.13639, ymax = 41.66932 )
+#' b0 <- st_sfc(st_polygon(list(rbind(c(bbox$xmin, bbox$ymin),
+#'            c(bbox$xmax, bbox$ymin),
+#'            c(bbox$xmax, bbox$ymax),
+#'            c(bbox$xmin, bbox$ymax),
+#'            c(bbox$xmin, bbox$ymin)))))
+#' st_crs(b0) <- 4326
+#' nhd_plus_query(poly = b0, dsn = "NHDFlowLine")
 #' }
 
-nhd_plus_query <- function(lon, lat, dsn, buffer_dist = 0.05){
+nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
+                           dsn, buffer_dist = 0.05){
 
-  pnt <- sf::st_sfc(sf::st_point(c(lon, lat)))
-  sf::st_crs(pnt) <- sf::st_crs(nhdR::vpu_shp)
-  vpu <- find_vpu(pnt)
+  if(all(!is.na(c(lon, lat, poly)))){
+    stop("Must specify either lon and lat or poly but not both.")
+  }
 
-  sp <- lapply(dsn, function(x) nhd_plus_load(vpu = vpu, dsn = x))
-  names(sp) <- dsn
+  if(all(!is.na(c(lon, lat)))){
+    pnt <- sf::st_sfc(sf::st_point(c(lon, lat)))
+    sf::st_crs(pnt) <- sf::st_crs(nhdR::vpu_shp)
+    vpu <- find_vpu(pnt)
 
-  sp_sub <- select_point_overlay(pnt = pnt, sp = sp, buffer_dist = buffer_dist)
+    sp <- lapply(dsn, function(x) nhd_plus_load(vpu = vpu, dsn = x))
+    names(sp) <- dsn
 
-  pnt <- sf::st_transform(pnt, sf::st_crs(sp_sub[[1]]))
-  list(pnt = pnt, sp = sp_sub)
+    sp_sub <- select_point_overlay(pnt = pnt, sp = sp,
+                                   buffer_dist = buffer_dist)
+
+    pnt <- sf::st_transform(pnt, sf::st_crs(sp_sub[[1]]))
+    list(pnt = pnt, sp = sp_sub)
+  }else{
+
+    poly <- st_transform(poly, sf::st_crs(nhdR::vpu_shp))
+    vpu <- find_vpu(poly)
+
+    sp <- lapply(dsn, function(x) nhd_plus_load(vpu = vpu, dsn = x))
+    names(sp) <- dsn
+
+    sp_sub <- select_poly_overlay(poly = poly, sp = sp)
+
+    list(sp = sp_sub)
+  }
 }
 
 #' nhd_query
@@ -115,6 +144,40 @@ select_point_overlay <- function(pnt, sp, buffer_dist = 0.05){
     sp <- sf::st_transform(sp, crs = crs)
     sp_intersecting <- unlist(lapply(
                           sf::st_intersects(sp, pnt_buff), length)) > 0
+
+    sp_sub <- sp[sp_intersecting,]
+  }
+
+  sp_sub
+}
+
+#' select_poly_overlay
+#'
+#' @param poly sf *polygon object
+#' @param sp list of sf data frames
+#'
+#' @export
+#'
+select_poly_overlay <- function(poly, sp, crs = NA){
+  if(is.na(crs)){
+    crs <- st_crs(poly)
+  }
+  utm_zone <- long2UTM(sf::st_coordinates(poly)[1])
+
+  if(all(class(sp) == "list")){
+    sp    <- lapply(sp, function(x) sf::st_transform(x, crs = crs))
+
+    sp_intersecting <- lapply(sp,
+                              function(x) unlist(lapply(
+                                sf::st_intersects(x, poly), length)) > 0)
+
+    sp_sub <- lapply(seq_len(length(sp_intersecting)),
+                     function(x) sp[[x]][sp_intersecting[[x]],])
+    names(sp_sub) <- names(sp)
+  }else{
+    sp <- sf::st_transform(sp, crs = crs)
+    sp_intersecting <- unlist(lapply(
+      sf::st_intersects(sp, poly), length)) > 0
 
     sp_sub <- sp[sp_intersecting,]
   }

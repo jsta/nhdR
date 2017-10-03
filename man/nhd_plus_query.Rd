@@ -4,7 +4,7 @@
 \alias{nhd_plus_query}
 \title{nhd_plus_query}
 \usage{
-nhd_plus_query(lon, lat, dsn, buffer_dist = 0.05)
+nhd_plus_query(lon, lat, poly, dsn, buffer_dist = 0.05)
 }
 \arguments{
 \item{lon}{numeric longitude}
