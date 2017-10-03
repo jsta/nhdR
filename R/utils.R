@@ -59,11 +59,18 @@ is_spatial <- function(filename){
   length(grep("shp$", filename)) > 0
 }
 
+#' Find VPU
+#'
+#' Find Vector Processing Unit from sf object
+#'
+#' @param pnt sf object
+#'
 #' @importFrom sf st_transform st_intersects
-#' @importFrom dplyr filter
+#' @export
+#'
 find_vpu <- function(pnt){
   pnt <- sf::st_transform(pnt, sf::st_crs(nhdR::vpu_shp))
-  vpu <- dplyr::filter(nhdR::vpu_shp, UnitType == "VPU")
+  vpu <- nhdR::vpu_shp[nhdR::vpu_shp$UnitType == "VPU",]
   vpu_intersects <- sf::st_intersects(vpu, pnt)
   vpu <- vpu[which(sapply(vpu_intersects,
                           function(x) length(x > 0)) == 1),]

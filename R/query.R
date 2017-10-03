@@ -1,7 +1,8 @@
 #' nhd_plus_query
 #' @export
-#' @param lon numeric longitude
-#' @param lat numeric latitude
+#' @param lon numeric longitude. optional
+#' @param lat numeric latitude. optional
+#' @param poly sfc polygon. optional
 #' @param dsn character data source
 #' @param buffer_dist numeric buffer in units of coordinate degrees
 #' @examples \dontrun{
@@ -156,11 +157,12 @@ select_point_overlay <- function(pnt, sp, buffer_dist = 0.05){
 #' @param poly sf *polygon object
 #' @param sp list of sf data frames
 #'
+#' @importFrom sf st_crs st_coordinates st_transform st_intersects
 #' @export
 #'
-select_poly_overlay <- function(poly, sp, crs = NA){
+select_poly_overlay <- function(poly, sp){
   if(is.na(crs)){
-    crs <- st_crs(poly)
+    crs <- sf::st_crs(poly)
   }
   utm_zone <- long2UTM(sf::st_coordinates(poly)[1])
 

@@ -7,9 +7,11 @@
 nhd_plus_query(lon = NA, lat = NA, poly = NA, dsn, buffer_dist = 0.05)
 }
 \arguments{
-\item{lon}{numeric longitude}
+\item{lon}{numeric longitude. optional}
 
-\item{lat}{numeric latitude}
+\item{lat}{numeric latitude. optional}
+
+\item{poly}{sfc polygon. optional}
 
 \item{dsn}{character data source}
 
