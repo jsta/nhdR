@@ -104,7 +104,10 @@ nhd_query <- function(lon, lat, dsn, buffer_dist = 0.05){
   list(pnt = pnt, sp = sp_sub)
 }
 
-#' select_point_overlay
+#' Select intersect based on a point buffer
+#'
+#' Select intersecting layer based on a point buffer
+#'
 #' @param pnt geographic point of class sfc
 #' @param sp list of sf data frames
 #' @param buffer_dist numeric buffer in units of coordinate degrees
@@ -152,7 +155,9 @@ select_point_overlay <- function(pnt, sp, buffer_dist = 0.05){
   sp_sub
 }
 
-#' select_poly_overlay
+#' Select intersect based on a polygonr
+#'
+#' Select intersecting layer based on a polygon extent
 #'
 #' @param poly sf *polygon object
 #' @param sp list of sf data frames
@@ -161,10 +166,11 @@ select_point_overlay <- function(pnt, sp, buffer_dist = 0.05){
 #' @export
 #'
 select_poly_overlay <- function(poly, sp){
-  if(is.na(crs)){
-    crs <- sf::st_crs(poly)
-  }
+
   utm_zone <- long2UTM(sf::st_coordinates(poly)[1])
+  crs <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
+
+  poly      <- sf::st_transform(poly, crs = crs)
 
   if(all(class(sp) == "list")){
     sp    <- lapply(sp, function(x) sf::st_transform(x, crs = crs))

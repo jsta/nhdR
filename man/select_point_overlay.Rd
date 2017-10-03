@@ -2,7 +2,7 @@
 % Please edit documentation in R/query.R
 \name{select_point_overlay}
 \alias{select_point_overlay}
-\title{select_point_overlay}
+\title{Select intersect based on a point buffer}
 \usage{
 select_point_overlay(pnt, sp, buffer_dist = 0.05)
 }
@@ -14,7 +14,7 @@ select_point_overlay(pnt, sp, buffer_dist = 0.05)
 \item{buffer_dist}{numeric buffer in units of coordinate degrees}
 }
 \description{
-select_point_overlay
+Select intersecting layer based on a point buffer
 }
 \examples{
 \dontrun{
