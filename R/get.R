@@ -58,7 +58,7 @@ nhd_plus_get <- function(vpu = NA, component = "NHDSnapshot"){
   }
 
   if(!vpu %in% c("National", 1:22, "10L", "10U", "03N", "03W", "03S",
-                 paste0("0", 1:9))){
+                 paste0("0", 1:9), as.character(vpu_shp$UnitID))){
     stop(paste0(vpu, " is not a valid vpu"))
   }
 

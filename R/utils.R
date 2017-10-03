@@ -60,11 +60,12 @@ is_spatial <- function(filename){
 }
 
 find_vpu <- function(pnt){
-  vpu <- sf::st_covers(nhdR::vpu_shp$geometry, pnt)
-  vpu <- nhdR::vpu_shp[which(vpu == 1),]
-  vpu <- suppressWarnings(as.numeric(as.character(vpu$UnitID)))
-  vpu <- vpu[!is.na(vpu)]
-  vpu
+  pnt <- st_transform(pnt, st_crs(nhdR::vpu_shp))
+  vpu <- filter(nhdR::vpu_shp, UnitType == "VPU")
+  vpu_intersects <- sf::st_intersects(vpu, pnt)
+  vpu <- vpu[which(sapply(vpu_intersects, function(x) length(x > 0)) == 1),]
+  vpu <- as.character(vpu$UnitID)
+  vpu[!is.na(vpu)]
 }
 
 find_state <- function(pnt){
