@@ -4,7 +4,7 @@
 \alias{select_poly_overlay}
 \title{select_poly_overlay}
 \usage{
-select_poly_overlay(poly, sp)
+select_poly_overlay(poly, sp, crs = NA)
 }
 \arguments{
 \item{poly}{sf *polygon object}

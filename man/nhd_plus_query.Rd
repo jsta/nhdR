@@ -4,7 +4,7 @@
 \alias{nhd_plus_query}
 \title{nhd_plus_query}
 \usage{
-nhd_plus_query(lon, lat, poly, dsn, buffer_dist = 0.05)
+nhd_plus_query(lon = NA, lat = NA, poly = NA, dsn, buffer_dist = 0.05)
 }
 \arguments{
 \item{lon}{numeric longitude}
@@ -37,5 +37,15 @@ axis(1); axis(2)
 
 library(ggplot2)
 ggplot(qry$sp$NHDWaterbody) + geom_sf()
+
+bbox <- data.frame(xmin = -73.34628, ymin = 41.32372,
+                  xmax = -73.13639, ymax = 41.66932 )
+b0 <- st_sfc(st_polygon(list(rbind(c(bbox$xmin, bbox$ymin),
+           c(bbox$xmax, bbox$ymin),
+           c(bbox$xmax, bbox$ymax),
+           c(bbox$xmin, bbox$ymax),
+           c(bbox$xmin, bbox$ymin)))))
+st_crs(b0) <- 4326
+nhd_plus_query(poly = b0, dsn = "NHDFlowLine")
 }
 }

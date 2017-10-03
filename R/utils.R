@@ -59,11 +59,14 @@ is_spatial <- function(filename){
   length(grep("shp$", filename)) > 0
 }
 
+#' @importFrom sf st_transform st_intersects
+#' @importFrom dplyr filter
 find_vpu <- function(pnt){
-  pnt <- st_transform(pnt, st_crs(nhdR::vpu_shp))
-  vpu <- filter(nhdR::vpu_shp, UnitType == "VPU")
+  pnt <- sf::st_transform(pnt, sf::st_crs(nhdR::vpu_shp))
+  vpu <- dplyr::filter(nhdR::vpu_shp, UnitType == "VPU")
   vpu_intersects <- sf::st_intersects(vpu, pnt)
-  vpu <- vpu[which(sapply(vpu_intersects, function(x) length(x > 0)) == 1),]
+  vpu <- vpu[which(sapply(vpu_intersects,
+                          function(x) length(x > 0)) == 1),]
   vpu <- as.character(vpu$UnitID)
   vpu[!is.na(vpu)]
 }
