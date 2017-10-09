@@ -89,10 +89,10 @@ find_state <- function(pnt){
   state
 }
 
-handle_dbf <- function(state, layer_name){
+handle_dbf <- function(state, dsn){
   temp_dir <- tempdir()
-  gdalUtils::ogr2ogr(gdb_path(state), temp_dir, layer_name)
-  read.dbf(file.path(temp_dir, paste0(layer_name, ".dbf")))
+  gdalUtils::ogr2ogr(gdb_path(state), temp_dir, dsn)
+  read.dbf(file.path(temp_dir, paste0(dsn, ".dbf")))
 }
 
 # https://stackoverflow.com/a/9188972/3362993

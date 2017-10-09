@@ -1,7 +1,7 @@
 #' nhd_load
 #'
 #' @param state character state abbreviation
-#' @param layer_name character name of a NHD layer
+#' @param dsn character name of a NHD layer
 #' @param file_ext character choice of "shp" for spatial data and
 #' "dbf" or "gpkg" for non-spatial. optional
 #' @param ... arguments passed to sf::st_read
@@ -22,7 +22,7 @@
 #' dt <- nhd_load("RI", "NHDWaterbody", file_ext = "dbf")
 #' dt <- nhd_load(c("RI", "DC"), "NHDWaterbody", file_ext = "gpkg")
 #' }
-nhd_load <- function(state, layer_name, file_ext = NA, ...){
+nhd_load <- function(state, dsn, file_ext = NA, ...){
 
   if(!(file_ext %in% c(NA, "shp", "dbf", "gpkg"))){
     stop(paste0("file_ext must be set to either 'shp' or 'dbf'"))
@@ -55,12 +55,12 @@ nhd_load <- function(state, layer_name, file_ext = NA, ...){
 
         if(is.na(file_ext) | file_ext == "shp"){
           tryCatch({
-            sf::st_zm(sf::st_read(gdb_path(state), layer_name,
+            sf::st_zm(sf::st_read(gdb_path(state), dsn,
               stringsAsFactors = FALSE, ...))},
           error = function(e) {
             temp_dir <- tempdir()
-            gdalUtils::ogr2ogr(gdb_path(state), temp_dir, layer_name)
-            read.dbf(file.path(temp_dir, paste0(layer_name, ".dbf")))
+            gdalUtils::ogr2ogr(gdb_path(state), temp_dir, dsn)
+            read.dbf(file.path(temp_dir, paste0(dsn, ".dbf")))
           })
         }else{
           if(file_ext == "gpkg"){
@@ -71,13 +71,13 @@ nhd_load <- function(state, layer_name, file_ext = NA, ...){
             if(!file.exists(gpkg_path)){
               compile_gpkg(state)
             }
-            res <- dplyr::tbl(dplyr::src_sqlite(gpkg_path), layer_name)
+            res <- dplyr::tbl(dplyr::src_sqlite(gpkg_path), dsn)
             geom <- rlang::quo("geom")
             data.frame(dplyr::select(res, -geom))
           }else{
             temp_dir <- tempdir()
-            gdalUtils::ogr2ogr(gdb_path(state), temp_dir, layer_name)
-            read.dbf(file.path(temp_dir, paste0(layer_name, ".dbf")))
+            gdalUtils::ogr2ogr(gdb_path(state), temp_dir, dsn)
+            read.dbf(file.path(temp_dir, paste0(dsn, ".dbf")))
           }
         }
       }

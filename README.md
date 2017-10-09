@@ -133,7 +133,7 @@ nhd_list(state = "DC")
 ```
 
 ``` r
-nhd_info(state = "DC", layer_name = "NHDWaterbody")
+nhd_info(state = "DC", dsn = "NHDWaterbody")
 #> Source: "/home/jose/.local/share/nhdR/NHDH_DC.gdb", layer: "NHDWaterbody"
 #> Driver: OpenFileGDB; number of rows: 8025 
 #> Feature type: wkbPolygon with 3 dimensions
@@ -156,7 +156,7 @@ nhd_info(state = "DC", layer_name = "NHDWaterbody")
 ```
 
 ``` r
-head(nhd_load(state = "DC", layer_name = "NHDWaterbody"))
+head(nhd_load(state = "DC", dsn = "NHDWaterbody"))
 #> Reading layer `NHDWaterbody' from data source `/home/jose/.local/share/nhdR/NHDH_DC.gdb' using driver `OpenFileGDB'
 #> Simple feature collection with 8025 features and 12 fields
 #> geometry type:  MULTIPOLYGON

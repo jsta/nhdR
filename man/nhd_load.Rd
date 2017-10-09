@@ -4,12 +4,12 @@
 \alias{nhd_load}
 \title{nhd_load}
 \usage{
-nhd_load(state, layer_name, file_ext = NA, ...)
+nhd_load(state, dsn, file_ext = NA, ...)
 }
 \arguments{
 \item{state}{character state abbreviation}
 
-\item{layer_name}{character name of a NHD layer}
+\item{dsn}{character name of a NHD layer}
 
 \item{file_ext}{character choice of "shp" for spatial data and
 "dbf" or "gpkg" for non-spatial. optional}

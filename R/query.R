@@ -91,7 +91,7 @@ nhd_query <- function(lon, lat, dsn, buffer_dist = 0.05){
   state <- find_state(pnt)
   state_abb <- datasets::state.abb[tolower(datasets::state.name) == state]
 
-  sp <- lapply(dsn, function(x) nhd_load(state = state_abb, layer_name = x))
+  sp <- lapply(dsn, function(x) nhd_load(state = state_abb, dsn = x))
   names(sp) <- dsn
 
   sp_sub <- select_point_overlay(pnt = pnt, sp = sp, buffer_dist = buffer_dist)
