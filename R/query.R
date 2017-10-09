@@ -11,7 +11,7 @@
 #'
 #' pnt <- st_as_sf(wk, coords = c("Lon", "Lat"), crs = 4326)
 #' pnt <- st_transform(pnt, st_crs(vpu_shp))
-#' nhd_plus_list(nhdR::find_vpu(pnt))
+#' # nhd_plus_list(nhdR::find_vpu(pnt))
 #'
 #' qry <- nhd_plus_query(wk$Lon, wk$Lat,
 #'          dsn = c("NHDWaterbody", "NHDFlowLine"), buffer_dist = 0.05)
@@ -24,15 +24,12 @@
 #' library(ggplot2)
 #' ggplot(qry$sp$NHDWaterbody) + geom_sf()
 #'
-#' bbox <- data.frame(xmin = -73.34628, ymin = 41.32372,
-#'                   xmax = -73.13639, ymax = 41.66932 )
-#' b0 <- st_sfc(st_polygon(list(rbind(c(bbox$xmin, bbox$ymin),
-#'            c(bbox$xmax, bbox$ymin),
-#'            c(bbox$xmax, bbox$ymax),
-#'            c(bbox$xmin, bbox$ymax),
-#'            c(bbox$xmin, bbox$ymin)))))
-#' st_crs(b0) <- 4326
-#' nhd_plus_query(poly = b0, dsn = "NHDFlowLine")
+#' wbd <- qry$sp$NHDWaterbody[which.max(st_area(qry$sp$NHDWaterbody)),]
+#' qry_lines <- nhd_plus_query(poly = st_as_sfc(st_bbox(wbd)),
+#'                             dsn = "NHDFlowLine")
+#' ggplot() +
+#'   geom_sf(data = qry$sp$NHDWaterbody) +
+#'   geom_sf(data = qry_lines$sp$NHDFlowLine, color = "red")
 #' }
 
 nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
