@@ -6,6 +6,9 @@
 \usage{
 bbox2poly(bbox)
 }
+\arguments{
+\item{bbox}{object of class bbox from sf}
+}
 \description{
 Convert a bounding box to polygon
 }

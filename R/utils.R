@@ -132,6 +132,8 @@ is_gpkg_installed <- function(){
 
 #' Convert a bounding box to polygon
 #'
+#' @param bbox object of class bbox from sf
+#'
 #' @importFrom sf st_as_sfc
 #' @export
 #' @examples \dontrun{
