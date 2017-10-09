@@ -4,12 +4,12 @@
 \alias{nhd_info}
 \title{nhd_info}
 \usage{
-nhd_info(state, layer_name)
+nhd_info(state, dsn)
 }
 \arguments{
 \item{state}{character}
 
-\item{layer_name}{character}
+\item{dsn}{character}
 }
 \description{
 nhd_info
