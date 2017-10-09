@@ -129,3 +129,21 @@ is_gpkg_installed <- function(){
   name <- rlang::quo("name")
   all(as.logical(dplyr::filter(sf::st_drivers(), name == "GPKG")[3:6]))
 }
+
+#' Convert a bounding box to polygon
+#'
+#' @export
+#' @examples \dontrun{
+#' library(sf)
+#' wk <- wikilake::lake_wiki("Gull Lake (Michigan)")
+#'
+#' pnt <- st_as_sf(wk, coords = c("Lon", "Lat"), crs = 4326)
+#' pnt <- st_transform(pnt, st_crs(vpu_shp))
+#' qry <- nhd_plus_query(wk$Lon, wk$Lat,
+#'          dsn = c("NHDWaterbody"), buffer_dist = 0.05)
+#' wbd <- qry$sp$NHDWaterbody[which.max(st_area(qry$sp$NHDWaterbody)),]
+#' bbox2poly(st_bbox(wbd))
+#' }
+bbox2poly <- function(bbox){
+  st_as_sfc(bbox)
+}

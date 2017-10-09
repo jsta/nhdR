@@ -6,7 +6,7 @@
 #' @param dsn character data source
 #' @param buffer_dist numeric buffer in units of coordinate degrees
 #' @examples \dontrun{
-#'
+#' library(sf)
 #' wk <- wikilake::lake_wiki("Gull Lake (Michigan)")
 #'
 #' pnt <- st_as_sf(wk, coords = c("Lon", "Lat"), crs = 4326)
