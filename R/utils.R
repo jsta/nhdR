@@ -100,6 +100,24 @@ long2UTM <- function(long) {
   (floor((long + 180)/6) %% 60) + 1
 }
 
+#' Re-project to appropriate UTM zone
+#'
+#' @param sf_object an sf object
+#'
+#' @importFrom sf st_transform st_crs
+#' @export
+toUTM <- function(sf_object){
+
+  if(is.na(st_crs(sf_object)$epsg)){
+    sf_object <- st_transform(sf_object, crs = 4326)
+  }
+
+  utm_zone <- long2UTM(sf::st_coordinates(sf_object)[1])
+  crs <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
+
+  sf::st_transform(sf_object, crs = crs)
+}
+
 compile_gpkg <- function(state){
   gdalUtils::ogr2ogr(
     src_datasource_name = gdb_path(state),
