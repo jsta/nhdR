@@ -132,6 +132,7 @@ is_gpkg_installed <- function(){
 
 #' Convert a bounding box to polygon
 #'
+#' @importFrom sf st_as_sfc
 #' @export
 #' @examples \dontrun{
 #' library(sf)
@@ -145,5 +146,5 @@ is_gpkg_installed <- function(){
 #' bbox2poly(st_bbox(wbd))
 #' }
 bbox2poly <- function(bbox){
-  st_as_sfc(bbox)
+  sf::st_as_sfc(bbox)
 }
