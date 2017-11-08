@@ -4,7 +4,7 @@
 \alias{nhd_load}
 \title{nhd_load}
 \usage{
-nhd_load(state, dsn, file_ext = NA, ...)
+nhd_load(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...)
 }
 \arguments{
 \item{state}{character state abbreviation}
@@ -14,6 +14,8 @@ nhd_load(state, dsn, file_ext = NA, ...)
 \item{file_ext}{character choice of "shp" for spatial data and
 "dbf" or "gpkg" for non-spatial. optional}
 
+\item{approve_all_dl}{logical blanket approval to download all missing data}
+
 \item{...}{arguments passed to sf::st_read}
 }
 \value{
@@ -21,6 +23,9 @@ spatial object
 }
 \description{
 nhd_load
+}
+\details{
+This function will ask the user to approve downloading missing data unless approve_all_dl is set to TRUE.
 }
 \examples{
 \dontrun{

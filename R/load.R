@@ -4,6 +4,7 @@
 #' @param dsn character name of a NHD layer
 #' @param file_ext character choice of "shp" for spatial data and
 #' "dbf" or "gpkg" for non-spatial. optional
+#' @param approve_all_dl logical blanket approval to download all missing data
 #' @param ... arguments passed to sf::st_read
 #'
 #' @return spatial object
@@ -12,6 +13,8 @@
 #' @importFrom rlang quo
 #' @importFrom dplyr tbl select src_sqlite
 #' @export
+#'
+#' @details This function will ask the user to approve downloading missing data unless approve_all_dl is set to TRUE.
 #'
 #' @examples \dontrun{
 #' dt <- nhd_load(c("RI"), c("NHDWaterbody"))
@@ -22,7 +25,7 @@
 #' dt <- nhd_load("RI", "NHDWaterbody", file_ext = "dbf")
 #' dt <- nhd_load(c("RI", "DC"), "NHDWaterbody", file_ext = "gpkg")
 #' }
-nhd_load <- function(state, dsn, file_ext = NA, ...){
+nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
 
   if(!(file_ext %in% c(NA, "shp", "dbf", "gpkg"))){
     stop(paste0("file_ext must be set to either 'shp' or 'dbf'"))
@@ -34,7 +37,7 @@ nhd_load <- function(state, dsn, file_ext = NA, ...){
       userconsents <- utils::menu(c("Yes", "No"),
                         title = paste0(state,
                         " state gdb file not found. Download it?"))
-      if(userconsents == 1){
+      if(userconsents == 1 | approve_all_dl){
         yes_dl <- 1
       }else{
         yes_dl <- 0
