@@ -34,10 +34,14 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
   nhd_state_exists <- function(state){
     if(any(!file.exists(gdb_path(state)))){
       state_exists <- 0
-      userconsents <- utils::menu(c("Yes", "No"),
-                        title = paste0(state,
-                        " state gdb file not found. Download it?"))
-      if(userconsents == 1 | approve_all_dl){
+      if(!approve_all_dl){
+        userconsents <- utils::menu(c("Yes", "No"),
+                          title = paste0(state,
+                          " state gdb file not found. Download it?"))
+      }else{
+        userconsents <- 1
+      }
+      if(userconsents == 1){
         yes_dl <- 1
       }else{
         yes_dl <- 0
