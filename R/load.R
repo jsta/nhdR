@@ -126,10 +126,13 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
 #' @param dsn data source name
 #' @param file_ext character choice of "shp" for spatial data and
 #' "dbf" for non-spatial. optional
+#' @param approve_all_dl logical blanket approval to download all missing data
 #' @return spatial object
 #' @importFrom sf st_read st_zm
 #' @importFrom foreign read.dbf
 #' @export
+#'
+#' @details This function will ask the user to approve downloading missing data unless approve_all_dl is set to TRUE.
 #'
 #' @examples \dontrun{
 #' # Spatial
@@ -144,7 +147,7 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
 #' gridcode  <- nhd_plus_load(1, "NHDPlusCatchment", "featuregridcode")
 #' }
 nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
-                          file_ext = NA){
+                          file_ext = NA, approve_all_dl = FALSE){
 
   if(!(file_ext %in% c(NA, "shp", "dbf"))){
     stop(paste0("file_ext must be set to either 'shp' or 'dbf'"))
@@ -155,8 +158,14 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
                           basename(get_plus_remotepath(vpu, component)))
 
     if(any(!file.exists(vpu_path))){
-      userconsents <- utils::menu(c("Yes", "No"),
-        title = paste0(vpu, " vpu file not found. Download it?"))
+
+      if(!approve_all_dl){
+        userconsents <- utils::menu(c("Yes", "No"),
+                  title = paste0(vpu, " vpu file not found. Download it?"))
+      }else{
+        userconsents <- 1
+      }
+
       if(userconsents == 1){
         nhd_plus_get(vpu = vpu, component = component)
       }else{

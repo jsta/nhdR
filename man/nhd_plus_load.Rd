@@ -4,7 +4,8 @@
 \alias{nhd_plus_load}
 \title{nhd_plus_load}
 \usage{
-nhd_plus_load(vpu, component = "NHDSnapshot", dsn, file_ext = NA)
+nhd_plus_load(vpu, component = "NHDSnapshot", dsn, file_ext = NA,
+  approve_all_dl = FALSE)
 }
 \arguments{
 \item{vpu}{numeric vector processing unit}
@@ -15,12 +16,17 @@ nhd_plus_load(vpu, component = "NHDSnapshot", dsn, file_ext = NA)
 
 \item{file_ext}{character choice of "shp" for spatial data and
 "dbf" for non-spatial. optional}
+
+\item{approve_all_dl}{logical blanket approval to download all missing data}
 }
 \value{
 spatial object
 }
 \description{
 nhd_plus_load
+}
+\details{
+This function will ask the user to approve downloading missing data unless approve_all_dl is set to TRUE.
 }
 \examples{
 \dontrun{
