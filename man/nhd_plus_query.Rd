@@ -4,7 +4,8 @@
 \alias{nhd_plus_query}
 \title{nhd_plus_query}
 \usage{
-nhd_plus_query(lon = NA, lat = NA, poly = NA, dsn, buffer_dist = 0.05)
+nhd_plus_query(lon = NA, lat = NA, poly = NA, dsn, buffer_dist = 0.05,
+  approve_all_dl = FALSE)
 }
 \arguments{
 \item{lon}{numeric longitude. optional}
@@ -16,6 +17,8 @@ nhd_plus_query(lon = NA, lat = NA, poly = NA, dsn, buffer_dist = 0.05)
 \item{dsn}{character data source}
 
 \item{buffer_dist}{numeric buffer in units of coordinate degrees}
+
+\item{approve_all_dl}{logical blanket approval to download all missing data}
 }
 \description{
 nhd_plus_query

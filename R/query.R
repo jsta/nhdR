@@ -45,7 +45,8 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
     sf::st_crs(pnt) <- sf::st_crs(nhdR::vpu_shp)
     vpu <- find_vpu(pnt)
 
-    sp <- lapply(dsn, function(x) nhd_plus_load(vpu = vpu, dsn = x))
+    sp <- lapply(dsn, function(x) nhd_plus_load(vpu = vpu, dsn = x,
+                                          approve_all_dl = approve_all_dl))
     names(sp) <- dsn
 
     sp_sub <- select_point_overlay(pnt = pnt, sp = sp,
