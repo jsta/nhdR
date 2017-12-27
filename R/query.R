@@ -204,6 +204,8 @@ select_poly_overlay <- function(poly, sp){
 #' coords <- data.frame(lat = 20.79722, lon = -156.47833)
 #' terminal_reaches(coords$lon, coords$lat)
 #'
+#' coords <- data.frame(lat = 41.42217, lon = -73.24189)
+#' terminal_reaches(coords$lon, coords$lat)
 #' }
 terminal_reaches <- function(lon, lat){
 
@@ -222,14 +224,16 @@ terminal_reaches <- function(lon, lat){
                                   dsn = "NHDFlowline")$sp$NHDFlowline
   network_table <- nhd_plus_load(vpu = as.numeric(vpu), "NHDPlusAttributes",
                                  "PlusFlow")
+  names(network_table) <- tolower(names(network_table))
+  names(network_lines) <- tolower(names(network_lines))
 
   network_table <- dplyr::filter(network_table,
-                            .data$FromComID %in% network_lines$ComID |
-                            .data$ToComID %in% network_lines$ComID)
+                            .data$fromcomid %in% network_lines$comid |
+                            .data$tocomid %in% network_lines$comid)
 
   # find nodes with no downstream connections
   res <- dplyr::filter(network_table,
-                       !(network_table$ToComID %in% network_table$FromComID))
-  dplyr::filter(network_lines, ComID == res$FromComID)
+                       !(network_table$tocomid %in% network_table$fromcomid))
+  dplyr::filter(network_lines, comid == res$fromcomid)
 }
 
