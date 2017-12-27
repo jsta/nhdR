@@ -196,6 +196,10 @@ select_poly_overlay <- function(poly, sp){
 #' @param lon numeric decimal degree longitude
 #' @param lat numeric decimal degree latitude
 #'
+#' @export
+#' @importFrom sf st_area
+#' @importFrom rlang .data
+#'
 #' @examples \dontrun{
 #' coords <- data.frame(lat = 20.79722, lon = -156.47833)
 #' terminal_reaches(coords$lon, coords$lat)
@@ -218,9 +222,10 @@ terminal_reaches <- function(lon, lat){
                                   dsn = "NHDFlowline")$sp$NHDFlowline
   network_table <- nhd_plus_load(vpu = as.numeric(vpu), "NHDPlusAttributes",
                                  "PlusFlow")
+
   network_table <- dplyr::filter(network_table,
-                                 FromComID %in% network_lines$ComID |
-                                   ToComID %in% network_lines$ComID)
+                            .data$FromComID %in% network_lines$ComID |
+                            .data$ToComID %in% network_lines$ComID)
 
   # find nodes with no downstream connections
   res <- dplyr::filter(network_table,
