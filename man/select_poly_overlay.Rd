@@ -2,7 +2,7 @@
 % Please edit documentation in R/query.R
 \name{select_poly_overlay}
 \alias{select_poly_overlay}
-\title{Select intersect based on a polygonr}
+\title{Select features clipped by a polygon}
 \usage{
 select_poly_overlay(poly, sp)
 }
@@ -12,5 +12,5 @@ select_poly_overlay(poly, sp)
 \item{sp}{list of sf data frames}
 }
 \description{
-Select intersecting layer based on a polygon extent
+Select features clipped by a polygon
 }

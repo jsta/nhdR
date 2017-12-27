@@ -182,7 +182,7 @@ dt &lt;-<span class="st"> </span><span class="kw"><a href="reference/nhd_plus_lo
 <span class="co">#&gt; [1] "OpenFileGDB"</span>
 <span class="co">#&gt; attr(,"nlayers")</span>
 <span class="co">#&gt; [1] 33</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/nhd_info.html">nhd_info</a></span>(<span class="dt">state =</span> <span class="st">"DC"</span>, <span class="dt">layer_name =</span> <span class="st">"NHDWaterbody"</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/nhd_info.html">nhd_info</a></span>(<span class="dt">state =</span> <span class="st">"DC"</span>, <span class="dt">dsn =</span> <span class="st">"NHDWaterbody"</span>)
 <span class="co">#&gt; Source: "/home/jose/.local/share/nhdR/NHDH_DC.gdb", layer: "NHDWaterbody"</span>
 <span class="co">#&gt; Driver: OpenFileGDB; number of rows: 8025 </span>
 <span class="co">#&gt; Feature type: wkbPolygon with 3 dimensions</span>
@@ -202,7 +202,7 @@ dt &lt;-<span class="st"> </span><span class="kw"><a href="reference/nhd_plus_lo
 <span class="co">#&gt; 10                FCode    0      0  Integer</span>
 <span class="co">#&gt; 11         Shape_Length    2      0     Real</span>
 <span class="co">#&gt; 12           Shape_Area    2      0     Real</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw"><a href="reference/nhd_load.html">nhd_load</a></span>(<span class="dt">state =</span> <span class="st">"DC"</span>, <span class="dt">layer_name =</span> <span class="st">"NHDWaterbody"</span>))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw"><a href="reference/nhd_load.html">nhd_load</a></span>(<span class="dt">state =</span> <span class="st">"DC"</span>, <span class="dt">dsn =</span> <span class="st">"NHDWaterbody"</span>))
 <span class="co">#&gt; Reading layer `NHDWaterbody' from data source `/home/jose/.local/share/nhdR/NHDH_DC.gdb' using driver `OpenFileGDB'</span>
 <span class="co">#&gt; Simple feature collection with 8025 features and 12 fields</span>
 <span class="co">#&gt; geometry type:  MULTIPOLYGON</span>
@@ -256,7 +256,7 @@ dt &lt;-<span class="st"> </span><span class="kw"><a href="reference/nhd_plus_lo
 <p>GPL</p>
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Joseph Stachelek <br><small class="roles"> Author, maintainer </small> </li>
+<li>Joseph Stachelek <br><small class="roles"> Author, maintainer </small>  </li>
 </ul>
 <h2>Dev status</h2>
 <ul class="list-unstyled">

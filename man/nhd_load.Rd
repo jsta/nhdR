@@ -2,7 +2,7 @@
 % Please edit documentation in R/load.R
 \name{nhd_load}
 \alias{nhd_load}
-\title{nhd_load}
+\title{Load NHD layers into current session}
 \usage{
 nhd_load(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...)
 }
@@ -22,7 +22,7 @@ nhd_load(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...)
 spatial object
 }
 \description{
-nhd_load
+Load NHD layers into current session
 }
 \details{
 This function will ask the user to approve downloading missing data unless approve_all_dl is set to TRUE.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/query.R
 \name{nhd_plus_query}
 \alias{nhd_plus_query}
-\title{nhd_plus_query}
+\title{Select NHDplus features via polygon or circular buffer of coordinate pair}
 \usage{
 nhd_plus_query(lon = NA, lat = NA, poly = NA, dsn, buffer_dist = 0.05,
   approve_all_dl = FALSE)
@@ -21,7 +21,7 @@ nhd_plus_query(lon = NA, lat = NA, poly = NA, dsn, buffer_dist = 0.05,
 \item{approve_all_dl}{logical blanket approval to download all missing data}
 }
 \description{
-nhd_plus_query
+Select NHDplus features via polygon or circular buffer of coordinate pair
 }
 \examples{
 \dontrun{

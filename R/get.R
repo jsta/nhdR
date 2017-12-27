@@ -1,4 +1,5 @@
-#' nhd_get
+#' Download and cache NHD data by state
+#'
 #' @param state character state abbrevation includes "DC", "PR", and "VI"
 #' @export
 #' @importFrom utils unzip
@@ -35,7 +36,8 @@ nhd_get <- function(state = NA){
   invisible(lapply(state, nhd_get_state))
 }
 
-#' nhd_plus_get
+#' Download and cache NHDplus data by state
+#'
 #' @param vpu numeric vector processing unit
 #' @param component character component name
 #' @export

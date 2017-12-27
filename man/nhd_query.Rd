@@ -2,7 +2,7 @@
 % Please edit documentation in R/query.R
 \name{nhd_query}
 \alias{nhd_query}
-\title{nhd_query}
+\title{Select NHD features clipped by a circular buffer a coordinate pair}
 \usage{
 nhd_query(lon, lat, dsn, buffer_dist = 0.05)
 }
@@ -16,7 +16,7 @@ nhd_query(lon, lat, dsn, buffer_dist = 0.05)
 \item{buffer_dist}{numeric buffer in units of coordinate degrees}
 }
 \description{
-nhd_query
+Select NHD features clipped by a circular buffer a coordinate pair
 }
 \examples{
 \dontrun{

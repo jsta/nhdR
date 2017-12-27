@@ -2,7 +2,7 @@
 % Please edit documentation in R/info.R
 \name{nhd_plus_info}
 \alias{nhd_plus_info}
-\title{nhd_plus_info}
+\title{Return NHDplus layer metadata and field listing}
 \usage{
 nhd_plus_info(vpu, component, dsn, file_ext = NA)
 }
@@ -17,7 +17,7 @@ nhd_plus_info(vpu, component, dsn, file_ext = NA)
 "dbf" for non-spatial. optional}
 }
 \description{
-nhd_plus_info
+Return NHDplus layer metadata and field listing
 }
 \examples{
 \dontrun{

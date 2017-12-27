@@ -2,7 +2,7 @@
 % Please edit documentation in R/list.R
 \name{nhd_plus_list}
 \alias{nhd_plus_list}
-\title{nhd_plus_list}
+\title{List available locally cached NHDplus layers per state}
 \usage{
 nhd_plus_list(vpu, component = "NHDSnapshot", file_ext = NA, ...)
 }
@@ -17,7 +17,7 @@ nhd_plus_list(vpu, component = "NHDSnapshot", file_ext = NA, ...)
 \item{...}{arguments passed to list.files. optional.}
 }
 \description{
-nhd_plus_list
+List available locally cached NHDplus layers per state
 }
 \examples{
 \dontrun{

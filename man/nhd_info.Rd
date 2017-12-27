@@ -2,7 +2,7 @@
 % Please edit documentation in R/info.R
 \name{nhd_info}
 \alias{nhd_info}
-\title{nhd_info}
+\title{Return NHD layer metadata and field listing}
 \usage{
 nhd_info(state, dsn)
 }
@@ -12,7 +12,7 @@ nhd_info(state, dsn)
 \item{dsn}{character}
 }
 \description{
-nhd_info
+Return NHD layer metadata and field listing
 }
 \examples{
 \dontrun{

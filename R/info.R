@@ -1,4 +1,4 @@
-#' nhd_info
+#' Return NHD layer metadata and field listing
 #'
 #' @param state character
 #' @param dsn character
@@ -12,7 +12,7 @@ nhd_info <- function(state, dsn){
   rgdal::ogrInfo(gdb_path(state), dsn)
 }
 
-#' nhd_plus_info
+#' Return NHDplus layer metadata and field listing
 #'
 #' @param vpu numeric vector processing unit
 #' @param component character component name

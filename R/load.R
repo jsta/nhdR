@@ -1,4 +1,4 @@
-#' nhd_load
+#' Load NHD layers into current session
 #'
 #' @param state character state abbreviation
 #' @param dsn character name of a NHD layer
@@ -119,7 +119,7 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
   res
 }
 
-#' nhd_plus_load
+#' Load NHDplus layers into current session
 #'
 #' @param vpu numeric vector processing unit
 #' @param component character component name

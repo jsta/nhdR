@@ -1,4 +1,4 @@
-#' nhd_list
+#' List available locally cached NHD layers per state
 #'
 #' @export
 #' @param state character state abbreviation
@@ -11,7 +11,7 @@ nhd_list <- function(state){
   rgdal::ogrListLayers(gdb_path(state))
 }
 
-#' nhd_plus_list
+#' List available locally cached NHDplus layers per state
 #'
 #' @export
 #' @param vpu numeric vector processing unit

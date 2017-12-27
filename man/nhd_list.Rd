@@ -2,7 +2,7 @@
 % Please edit documentation in R/list.R
 \name{nhd_list}
 \alias{nhd_list}
-\title{nhd_list}
+\title{List available locally cached NHD layers per state}
 \usage{
 nhd_list(state)
 }
@@ -10,7 +10,7 @@ nhd_list(state)
 \item{state}{character state abbreviation}
 }
 \description{
-nhd_list
+List available locally cached NHD layers per state
 }
 \examples{
 \dontrun{

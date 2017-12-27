@@ -1,4 +1,5 @@
-#' nhd_plus_query
+#' Select NHDplus features via polygon or circular buffer of coordinate pair
+#'
 #' @export
 #' @param lon numeric longitude. optional
 #' @param lat numeric latitude. optional
@@ -69,7 +70,8 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
   }
 }
 
-#' nhd_query
+#' Select NHD features clipped by a circular buffer a coordinate pair
+#'
 #' @export
 #' @import datasets
 #' @param lon numeric longitude
@@ -104,9 +106,7 @@ nhd_query <- function(lon, lat, dsn, buffer_dist = 0.05){
   list(pnt = pnt, sp = sp_sub)
 }
 
-#' Select intersect based on a point buffer
-#'
-#' Select intersecting layer based on a point buffer
+#' Select features clipped by a point buffer around a point
 #'
 #' @param pnt geographic point of class sfc
 #' @param sp list of sf data frames
@@ -155,9 +155,7 @@ select_point_overlay <- function(pnt, sp, buffer_dist = 0.05){
   sp_sub
 }
 
-#' Select intersect based on a polygonr
-#'
-#' Select intersecting layer based on a polygon extent
+#' Select features clipped by a polygon
 #'
 #' @param poly sf *polygon object
 #' @param sp list of sf data frames

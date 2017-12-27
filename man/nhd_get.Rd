@@ -2,7 +2,7 @@
 % Please edit documentation in R/get.R
 \name{nhd_get}
 \alias{nhd_get}
-\title{nhd_get}
+\title{Download and cache NHD data by state}
 \usage{
 nhd_get(state = NA)
 }
@@ -10,7 +10,7 @@ nhd_get(state = NA)
 \item{state}{character state abbrevation includes "DC", "PR", and "VI"}
 }
 \description{
-nhd_get
+Download and cache NHD data by state
 }
 \examples{
 \dontrun{

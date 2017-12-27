@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>nhd_plus_query — nhd_plus_query • nhdR</title>
+<title>Select NHDplus features via polygon or circular buffer of coordinate pair — nhd_plus_query • nhdR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -92,14 +92,15 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>nhd_plus_query</h1>
+    <h1>Select NHDplus features via polygon or circular buffer of coordinate pair</h1>
     </div>
 
     
-    <p>nhd_plus_query</p>
+    <p>Select NHDplus features via polygon or circular buffer of coordinate pair</p>
     
 
-    <pre class="usage"><span class='fu'>nhd_plus_query</span>(<span class='kw'>lon</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>poly</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>dsn</span>, <span class='kw'>buffer_dist</span> <span class='kw'>=</span> <span class='fl'>0.05</span>)</pre>
+    <pre class="usage"><span class='fu'>nhd_plus_query</span>(<span class='kw'>lon</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>poly</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>dsn</span>, <span class='kw'>buffer_dist</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
+  <span class='kw'>approve_all_dl</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -124,37 +125,39 @@
       <th>buffer_dist</th>
       <td><p>numeric buffer in units of coordinate degrees</p></td>
     </tr>
+    <tr>
+      <th>approve_all_dl</th>
+      <td><p>logical blanket approval to download all missing data</p></td>
+    </tr>
     </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'>library</span>(<span class='no'>sf</span>)
 <span class='no'>wk</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>wikilake</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/wikilake/topics/lake_wiki'>lake_wiki</a></span>(<span class='st'>"Gull Lake (Michigan)"</span>)
 
-<span class='no'>pnt</span> <span class='kw'>&lt;-</span> <span class='fu'>st_as_sf</span>(<span class='no'>wk</span>, <span class='kw'>coords</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"Lon"</span>, <span class='st'>"Lat"</span>), <span class='kw'>crs</span> <span class='kw'>=</span> <span class='fl'>4326</span>)
-<span class='no'>pnt</span> <span class='kw'>&lt;-</span> <span class='fu'>st_transform</span>(<span class='no'>pnt</span>, <span class='fu'>st_crs</span>(<span class='no'>vpu_shp</span>))
-<span class='fu'><a href='nhd_plus_list.html'>nhd_plus_list</a></span>(<span class='kw pkg'>nhdR</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/nhdR/topics/find_vpu'>find_vpu</a></span>(<span class='no'>pnt</span>))
+<span class='no'>pnt</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/sf/topics/st_as_sf'>st_as_sf</a></span>(<span class='no'>wk</span>, <span class='kw'>coords</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"Lon"</span>, <span class='st'>"Lat"</span>), <span class='kw'>crs</span> <span class='kw'>=</span> <span class='fl'>4326</span>)
+<span class='no'>pnt</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/sf/topics/st_transform'>st_transform</a></span>(<span class='no'>pnt</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/sf/topics/st_crs'>st_crs</a></span>(<span class='no'>vpu_shp</span>))
+<span class='co'># nhd_plus_list(nhdR::find_vpu(pnt))</span>
 
 <span class='no'>qry</span> <span class='kw'>&lt;-</span> <span class='fu'>nhd_plus_query</span>(<span class='no'>wk</span>$<span class='no'>Lon</span>, <span class='no'>wk</span>$<span class='no'>Lat</span>,
          <span class='kw'>dsn</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"NHDWaterbody"</span>, <span class='st'>"NHDFlowLine"</span>), <span class='kw'>buffer_dist</span> <span class='kw'>=</span> <span class='fl'>0.05</span>)
 
-<span class='fu'>plot</span>(<span class='no'>qry</span>$<span class='no'>sp</span>$<span class='no'>NHDWaterbody</span>$<span class='no'>geometry</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"blue"</span>)
-<span class='fu'>plot</span>(<span class='no'>qry</span>$<span class='no'>sp</span>$<span class='no'>NHDFlowLine</span>$<span class='no'>geometry</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"cyan"</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'>plot</span>(<span class='no'>qry</span>$<span class='no'>pnt</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>19</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/sf/topics/plot'>plot</a></span>(<span class='no'>qry</span>$<span class='no'>sp</span>$<span class='no'>NHDWaterbody</span>$<span class='no'>geometry</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"blue"</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/sf/topics/plot'>plot</a></span>(<span class='no'>qry</span>$<span class='no'>sp</span>$<span class='no'>NHDFlowLine</span>$<span class='no'>geometry</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"cyan"</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/sf/topics/plot'>plot</a></span>(<span class='no'>qry</span>$<span class='no'>pnt</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>19</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'>axis</span>(<span class='fl'>1</span>); <span class='fu'>axis</span>(<span class='fl'>2</span>)
 
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
 <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>(<span class='no'>qry</span>$<span class='no'>sp</span>$<span class='no'>NHDWaterbody</span>) + <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggsf'>geom_sf</a></span>()
 
-<span class='no'>bbox</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>xmin</span> <span class='kw'>=</span> -<span class='fl'>73.34628</span>, <span class='kw'>ymin</span> <span class='kw'>=</span> <span class='fl'>41.32372</span>,
-                  <span class='kw'>xmax</span> <span class='kw'>=</span> -<span class='fl'>73.13639</span>, <span class='kw'>ymax</span> <span class='kw'>=</span> <span class='fl'>41.66932</span> )
-<span class='no'>b0</span> <span class='kw'>&lt;-</span> <span class='fu'>st_sfc</span>(<span class='fu'>st_polygon</span>(<span class='fu'>list</span>(<span class='fu'>rbind</span>(<span class='fu'>c</span>(<span class='no'>bbox</span>$<span class='no'>xmin</span>, <span class='no'>bbox</span>$<span class='no'>ymin</span>),
-           <span class='fu'>c</span>(<span class='no'>bbox</span>$<span class='no'>xmax</span>, <span class='no'>bbox</span>$<span class='no'>ymin</span>),
-           <span class='fu'>c</span>(<span class='no'>bbox</span>$<span class='no'>xmax</span>, <span class='no'>bbox</span>$<span class='no'>ymax</span>),
-           <span class='fu'>c</span>(<span class='no'>bbox</span>$<span class='no'>xmin</span>, <span class='no'>bbox</span>$<span class='no'>ymax</span>),
-           <span class='fu'>c</span>(<span class='no'>bbox</span>$<span class='no'>xmin</span>, <span class='no'>bbox</span>$<span class='no'>ymin</span>)))))
-<span class='fu'>st_crs</span>(<span class='no'>b0</span>) <span class='kw'>&lt;-</span> <span class='fl'>4326</span>
-<span class='fu'>nhd_plus_query</span>(<span class='kw'>poly</span> <span class='kw'>=</span> <span class='no'>b0</span>, <span class='kw'>dsn</span> <span class='kw'>=</span> <span class='st'>"NHDFlowLine"</span>)
+<span class='no'>wbd</span> <span class='kw'>&lt;-</span> <span class='no'>qry</span>$<span class='no'>sp</span>$<span class='no'>NHDWaterbody</span>[<span class='fu'>which.max</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/sf/topics/geos_measures'>st_area</a></span>(<span class='no'>qry</span>$<span class='no'>sp</span>$<span class='no'>NHDWaterbody</span>)),]
+<span class='no'>qry_lines</span> <span class='kw'>&lt;-</span> <span class='fu'>nhd_plus_query</span>(<span class='kw'>poly</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/sf/topics/st_as_sfc'>st_as_sfc</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/sf/topics/st_bbox'>st_bbox</a></span>(<span class='no'>wbd</span>)),
+                            <span class='kw'>dsn</span> <span class='kw'>=</span> <span class='st'>"NHDFlowLine"</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggplot'>ggplot</a></span>() +
+  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggsf'>geom_sf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>qry</span>$<span class='no'>sp</span>$<span class='no'>NHDWaterbody</span>) +
+  <span class='fu'><a href='http://www.rdocumentation.org/packages/ggplot2/topics/ggsf'>geom_sf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>qry_lines</span>$<span class='no'>sp</span>$<span class='no'>NHDFlowLine</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
