@@ -190,3 +190,41 @@ select_poly_overlay <- function(poly, sp){
 
   sp_sub
 }
+
+#' Return terminal reaches from collection intersecting lake
+#'
+#' @param lon numeric decimal degree longitude
+#' @param lat numeric decimal degree latitude
+#'
+#' @examples \dontrun{
+#' coords <- data.frame(lat = 20.79722, lon = -156.47833)
+#' terminal_reaches(coords$lon, coords$lat)
+#'
+#' }
+terminal_reaches <- function(lon, lat){
+
+  # find vpu
+  pnt <- sf::st_sfc(sf::st_point(c(lon, lat)))
+  sf::st_crs(pnt) <- sf::st_crs(nhdR::vpu_shp)
+  vpu <- find_vpu(pnt)
+
+  # find lake polygon
+  poly <- nhd_plus_query(lon, lat, dsn = "NHDWaterbody",
+                         buffer_dist = 0.01)$sp$NHDWaterbody
+  poly <- poly[which.max(st_area(poly)),]
+
+  # query stream network and flow table by polygon intersection
+  network_lines <- nhd_plus_query(poly = poly,
+                                  dsn = "NHDFlowline")$sp$NHDFlowline
+  network_table <- nhd_plus_load(vpu = as.numeric(vpu), "NHDPlusAttributes",
+                                 "PlusFlow")
+  network_table <- dplyr::filter(network_table,
+                                 FromComID %in% network_lines$ComID |
+                                   ToComID %in% network_lines$ComID)
+
+  # find nodes with no downstream connections
+  res <- dplyr::filter(network_table,
+                       !(network_table$ToComID %in% network_table$FromComID))
+  dplyr::filter(network_lines, ComID == res$FromComID)
+}
+
