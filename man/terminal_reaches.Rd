@@ -4,12 +4,14 @@
 \alias{terminal_reaches}
 \title{Return terminal reaches from collection intersecting lake}
 \usage{
-terminal_reaches(lon, lat)
+terminal_reaches(lon = NA, lat = NA, network = NA)
 }
 \arguments{
 \item{lon}{numeric decimal degree longitude}
 
 \item{lat}{numeric decimal degree latitude}
+
+\item{network}{sf lines collection}
 }
 \description{
 Return terminal reaches from collection intersecting lake
@@ -19,5 +21,14 @@ Return terminal reaches from collection intersecting lake
 coords <- data.frame(lat = 20.79722, lon = -156.47833)
 terminal_reaches(coords$lon, coords$lat)
 
+coords <- data.frame(lat = 41.42217, lon = -73.24189)
+terminal_reaches(coords$lon, coords$lat)
+
+network <- nhd_plus_query(lon = coords$lon, lat = coords$lat,
+                          dsn = "NHDFlowline", buffer_dist = 0.02)$sp$NHDFlowline
+t_reach <- terminal_reaches(network = network)
+
+plot(network$geometry)
+plot(t_reach, col = "red", add = TRUE)
 }
 }

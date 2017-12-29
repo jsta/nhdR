@@ -195,6 +195,7 @@ select_poly_overlay <- function(poly, sp){
 #'
 #' @param lon numeric decimal degree longitude
 #' @param lat numeric decimal degree latitude
+#' @param network sf lines collection
 #'
 #' @export
 #' @importFrom sf st_area
@@ -206,22 +207,31 @@ select_poly_overlay <- function(poly, sp){
 #'
 #' coords <- data.frame(lat = 41.42217, lon = -73.24189)
 #' terminal_reaches(coords$lon, coords$lat)
+#'
+#' network <- nhd_plus_query(lon = coords$lon, lat = coords$lat,
+#'                           dsn = "NHDFlowline", buffer_dist = 0.02)$sp$NHDFlowline
+#' t_reach <- terminal_reaches(network = network)
+#'
+#' plot(network$geometry)
+#' plot(t_reach, col = "red", add = TRUE)
 #' }
-terminal_reaches <- function(lon, lat){
+terminal_reaches <- function(lon = NA, lat = NA, network = NA){
 
-  # find vpu
-  pnt <- sf::st_sfc(sf::st_point(c(lon, lat)))
-  sf::st_crs(pnt) <- sf::st_crs(nhdR::vpu_shp)
-  vpu <- find_vpu(pnt)
+  if(all(is.na(network))){
+    pnt <- sf::st_sfc(sf::st_point(c(lon, lat)))
+    sf::st_crs(pnt) <- sf::st_crs(nhdR::vpu_shp)
+    vpu <- find_vpu(pnt)
 
-  # find lake polygon
-  poly <- nhd_plus_query(lon, lat, dsn = "NHDWaterbody",
-                         buffer_dist = 0.01)$sp$NHDWaterbody
-  poly <- poly[which.max(st_area(poly)),]
-
-  # query stream network and flow table by polygon intersection
-  network_lines <- nhd_plus_query(poly = poly,
+    poly <- nhd_plus_query(lon, lat, dsn = "NHDWaterbody",
+                           buffer_dist = 0.01)$sp$NHDWaterbody
+    poly <- poly[which.max(st_area(poly)),] # find lake polygon
+    network_lines <- nhd_plus_query(poly = poly,
                                   dsn = "NHDFlowline")$sp$NHDFlowline
+  }else{
+    network_lines <- network
+    vpu <- find_vpu(st_centroid(st_union(network_lines)))
+  }
+
   network_table <- nhd_plus_load(vpu = as.numeric(vpu), "NHDPlusAttributes",
                                  "PlusFlow")
   names(network_table) <- tolower(names(network_table))
