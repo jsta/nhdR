@@ -130,6 +130,7 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
 #' @return spatial object
 #' @importFrom sf st_read st_zm
 #' @importFrom foreign read.dbf
+#' @importFrom curl has_internet
 #' @export
 #'
 #' @details This function will ask the user to approve downloading missing data unless approve_all_dl is set to TRUE.
@@ -154,8 +155,12 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
   }
 
   nhd_plus_load_vpu <- function(vpu, component, dsn, ...){
-    vpu_path <- file.path(nhd_path(), "NHDPlus",
+    if(curl::has_internet()){
+      vpu_path <- file.path(nhd_path(), "NHDPlus",
                           basename(get_plus_remotepath(vpu, component)))
+    }else{
+      stop("This function requires internet access.")
+    }
 
     if(any(!file.exists(vpu_path))){
 

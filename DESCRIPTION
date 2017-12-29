@@ -20,7 +20,8 @@ Imports:
     ggplot2,
     gdalUtils,
     rlang,
-    dplyr
+    dplyr,
+    curl
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
