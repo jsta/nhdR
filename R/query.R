@@ -241,9 +241,12 @@ terminal_reaches <- function(lon = NA, lat = NA, network = NA){
                             .data$fromcomid %in% network_lines$comid |
                             .data$tocomid %in% network_lines$comid)
 
-  # find nodes with no downstream connections
+  # find nodes with no downstream connections and at least one upstream conn.
   res <- dplyr::filter(network_table,
                        !(network_table$tocomid %in% network_table$fromcomid))
-  dplyr::filter(network_lines, comid == res$fromcomid)
+  up_one <- network_table[network_table$tocomid  %in% res$fromcomid,]
+  res <- res[which(up_one$fromcomid != 0),]
+
+  dplyr::filter(network_lines, comid %in% res$fromcomid)
 }
 
