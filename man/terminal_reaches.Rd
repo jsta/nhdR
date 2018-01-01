@@ -4,7 +4,8 @@
 \alias{terminal_reaches}
 \title{Return terminal reaches from collection intersecting lake}
 \usage{
-terminal_reaches(lon = NA, lat = NA, network = NA)
+terminal_reaches(lon = NA, lat = NA, network = NA,
+  approve_all_dl = FALSE)
 }
 \arguments{
 \item{lon}{numeric decimal degree longitude}
@@ -12,6 +13,8 @@ terminal_reaches(lon = NA, lat = NA, network = NA)
 \item{lat}{numeric decimal degree latitude}
 
 \item{network}{sf lines collection}
+
+\item{approve_all_dl}{logical blanket approval to download all missing data}
 }
 \description{
 Return terminal reaches from collection intersecting lake

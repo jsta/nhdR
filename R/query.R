@@ -196,6 +196,7 @@ select_poly_overlay <- function(poly, sp){
 #' @param lon numeric decimal degree longitude
 #' @param lat numeric decimal degree latitude
 #' @param network sf lines collection
+#' @param approve_all_dl logical blanket approval to download all missing data
 #'
 #' @export
 #' @importFrom sf st_area
@@ -215,7 +216,7 @@ select_poly_overlay <- function(poly, sp){
 #' plot(network$geometry)
 #' plot(t_reach, col = "red", add = TRUE)
 #' }
-terminal_reaches <- function(lon = NA, lat = NA, network = NA){
+terminal_reaches <- function(lon = NA, lat = NA, network = NA, approve_all_dl = FALSE){
 
   if(all(is.na(network))){
     pnt <- sf::st_sfc(sf::st_point(c(lon, lat)))
@@ -223,7 +224,7 @@ terminal_reaches <- function(lon = NA, lat = NA, network = NA){
     vpu <- find_vpu(pnt)
 
     poly <- nhd_plus_query(lon, lat, dsn = "NHDWaterbody",
-                           buffer_dist = 0.01)$sp$NHDWaterbody
+                           buffer_dist = 0.01, approve_all_dl = approve_all_dl)$sp$NHDWaterbody
     poly <- poly[which.max(st_area(poly)),] # find lake polygon
     network_lines <- nhd_plus_query(poly = poly,
                                   dsn = "NHDFlowline")$sp$NHDFlowline
@@ -233,7 +234,7 @@ terminal_reaches <- function(lon = NA, lat = NA, network = NA){
   }
 
   network_table <- nhd_plus_load(vpu = as.numeric(vpu), "NHDPlusAttributes",
-                                 "PlusFlow")
+                                 "PlusFlow", approve_all_dl = approve_all_dl)
   names(network_table) <- tolower(names(network_table))
   names(network_lines) <- tolower(names(network_lines))
 
