@@ -7,14 +7,16 @@
 #' @param approve_all_dl logical blanket approval to download all missing data
 #' @param ... arguments passed to sf::st_read
 #'
-#' @return spatial object
+#' @return Spatial simple features object or data frame depending on the dsn
+#' type and value passed to file_ext
 #' @importFrom sf st_read
 #' @importFrom gdalUtils ogr2ogr
 #' @importFrom rlang quo
 #' @importFrom dplyr tbl select src_sqlite
 #' @export
 #'
-#' @details This function will ask the user to approve downloading missing data unless approve_all_dl is set to TRUE.
+#' @details This function will ask the user to approve downloading missing data
+#'  unless approve_all_dl is set to TRUE.
 #'
 #' @examples \dontrun{
 #' dt <- nhd_load(c("RI"), c("NHDWaterbody"))
@@ -133,7 +135,8 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
 #' @importFrom curl has_internet
 #' @export
 #'
-#' @details This function will ask the user to approve downloading missing data unless approve_all_dl is set to TRUE.
+#' @details This function will ask the user to approve downloading missing data
+#' unless approve_all_dl is set to TRUE.
 #'
 #' @examples \dontrun{
 #' # Spatial

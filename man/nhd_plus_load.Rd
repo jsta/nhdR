@@ -26,7 +26,8 @@ spatial object
 Load NHDplus layers into current session
 }
 \details{
-This function will ask the user to approve downloading missing data unless approve_all_dl is set to TRUE.
+This function will ask the user to approve downloading missing data
+unless approve_all_dl is set to TRUE.
 }
 \examples{
 \dontrun{

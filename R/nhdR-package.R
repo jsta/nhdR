@@ -11,7 +11,8 @@ NULL
 
 #' gull
 #'
-#' @title List of simple features lake polygons and flowlines within a buffer around Gull Lake Michigan.
+#' @title List of simple features lake polygons and flowlines within a buffer
+#' around Gull Lake Michigan.
 #' @description Data from NHD Plus
 #' @docType data
 #' @keywords datasets
@@ -21,7 +22,8 @@ NULL
 
 #' vpu_shp
 #'
-#' @title Low-res simple features data frame of the NHDPlus vector processing units.
+#' @title Low-res simple features data frame of the NHDPlus vector processing
+#' units.
 #'
 #' @docType data
 #' @keywords datasets

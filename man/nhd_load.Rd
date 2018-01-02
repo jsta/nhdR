@@ -19,13 +19,15 @@ nhd_load(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...)
 \item{...}{arguments passed to sf::st_read}
 }
 \value{
-spatial object
+Spatial simple features object or data frame depending on the dsn
+type and value passed to file_ext
 }
 \description{
 Load NHD layers into current session
 }
 \details{
-This function will ask the user to approve downloading missing data unless approve_all_dl is set to TRUE.
+This function will ask the user to approve downloading missing data
+ unless approve_all_dl is set to TRUE.
 }
 \examples{
 \dontrun{

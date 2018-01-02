@@ -210,7 +210,7 @@ select_poly_overlay <- function(poly, sp){
 #' terminal_reaches(coords$lon, coords$lat)
 #'
 #' network <- nhd_plus_query(lon = coords$lon, lat = coords$lat,
-#'                           dsn = "NHDFlowline", buffer_dist = 0.02)$sp$NHDFlowline
+#'                      dsn = "NHDFlowline", buffer_dist = 0.02)$sp$NHDFlowline
 #' t_reach <- terminal_reaches(network = network)
 #'
 #' plot(network$geometry)
