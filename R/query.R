@@ -216,7 +216,8 @@ select_poly_overlay <- function(poly, sp){
 #' plot(network$geometry)
 #' plot(t_reach$geometry, col = "red", add = TRUE)
 #' }
-terminal_reaches <- function(lon = NA, lat = NA, network = NA, approve_all_dl = FALSE){
+terminal_reaches <- function(lon = NA, lat = NA, network = NA,
+                             approve_all_dl = FALSE){
 
   if(all(is.na(network))){
     pnt <- sf::st_sfc(sf::st_point(c(lon, lat)))
@@ -224,7 +225,8 @@ terminal_reaches <- function(lon = NA, lat = NA, network = NA, approve_all_dl = 
     vpu <- find_vpu(pnt)
 
     poly <- nhd_plus_query(lon, lat, dsn = "NHDWaterbody",
-                           buffer_dist = 0.01, approve_all_dl = approve_all_dl)$sp$NHDWaterbody
+                           buffer_dist = 0.01,
+                           approve_all_dl = approve_all_dl)$sp$NHDWaterbody
     poly <- poly[which.max(st_area(poly)),] # find lake polygon
     network_lines <- nhd_plus_query(poly = poly,
                                   dsn = "NHDFlowline")$sp$NHDFlowline
@@ -233,7 +235,7 @@ terminal_reaches <- function(lon = NA, lat = NA, network = NA, approve_all_dl = 
     vpu <- find_vpu(st_centroid(st_union(network_lines)))
   }
 
-  network_table <- nhd_plus_load(vpu = as.numeric(vpu), "NHDPlusAttributes",
+  network_table <- nhd_plus_load(vpu = vpu, "NHDPlusAttributes",
                                  "PlusFlow", approve_all_dl = approve_all_dl)
   names(network_table) <- tolower(names(network_table))
   names(network_lines) <- tolower(names(network_lines))
@@ -290,7 +292,7 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA, approve_all_dl = FALS
     vpu <- find_vpu(st_centroid(st_union(network_lines)))
   }
 
-  network_table <- nhd_plus_load(vpu = as.numeric(vpu), "NHDPlusAttributes",
+  network_table <- nhd_plus_load(vpu = vpu, "NHDPlusAttributes",
                                  "PlusFlow", approve_all_dl = approve_all_dl)
   names(network_table) <- tolower(names(network_table))
   names(network_lines) <- tolower(names(network_lines))

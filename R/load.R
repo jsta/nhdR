@@ -149,6 +149,9 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
 #' dt <- nhd_plus_load("National", "V1_To_V2_Crosswalk",
 #'  "NHDPlusV1Network_V2Network_Crosswalk")
 #' gridcode  <- nhd_plus_load(1, "NHDPlusCatchment", "featuregridcode")
+#'
+#' # Character VPU
+#' nhd_plus_load(vpu = "10L", "NHDPlusAttributes", "PlusFlow")
 #' }
 nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
                           file_ext = NA, approve_all_dl = FALSE){
