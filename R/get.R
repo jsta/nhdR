@@ -53,6 +53,10 @@ nhd_get <- function(state = NA){
 #' }
 nhd_plus_get <- function(vpu = NA, component = "NHDSnapshot"){
 
+  if(!curl::has_internet()){
+    stop("This function requires internet access.")
+  }
+
   if(!(component %in% c("NHDSnapshot", "NHDPlusCatchment",
                         "NHDPlusAttributes", "V1_To_V2_Crosswalk"))){
     stop(paste0("Component '", component,

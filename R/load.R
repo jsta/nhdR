@@ -151,7 +151,7 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
 #' gridcode  <- nhd_plus_load(1, "NHDPlusCatchment", "featuregridcode")
 #'
 #' # Character VPU
-#' nhd_plus_load(vpu = "10L", "NHDPlusAttributes", "PlusFlow")
+#' plusflow <- nhd_plus_load(vpu = "10L", "NHDPlusAttributes", "PlusFlow")
 #' }
 nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
                           file_ext = NA, approve_all_dl = FALSE){
@@ -161,14 +161,14 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
   }
 
   nhd_plus_load_vpu <- function(vpu, component, dsn, ...){
-    if(curl::has_internet()){
-      vpu_path <- file.path(nhd_path(), "NHDPlus",
-                          basename(get_plus_remotepath(vpu, component)))
-    }else{
-      stop("This function requires internet access.")
-    }
+      vpu_path <- list.files(file.path(nhd_path(), "NHDPlus"),
+                             include.dirs = TRUE, full.names = TRUE)
+      vpu_path <- vpu_path[grep(vpu, vpu_path)]
+      vpu_path <- vpu_path[
+        seq_len(length(vpu_path)) %in% grep("7z", vpu_path)]
+      vpu_path <- vpu_path[grep(component, vpu_path)]
 
-    if(any(!file.exists(vpu_path))){
+    if(any(!file.exists(vpu_path)) | length(vpu_path) == 0){
 
       if(!approve_all_dl){
         userconsents <- utils::menu(c("Yes", "No"),
