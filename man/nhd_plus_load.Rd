@@ -41,6 +41,7 @@ dt <- nhd_plus_load(1, "NHDPlusAttributes", "PlusFlow")
 dt <- nhd_plus_load("National", "V1_To_V2_Crosswalk",
  "NHDPlusV1Network_V2Network_Crosswalk")
 gridcode  <- nhd_plus_load(1, "NHDPlusCatchment", "featuregridcode")
+flowline_vaa  <- nhd_plus_load(1, "NHDPlusAttributes", "PlusFlowlineVAA")
 
 # Character VPU
 plusflow <- nhd_plus_load(vpu = "10L", "NHDPlusAttributes", "PlusFlow")
