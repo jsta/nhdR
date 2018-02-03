@@ -133,7 +133,7 @@
 <span class='fu'>terminal_reaches</span>(<span class='no'>coords</span>$<span class='no'>lon</span>, <span class='no'>coords</span>$<span class='no'>lat</span>)
 
 <span class='no'>network</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='nhd_plus_query.html'>nhd_plus_query</a></span>(<span class='kw'>lon</span> <span class='kw'>=</span> <span class='no'>coords</span>$<span class='no'>lon</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='no'>coords</span>$<span class='no'>lat</span>,
-                          <span class='kw'>dsn</span> <span class='kw'>=</span> <span class='st'>"NHDFlowline"</span>, <span class='kw'>buffer_dist</span> <span class='kw'>=</span> <span class='fl'>0.02</span>)$<span class='no'>sp</span>$<span class='no'>NHDFlowline</span>
+                     <span class='kw'>dsn</span> <span class='kw'>=</span> <span class='st'>"NHDFlowline"</span>, <span class='kw'>buffer_dist</span> <span class='kw'>=</span> <span class='fl'>0.02</span>)$<span class='no'>sp</span>$<span class='no'>NHDFlowline</span>
 <span class='no'>t_reach</span> <span class='kw'>&lt;-</span> <span class='fu'>terminal_reaches</span>(<span class='kw'>network</span> <span class='kw'>=</span> <span class='no'>network</span>)
 
 <span class='fu'>plot</span>(<span class='no'>network</span>$<span class='no'>geometry</span>)

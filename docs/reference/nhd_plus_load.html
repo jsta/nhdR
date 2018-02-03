@@ -134,7 +134,8 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function will ask the user to approve downloading missing data unless approve_all_dl is set to TRUE.</p>
+    <p>This function will ask the user to approve downloading missing data
+unless approve_all_dl is set to TRUE.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -149,6 +150,10 @@
 <span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fu'>nhd_plus_load</span>(<span class='st'>"National"</span>, <span class='st'>"V1_To_V2_Crosswalk"</span>,
  <span class='st'>"NHDPlusV1Network_V2Network_Crosswalk"</span>)
 <span class='no'>gridcode</span>  <span class='kw'>&lt;-</span> <span class='fu'>nhd_plus_load</span>(<span class='fl'>1</span>, <span class='st'>"NHDPlusCatchment"</span>, <span class='st'>"featuregridcode"</span>)
+<span class='no'>flowline_vaa</span>  <span class='kw'>&lt;-</span> <span class='fu'>nhd_plus_load</span>(<span class='fl'>1</span>, <span class='st'>"NHDPlusAttributes"</span>, <span class='st'>"PlusFlowlineVAA"</span>)
+
+<span class='co'># Character VPU</span>
+<span class='no'>plusflow</span> <span class='kw'>&lt;-</span> <span class='fu'>nhd_plus_load</span>(<span class='kw'>vpu</span> <span class='kw'>=</span> <span class='st'>"10L"</span>, <span class='st'>"NHDPlusAttributes"</span>, <span class='st'>"PlusFlow"</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
