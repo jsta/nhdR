@@ -26,12 +26,11 @@ Usage
 
 ``` r
 library(nhdR)
-#> Loading required package: maps
 ```
 
 ### NHD Plus
 
-Unlike the standard NHD, the NHD-Plus exports are organized by vector processing unit (vpu). See below for a low resolution vpu map (also `nhdR::vpu_shp`). A hi-res version can be found [here](http://www.horizon-systems.com/NHDPlus/NHDPlusV2_data.php).
+NHD-Plus exports are organized by vector processing unit (vpu). See below for a low resolution vpu map (also `nhdR::vpu_shp`). A hi-res version can be found [here](http://www.horizon-systems.com/NHDPlus/NHDPlusV2_data.php).
 
 ![](images/unnamed-chunk-3-1.png)
 
@@ -104,6 +103,8 @@ dt <- nhd_plus_load(vpu = 4, "NHDSnapshot", "NHDWaterbody")
 ```
 
 ### NHD
+
+NHD exports are organized by US state.
 
 ``` r
 nhd_get(state = c("DC", "HI"))

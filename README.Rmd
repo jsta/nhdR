@@ -35,13 +35,13 @@ This package also requires an installation of [7-zip](http://www.7-zip.org/) tha
 ## Usage
 ### Load package
 
-```{r }
+```{r message=FALSE, results='hide'}
 library(nhdR)
 ```
 
 ### NHD Plus
 
-Unlike the standard NHD, the NHD-Plus exports are organized by vector processing unit (vpu). See below for a low resolution vpu map (also `nhdR::vpu_shp`). A hi-res version can be found [here](http://www.horizon-systems.com/NHDPlus/NHDPlusV2_data.php).
+NHD-Plus exports are organized by vector processing unit (vpu). See below for a low resolution vpu map (also `nhdR::vpu_shp`). A hi-res version can be found [here](http://www.horizon-systems.com/NHDPlus/NHDPlusV2_data.php).
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 library(ggplot2)
@@ -105,6 +105,8 @@ dt <- nhd_plus_load(vpu = 4, "NHDSnapshot", "NHDWaterbody")
 ```
 
 ### NHD
+
+NHD exports are organized by US state. 
 
 ```{r eval=FALSE}
 nhd_get(state = c("DC", "HI"))
