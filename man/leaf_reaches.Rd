@@ -23,8 +23,8 @@ Return leaf reaches from a network or query intersecting lake
 coords <- data.frame(lat = 20.79722, lon = -156.47833)
 leaf_reaches(coords$lon, coords$lat)
 
-coords <- data.frame(lat = 41.42217, lon = -73.24189)
-leaf_reaches(coords$lon, coords$lat)
+coords  <- data.frame(lat = 41.42217, lon = -73.24189)
+l_reach <- leaf_reaches(coords$lon, coords$lat)
 
 network <- nhd_plus_query(lon = coords$lon, lat = coords$lat,
                           dsn = "NHDFlowline", buffer_dist = 0.02)$sp$NHDFlowline
