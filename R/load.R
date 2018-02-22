@@ -207,9 +207,9 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
     }
   }
 
-  res <- lapply(vpu, nhd_plus_load_vpu, component = component, dsn = dsn)
+  res        <- lapply(vpu, nhd_plus_load_vpu, component = component, dsn = dsn)
   is_spatial <- unlist(lapply(res, function(x) x$is_spatial))
-  res <- do.call("rbind", lapply(res, function(x) x$res))
+  res        <- do.call("rbind", lapply(res, function(x) x$res))
 
   if(any(is_spatial)){
     invisible(prj <- sf::st_crs(nhd_plus_load_vpu(vpu[1],

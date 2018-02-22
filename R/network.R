@@ -131,9 +131,12 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
 #'
 #' @examples \dontrun{
 #' coords <- data.frame(lat = 20.79722, lon = -156.47833)
-#' extract_network(coords$lon, coords$lat)
+#' res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
+#'
+#' mapview(res)
 #' }
-extract_network <- function(lon = NA, lat = NA, approve_all_dl = FALSE){
+extract_network <- function(lon = NA, lat = NA, maxsteps = 3,
+                            approve_all_dl = FALSE){
 
   # retrieve network table
   pnt             <- st_sfc(st_point(c(lon, lat)))
@@ -143,9 +146,7 @@ extract_network <- function(lon = NA, lat = NA, approve_all_dl = FALSE){
                                  "PlusFlow", approve_all_dl = approve_all_dl)
   names(network_table) <- tolower(names(network_table))
 
-  #browser()
 
-  # retrieve collection of terminal reaches
   t_reaches     <- terminal_reaches(lon, lat)
   temp_reaches  <- neighbors(t_reaches$comid, network_table, direction = "up")
   res_reaches   <- temp_reaches
@@ -155,15 +156,24 @@ extract_network <- function(lon = NA, lat = NA, approve_all_dl = FALSE){
   while(!all_terminal){
     temp_reaches <- neighbors(temp_reaches$fromcomid,
                               network_table, direction = "up")
-    if(nrow(temp_reaches) == 0){
+    if(nrow(temp_reaches) == 0 | steps == maxsteps){
       all_terminal <- TRUE
     }else{
      res_reaches <- rbind(res_reaches, temp_reaches)
-     steps <- steps + 1
+     steps       <- steps + 1
     }
   }
 
-  list(network = res_reaches, steps = steps)
+  # pull geospatial lines
+  lines_file <- nhd_plus_list(vpu, "NHDSnapshot", full.names = TRUE,
+                              file_ext = "shp")
+  lines_file <- lines_file[grep("NHDFlowline", lines_file)]
+
+  # load full network for now evetually speed up with sql
+  lines        <- nhd_plus_load(vpu, "NHDSnapshot", "NHDFlowline")
+  names(lines) <- tolower(names(lines))
+
+  dplyr::filter(lines, comid %in% res_reaches$tocomid)
 }
 
 neighbors <- function(node, network_table, direction = c("up", "down")) {
@@ -171,6 +181,7 @@ neighbors <- function(node, network_table, direction = c("up", "down")) {
     stop("not implemented yet")
   }
   if (direction == "up"){
-    dplyr::filter(network_table, tocomid %in% node)
+    res <- dplyr::filter(network_table, tocomid %in% node)
+    dplyr::filter(res, fromcomid != 0)
   }
 }
