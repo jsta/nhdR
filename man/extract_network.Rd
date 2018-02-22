@@ -18,6 +18,7 @@ Return stream network upstream of a waterbody
 }
 \examples{
 \dontrun{
-# waterbody
+coords <- data.frame(lat = 20.79722, lon = -156.47833)
+extract_network(coords$lon, coords$lat)
 }
 }

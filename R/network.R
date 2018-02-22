@@ -82,7 +82,8 @@ terminal_reaches <- function(lon = NA, lat = NA, network = NA,
 #' plot(network$geometry)
 #' plot(l_reach$geometry, col = "red", add = TRUE)
 #' }
-leaf_reaches <- function(lon = NA, lat = NA, network = NA, approve_all_dl = FALSE){
+leaf_reaches <- function(lon = NA, lat = NA, network = NA,
+                         approve_all_dl = FALSE){
 
   if(all(is.na(network))){
     pnt <- sf::st_sfc(sf::st_point(c(lon, lat)))
@@ -129,10 +130,47 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA, approve_all_dl = FALS
 #' @export
 #'
 #' @examples \dontrun{
-#' # waterbody
+#' coords <- data.frame(lat = 20.79722, lon = -156.47833)
+#' extract_network(coords$lon, coords$lat)
 #' }
 extract_network <- function(lon = NA, lat = NA, approve_all_dl = FALSE){
 
-  # run terminal_reaches
+  # retrieve network table
+  pnt             <- st_sfc(st_point(c(lon, lat)))
+  st_crs(pnt)     <- st_crs(nhdR::vpu_shp)
+  vpu             <- find_vpu(pnt)
+  network_table   <- nhd_plus_load(vpu = vpu, "NHDPlusAttributes",
+                                 "PlusFlow", approve_all_dl = approve_all_dl)
+  names(network_table) <- tolower(names(network_table))
+
+  #browser()
+
+  # retrieve collection of terminal reaches
+  t_reaches     <- terminal_reaches(lon, lat)
+  temp_reaches  <- neighbors(t_reaches$comid, network_table, direction = "up")
+  res_reaches   <- temp_reaches
+
+  all_terminal <- FALSE
+  steps        <- 0
+  while(!all_terminal){
+    temp_reaches <- neighbors(temp_reaches$fromcomid,
+                              network_table, direction = "up")
+    if(nrow(temp_reaches) == 0){
+      all_terminal <- TRUE
+    }else{
+     res_reaches <- rbind(res_reaches, temp_reaches)
+     steps <- steps + 1
+    }
+  }
+
+  list(network = res_reaches, steps = steps)
 }
 
+neighbors <- function(node, network_table, direction = c("up", "down")) {
+  if(direction == "down"){
+    stop("not implemented yet")
+  }
+  if (direction == "up"){
+    dplyr::filter(network_table, tocomid %in% node)
+  }
+}
