@@ -16,7 +16,8 @@ leaf_reaches(lon = NA, lat = NA, network = NA, approve_all_dl = FALSE)
 \item{approve_all_dl}{logical blanket approval to download all missing data}
 }
 \description{
-Return leaf reaches from a network or query intersecting lake
+A leaf reach is a stream flowline that has upstream connections but is
+not in the focal set.
 }
 \examples{
 \dontrun{

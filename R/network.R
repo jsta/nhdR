@@ -62,6 +62,9 @@ terminal_reaches <- function(lon = NA, lat = NA, network = NA,
 
 #' Return leaf reaches from a network or query intersecting lake
 #'
+#' A leaf reach is a stream flowline that has upstream connections but is
+#' not in the focal set.
+#'
 #' @inheritParams terminal_reaches
 #'
 #' @export
@@ -91,8 +94,9 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
     vpu <- find_vpu(pnt)
 
     poly <- nhd_plus_query(lon, lat, dsn = "NHDWaterbody",
-                           buffer_dist = 0.01, approve_all_dl = approve_all_dl)$sp$NHDWaterbody
-    poly <- poly[which.max(st_area(poly)),] # find lake polygon
+                    buffer_dist = 0.01,
+                    approve_all_dl = approve_all_dl)$sp$NHDWaterbody
+    poly          <- poly[which.max(st_area(poly)),] # find lake polygon
     network_lines <- nhd_plus_query(poly = poly,
                                     dsn = "NHDFlowline")$sp$NHDFlowline
   }else{
