@@ -4,8 +4,8 @@
 \alias{terminal_reaches}
 \title{Return terminal reaches from collection intersecting lake}
 \usage{
-terminal_reaches(lon = NA, lat = NA, network = NA,
-  approve_all_dl = FALSE)
+terminal_reaches(lon = NA, lat = NA, network = NA, lakewise = FALSE,
+  lakesize_threshold = 4, approve_all_dl = FALSE)
 }
 \arguments{
 \item{lon}{numeric decimal degree longitude}
@@ -13,6 +13,10 @@ terminal_reaches(lon = NA, lat = NA, network = NA,
 \item{lat}{numeric decimal degree latitude}
 
 \item{network}{sf lines collection}
+
+\item{lakewise}{logical return waterbody exit of all in-network lakes?}
+
+\item{lakesize_threshold}{numeric above which to count as a lake (ha)}
 
 \item{approve_all_dl}{logical blanket approval to download all missing data}
 }
@@ -35,10 +39,15 @@ t_reach <- terminal_reaches(coords$lon, coords$lat)
 mapview(st_as_sf(coords, coords = c("lon", "lat"), crs = 4326)) +
 mapview(t_reach$geometry, color = "red")
 
+coords <- data.frame(lat = 41.859080, lon = -71.575422)
 network <- nhd_plus_query(lon = coords$lon, lat = coords$lat,
                      dsn = "NHDFlowline", buffer_dist = 0.02)$sp$NHDFlowline
 t_reach <- terminal_reaches(network = network)
+t_reach_lake <- terminal_reaches(network = network, lakewise = TRUE,
+                                 lakesize_threshold = 1)
 
-mapview(network) + mapview(t_reach, color = "red")
+mapview(network) + mapview(t_reach, color = "red") +
+mapview(t_reach_lake, color = "green")
+
 }
 }

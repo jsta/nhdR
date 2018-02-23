@@ -7,6 +7,8 @@
 #' @param lon numeric decimal degree longitude
 #' @param lat numeric decimal degree latitude
 #' @param network sf lines collection
+#' @param lakewise logical return waterbody exit of all in-network lakes?
+#' @param lakesize_threshold numeric above which to count as a lake (ha)
 #' @param approve_all_dl logical blanket approval to download all missing data
 #'
 #' @export
@@ -26,14 +28,19 @@
 #' mapview(st_as_sf(coords, coords = c("lon", "lat"), crs = 4326)) +
 #' mapview(t_reach$geometry, color = "red")
 #'
+#' coords <- data.frame(lat = 41.859080, lon = -71.575422)
 #' network <- nhd_plus_query(lon = coords$lon, lat = coords$lat,
 #'                      dsn = "NHDFlowline", buffer_dist = 0.02)$sp$NHDFlowline
 #' t_reach <- terminal_reaches(network = network)
+#' t_reach_lake <- terminal_reaches(network = network, lakewise = TRUE,
+#'                                  lakesize_threshold = 1)
 #'
-#' mapview(network) + mapview(t_reach, color = "red")
+#' mapview(network) + mapview(t_reach, color = "red") +
+#' mapview(t_reach_lake, color = "green")
+#'
 #' }
-terminal_reaches <- function(lon = NA, lat = NA, network = NA,
-                             approve_all_dl = FALSE){
+terminal_reaches <- function(lon = NA, lat = NA, network = NA, lakewise = FALSE,
+                             lakesize_threshold = 4, approve_all_dl = FALSE){
 
   if(all(is.na(network))){
     pnt         <- st_sfc(st_point(c(lon, lat)))
@@ -44,6 +51,7 @@ terminal_reaches <- function(lon = NA, lat = NA, network = NA,
                            buffer_dist = 0.01,
                            approve_all_dl = approve_all_dl)$sp$NHDWaterbody
     poly <- poly[which.max(st_area(poly)),] # find lake polygon
+
     network_lines <- nhd_plus_query(poly = poly,
                                     dsn = "NHDFlowline")$sp$NHDFlowline
   }else{
@@ -60,12 +68,37 @@ terminal_reaches <- function(lon = NA, lat = NA, network = NA,
                                  .data$fromcomid %in% network_lines$comid |
                                    .data$tocomid %in% network_lines$comid)
 
-  # find nodes with no downstream connections and at least one upstream conn.
-  res <- dplyr::filter(network_table,
-                       !(network_table$tocomid %in% network_table$fromcomid))
-  up_one <- network_table[network_table$tocomid  %in% res$fromcomid,]
-  res <- res[which(up_one$fromcomid != 0),]
+  if(lakewise){
+    # pull lines that intersect a lake
+    network_lines <- dplyr::filter(network_lines, .data$wbareacomi != 0)
 
+    # filter lines to those that intersect a lake larger than size threshold
+    poly <- nhd_plus_query(poly = st_convex_hull(
+      st_union(st_cast(network_lines, "MULTILINESTRING"))),
+      dsn = "NHDWaterbody",
+      buffer_dist = 0.01,
+      approve_all_dl = approve_all_dl)$sp$NHDWaterbody
+
+    poly <- poly[st_area(poly) >
+                 units::as_units(lakesize_threshold, "ha"),]
+
+    intersecting_reaches <- network_lines[unlist(lapply(
+      st_intersects(network_lines, poly), function(x) length(x) > 0)),]
+
+    network_table <- dplyr::filter(network_table,
+                                   .data$fromcomid %in% intersecting_reaches$comid |
+                                     .data$tocomid %in% intersecting_reaches$comid)
+
+  }
+
+  # find nodes with no downstream connections.
+  res    <- dplyr::filter(network_table,
+                       !(network_table$tocomid %in% network_table$fromcomid))
+  # find nodes with at least one upstream conn.
+  up_one <- network_table[network_table$tocomid  %in% res$fromcomid,]
+  res    <- res[which(up_one$fromcomid != 0),]
+
+  # find nodes with no downstream and at least one upstream conn.
   dplyr::filter(network_lines, .data$comid %in% res$fromcomid)
 }
 
