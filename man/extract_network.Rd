@@ -4,12 +4,15 @@
 \alias{extract_network}
 \title{Return stream network upstream of a waterbody}
 \usage{
-extract_network(lon = NA, lat = NA, approve_all_dl = FALSE)
+extract_network(lon = NA, lat = NA, maxsteps = 3,
+  approve_all_dl = FALSE)
 }
 \arguments{
 \item{lon}{numeric decimal degree longitude}
 
 \item{lat}{numeric decimal degree latitude}
+
+\item{maxsteps}{maximum number of stream climbing iterations}
 
 \item{approve_all_dl}{logical blanket approval to download all missing data}
 }
@@ -18,7 +21,12 @@ Return stream network upstream of a waterbody
 }
 \examples{
 \dontrun{
+library(mapview)
+library(sf)
+
 coords <- data.frame(lat = 20.79722, lon = -156.47833)
-extract_network(coords$lon, coords$lat)
+res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
+
+mapview(res)
 }
 }

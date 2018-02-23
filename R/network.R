@@ -6,7 +6,7 @@
 #' @param approve_all_dl logical blanket approval to download all missing data
 #'
 #' @export
-#' @importFrom sf st_area st_centroid st_union
+#' @importFrom sf st_area st_centroid st_union st_crs st_sfc st_point st_crs<-
 #' @importFrom rlang .data
 #'
 #' @examples \dontrun{
@@ -27,9 +27,9 @@ terminal_reaches <- function(lon = NA, lat = NA, network = NA,
                              approve_all_dl = FALSE){
 
   if(all(is.na(network))){
-    pnt <- sf::st_sfc(sf::st_point(c(lon, lat)))
-    sf::st_crs(pnt) <- sf::st_crs(nhdR::vpu_shp)
-    vpu <- find_vpu(pnt)
+    pnt         <- st_sfc(st_point(c(lon, lat)))
+    st_crs(pnt) <- st_crs(nhdR::vpu_shp)
+    vpu         <- find_vpu(pnt)
 
     poly <- nhd_plus_query(lon, lat, dsn = "NHDWaterbody",
                            buffer_dist = 0.01,
@@ -126,10 +126,14 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
 #' Return stream network upstream of a waterbody
 #'
 #' @inheritParams terminal_reaches
+#' @param maxsteps maximum number of stream climbing iterations
 #'
 #' @export
 #'
 #' @examples \dontrun{
+#' library(mapview)
+#' library(sf)
+#'
 #' coords <- data.frame(lat = 20.79722, lon = -156.47833)
 #' res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
 #'
@@ -173,7 +177,7 @@ extract_network <- function(lon = NA, lat = NA, maxsteps = 3,
   lines        <- nhd_plus_load(vpu, "NHDSnapshot", "NHDFlowline")
   names(lines) <- tolower(names(lines))
 
-  dplyr::filter(lines, comid %in% res_reaches$tocomid)
+  dplyr::filter(lines, .data$comid %in% res_reaches$tocomid)
 }
 
 neighbors <- function(node, network_table, direction = c("up", "down")) {
@@ -181,7 +185,7 @@ neighbors <- function(node, network_table, direction = c("up", "down")) {
     stop("not implemented yet")
   }
   if (direction == "up"){
-    res <- dplyr::filter(network_table, tocomid %in% node)
-    dplyr::filter(res, fromcomid != 0)
+    res <- dplyr::filter(network_table, .data$tocomid %in% node)
+    dplyr::filter(res, .data$fromcomid != 0)
   }
 }
