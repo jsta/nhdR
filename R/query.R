@@ -42,9 +42,9 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
   }
 
   if(all(!is.na(c(lon, lat)))){
-    pnt <- sf::st_sfc(sf::st_point(c(lon, lat)))
-    sf::st_crs(pnt) <- sf::st_crs(nhdR::vpu_shp)
-    vpu <- find_vpu(pnt)
+    pnt         <- st_sfc(st_point(c(lon, lat)))
+    st_crs(pnt) <- st_crs(nhdR::vpu_shp)
+    vpu         <- find_vpu(pnt)
 
     sp <- lapply(dsn, function(x) nhd_plus_load(vpu = vpu, dsn = x,
                                           approve_all_dl = approve_all_dl))
@@ -53,12 +53,12 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
     sp_sub <- select_point_overlay(pnt = pnt, sp = sp,
                                    buffer_dist = buffer_dist)
 
-    pnt <- sf::st_transform(pnt, sf::st_crs(sp_sub[[1]]))
+    pnt <- st_transform(pnt, sf::st_crs(sp_sub[[1]]))
     list(pnt = pnt, sp = sp_sub)
   }else{
 
-    poly <- st_transform(poly, sf::st_crs(nhdR::vpu_shp))
-    vpu <- find_vpu(poly)
+    poly <- st_transform(poly, st_crs(nhdR::vpu_shp))
+    vpu  <- find_vpu(poly)
 
     sp <- lapply(dsn, function(x) nhd_plus_load(vpu = vpu, dsn = x,
                                           approve_all_dl = approve_all_dl))
@@ -90,18 +90,18 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
 
 nhd_query <- function(lon, lat, dsn, buffer_dist = 0.05){
 
-  pnt <- sf::st_sfc(sf::st_point(c(lon, lat)))
-  sf::st_crs(pnt) <- sf::st_crs(nhdR::vpu_shp)
+  pnt         <- st_sfc(st_point(c(lon, lat)))
+  st_crs(pnt) <- st_crs(nhdR::vpu_shp)
 
-  state <- find_state(pnt)
+  state     <- find_state(pnt)
   state_abb <- datasets::state.abb[tolower(datasets::state.name) == state]
 
-  sp <- lapply(dsn, function(x) nhd_load(state = state_abb, dsn = x))
+  sp        <- lapply(dsn, function(x) nhd_load(state = state_abb, dsn = x))
   names(sp) <- dsn
 
-  sp_sub <- select_point_overlay(pnt = pnt, sp = sp, buffer_dist = buffer_dist)
+  sp_sub    <- select_point_overlay(pnt = pnt, sp = sp, buffer_dist = buffer_dist)
 
-  pnt <- sf::st_transform(pnt, sf::st_crs(sp_sub[[1]]))
+  pnt       <- st_transform(pnt, sf::st_crs(sp_sub[[1]]))
 
   list(pnt = pnt, sp = sp_sub)
 }
@@ -166,9 +166,9 @@ select_point_overlay <- function(pnt, sp, buffer_dist = 0.05){
 select_poly_overlay <- function(poly, sp){
 
   utm_zone <- long2UTM(sf::st_coordinates(poly)[1])
-  crs <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
+  crs      <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
 
-  poly      <- sf::st_transform(poly, crs = crs)
+  poly      <- st_transform(poly, crs = crs)
 
   if(all(class(sp) == "list")){
     sp    <- lapply(sp, function(x) sf::st_transform(x, crs = crs))

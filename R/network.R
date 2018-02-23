@@ -169,15 +169,18 @@ extract_network <- function(lon = NA, lat = NA, maxsteps = 3,
   }
 
   # pull geospatial lines
-  lines_file <- nhd_plus_list(vpu, "NHDSnapshot", full.names = TRUE,
-                              file_ext = "shp")
-  lines_file <- lines_file[grep("NHDFlowline", lines_file)]
-
   # load full network for now evetually speed up with sql
+  # lines_file <- nhd_plus_list(vpu, "NHDSnapshot", full.names = TRUE,
+  #                             file_ext = "shp")
+  # lines_file <- lines_file[grep("NHDFlowline", lines_file)]
   lines        <- nhd_plus_load(vpu, "NHDSnapshot", "NHDFlowline")
+
   names(lines) <- tolower(names(lines))
 
-  dplyr::filter(lines, .data$comid %in% res_reaches$tocomid)
+  utm_zone <- long2UTM(sf::st_coordinates(pnt)[1])
+  crs      <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
+
+  st_transform(dplyr::filter(lines, .data$comid %in% res_reaches$tocomid), crs = crs)
 }
 
 neighbors <- function(node, network_table, direction = c("up", "down")) {
