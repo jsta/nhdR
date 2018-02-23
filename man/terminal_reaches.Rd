@@ -17,21 +17,28 @@ terminal_reaches(lon = NA, lat = NA, network = NA,
 \item{approve_all_dl}{logical blanket approval to download all missing data}
 }
 \description{
-Return terminal reaches from collection intersecting lake
+In the case of a network query, a terminal reach is a stream flowline that
+has no downstream reaches in-network. In the case of a point query, a
+terminal reach is a flowline that exits the intersecting surface waterbody.
 }
 \examples{
 \dontrun{
-coords <- data.frame(lat = 20.79722, lon = -156.47833)
-terminal_reaches(coords$lon, coords$lat)
+library(sf)
+library(mapview)
 
-coords <- data.frame(lat = 41.42217, lon = -73.24189)
-terminal_reaches(coords$lon, coords$lat)
+coords  <- data.frame(lat = 20.79722, lon = -156.47833)
+t_reach <- terminal_reaches(coords$lon, coords$lat)
+
+coords  <- data.frame(lat = 41.42217, lon = -73.24189)
+t_reach <- terminal_reaches(coords$lon, coords$lat)
+
+mapview(st_as_sf(coords, coords = c("lon", "lat"), crs = 4326)) +
+mapview(t_reach$geometry, color = "red")
 
 network <- nhd_plus_query(lon = coords$lon, lat = coords$lat,
                      dsn = "NHDFlowline", buffer_dist = 0.02)$sp$NHDFlowline
 t_reach <- terminal_reaches(network = network)
 
-plot(network$geometry)
-plot(t_reach$geometry, col = "red", add = TRUE)
+mapview(network) + mapview(t_reach, color = "red")
 }
 }
