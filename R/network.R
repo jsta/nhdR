@@ -12,8 +12,9 @@
 #' @param approve_all_dl logical blanket approval to download all missing data
 #'
 #' @export
-#' @importFrom sf st_area st_centroid st_union st_crs st_sfc st_point st_crs<-
+#' @importFrom sf st_area st_centroid st_union st_crs st_sfc st_point st_crs<- st_cast
 #' @importFrom rlang .data
+#' @importFrom units as_units
 #'
 #' @examples \dontrun{
 #' library(sf)
