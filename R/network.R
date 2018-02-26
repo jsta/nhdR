@@ -31,12 +31,12 @@
 #'
 #' coords <- data.frame(lat = 41.859080, lon = -71.575422)
 #' network <- nhd_plus_query(lon = coords$lon, lat = coords$lat,
-#'                      dsn = "NHDFlowline", buffer_dist = 0.02)$sp$NHDFlowline
-#' t_reach <- terminal_reaches(network = network)
+#'                      dsn = "NHDFlowline", buffer_dist = 0.05)$sp$NHDFlowline
+#' t_reach      <- terminal_reaches(network = network)
 #' t_reach_lake <- terminal_reaches(network = network, lakewise = TRUE,
 #'                                  lakesize_threshold = 1)
 #'
-#' mapview(network) + mapview(t_reach, color = "red") +
+#' mapview(poly) + mapview(network) + mapview(t_reach, color = "red") +
 #' mapview(t_reach_lake, color = "green")
 #'
 #' }
@@ -87,17 +87,20 @@ terminal_reaches <- function(lon = NA, lat = NA, network = NA, lakewise = FALSE,
       st_intersects(network_lines, poly), function(x) length(x) > 0)),]
 
     network_table <- dplyr::filter(network_table,
-                                   .data$fromcomid %in% intersecting_reaches$comid |
-                                     .data$tocomid %in% intersecting_reaches$comid)
+                                   .data$fromcomid %in% intersecting_reaches$comid)
 
   }
+
 
   # find nodes with no downstream connections.
   res    <- dplyr::filter(network_table,
                        !(network_table$tocomid %in% network_table$fromcomid))
-  # find nodes with at least one upstream conn.
-  up_one <- network_table[network_table$tocomid  %in% res$fromcomid,]
-  res    <- res[which(up_one$fromcomid != 0),]
+
+  if(!lakewise){
+    # find nodes with at least one upstream conn.
+    up_one <- network_table[network_table$tocomid  %in% res$fromcomid,]
+    res    <- res[which(up_one$fromcomid != 0),]
+  }
 
   # find nodes with no downstream and at least one upstream conn.
   dplyr::filter(network_lines, .data$comid %in% res$fromcomid)

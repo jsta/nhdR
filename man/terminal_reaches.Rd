@@ -41,12 +41,12 @@ mapview(t_reach$geometry, color = "red")
 
 coords <- data.frame(lat = 41.859080, lon = -71.575422)
 network <- nhd_plus_query(lon = coords$lon, lat = coords$lat,
-                     dsn = "NHDFlowline", buffer_dist = 0.02)$sp$NHDFlowline
-t_reach <- terminal_reaches(network = network)
+                     dsn = "NHDFlowline", buffer_dist = 0.05)$sp$NHDFlowline
+t_reach      <- terminal_reaches(network = network)
 t_reach_lake <- terminal_reaches(network = network, lakewise = TRUE,
                                  lakesize_threshold = 1)
 
-mapview(network) + mapview(t_reach, color = "red") +
+mapview(poly) + mapview(network) + mapview(t_reach, color = "red") +
 mapview(t_reach_lake, color = "green")
 
 }
