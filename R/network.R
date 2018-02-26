@@ -7,6 +7,7 @@
 #' @param lon numeric decimal degree longitude
 #' @param lat numeric decimal degree latitude
 #' @param network sf lines collection
+#' @param buffer_dist numeric buffer around lat-lon point in dec. deg.
 #' @param lakewise logical return waterbody exit of all in-network lakes?
 #' @param lakesize_threshold numeric above which to count as a lake (ha)
 #' @param approve_all_dl logical blanket approval to download all missing data
@@ -40,7 +41,8 @@
 #' mapview(t_reach_lake, color = "green")
 #'
 #' }
-terminal_reaches <- function(lon = NA, lat = NA, network = NA, lakewise = FALSE,
+terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
+                             network = NA, lakewise = FALSE,
                              lakesize_threshold = 4, approve_all_dl = FALSE){
 
   if(all(is.na(network))){
@@ -49,7 +51,7 @@ terminal_reaches <- function(lon = NA, lat = NA, network = NA, lakewise = FALSE,
     vpu         <- find_vpu(pnt)
 
     poly <- nhd_plus_query(lon, lat, dsn = "NHDWaterbody",
-                           buffer_dist = 0.01,
+                           buffer_dist = buffer_dist,
                            approve_all_dl = approve_all_dl)$sp$NHDWaterbody
     poly <- poly[which.max(st_area(poly)),] # find lake polygon
 
@@ -189,7 +191,7 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
 #'
 #' mapview(res)
 #' }
-extract_network <- function(lon = NA, lat = NA, maxsteps = 3,
+extract_network <- function(lon = NA, lat = NA, buffer_dist = 0.01, maxsteps = 3,
                             approve_all_dl = FALSE){
 
   # retrieve network table
@@ -201,7 +203,7 @@ extract_network <- function(lon = NA, lat = NA, maxsteps = 3,
   names(network_table) <- tolower(names(network_table))
 
 
-  t_reaches     <- terminal_reaches(lon, lat)
+  t_reaches     <- terminal_reaches(lon, lat, buffer_dist = buffer_dist)
   temp_reaches  <- neighbors(t_reaches$comid, network_table, direction = "up")
   res_reaches   <- temp_reaches
 

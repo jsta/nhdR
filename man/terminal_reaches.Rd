@@ -4,13 +4,15 @@
 \alias{terminal_reaches}
 \title{Return terminal reaches from collection intersecting lake}
 \usage{
-terminal_reaches(lon = NA, lat = NA, network = NA, lakewise = FALSE,
-  lakesize_threshold = 4, approve_all_dl = FALSE)
+terminal_reaches(lon = NA, lat = NA, buffer_dist = 0.01, network = NA,
+  lakewise = FALSE, lakesize_threshold = 4, approve_all_dl = FALSE)
 }
 \arguments{
 \item{lon}{numeric decimal degree longitude}
 
 \item{lat}{numeric decimal degree latitude}
+
+\item{buffer_dist}{numeric buffer around lat-lon point in dec. deg.}
 
 \item{network}{sf lines collection}
 
