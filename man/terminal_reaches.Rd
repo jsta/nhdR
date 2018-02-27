@@ -5,7 +5,7 @@
 \title{Return terminal reaches from collection intersecting lake}
 \usage{
 terminal_reaches(lon = NA, lat = NA, buffer_dist = 0.01, network = NA,
-  lakewise = FALSE, lakesize_threshold = 4, approve_all_dl = FALSE)
+  lakewise = FALSE, lakesize_threshold = 4, approve_all_dl = FALSE, ...)
 }
 \arguments{
 \item{lon}{numeric decimal degree longitude}
@@ -21,6 +21,8 @@ terminal_reaches(lon = NA, lat = NA, buffer_dist = 0.01, network = NA,
 \item{lakesize_threshold}{numeric above which to count as a lake (ha)}
 
 \item{approve_all_dl}{logical blanket approval to download all missing data}
+
+\item{...}{parameters passed on to sf::st_read}
 }
 \description{
 In the case of a network query, a terminal reach is a stream flowline that

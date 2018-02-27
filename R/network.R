@@ -11,9 +11,10 @@
 #' @param lakewise logical return waterbody exit of all in-network lakes?
 #' @param lakesize_threshold numeric above which to count as a lake (ha)
 #' @param approve_all_dl logical blanket approval to download all missing data
+#' @param ... parameters passed on to sf::st_read
 #'
 #' @export
-#' @importFrom sf st_area st_centroid st_union st_crs st_sfc st_point st_crs<- st_cast st_convex_hull
+#' @importFrom sf st_area st_centroid st_union st_crs st_sfc st_point st_crs<- st_cast st_convex_hull filter.sf
 #' @importFrom rlang .data
 #' @importFrom units as_units
 #'
@@ -43,7 +44,7 @@
 #' }
 terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
                              network = NA, lakewise = FALSE,
-                             lakesize_threshold = 4, approve_all_dl = FALSE){
+                             lakesize_threshold = 4, approve_all_dl = FALSE, ...){
 
   if(all(is.na(network))){
     pnt         <- st_sfc(st_point(c(lon, lat)))
@@ -52,18 +53,18 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
 
     poly <- nhd_plus_query(lon, lat, dsn = "NHDWaterbody",
                            buffer_dist = buffer_dist,
-                           approve_all_dl = approve_all_dl)$sp$NHDWaterbody
+                           approve_all_dl = approve_all_dl, ...)$sp$NHDWaterbody
     poly <- poly[which.max(st_area(poly)),] # find lake polygon
 
     network_lines <- nhd_plus_query(poly = poly,
-                                    dsn = "NHDFlowline")$sp$NHDFlowline
+                                    dsn = "NHDFlowline", ...)$sp$NHDFlowline
   }else{
     network_lines <- network
     vpu <- find_vpu(st_centroid(st_union(network_lines)))
   }
 
   network_table <- nhd_plus_load(vpu = vpu, "NHDPlusAttributes",
-                                 "PlusFlow", approve_all_dl = approve_all_dl)
+                                 "PlusFlow", approve_all_dl = approve_all_dl, ...)
   names(network_table) <- tolower(names(network_table))
   names(network_lines) <- tolower(names(network_lines))
 
@@ -80,7 +81,7 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
       st_union(st_cast(network_lines, "MULTILINESTRING"))),
       dsn = "NHDWaterbody",
       buffer_dist = 0.01,
-      approve_all_dl = approve_all_dl)$sp$NHDWaterbody
+      approve_all_dl = approve_all_dl, ...)$sp$NHDWaterbody
 
     poly <- poly[st_area(poly) >
                  units::as_units(lakesize_threshold, "ha"),]
