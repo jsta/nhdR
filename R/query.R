@@ -7,6 +7,7 @@
 #' @param dsn character data source
 #' @param buffer_dist numeric buffer in units of coordinate degrees
 #' @param approve_all_dl logical blanket approval to download all missing data
+#' @param ... parameters passed on to sf::st_read
 #' @examples \dontrun{
 #' library(sf)
 #' wk <- wikilake::lake_wiki("Gull Lake (Michigan)")
@@ -35,7 +36,7 @@
 #' }
 
 nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
-                           dsn, buffer_dist = 0.05, approve_all_dl = FALSE){
+                           dsn, buffer_dist = 0.05, approve_all_dl = FALSE, ...){
 
   if(all(!is.na(c(lon, lat, poly)))){
     stop("Must specify either lon and lat or poly but not both.")
@@ -47,7 +48,7 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
     vpu         <- find_vpu(pnt)
 
     sp <- lapply(dsn, function(x) nhd_plus_load(vpu = vpu, dsn = x,
-                                          approve_all_dl = approve_all_dl))
+                                          approve_all_dl = approve_all_dl, ...))
     names(sp) <- dsn
 
     sp_sub <- select_point_overlay(pnt = pnt, sp = sp,
@@ -61,7 +62,7 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
     vpu  <- find_vpu(poly)
 
     sp <- lapply(dsn, function(x) nhd_plus_load(vpu = vpu, dsn = x,
-                                          approve_all_dl = approve_all_dl))
+                                          approve_all_dl = approve_all_dl, ...))
     names(sp) <- dsn
 
     sp_sub <- select_poly_overlay(poly = poly, sp = sp)

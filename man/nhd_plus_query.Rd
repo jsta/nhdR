@@ -5,7 +5,7 @@
 \title{Select NHDplus features via polygon or circular buffer of coordinate pair}
 \usage{
 nhd_plus_query(lon = NA, lat = NA, poly = NA, dsn, buffer_dist = 0.05,
-  approve_all_dl = FALSE)
+  approve_all_dl = FALSE, ...)
 }
 \arguments{
 \item{lon}{numeric longitude. optional}
@@ -19,6 +19,8 @@ nhd_plus_query(lon = NA, lat = NA, poly = NA, dsn, buffer_dist = 0.05,
 \item{buffer_dist}{numeric buffer in units of coordinate degrees}
 
 \item{approve_all_dl}{logical blanket approval to download all missing data}
+
+\item{...}{parameters passed on to sf::st_read}
 }
 \description{
 Select NHDplus features via polygon or circular buffer of coordinate pair
