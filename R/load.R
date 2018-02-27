@@ -129,6 +129,7 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
 #' @param file_ext character choice of "shp" for spatial data and
 #' "dbf" for non-spatial. optional
 #' @param approve_all_dl logical blanket approval to download all missing data
+#' @param ... parameters passed on to sf::st_read
 #' @return spatial object
 #' @importFrom sf st_read st_zm
 #' @importFrom foreign read.dbf
@@ -155,7 +156,7 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
 #' plusflow <- nhd_plus_load(vpu = "10L", "NHDPlusAttributes", "PlusFlow")
 #' }
 nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
-                          file_ext = NA, approve_all_dl = FALSE){
+                          file_ext = NA, approve_all_dl = FALSE, ...){
 
   if(!(file_ext %in% c(NA, "shp", "dbf"))){
     stop(paste0("file_ext must be set to either 'shp' or 'dbf'"))
@@ -207,7 +208,7 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
     }
   }
 
-  res        <- lapply(vpu, nhd_plus_load_vpu, component = component, dsn = dsn)
+  res        <- lapply(vpu, nhd_plus_load_vpu, component = component, dsn = dsn, ...)
   is_spatial <- unlist(lapply(res, function(x) x$is_spatial))
   res        <- do.call("rbind", lapply(res, function(x) x$res))
 

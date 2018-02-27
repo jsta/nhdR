@@ -5,7 +5,7 @@
 \title{Load NHDplus layers into current session}
 \usage{
 nhd_plus_load(vpu, component = "NHDSnapshot", dsn, file_ext = NA,
-  approve_all_dl = FALSE)
+  approve_all_dl = FALSE, ...)
 }
 \arguments{
 \item{vpu}{numeric vector processing unit}
@@ -18,6 +18,8 @@ nhd_plus_load(vpu, component = "NHDSnapshot", dsn, file_ext = NA,
 "dbf" for non-spatial. optional}
 
 \item{approve_all_dl}{logical blanket approval to download all missing data}
+
+\item{...}{parameters passed on to sf::st_read}
 }
 \value{
 spatial object
