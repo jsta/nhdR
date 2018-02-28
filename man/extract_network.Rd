@@ -4,13 +4,15 @@
 \alias{extract_network}
 \title{Return stream network upstream of a waterbody}
 \usage{
-extract_network(lon = NA, lat = NA, buffer_dist = 0.01, maxsteps = 3,
-  approve_all_dl = FALSE)
+extract_network(lon = NA, lat = NA, lines = NA, buffer_dist = 0.01,
+  maxsteps = 3, approve_all_dl = FALSE)
 }
 \arguments{
 \item{lon}{numeric decimal degree longitude}
 
 \item{lat}{numeric decimal degree latitude}
+
+\item{lines}{sf spatial lines object to limit the extent of the network search}
 
 \item{buffer_dist}{numeric buffer around lat-lon point in dec. deg.}
 

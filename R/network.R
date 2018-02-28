@@ -180,6 +180,7 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
 #'
 #' @inheritParams terminal_reaches
 #' @param maxsteps maximum number of stream climbing iterations
+#' @param lines sf spatial lines object to limit the extent of the network search
 #'
 #' @export
 #'
@@ -192,7 +193,8 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
 #'
 #' mapview(res)
 #' }
-extract_network <- function(lon = NA, lat = NA, buffer_dist = 0.01, maxsteps = 3,
+extract_network <- function(lon = NA, lat = NA, lines = NA,
+                            buffer_dist = 0.01, maxsteps = 3,
                             approve_all_dl = FALSE){
 
   # retrieve network table
@@ -203,6 +205,12 @@ extract_network <- function(lon = NA, lat = NA, buffer_dist = 0.01, maxsteps = 3
                                  "PlusFlow", approve_all_dl = approve_all_dl)
   names(network_table) <- tolower(names(network_table))
 
+  if(!is.na(lines)){
+    names(lines) <- tolower(names(lines))
+    # filter network table by line comids
+    network_table <- dplyr::filter(network_table, .data$tocomid %in% lines$comid |
+                                     .data$fromcomid %in% lines$comid)
+  }
 
   t_reaches     <- terminal_reaches(lon, lat, buffer_dist = buffer_dist)
   temp_reaches  <- neighbors(t_reaches$comid, network_table, direction = "up")
@@ -222,13 +230,14 @@ extract_network <- function(lon = NA, lat = NA, buffer_dist = 0.01, maxsteps = 3
   }
 
   # pull geospatial lines
-  # load full network for now evetually speed up with sql
+  # load full network for now eventually speed up with sql
   # lines_file <- nhd_plus_list(vpu, "NHDSnapshot", full.names = TRUE,
   #                             file_ext = "shp")
   # lines_file <- lines_file[grep("NHDFlowline", lines_file)]
-  lines        <- nhd_plus_load(vpu, "NHDSnapshot", "NHDFlowline")
-
-  names(lines) <- tolower(names(lines))
+  if(is.na(lines)){
+    lines        <- nhd_plus_load(vpu, "NHDSnapshot", "NHDFlowline")
+    names(lines) <- tolower(names(lines))
+  }
 
   utm_zone <- long2UTM(sf::st_coordinates(pnt)[1])
   crs      <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
