@@ -40,7 +40,6 @@
 #'
 #' mapview(poly) + mapview(network) + mapview(t_reach, color = "red") +
 #' mapview(t_reach_lake, color = "green")
-#'
 #' }
 terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
                              network = NA, lakewise = FALSE,
@@ -205,7 +204,7 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
                                  "PlusFlow", approve_all_dl = approve_all_dl)
   names(network_table) <- tolower(names(network_table))
 
-  if(!is.na(lines)){
+  if(all(!is.na(lines))){
     names(lines) <- tolower(names(lines))
     # filter network table by line comids
     network_table <- dplyr::filter(network_table, .data$tocomid %in% lines$comid |
@@ -234,7 +233,7 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
   # lines_file <- nhd_plus_list(vpu, "NHDSnapshot", full.names = TRUE,
   #                             file_ext = "shp")
   # lines_file <- lines_file[grep("NHDFlowline", lines_file)]
-  if(is.na(lines)){
+  if(all(is.na(lines))){
     lines        <- nhd_plus_load(vpu, "NHDSnapshot", "NHDFlowline")
     names(lines) <- tolower(names(lines))
   }
