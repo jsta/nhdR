@@ -2,7 +2,7 @@
 % Please edit documentation in R/network.R
 \name{extract_network}
 \alias{extract_network}
-\title{Return stream network upstream of a waterbody}
+\title{Return nhd plus stream network upstream of a waterbody}
 \usage{
 extract_network(lon = NA, lat = NA, lines = NA, buffer_dist = 0.01,
   maxsteps = 3, approve_all_dl = FALSE)
@@ -21,7 +21,7 @@ extract_network(lon = NA, lat = NA, lines = NA, buffer_dist = 0.01,
 \item{approve_all_dl}{logical blanket approval to download all missing data}
 }
 \description{
-Return stream network upstream of a waterbody
+Return nhd plus stream network upstream of a waterbody
 }
 \examples{
 \dontrun{

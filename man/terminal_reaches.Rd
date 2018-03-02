@@ -52,6 +52,5 @@ t_reach_lake <- terminal_reaches(network = network, lakewise = TRUE,
 
 mapview(poly) + mapview(network) + mapview(t_reach, color = "red") +
 mapview(t_reach_lake, color = "green")
-
 }
 }

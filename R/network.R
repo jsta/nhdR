@@ -175,7 +175,7 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
 }
 
 
-#' Return stream network upstream of a waterbody
+#' Return nhd plus stream network upstream of a waterbody
 #'
 #' @inheritParams terminal_reaches
 #' @param maxsteps maximum number of stream climbing iterations
@@ -215,33 +215,37 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
   temp_reaches  <- neighbors(t_reaches$comid, network_table, direction = "up")
   res_reaches   <- temp_reaches
 
-  all_terminal <- FALSE
-  steps        <- 0
-  while(!all_terminal){
-    temp_reaches <- neighbors(temp_reaches$fromcomid,
-                              network_table, direction = "up")
-    if(nrow(temp_reaches) == 0 | steps == maxsteps){
-      all_terminal <- TRUE
-    }else{
-     res_reaches <- rbind(res_reaches, temp_reaches)
-     steps       <- steps + 1
+  if(nrow(t_reaches) == 0){
+    NA # lake is not connected to stream network
+  }else{
+    all_terminal <- FALSE
+    steps        <- 0
+    while(!all_terminal){
+      temp_reaches <- neighbors(temp_reaches$fromcomid,
+                                network_table, direction = "up")
+      if(nrow(temp_reaches) == 0 | steps == maxsteps){
+        all_terminal <- TRUE
+      }else{
+       res_reaches <- rbind(res_reaches, temp_reaches)
+       steps       <- steps + 1
+      }
     }
+
+    # pull geospatial lines
+    # load full network for now eventually speed up with sql
+    # lines_file <- nhd_plus_list(vpu, "NHDSnapshot", full.names = TRUE,
+    #                             file_ext = "shp")
+    # lines_file <- lines_file[grep("NHDFlowline", lines_file)]
+    if(all(is.na(lines))){
+      lines        <- nhd_plus_load(vpu, "NHDSnapshot", "NHDFlowline")
+      names(lines) <- tolower(names(lines))
+    }
+
+    utm_zone <- long2UTM(sf::st_coordinates(pnt)[1])
+    crs      <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
+
+    st_transform(dplyr::filter(lines, .data$comid %in% res_reaches$tocomid), crs = crs)
   }
-
-  # pull geospatial lines
-  # load full network for now eventually speed up with sql
-  # lines_file <- nhd_plus_list(vpu, "NHDSnapshot", full.names = TRUE,
-  #                             file_ext = "shp")
-  # lines_file <- lines_file[grep("NHDFlowline", lines_file)]
-  if(all(is.na(lines))){
-    lines        <- nhd_plus_load(vpu, "NHDSnapshot", "NHDFlowline")
-    names(lines) <- tolower(names(lines))
-  }
-
-  utm_zone <- long2UTM(sf::st_coordinates(pnt)[1])
-  crs      <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
-
-  st_transform(dplyr::filter(lines, .data$comid %in% res_reaches$tocomid), crs = crs)
 }
 
 neighbors <- function(node, network_table, direction = c("up", "down")) {
