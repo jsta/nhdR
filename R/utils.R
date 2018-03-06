@@ -150,3 +150,13 @@ is_gpkg_installed <- function(){
 bbox2poly <- function(bbox){
   sf::st_as_sfc(bbox)
 }
+
+# https://stackoverflow.com/a/14965990/3362993
+has_7z <- function(){
+  paths_7z <- c("7z", "~/usr/bin/7z")
+  if(!any(length(Sys.which(paths_7z)) > 0)){
+    "The 7-zip program is needed to unpack NHD downloads (http://www.7-zip.org/)."
+  }else{
+    TRUE
+  }
+}
