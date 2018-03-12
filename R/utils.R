@@ -68,7 +68,12 @@ is_spatial <- function(filename){
 #' @importFrom sf st_transform st_intersects
 #' @export
 #'
+#' @examples \dontrun{
+# find_vpu(
+#   st_cast(nhdR::vpu_shp, "POINT"))
+#' }
 find_vpu <- function(pnt){
+  # browser()
   pnt <- sf::st_transform(pnt, sf::st_crs(nhdR::vpu_shp))
   vpu <- nhdR::vpu_shp[nhdR::vpu_shp$UnitType == "VPU",]
   vpu_intersects <- sf::st_intersects(vpu, pnt)
@@ -153,9 +158,11 @@ bbox2poly <- function(bbox){
 
 # https://stackoverflow.com/a/14965990/3362993
 has_7z <- function(){
-  paths_7z <- c("7z", "~/usr/bin/7z")
-  if(!any(length(Sys.which(paths_7z)) > 0)){
-    "The 7-zip program is needed to unpack NHD downloads (http://www.7-zip.org/)."
+  paths_7z <- c("7z",
+                "~/usr/bin/7z",
+                "C:\\PROGRA~1\\7-Zip\\7za")
+  if(!any(nchar(Sys.which(paths_7z)) > 0)){
+    FALSE
   }else{
     TRUE
   }
