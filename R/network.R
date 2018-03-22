@@ -244,7 +244,8 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
     utm_zone <- long2UTM(sf::st_coordinates(pnt)[1])
     crs      <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
 
-    st_transform(dplyr::filter(lines, .data$comid %in% res_reaches$tocomid), crs = crs)
+    st_transform(dplyr::filter(lines, .data$comid %in% res_reaches$tocomid),
+                 crs = crs)
   }
 }
 
