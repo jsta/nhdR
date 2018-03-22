@@ -12,3 +12,17 @@ find_vpu(pnt)
 \description{
 Find Vector Processing Unit from sf object
 }
+\examples{
+\dontrun{
+library(sf)
+
+vpu_centers <- st_cast(st_point_on_surface(nhdR::vpu_shp),
+                       "POINT")
+
+find_vpu(vpu_centers[1,])
+find_vpu(vpu_centers)
+
+find_vpu(nhdR::gull$sp$NHDWaterbody[1,])
+find_vpu(nhdR::gull$sp$NHDWaterbody)
+}
+}

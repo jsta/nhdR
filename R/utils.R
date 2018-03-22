@@ -65,22 +65,32 @@ is_spatial <- function(filename){
 #'
 #' @param pnt sf object
 #'
-#' @importFrom sf st_transform st_intersects
+#' @importFrom sf st_transform st_crs st_join
+#' @importFrom dplyr select
 #' @export
 #'
 #' @examples \dontrun{
-# find_vpu(
-#   st_cast(nhdR::vpu_shp, "POINT"))
+#' library(sf)
+#'
+#' vpu_centers <- st_cast(st_point_on_surface(nhdR::vpu_shp),
+#'                        "POINT")
+#'
+#' find_vpu(vpu_centers[1,])
+#' find_vpu(vpu_centers)
+#'
+#' find_vpu(nhdR::gull$sp$NHDWaterbody[1,])
+#' find_vpu(nhdR::gull$sp$NHDWaterbody)
 #' }
 find_vpu <- function(pnt){
-  # browser()
   pnt <- sf::st_transform(pnt, sf::st_crs(nhdR::vpu_shp))
   vpu <- nhdR::vpu_shp[nhdR::vpu_shp$UnitType == "VPU",]
-  vpu_intersects <- sf::st_intersects(vpu, pnt)
-  vpu <- vpu[which(sapply(vpu_intersects,
-                          function(x) length(x > 0)) == 1),]
-  vpu <- as.character(vpu$UnitID)
-  vpu[!is.na(vpu)]
+
+  if(any(names(pnt) == "UnitID")){
+    pnt <- pnt[,!(names(pnt) %in% "UnitID")]
+  }
+
+  res <- st_join(sf::st_sf(pnt), vpu)$UnitID
+  as.character(res)
 }
 
 find_state <- function(pnt){
