@@ -18,13 +18,24 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Return terminal reaches from collection intersecting lake — terminal_reaches" />
+
+<meta property="og:description" content="In the case of a network query, a terminal reach is a stream flowline that
+has no downstream reaches in-network. In the case of a point query, a
+terminal reach is a flowline that exits the intersecting surface waterbody." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,12 +58,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">nhdR</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">nhdR</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -82,6 +97,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -89,20 +105,26 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Return terminal reaches from collection intersecting lake</h1>
+    <small class="dont-index">Source: <a href='https://github.com/jsta/nhdR/blob/master/R/network.R'><code>R/network.R</code></a></small>
+    <div class="hidden name"><code>terminal_reaches.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
-    <p>Return terminal reaches from collection intersecting lake</p>
+    <p>In the case of a network query, a terminal reach is a stream flowline that
+has no downstream reaches in-network. In the case of a point query, a
+terminal reach is a flowline that exits the intersecting surface waterbody.</p>
     
+    </div>
 
-    <pre class="usage"><span class='fu'>terminal_reaches</span>(<span class='kw'>lon</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>network</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>approve_all_dl</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>terminal_reaches</span>(<span class='kw'>lon</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>buffer_dist</span> <span class='kw'>=</span> <span class='fl'>0.01</span>, <span class='kw'>network</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>lakewise</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>lakesize_threshold</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>approve_all_dl</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -114,30 +136,55 @@
       <td><p>numeric decimal degree latitude</p></td>
     </tr>
     <tr>
+      <th>buffer_dist</th>
+      <td><p>numeric buffer around lat-lon point in dec. deg.</p></td>
+    </tr>
+    <tr>
       <th>network</th>
       <td><p>sf lines collection</p></td>
     </tr>
     <tr>
+      <th>lakewise</th>
+      <td><p>logical return waterbody exit of all in-network lakes?</p></td>
+    </tr>
+    <tr>
+      <th>lakesize_threshold</th>
+      <td><p>numeric above which to count as a lake (ha)</p></td>
+    </tr>
+    <tr>
       <th>approve_all_dl</th>
       <td><p>logical blanket approval to download all missing data</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>parameters passed on to sf::st_read</p></td>
     </tr>
     </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>coords</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>lat</span> <span class='kw'>=</span> <span class='fl'>20.79722</span>, <span class='kw'>lon</span> <span class='kw'>=</span> -<span class='fl'>156.47833</span>)
-<span class='fu'>terminal_reaches</span>(<span class='no'>coords</span>$<span class='no'>lon</span>, <span class='no'>coords</span>$<span class='no'>lat</span>)
+<span class='fu'>library</span>(<span class='no'>sf</span>)
+<span class='fu'>library</span>(<span class='no'>mapview</span>)
 
-<span class='no'>coords</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>lat</span> <span class='kw'>=</span> <span class='fl'>41.42217</span>, <span class='kw'>lon</span> <span class='kw'>=</span> -<span class='fl'>73.24189</span>)
-<span class='fu'>terminal_reaches</span>(<span class='no'>coords</span>$<span class='no'>lon</span>, <span class='no'>coords</span>$<span class='no'>lat</span>)
+<span class='no'>coords</span>  <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>lat</span> <span class='kw'>=</span> <span class='fl'>20.79722</span>, <span class='kw'>lon</span> <span class='kw'>=</span> -<span class='fl'>156.47833</span>)
+<span class='no'>t_reach</span> <span class='kw'>&lt;-</span> <span class='fu'>terminal_reaches</span>(<span class='no'>coords</span>$<span class='no'>lon</span>, <span class='no'>coords</span>$<span class='no'>lat</span>)
 
+<span class='no'>coords</span>  <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>lat</span> <span class='kw'>=</span> <span class='fl'>41.42217</span>, <span class='kw'>lon</span> <span class='kw'>=</span> -<span class='fl'>73.24189</span>)
+<span class='no'>t_reach</span> <span class='kw'>&lt;-</span> <span class='fu'>terminal_reaches</span>(<span class='no'>coords</span>$<span class='no'>lon</span>, <span class='no'>coords</span>$<span class='no'>lat</span>)
+
+<span class='fu'><a href='http://www.rdocumentation.org/packages/mapview/topics/mapView'>mapview</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/sf/topics/st_as_sf'>st_as_sf</a></span>(<span class='no'>coords</span>, <span class='kw'>coords</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"lon"</span>, <span class='st'>"lat"</span>), <span class='kw'>crs</span> <span class='kw'>=</span> <span class='fl'>4326</span>)) +
+<span class='fu'><a href='http://www.rdocumentation.org/packages/mapview/topics/mapView'>mapview</a></span>(<span class='no'>t_reach</span>$<span class='no'>geometry</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>)
+
+<span class='no'>coords</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>lat</span> <span class='kw'>=</span> <span class='fl'>41.859080</span>, <span class='kw'>lon</span> <span class='kw'>=</span> -<span class='fl'>71.575422</span>)
 <span class='no'>network</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='nhd_plus_query.html'>nhd_plus_query</a></span>(<span class='kw'>lon</span> <span class='kw'>=</span> <span class='no'>coords</span>$<span class='no'>lon</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='no'>coords</span>$<span class='no'>lat</span>,
-                     <span class='kw'>dsn</span> <span class='kw'>=</span> <span class='st'>"NHDFlowline"</span>, <span class='kw'>buffer_dist</span> <span class='kw'>=</span> <span class='fl'>0.02</span>)$<span class='no'>sp</span>$<span class='no'>NHDFlowline</span>
-<span class='no'>t_reach</span> <span class='kw'>&lt;-</span> <span class='fu'>terminal_reaches</span>(<span class='kw'>network</span> <span class='kw'>=</span> <span class='no'>network</span>)
+                     <span class='kw'>dsn</span> <span class='kw'>=</span> <span class='st'>"NHDFlowline"</span>, <span class='kw'>buffer_dist</span> <span class='kw'>=</span> <span class='fl'>0.05</span>)$<span class='no'>sp</span>$<span class='no'>NHDFlowline</span>
+<span class='no'>t_reach</span>      <span class='kw'>&lt;-</span> <span class='fu'>terminal_reaches</span>(<span class='kw'>network</span> <span class='kw'>=</span> <span class='no'>network</span>)
+<span class='no'>t_reach_lake</span> <span class='kw'>&lt;-</span> <span class='fu'>terminal_reaches</span>(<span class='kw'>network</span> <span class='kw'>=</span> <span class='no'>network</span>, <span class='kw'>lakewise</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+                                 <span class='kw'>lakesize_threshold</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
-<span class='fu'>plot</span>(<span class='no'>network</span>$<span class='no'>geometry</span>)
-<span class='fu'>plot</span>(<span class='no'>t_reach</span>$<span class='no'>geometry</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='http://www.rdocumentation.org/packages/mapview/topics/mapView'>mapview</a></span>(<span class='no'>poly</span>) + <span class='fu'><a href='http://www.rdocumentation.org/packages/mapview/topics/mapView'>mapview</a></span>(<span class='no'>network</span>) + <span class='fu'><a href='http://www.rdocumentation.org/packages/mapview/topics/mapView'>mapview</a></span>(<span class='no'>t_reach</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>) +
+<span class='fu'><a href='http://www.rdocumentation.org/packages/mapview/topics/mapView'>mapview</a></span>(<span class='no'>t_reach_lake</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"green"</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -157,11 +204,14 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>List available locally cached NHDplus layers per state — nhd_plus_list • nhdR</title>
+<title>Return nhd plus stream network upstream of a waterbody — extract_network • nhdR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,9 +28,9 @@
 
 
 
-<meta property="og:title" content="List available locally cached NHDplus layers per state — nhd_plus_list" />
+<meta property="og:title" content="Return nhd plus stream network upstream of a waterbody — extract_network" />
 
-<meta property="og:description" content="List available locally cached NHDplus layers per state" />
+<meta property="og:description" content="Return nhd plus stream network upstream of a waterbody" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -106,50 +106,59 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>List available locally cached NHDplus layers per state</h1>
-    <small class="dont-index">Source: <a href='https://github.com/jsta/nhdR/blob/master/R/list.R'><code>R/list.R</code></a></small>
-    <div class="hidden name"><code>nhd_plus_list.Rd</code></div>
+    <h1>Return nhd plus stream network upstream of a waterbody</h1>
+    <small class="dont-index">Source: <a href='https://github.com/jsta/nhdR/blob/master/R/network.R'><code>R/network.R</code></a></small>
+    <div class="hidden name"><code>extract_network.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>List available locally cached NHDplus layers per state</p>
+    <p>Return nhd plus stream network upstream of a waterbody</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>nhd_plus_list</span>(<span class='no'>vpu</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"NHDSnapshot"</span>, <span class='kw'>file_ext</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>extract_network</span>(<span class='kw'>lon</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>lines</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>buffer_dist</span> <span class='kw'>=</span> <span class='fl'>0.01</span>,
+  <span class='kw'>maxsteps</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>approve_all_dl</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>vpu</th>
-      <td><p>numeric vector processing unit</p></td>
+      <th>lon</th>
+      <td><p>numeric decimal degree longitude</p></td>
     </tr>
     <tr>
-      <th>component</th>
-      <td><p>character component name</p></td>
+      <th>lat</th>
+      <td><p>numeric decimal degree latitude</p></td>
     </tr>
     <tr>
-      <th>file_ext</th>
-      <td><p>character choice of "shp" for spatial data and
-"dbf" for non-spatial. optional</p></td>
+      <th>lines</th>
+      <td><p>sf spatial lines object to limit the extent of the network search</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>arguments passed to list.files. optional.</p></td>
+      <th>buffer_dist</th>
+      <td><p>numeric buffer around lat-lon point in dec. deg.</p></td>
+    </tr>
+    <tr>
+      <th>maxsteps</th>
+      <td><p>maximum number of stream climbing iterations</p></td>
+    </tr>
+    <tr>
+      <th>approve_all_dl</th>
+      <td><p>logical blanket approval to download all missing data</p></td>
     </tr>
     </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'>nhd_plus_list</span>(<span class='kw'>vpu</span> <span class='kw'>=</span> <span class='fl'>4</span>)
-<span class='fu'>nhd_plus_list</span>(<span class='kw'>vpu</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>full.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>library</span>(<span class='no'>mapview</span>)
+<span class='fu'>library</span>(<span class='no'>sf</span>)
 
-<span class='fu'>nhd_plus_list</span>(<span class='kw'>vpu</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"NHDPlusAttributes"</span>)
-<span class='fu'>nhd_plus_list</span>(<span class='kw'>vpu</span> <span class='kw'>=</span> <span class='st'>"National"</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"V1_To_V2_Crosswalk"</span>)
+<span class='no'>coords</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>lat</span> <span class='kw'>=</span> <span class='fl'>20.79722</span>, <span class='kw'>lon</span> <span class='kw'>=</span> -<span class='fl'>156.47833</span>)
+<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>extract_network</span>(<span class='no'>coords</span>$<span class='no'>lon</span>, <span class='no'>coords</span>$<span class='no'>lat</span>, <span class='kw'>maxsteps</span> <span class='kw'>=</span> <span class='fl'>9</span>)
 
+<span class='fu'><a href='http://www.rdocumentation.org/packages/mapview/topics/mapView'>mapview</a></span>(<span class='no'>res</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -14,7 +14,7 @@
 #' @param ... parameters passed on to sf::st_read
 #'
 #' @export
-#' @importFrom sf st_area st_centroid st_union st_crs st_sfc st_point st_crs<- st_cast st_convex_hull filter.sf
+#' @importFrom sf st_area st_centroid st_union st_crs st_sfc st_point st_crs<- st_cast st_convex_hull
 #' @importFrom rlang .data
 #' @importFrom units as_units
 #'

@@ -18,13 +18,19 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Function reference" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,12 +53,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">nhdR</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">nhdR</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -82,6 +92,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -89,156 +100,157 @@
       
       </header>
 
-      <div class="row">
-  <div class="col-md-9">
+<div class="row">
+  <div class="contents col-md-9">
     <div class="page-header">
-      <h1>
-        Reference
-        <small>version&nbsp;0.2</small>
-      </h1>
+      <h1>Reference</h1>
     </div>
 
-    <div class="contents">
-      <table class="ref-index">
+    <table class="ref-index">
 
-      <colgroup>
-        <col class="alias" />
-        <col class="title" />
-      </colgroup>
+    <colgroup>
+      <col class="alias" />
+      <col class="title" />
+    </colgroup>
 
-      <tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="bbox2poly.html">bbox2poly</a></code> </p>
-          </td>
-          <td><p>Convert a bounding box to polygon</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="find_vpu.html">find_vpu</a></code> </p>
-          </td>
-          <td><p>Find VPU</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="gull.html">gull</a></code> </p>
-          </td>
-          <td><p>List of simple features lake polygons and flowlines within a buffer
+    <tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="bbox2poly.html">bbox2poly()</a></code> </p>
+        </td>
+        <td><p>Convert a bounding box to polygon</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="extract_network.html">extract_network()</a></code> </p>
+        </td>
+        <td><p>Return nhd plus stream network upstream of a waterbody</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="find_vpu.html">find_vpu()</a></code> </p>
+        </td>
+        <td><p>Find VPU</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="gull.html">gull</a></code> </p>
+        </td>
+        <td><p>List of simple features lake polygons and flowlines within a buffer
 around Gull Lake Michigan.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="leaf_reaches.html">leaf_reaches</a></code> </p>
-          </td>
-          <td><p>Return leaf reaches from a network or query intersecting lake</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nhd_get.html">nhd_get</a></code> </p>
-          </td>
-          <td><p>Download and cache NHD data by state</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nhd_info.html">nhd_info</a></code> </p>
-          </td>
-          <td><p>Return NHD layer metadata and field listing</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nhd_list.html">nhd_list</a></code> </p>
-          </td>
-          <td><p>List available locally cached NHD layers per state</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nhd_load.html">nhd_load</a></code> </p>
-          </td>
-          <td><p>Load NHD layers into current session</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nhd_plus_get.html">nhd_plus_get</a></code> </p>
-          </td>
-          <td><p>Download and cache NHDplus data by state</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nhd_plus_info.html">nhd_plus_info</a></code> </p>
-          </td>
-          <td><p>Return NHDplus layer metadata and field listing</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nhd_plus_list.html">nhd_plus_list</a></code> </p>
-          </td>
-          <td><p>List available locally cached NHDplus layers per state</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nhd_plus_load.html">nhd_plus_load</a></code> </p>
-          </td>
-          <td><p>Load NHDplus layers into current session</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nhd_plus_query.html">nhd_plus_query</a></code> </p>
-          </td>
-          <td><p>Select NHDplus features via polygon or circular buffer of coordinate pair</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nhd_query.html">nhd_query</a></code> </p>
-          </td>
-          <td><p>Select NHD features clipped by a circular buffer a coordinate pair</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nhdR-package.html">nhdR-package</a></code> </p>
-          </td>
-          <td><p>R interface to the National Hydrography Dataset</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="select_point_overlay.html">select_point_overlay</a></code> </p>
-          </td>
-          <td><p>Select features clipped by a point buffer around a point</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="select_poly_overlay.html">select_poly_overlay</a></code> </p>
-          </td>
-          <td><p>Select features clipped by a polygon</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="terminal_reaches.html">terminal_reaches</a></code> </p>
-          </td>
-          <td><p>Return terminal reaches from collection intersecting lake</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="toUTM.html">toUTM</a></code> </p>
-          </td>
-          <td><p>Re-project to appropriate UTM zone</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="vpu_shp.html">vpu_shp</a></code> </p>
-          </td>
-          <td><p>Low-res simple features data frame of the NHDPlus vector processing
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="leaf_reaches.html">leaf_reaches()</a></code> </p>
+        </td>
+        <td><p>Return leaf reaches from a network or query intersecting lake</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="nhdR-package.html">nhdR-package</a></code> </p>
+        </td>
+        <td><p>R interface to the National Hydrography Dataset</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="nhd_get.html">nhd_get()</a></code> </p>
+        </td>
+        <td><p>Download and cache NHD data by state</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="nhd_info.html">nhd_info()</a></code> </p>
+        </td>
+        <td><p>Return NHD layer metadata and field listing</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="nhd_list.html">nhd_list()</a></code> </p>
+        </td>
+        <td><p>List available locally cached NHD layers per state</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="nhd_load.html">nhd_load()</a></code> </p>
+        </td>
+        <td><p>Load NHD layers into current session</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="nhd_plus_get.html">nhd_plus_get()</a></code> </p>
+        </td>
+        <td><p>Download and cache NHDplus data by state</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="nhd_plus_info.html">nhd_plus_info()</a></code> </p>
+        </td>
+        <td><p>Return NHDplus layer metadata and field listing</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="nhd_plus_list.html">nhd_plus_list()</a></code> </p>
+        </td>
+        <td><p>List available locally cached NHDplus layers per state</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="nhd_plus_load.html">nhd_plus_load()</a></code> </p>
+        </td>
+        <td><p>Load NHDplus layers into current session</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="nhd_plus_query.html">nhd_plus_query()</a></code> </p>
+        </td>
+        <td><p>Select NHDplus features via polygon or circular buffer of coordinate pair</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="nhd_query.html">nhd_query()</a></code> </p>
+        </td>
+        <td><p>Select NHD features clipped by a circular buffer a coordinate pair</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="select_point_overlay.html">select_point_overlay()</a></code> </p>
+        </td>
+        <td><p>Select features clipped by a point buffer around a point</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="select_poly_overlay.html">select_poly_overlay()</a></code> </p>
+        </td>
+        <td><p>Select features clipped by a polygon</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="terminal_reaches.html">terminal_reaches()</a></code> </p>
+        </td>
+        <td><p>Return terminal reaches from collection intersecting lake</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="toUTM.html">toUTM()</a></code> </p>
+        </td>
+        <td><p>Re-project to appropriate UTM zone</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="vpu_shp.html">vpu_shp</a></code> </p>
+        </td>
+        <td><p>Low-res simple features data frame of the NHDPlus vector processing
 units.</p></td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
+      </tr>
+    </tbody>
+    </table>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -255,11 +267,14 @@ units.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+
