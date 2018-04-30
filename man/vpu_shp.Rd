@@ -4,7 +4,7 @@
 \name{vpu_shp}
 \alias{vpu_shp}
 \title{Low-res simple features data frame of the NHDPlus vector processing
-units.}
+units}
 \description{
 vpu_shp
 }

@@ -23,7 +23,7 @@ NULL
 #' vpu_shp
 #'
 #' @title Low-res simple features data frame of the NHDPlus vector processing
-#' units.
+#' units
 #'
 #' @docType data
 #' @keywords datasets
