@@ -2,7 +2,7 @@
 % Please edit documentation in R/get.R
 \name{nhd_plus_get}
 \alias{nhd_plus_get}
-\title{Download and cache NHDplus data by state}
+\title{Download and cache NHDplus data by vector processing unit}
 \usage{
 nhd_plus_get(vpu = NA, component = "NHDSnapshot")
 }
@@ -12,7 +12,7 @@ nhd_plus_get(vpu = NA, component = "NHDSnapshot")
 \item{component}{character component name}
 }
 \description{
-Download and cache NHDplus data by state
+Download and cache NHDplus data by vector processing unit
 }
 \examples{
 \dontrun{

@@ -36,7 +36,7 @@ nhd_get <- function(state = NA){
   invisible(lapply(state, nhd_get_state))
 }
 
-#' Download and cache NHDplus data by state
+#' Download and cache NHDplus data by vector processing unit
 #'
 #' @param vpu numeric vector processing unit
 #' @param component character component name
