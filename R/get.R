@@ -62,7 +62,7 @@ nhd_plus_get <- function(vpu = NA, component = "NHDSnapshot"){
 
   if(!(component %in% c("NHDSnapshot", "NHDPlusCatchment",
                         "NHDPlusAttributes", "V1_To_V2_Crosswalk",
-                        "EROMExtension"))){
+                        "EROMExtension", "VogelExtension"))){
     stop(paste0("Component '", component,
                 "' was not found. Is it misspelled?"))
   }
