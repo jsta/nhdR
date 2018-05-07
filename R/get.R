@@ -45,11 +45,14 @@ nhd_get <- function(state = NA){
 #' @importFrom rvest html_nodes html_attrs
 #' @importFrom xml2 read_html
 #' @examples \dontrun{
+#' # Spatial
 #' nhd_plus_get(vpu = 4)
 #' nhd_plus_get(vpu = "10L")
 #' nhd_plus_get(vpu = 1, component = "NHDPlusAttributes")
 #'
+#' # Non-spatial
 #' nhd_plus_get(vpu = "National", component = "V1_To_V2_Crosswalk")
+#' nhd_plus_get(vpu = 4, component = "EROMExtension")
 #' }
 nhd_plus_get <- function(vpu = NA, component = "NHDSnapshot"){
 
@@ -58,7 +61,8 @@ nhd_plus_get <- function(vpu = NA, component = "NHDSnapshot"){
   }
 
   if(!(component %in% c("NHDSnapshot", "NHDPlusCatchment",
-                        "NHDPlusAttributes", "V1_To_V2_Crosswalk"))){
+                        "NHDPlusAttributes", "V1_To_V2_Crosswalk",
+                        "EROMExtension"))){
     stop(paste0("Component '", component,
                 "' was not found. Is it misspelled?"))
   }
