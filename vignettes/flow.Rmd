@@ -25,7 +25,7 @@ library(sf)
 
 ## Enhanced Unit Runoff Method (EROM)
 
-```{r }
+```{r eval=FALSE}
 # nhd_plus_list(4, "EROMExtension")
 eromflow  <- nhd_plus_load(4, "EROMExtension", "EROM_MA0001") %>% 
   filter(ComID %in% gull$sp$NHDFlowLine$COMID) %>%
@@ -37,13 +37,17 @@ gull_sf <- left_join(gull_sf, eromflow, by = c("COMID" = "ComID"))
 
 ## Vogel Flow Estimation
 
-```{r }
+```{r eval=FALSE}
 # nhd_plus_list(4, "VogelExtension")
 vogelflow  <- nhd_plus_load(4, "VogelExtension", "vogelflow") %>% 
   filter(COMID %in% gull$sp$NHDFlowLine$COMID, 
          MAFLOWV != -9999.00000) 
 
 gull_sf <- left_join(gull_sf, vogelflow)
+```
+
+```{r echo=FALSE}
+gull_sf <- gull
 ```
 
 ```{r }

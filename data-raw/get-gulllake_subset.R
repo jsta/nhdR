@@ -1,29 +1,32 @@
 library(wikilake)
 library(sf)
 library(nhdR)
+library(dplyr)
+library(magrittr)
 
-wb <- nhd_plus_load(vpu = 4, "NHDWaterbody")
-fl <- nhd_plus_load(vpu = 4, component = "NHDFlowLine")
+# ---- pull_geom ----
 
-gull_meta <- wikilake::lake_wiki("Gull Lake (Michigan)")
-gull <- st_sfc(st_point(c(gull_meta$Lon, gull_meta$Lat)))
-gull_buff <- st_sfc(st_buffer(gull, dist = 0.05))
-st_crs(gull) <- st_crs(gull_buff) <- 4326 #wgs84 epsg
-st_crs(wb) <- st_crs(fl) <- 4269
+# wb <- nhd_plus_load(vpu = 4, dsn = "NHDWaterbody")
+# fl <- nhd_plus_load(vpu = 4, dsn = "NHDFlowLine")
 
-gull      <- st_transform(gull, crs = "+proj=utm +zone=10 +datum=WGS84")
-gull_buff <- st_transform(gull_buff, crs = "+proj=utm +zone=10 +datum=WGS84")
+gull_meta    <- wikilake::lake_wiki("Gull Lake (Michigan)")
+gull         <- st_sfc(st_point(c(gull_meta$Lon, gull_meta$Lat)))
 
-wb        <- st_transform(wb, crs = "+proj=utm +zone=10 +datum=WGS84")
-fl        <- st_transform(fl, crs = "+proj=utm +zone=10 +datum=WGS84")
+gull <- nhd_plus_query(lon = gull_meta$Lon, lat = gull_meta$Lat,
+                       dsn = c("NHDWaterbody", "NHDFlowLine"))
 
-wb_intersecting <- unlist(lapply(st_intersects(wb, gull_buff), length)) > 0
-wb_sub <- wb[wb_intersecting,]
+# ---- pull_flow ----
 
-fl_intersecting <- unlist(lapply(st_intersects(fl, gull_buff), length)) > 0
-fl_sub <- fl[fl_intersecting,]
+eromflow  <- nhd_plus_load(4, "EROMExtension", "EROM_MA0001") %>%
+  filter(ComID %in% gull$sp$NHDFlowLine$COMID) %>%
+  select(ComID, Q0001F)
 
-gull <- list(wb_sub = wb_sub,
-            fl_sub = fl_sub)
+vogelflow  <- nhd_plus_load(4, "VogelExtension", "vogelflow") %>%
+  filter(COMID %in% gull$sp$NHDFlowLine$COMID,
+         MAFLOWV != -9999.00000)
 
-devtools::use_data(gull)
+gull$sp$NHDFlowLine %>%
+  left_join(eromflow, by = c("COMID" = "ComID")) %>%
+  left_join(vogelflow, by = "COMID") -> gull$sp$NHDFlowLine
+
+devtools::use_data(gull, overwrite = TRUE)
