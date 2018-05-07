@@ -32,5 +32,6 @@ Suggests: knitr,
     sp,
     rgeos,
     testthat
+Remotes: tidyverse/ggplot2
 VignetteBuilder: knitr
 SystemRequirements: 7-zip command line tool (7z)
