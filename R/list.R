@@ -41,7 +41,7 @@ nhd_plus_list <- function(vpu, component = "NHDSnapshot", file_ext = NA, ...){
     target_dir <- target_dir[grep(component, target_dir)]
   }
 
-  res <- list.files(target_dir, pattern = "dbf|shp", ...)
+  res <- list.files(target_dir, pattern = "dbf|DBF|shp", ...)
 
   if(length(grep(file_ext, res)) == 0 | is.na(file_ext)){
     res
