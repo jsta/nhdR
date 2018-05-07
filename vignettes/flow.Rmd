@@ -47,7 +47,7 @@ gull_sf <- left_join(gull_sf, vogelflow)
 ```
 
 ```{r echo=FALSE}
-gull_sf <- gull
+gull_sf <- gull$sp$NHDFlowLine
 ```
 
 ```{r }
