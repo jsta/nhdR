@@ -151,7 +151,7 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
 #'  "NHDPlusV1Network_V2Network_Crosswalk")
 #' gridcode      <- nhd_plus_load(1, "NHDPlusCatchment", "featuregridcode")
 #' flowline_vaa  <- nhd_plus_load(1, "NHDPlusAttributes", "PlusFlowlineVAA")
-#' eromflow      <- nhd_plus_load(4, "EROMExtension")
+#' eromflow      <- nhd_plus_load(4, "EROMExtension", "EROM_010001")
 #'
 #' # Character VPU
 #' plusflow <- nhd_plus_load(vpu = "10L", "NHDPlusAttributes", "PlusFlow")
