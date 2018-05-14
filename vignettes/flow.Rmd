@@ -16,6 +16,8 @@ knitr::opts_chunk$set(
 )
 ```
 
+Let's get some flow data for the NHDPlus subset included with `nhdR` package. Our goal is to adjust the color and size of each reach by their average flow. 
+
 ```{r message=FALSE, warning=FALSE}
 library(nhdR)
 library(dplyr)
@@ -23,35 +25,45 @@ library(ggplot2)
 library(sf)
 ```
 
+```{r }
+ggplot() + 
+  geom_sf(data = gull$sp$NHDWaterbody) + 
+  geom_sf(data = gull$sp$NHDFlowLine)
+
+gull_sf <- gull$sp$NHDFlowLine
+```
+
+NHDPlus includes two estimates of flow:
+
 ## Enhanced Unit Runoff Method (EROM)
 
 ```{r eval=FALSE}
-# nhd_plus_list(4, "EROMExtension")
 eromflow  <- nhd_plus_load(4, "EROMExtension", "EROM_MA0001") %>% 
   filter(ComID %in% gull$sp$NHDFlowLine$COMID) %>%
   select(ComID, Q0001F)
 
-gull_sf <- gull$sp$NHDFlowLine
 gull_sf <- left_join(gull_sf, eromflow, by = c("COMID" = "ComID"))
 ```
 
 ## Vogel Flow Estimation
 
 ```{r eval=FALSE}
-# nhd_plus_list(4, "VogelExtension")
 vogelflow  <- nhd_plus_load(4, "VogelExtension", "vogelflow") %>% 
   filter(COMID %in% gull$sp$NHDFlowLine$COMID, 
          MAFLOWV != -9999.00000) 
 
-gull_sf <- left_join(gull_sf, vogelflow)
+gull_sf <- left_join(gull_sf, vogelflow, by = "COMID")
 ```
 
+## Visualization
+
 ```{r echo=FALSE}
-gull_sf <- gull$sp$NHDFlowLine
+# gull_sf <- dplyr::select(gull_sf, -Q0001F:-MAVELV)
+gull_sf <- gull_flow
 ```
 
 ```{r }
-gull_sf <- filter(gull_sf, !is.na(Q0001F)) 
+gull_sf <- dplyr::filter(gull_sf, !is.na(Q0001F)) 
 gull_sf %>%  
   ggplot() + 
   geom_sf(data = gull$sp$NHDWaterbody) + 

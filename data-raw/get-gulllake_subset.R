@@ -27,6 +27,7 @@ vogelflow  <- nhd_plus_load(4, "VogelExtension", "vogelflow") %>%
 
 gull$sp$NHDFlowLine %>%
   left_join(eromflow, by = c("COMID" = "ComID")) %>%
-  left_join(vogelflow, by = "COMID") -> gull$sp$NHDFlowLine
+  left_join(vogelflow, by = "COMID") -> gull_flow
 
 devtools::use_data(gull, overwrite = TRUE)
+devtools::use_data(gull_flow, overwrite = TRUE)

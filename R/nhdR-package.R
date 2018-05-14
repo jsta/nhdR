@@ -29,3 +29,12 @@ NULL
 #' @keywords datasets
 #' @name vpu_shp
 NULL
+
+#' gull_flow
+#'
+#' @title Flowlines within a buffer around Gull Lake Michigan including flow information.
+#' @description Data from NHD Plus
+#' @docType data
+#' @keywords datasets
+#' @name gull_flow
+NULL
