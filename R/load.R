@@ -147,6 +147,7 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
 #' dt <- nhd_plus_load(4, "NHDSnapshot", "NHDWaterbody")
 #' dt <- nhd_plus_load(c(1,2), "NHDSnapshot", "NHDWaterbody")
 #' dt <- nhd_plus_load(4, "NHDSnapshot", "NHDFlowline")
+#' dt <- nhd_plus_load(4, "NHDPlusCatchment", "Catchment")
 #'
 #' # Non-spatial
 #' dt <- nhd_plus_load(1, "NHDPlusAttributes", "PlusFlow")

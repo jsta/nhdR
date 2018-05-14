@@ -37,6 +37,7 @@ unless approve_all_dl is set to TRUE.
 dt <- nhd_plus_load(4, "NHDSnapshot", "NHDWaterbody")
 dt <- nhd_plus_load(c(1,2), "NHDSnapshot", "NHDWaterbody")
 dt <- nhd_plus_load(4, "NHDSnapshot", "NHDFlowline")
+dt <- nhd_plus_load(4, "NHDPlusCatchment", "Catchment")
 
 # Non-spatial
 dt <- nhd_plus_load(1, "NHDPlusAttributes", "PlusFlow")
