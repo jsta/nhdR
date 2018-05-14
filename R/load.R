@@ -131,9 +131,12 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
 #' @param approve_all_dl logical blanket approval to download all missing data
 #' @param ... parameters passed on to sf::st_read
 #' @return spatial object
+#'
 #' @importFrom sf st_read st_zm
 #' @importFrom foreign read.dbf
 #' @importFrom curl has_internet
+#' @importFrom stringr str_extract
+#'
 #' @export
 #'
 #' @details This function will ask the user to approve downloading missing data
@@ -166,7 +169,13 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
   nhd_plus_load_vpu <- function(vpu, component, dsn, ...){
       vpu_path <- list.files(file.path(nhd_path(), "NHDPlus"),
                              include.dirs = TRUE, full.names = TRUE)
-      vpu_path <- vpu_path[grep(vpu, vpu_path)]
+
+      file_vpus <- sapply(
+        stringr::str_extract(vpu_path, "_([0-9]{2}[A-z]{0,1})_"),
+        function(x) substring(x, 2, nchar(x) - 1))
+
+      vpu_path <- vpu_path[file_vpus == zero_pad(vpu, 1)]
+
       vpu_path <- vpu_path[
         seq_len(length(vpu_path)) %in% grep("7z", vpu_path)]
       vpu_path <- vpu_path[grep(component, vpu_path)]
@@ -209,7 +218,8 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
     }
   }
 
-  res        <- lapply(vpu, nhd_plus_load_vpu, component = component, dsn = dsn, ...)
+  res        <- lapply(vpu, nhd_plus_load_vpu,
+                       component = component, dsn = dsn, ...)
   is_spatial <- unlist(lapply(res, function(x) x$is_spatial))
   res        <- do.call("rbind", lapply(res, function(x) x$res))
 
