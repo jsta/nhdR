@@ -4,12 +4,14 @@
 \alias{nhd_plus_get}
 \title{Download and cache NHDplus data by vector processing unit}
 \usage{
-nhd_plus_get(vpu = NA, component = "NHDSnapshot")
+nhd_plus_get(vpu = NA, component = "NHDSnapshot", force_dl = FALSE)
 }
 \arguments{
 \item{vpu}{numeric vector processing unit}
 
 \item{component}{character component name}
+
+\item{force_dl}{logical force a re-download of the requested data}
 }
 \description{
 Download and cache NHDplus data by vector processing unit

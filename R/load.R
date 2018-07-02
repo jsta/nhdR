@@ -129,6 +129,7 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
 #' @param file_ext character choice of "shp" for spatial data and
 #' "dbf" for non-spatial. optional
 #' @param approve_all_dl logical blanket approval to download all missing data
+#' @param force_dl logical force a re-download of the requested data
 #' @param ... parameters passed on to sf::st_read
 #' @return spatial object
 #'
@@ -161,13 +162,15 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
 #' plusflow <- nhd_plus_load(vpu = "10L", "NHDPlusAttributes", "PlusFlow")
 #' }
 nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
-                          file_ext = NA, approve_all_dl = FALSE, ...){
+                          file_ext = NA, approve_all_dl = FALSE, force_dl = FALSE,
+                          ...){
 
   if(!(file_ext %in% c(NA, "shp", "dbf"))){
     stop(paste0("file_ext must be set to either 'shp' or 'dbf'"))
   }
 
   nhd_plus_load_vpu <- function(vpu, component, dsn, ...){
+
       vpu_path <- list.files(file.path(nhd_path(), "NHDPlus"),
                              include.dirs = TRUE, full.names = TRUE)
 
@@ -181,9 +184,9 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
         seq_len(length(vpu_path)) %in% grep("7z", vpu_path)]
       vpu_path <- vpu_path[grep(component, vpu_path)]
 
-    if(any(!file.exists(vpu_path)) | length(vpu_path) == 0){
+    if(any(!file.exists(vpu_path)) | length(vpu_path) == 0 | force_dl){
 
-      if(!approve_all_dl){
+      if(!approve_all_dl & !force_dl){
         userconsents <- utils::menu(c("Yes", "No"),
                   title = paste0(vpu, " vpu file not found. Download it?"))
       }else{
@@ -191,7 +194,7 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
       }
 
       if(userconsents == 1){
-        nhd_plus_get(vpu = vpu, component = component)
+        nhd_plus_get(vpu = vpu, component = component, force_dl = force_dl)
       }else{
         stop("No file. Cannot load.")
       }

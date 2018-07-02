@@ -21,7 +21,14 @@ gdb_plus_path <- function(){
 #
 # }
 
-get_if_not_exists <- function(url, destfile){
+get_if_not_exists <- function(url, destfile, force_dl = FALSE){
+  if(force_dl){
+    message(paste0("Re-downloading ", url))
+    suppressWarnings(
+      httr::GET(url, httr::write_disk(destfile, overwrite = TRUE), httr::progress()))
+    TRUE
+  }
+
   if(!file.exists(destfile)){
     message(paste0("Downloading ", url))
     suppressWarnings(

@@ -40,6 +40,7 @@ nhd_get <- function(state = NA){
 #'
 #' @param vpu numeric vector processing unit
 #' @param component character component name
+#' @param force_dl logical force a re-download of the requested data
 #' @export
 #' @importFrom utils unzip
 #' @importFrom rvest html_nodes html_attrs
@@ -54,7 +55,7 @@ nhd_get <- function(state = NA){
 #' nhd_plus_get(vpu = "National", component = "V1_To_V2_Crosswalk")
 #' nhd_plus_get(vpu = 4, component = "EROMExtension")
 #' }
-nhd_plus_get <- function(vpu = NA, component = "NHDSnapshot"){
+nhd_plus_get <- function(vpu = NA, component = "NHDSnapshot", force_dl = FALSE){
 
   if(!curl::has_internet()){
     stop("This function requires internet access.")
@@ -81,7 +82,7 @@ nhd_plus_get <- function(vpu = NA, component = "NHDSnapshot"){
   dir.create(destsubdir, showWarnings = FALSE)
   destfile <- file.path(destdir, basename(url))
 
-  if(get_if_not_exists(url, destfile)){
+  if(get_if_not_exists(url, destfile, force_dl = force_dl)){
     if(Sys.info()["sysname"] == "Windows"){
       system(paste0("7za.exe e ", destfile, " -o", destsubdir))
     }else{
