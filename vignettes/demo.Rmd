@@ -1,10 +1,10 @@
 ---
-title: "Using nhdR"
+title: "Creating simple maps using nhdR"
 author: "Joseph Stachelek"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Using nhdR}
+  %\VignetteIndexEntry{Creating simple maps using nhdR}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
