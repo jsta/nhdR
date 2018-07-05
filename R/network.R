@@ -244,14 +244,22 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
     utm_zone <- long2UTM(sf::st_coordinates(pnt)[1])
     crs      <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
 
-    st_transform(dplyr::filter(lines, .data$comid %in% res_reaches$tocomid),
+    res <- st_transform(dplyr::filter(lines, .data$comid %in% res_reaches$tocomid),
                  crs = crs)
+
+    # pull first order streams
+    l_reach <- leaf_reaches(network = res)
+    first_order_reaches <- neighbors(l_reach$comid, network_table,
+                                      direction = "up")
+
+    rbind(res, st_transform(dplyr::filter(lines,
+                      .data$comid %in% first_order_reaches$fromcomid),crs = crs))
   }
 }
 
 neighbors <- function(node, network_table, direction = c("up", "down")) {
   if(direction == "down"){
-    stop("not implemented yet")
+    stop("Traversing down the network is not implemented yet.")
   }
   if (direction == "up"){
     res <- dplyr::filter(network_table, .data$tocomid %in% node)
