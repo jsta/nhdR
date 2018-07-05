@@ -13,23 +13,13 @@ mendota_meta    <- wikilake::lake_wiki("Lake Mendota")
 mendota         <- st_sfc(st_point(c(mendota_meta$Lon, mendota_meta$Lat)))
 
 mendota <- nhd_plus_query(lon = mendota_meta$Lon, lat = mendota_meta$Lat,
-                       dsn = c("NHDWaterbody", "NHDFlowLine"))
+                       dsn = c("NHDWaterbody", "NHDFlowLine"), buffer_dist = 0.2)
 
 vpu <- find_vpu(mendota$pnt)
 
-# ---- pull_flow ----
-
-eromflow  <- nhd_plus_load(vpu, "EROMExtension", "EROM_MA0001") %>%
-  filter(ComID %in% mendota$sp$NHDFlowLine$COMID) %>%
-  select(ComID, Q0001F)
-
-vogelflow  <- nhd_plus_load(7, "VogelExtension", "vogelflow") %>%
-  filter(COMID %in% mendota$sp$NHDFlowLine$COMID,
-         MAFLOWV != -9999.00000)
-
-mendota$sp$NHDFlowLine %>%
-  left_join(eromflow, by = c("COMID" = "ComID")) %>%
-  left_join(vogelflow, by = "COMID") -> mendota_flow
+# ---- pull_mendota_network ----
+mendota_network <- extract_network(lon = mendota_meta$Lon, lat = mendota_meta$Lat,
+                                   maxsteps = Inf)
 
 devtools::use_data(mendota, overwrite = TRUE)
-devtools::use_data(mendota_flow, overwrite = TRUE)
+devtools::use_data(mendota_network, overwrite = TRUE)

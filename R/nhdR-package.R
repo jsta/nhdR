@@ -48,11 +48,11 @@ NULL
 #' @name mendota
 NULL
 
-#' mendota_flow
+#' mendota_network
 #'
-#' @title Flowlines within a buffer around Lake Mendotan including flow information.
+#' @title Upstream flowlines connected to Lake Mendota.
 #' @description Data from NHD Plus
 #' @docType data
 #' @keywords datasets
-#' @name mendota_flow
+#' @name mendota_network
 NULL

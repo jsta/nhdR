@@ -27,7 +27,7 @@ library(sf)
 
 Let's start by pulling the coordinates associated with Lake Mendota, which will be the largest object (by area) in the waterbody object.
 
-```{r mendota_centroid, warning=FALSE}
+```{r mendota_centroid, warning=FALSE, eval=TRUE}
 data(mendota)
 
 largest_waterbody <- which.max(st_area(mendota$sp$NHDWaterbody))
@@ -38,23 +38,21 @@ mendota_centroid  <- st_coordinates(st_centroid(mendota_lake))
 
 Next, we can use the `extract_network` function to pull the stream network associated with Lake Mendota. Notice that we have set the `maxsteps` parameter to **Inf**. If the network is anticipated to be very large it can be a good idea to set this to a discrete (lower) number to avoid returning very large lines objects.
 
-```{r mendota_network}
+```{r mendota_network, eval=FALSE}
 mendota_network <- extract_network(lon = mendota_centroid[1], 
                                 lat = mendota_centroid[2], 
                                 maxsteps = Inf)
 ```
 
-Finally, we pull the stream network from a geometric buffer around Lake Mendota to check that `extract_network` is functioning properly. 
+Finally, we compare the stream network from a geometric buffer around Lake Mendota against the output of `extract_network` to make sure everything is working properly. 
 
-```{r nearby_lines}
-nearby_lines <- nhd_plus_query(lon = mendota_centroid[1], 
-                               lat = mendota_centroid[2],
-                               dsn = "NHDFlowLine", buffer_dist = 0.2)
+```{r use_precomputed_data, echo=FALSE}
+data(mendota_network)
 ```
 
 ```{r mapping}
 ggplot() + 
-  geom_sf(data = nearby_lines$sp$NHDFlowLine) +
+  geom_sf(data = mendota$sp$NHDFlowLine) +
   geom_sf(data = mendota_lake, fill = "cyan") +
   geom_sf(data = mendota_network, color = "blue")
 

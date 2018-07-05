@@ -112,52 +112,10 @@ mendota_centroid  &lt;-<span class="st"> </span><span class="kw"><a href="http:/
 <p>Next, we can use the <code>extract_network</code> function to pull the stream network associated with Lake Mendota. Notice that we have set the <code>maxsteps</code> parameter to <strong>Inf</strong>. If the network is anticipated to be very large it can be a good idea to set this to a discrete (lower) number to avoid returning very large lines objects.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mendota_network &lt;-<span class="st"> </span><span class="kw"><a href="../reference/extract_network.html">extract_network</a></span>(<span class="dt">lon =</span> mendota_centroid[<span class="dv">1</span>], 
                                 <span class="dt">lat =</span> mendota_centroid[<span class="dv">2</span>], 
-                                <span class="dt">maxsteps =</span> <span class="ot">Inf</span>)
-<span class="co">#&gt; although coordinates are longitude/latitude, st_intersects assumes that they are planar</span>
-<span class="co">#&gt; although coordinates are longitude/latitude, st_intersects assumes that they are planar</span>
-<span class="co">#&gt; although coordinates are longitude/latitude, st_intersects assumes that they are planar</span>
-<span class="co">#&gt; Reading layer `NHDWaterbody' from data source `/home/jose/.local/share/nhdR/NHDPlus/MS_07_NHDSnapshot/NHDWaterbody.shp' using driver `ESRI Shapefile'</span>
-<span class="co">#&gt; Simple feature collection with 42186 features and 12 fields</span>
-<span class="co">#&gt; geometry type:  POLYGON</span>
-<span class="co">#&gt; dimension:      XYZ</span>
-<span class="co">#&gt; bbox:           xmin: -97.35526 ymin: 36.95421 xmax: -86.10545 ymax: 47.79477</span>
-<span class="co">#&gt; epsg (SRID):    4269</span>
-<span class="co">#&gt; proj4string:    +proj=longlat +datum=NAD83 +no_defs</span>
-<span class="co">#&gt; Warning in st_buffer.sfc(pnt, dist = buffer_dist): st_buffer does not</span>
-<span class="co">#&gt; correctly buffer longitude/latitude data</span>
-<span class="co">#&gt; dist is assumed to be in decimal degrees (arc_degrees).</span>
-<span class="co">#&gt; although coordinates are longitude/latitude, st_intersects assumes that they are planar</span>
-<span class="co">#&gt; Reading layer `NHDFlowline' from data source `/home/jose/.local/share/nhdR/NHDPlus/MS_07_NHDSnapshot/NHDFlowline.shp' using driver `ESRI Shapefile'</span>
-<span class="co">#&gt; Simple feature collection with 193286 features and 14 fields</span>
-<span class="co">#&gt; geometry type:  LINESTRING</span>
-<span class="co">#&gt; dimension:      XYZM</span>
-<span class="co">#&gt; bbox:           xmin: -97.35899 ymin: 36.95512 xmax: -85.905 ymax: 47.73919</span>
-<span class="co">#&gt; epsg (SRID):    4269</span>
-<span class="co">#&gt; proj4string:    +proj=longlat +datum=NAD83 +no_defs</span>
-<span class="co">#&gt; Reading layer `NHDFlowline' from data source `/home/jose/.local/share/nhdR/NHDPlus/MS_07_NHDSnapshot/NHDFlowline.shp' using driver `ESRI Shapefile'</span>
-<span class="co">#&gt; Simple feature collection with 193286 features and 14 fields</span>
-<span class="co">#&gt; geometry type:  LINESTRING</span>
-<span class="co">#&gt; dimension:      XYZM</span>
-<span class="co">#&gt; bbox:           xmin: -97.35899 ymin: 36.95512 xmax: -85.905 ymax: 47.73919</span>
-<span class="co">#&gt; epsg (SRID):    4269</span>
-<span class="co">#&gt; proj4string:    +proj=longlat +datum=NAD83 +no_defs</span></code></pre></div>
-<p>Finally, we pull the stream network from a geometric buffer around Lake Mendota to check that <code>extract_network</code> is functioning properly.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nearby_lines &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nhd_plus_query.html">nhd_plus_query</a></span>(<span class="dt">lon =</span> mendota_centroid[<span class="dv">1</span>], 
-                               <span class="dt">lat =</span> mendota_centroid[<span class="dv">2</span>],
-                               <span class="dt">dsn =</span> <span class="st">"NHDFlowLine"</span>, <span class="dt">buffer_dist =</span> <span class="fl">0.2</span>)
-<span class="co">#&gt; although coordinates are longitude/latitude, st_intersects assumes that they are planar</span>
-<span class="co">#&gt; Reading layer `NHDFlowline' from data source `/home/jose/.local/share/nhdR/NHDPlus/MS_07_NHDSnapshot/NHDFlowline.shp' using driver `ESRI Shapefile'</span>
-<span class="co">#&gt; Simple feature collection with 193286 features and 14 fields</span>
-<span class="co">#&gt; geometry type:  LINESTRING</span>
-<span class="co">#&gt; dimension:      XYZM</span>
-<span class="co">#&gt; bbox:           xmin: -97.35899 ymin: 36.95512 xmax: -85.905 ymax: 47.73919</span>
-<span class="co">#&gt; epsg (SRID):    4269</span>
-<span class="co">#&gt; proj4string:    +proj=longlat +datum=NAD83 +no_defs</span>
-<span class="co">#&gt; Warning in st_buffer.sfc(pnt, dist = buffer_dist): st_buffer does not</span>
-<span class="co">#&gt; correctly buffer longitude/latitude data</span>
-<span class="co">#&gt; dist is assumed to be in decimal degrees (arc_degrees).</span></code></pre></div>
+                                <span class="dt">maxsteps =</span> <span class="ot">Inf</span>)</code></pre></div>
+<p>Finally, we compare the stream network from a geometric buffer around Lake Mendota against the output of <code>extract_network</code> to make sure everything is working properly.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggsf">geom_sf</a></span>(<span class="dt">data =</span> nearby_lines<span class="op">$</span>sp<span class="op">$</span>NHDFlowLine) <span class="op">+</span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggsf">geom_sf</a></span>(<span class="dt">data =</span> mendota<span class="op">$</span>sp<span class="op">$</span>NHDFlowLine) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggsf">geom_sf</a></span>(<span class="dt">data =</span> mendota_lake, <span class="dt">fill =</span> <span class="st">"cyan"</span>) <span class="op">+</span>
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggsf">geom_sf</a></span>(<span class="dt">data =</span> mendota_network, <span class="dt">color =</span> <span class="st">"blue"</span>)</code></pre></div>
 <p><img src="network_files/figure-html/mapping-1.png" width="700"></p>
