@@ -9,17 +9,6 @@
 #' @author \email{stachel2@msu.edu}
 NULL
 
-#' gull
-#'
-#' @title List of simple features lake polygons and flowlines within a buffer
-#' around Gull Lake Michigan.
-#' @description Data from NHD Plus
-#' @docType data
-#' @keywords datasets
-#' @name gull
-NULL
-
-
 #' vpu_shp
 #'
 #' @title Low-res simple features data frame of the NHDPlus vector processing
@@ -30,6 +19,16 @@ NULL
 #' @name vpu_shp
 NULL
 
+#' gull
+#'
+#' @title List of simple features lake polygons and flowlines within a buffer
+#' around Gull Lake Michigan.
+#' @description Data from NHD Plus
+#' @docType data
+#' @keywords datasets
+#' @name gull
+NULL
+
 #' gull_flow
 #'
 #' @title Flowlines within a buffer around Gull Lake Michigan including flow information.
@@ -37,4 +36,23 @@ NULL
 #' @docType data
 #' @keywords datasets
 #' @name gull_flow
+NULL
+
+#' mendota
+#'
+#' @title List of simple features lake polygons and flowlines within a buffer
+#' around Lake Mendota.
+#' @description Data from NHD Plus
+#' @docType data
+#' @keywords datasets
+#' @name mendota
+NULL
+
+#' mendota_flow
+#'
+#' @title Flowlines within a buffer around Lake Mendotan including flow information.
+#' @description Data from NHD Plus
+#' @docType data
+#' @keywords datasets
+#' @name mendota_flow
 NULL
