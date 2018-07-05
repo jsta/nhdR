@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">nhdR</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3</span>
       </span>
     </div>
 
@@ -81,12 +81,18 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/demo.html">Using nhdR</a>
+      <a href="../articles/demo.html">Creating simple maps using nhdR</a>
     </li>
     <li>
       <a href="../articles/flow.html">Querying flow information</a>
     </li>
+    <li>
+      <a href="../articles/network.html">Pull stream network associated with a waterbody catchment</a>
+    </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -121,7 +127,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>nhd_plus_load</span>(<span class='no'>vpu</span>, <span class='kw'>component</span> <span class='kw'>=</span> <span class='st'>"NHDSnapshot"</span>, <span class='no'>dsn</span>, <span class='kw'>file_ext</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>approve_all_dl</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>approve_all_dl</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>force_dl</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -148,6 +154,10 @@
       <td><p>logical blanket approval to download all missing data</p></td>
     </tr>
     <tr>
+      <th>force_dl</th>
+      <td><p>logical force a re-download of the requested data</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>parameters passed on to sf::st_read</p></td>
     </tr>
@@ -169,6 +179,7 @@ unless approve_all_dl is set to TRUE.</p>
 <span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fu'>nhd_plus_load</span>(<span class='fl'>4</span>, <span class='st'>"NHDSnapshot"</span>, <span class='st'>"NHDWaterbody"</span>)
 <span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fu'>nhd_plus_load</span>(<span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>2</span>), <span class='st'>"NHDSnapshot"</span>, <span class='st'>"NHDWaterbody"</span>)
 <span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fu'>nhd_plus_load</span>(<span class='fl'>4</span>, <span class='st'>"NHDSnapshot"</span>, <span class='st'>"NHDFlowline"</span>)
+<span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fu'>nhd_plus_load</span>(<span class='fl'>4</span>, <span class='st'>"NHDPlusCatchment"</span>, <span class='st'>"Catchment"</span>)
 
 <span class='co'># Non-spatial</span>
 <span class='no'>dt</span> <span class='kw'>&lt;-</span> <span class='fu'>nhd_plus_load</span>(<span class='fl'>1</span>, <span class='st'>"NHDPlusAttributes"</span>, <span class='st'>"PlusFlow"</span>)

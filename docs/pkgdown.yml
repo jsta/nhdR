@@ -4,4 +4,5 @@ pkgdown_sha: ~
 articles:
   demo: demo.html
   flow: flow.html
+  network: network.html
 
