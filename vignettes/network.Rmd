@@ -1,0 +1,61 @@
+---
+title: "Pull stream network associated with a waterbody catchment"
+author: "Joseph Stachelek"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Pull stream network associated with a waterbody catchment}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The goal of this vignette is to demonstrate how to pull the stream network associated with a waterbody catchment. We will use the `extract_network` function to accomplish this task using the built-in `mendota` dataset.
+
+```{r message=FALSE, warning=FALSE}
+library(nhdR)
+library(dplyr)
+library(ggplot2)
+library(sf)
+```
+
+Let's start by pulling the coordinates associated with Lake Mendota, which will be the largest object (by area) in the waterbody object.
+
+```{r mendota_centroid, warning=FALSE}
+data(mendota)
+
+largest_waterbody <- which.max(st_area(mendota$sp$NHDWaterbody))
+mendota_lake      <- mendota$sp$NHDWaterbody[largest_waterbody,]
+mendota_lake      <- st_transform(mendota_lake, crs = 4326)
+mendota_centroid  <- st_coordinates(st_centroid(mendota_lake))
+```
+
+Next, we can use the `extract_network` function to pull the stream network associated with Lake Mendota. Notice that we have set the `maxsteps` parameter to **Inf**. If the network is anticipated to be very large it can be a good idea to set this to a discrete (lower) number to avoid returning very large lines objects.
+
+```{r mendota_network}
+mendota_network <- extract_network(lon = mendota_centroid[1], 
+                                lat = mendota_centroid[2], 
+                                maxsteps = Inf)
+```
+
+Finally, we pull the stream network from a geometric buffer around Lake Mendota to check that `extract_network` is functioning properly. 
+
+```{r nearby_lines}
+nearby_lines <- nhd_plus_query(lon = mendota_centroid[1], 
+                               lat = mendota_centroid[2],
+                               dsn = "NHDFlowLine", buffer_dist = 0.2)
+```
+
+```{r mapping}
+ggplot() + 
+  geom_sf(data = nearby_lines$sp$NHDFlowLine) +
+  geom_sf(data = mendota_lake, fill = "cyan") +
+  geom_sf(data = mendota_network, color = "blue")
+
+```
