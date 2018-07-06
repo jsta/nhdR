@@ -55,6 +55,9 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
                            approve_all_dl = approve_all_dl, ...)$sp$NHDWaterbody
     poly <- poly[which.max(st_area(poly)),] # find lake polygon
 
+    if(nrow(poly) == 0){
+      stop("No lake polygon found at query point")
+    }
     network_lines <- nhd_plus_query(poly = poly,
                                     dsn = "NHDFlowline", ...)$sp$NHDFlowline
   }else{
