@@ -32,5 +32,10 @@ coords <- data.frame(lat = 20.79722, lon = -156.47833)
 res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
 
 mapview(res)
+
+# works even if the "network" is a single reach
+coords <- data.frame(lat = 42.96523, lon = -89.2527)
+res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
+
 }
 }

@@ -191,6 +191,11 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
 #' res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
 #'
 #' mapview(res)
+#'
+#' # works even if the "network" is a single reach
+#' coords <- data.frame(lat = 42.96523, lon = -89.2527)
+#' res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
+#'
 #' }
 extract_network <- function(lon = NA, lat = NA, lines = NA,
                             buffer_dist = 0.01, maxsteps = 3,
@@ -244,16 +249,24 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
     utm_zone <- long2UTM(sf::st_coordinates(pnt)[1])
     crs      <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
 
-    res <- st_transform(dplyr::filter(lines, .data$comid %in% res_reaches$tocomid),
-                 crs = crs)
+    res <- dplyr::filter(lines, .data$comid %in% res_reaches$tocomid)
+    if(nrow(res) > 0){
+      res <- st_transform(res, crs = crs)
+    }else{ # the 'network' is a single reach
+      res <- t_reaches
+    }
 
     # pull first order streams
     l_reach <- leaf_reaches(network = res)
-    first_order_reaches <- neighbors(l_reach$comid, network_table,
-                                      direction = "up")
+    if(nrow(l_reach) > 0){
+      first_order_reaches <- neighbors(l_reach$comid, network_table,
+                                        direction = "up")
 
-    rbind(res, st_transform(dplyr::filter(lines,
-                      .data$comid %in% first_order_reaches$fromcomid),crs = crs))
+      rbind(res, st_transform(dplyr::filter(lines,
+                        .data$comid %in% first_order_reaches$fromcomid),crs = crs))
+    }else{ # the 'network' is a single reach
+      res
+    }
   }
 }
 
