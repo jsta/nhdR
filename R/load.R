@@ -137,6 +137,7 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
 #' @importFrom foreign read.dbf
 #' @importFrom curl has_internet
 #' @importFrom stringr str_extract
+#' @importFrom memoise memoise
 #'
 #' @export
 #'
@@ -161,7 +162,7 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
 #' # Character VPU
 #' plusflow <- nhd_plus_load(vpu = "10L", "NHDPlusAttributes", "PlusFlow")
 #' }
-nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
+nhd_plus_load <- memoise::memoise(function(vpu, component = "NHDSnapshot", dsn,
                           file_ext = NA, approve_all_dl = FALSE, force_dl = FALSE,
                           ...){
 
@@ -234,4 +235,4 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
   }
 
   res
-}
+})
