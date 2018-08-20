@@ -12,3 +12,13 @@ toUTM(sf_object)
 \description{
 Re-project to appropriate UTM zone
 }
+\examples{
+\dontrun{
+data(gull)
+gull_ <- gull$sp$NHDWaterbody
+st_crs(gull_)
+gull_ <- st_transform(gull_, 4326)
+st_crs(gull_)
+st_crs(toUTM(gull_[1,]))
+}
+}

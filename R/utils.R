@@ -128,6 +128,15 @@ long2UTM <- function(long) {
 #'
 #' @importFrom sf st_transform st_crs
 #' @export
+#'
+#' @examples \dontrun{
+#' data(gull)
+#' gull_ <- gull$sp$NHDWaterbody
+#' st_crs(gull_)
+#' gull_ <- st_transform(gull_, 4326)
+#' st_crs(gull_)
+#' st_crs(toUTM(gull_[1,]))
+#' }
 toUTM <- function(sf_object){
 
   if(is.na(st_crs(sf_object)$epsg)){
