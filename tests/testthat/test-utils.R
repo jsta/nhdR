@@ -32,4 +32,12 @@ test_that("toUTM works", {
 
   expect_equal(st_crs(toUTM(gull$sp$NHDWaterbody)),
                st_crs(toUTM(big_combined)))
+
+  big_combined <- rbind(
+    st_transform(sunapee$sp$NHDWaterbody, 4326),
+    st_transform(gull$sp$NHDWaterbody, 4326))
+
+  expect_equal(st_crs(toUTM(sunapee$sp$NHDWaterbody)),
+               st_crs(toUTM(big_combined)))
+
 })
