@@ -143,10 +143,15 @@ toUTM <- function(sf_object){
     sf_object <- st_transform(sf_object, crs = 4326)
   }
 
-  utm_zone <- long2UTM(sf::st_coordinates(sf_object)[1])
-  crs <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
+  if(sf::st_is_longlat(sf_object)){
 
-  sf::st_transform(sf_object, crs = crs)
+    utm_zone <- long2UTM(sf::st_coordinates(sf_object)[1])
+    crs <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
+
+    sf::st_transform(sf_object, crs = crs)
+  }else{
+    sf_object
+  }
 }
 
 compile_gpkg <- function(state){

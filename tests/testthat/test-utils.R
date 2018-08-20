@@ -15,3 +15,17 @@ test_that("find_vpu works with numeric vpus", {
   sf::st_crs(pnt) <- 4326
   expect_equal(nhdR:::find_vpu(pnt), "01")
 })
+
+test_that("toUTM works with objects spanning multiple utm zones", {
+  data(gull)
+  data(mendota)
+
+  big_combined <- rbind(
+    gull$sp$NHDWaterbody,
+    mendota$sp$NHDWaterbody)
+
+  expect_equal(sf::st_crs(toUTM(big_combined)),
+               sf::st_crs(mendota$sp$NHDWaterbody))
+  expect_equal(sf::st_crs(toUTM(big_combined)),
+               sf::st_crs(gull$sp$NHDWaterbody))
+})
