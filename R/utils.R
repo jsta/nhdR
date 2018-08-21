@@ -144,9 +144,9 @@ toUTM <- function(sf_object){
   }
 
   if(sf::st_is_longlat(sf_object)){
-
-    utm_zone <- long2UTM(sf::st_coordinates(sf_object)[1])
-    crs <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
+    suppressWarnings(
+      utm_zone <- long2UTM(st_coordinates(st_centroid(st_union(sf_object)))[1]))
+    crs      <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
 
     sf::st_transform(sf_object, crs = crs)
   }else{
@@ -197,4 +197,9 @@ has_7z <- function(){
   }else{
     TRUE
   }
+}
+
+get_utm_zone <- function(crs){
+  crs <- as.character(crs)
+  stringr::str_extract(crs[2], "(?!\\+zone=)(\\d+)(?=\\s\\+datum)")
 }

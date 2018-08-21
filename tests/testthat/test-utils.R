@@ -30,8 +30,8 @@ test_that("toUTM works", {
     st_transform(gull$sp$NHDWaterbody, 4326),
     st_transform(sunapee$sp$NHDWaterbody, 4326))
 
-  expect_equal(st_crs(toUTM(gull$sp$NHDWaterbody)),
-               st_crs(toUTM(big_combined)))
+  expect_equal(get_utm_zone(st_crs(toUTM(gull$sp$NHDWaterbody))),
+               "16")
 
   big_combined <- rbind(
     st_transform(sunapee$sp$NHDWaterbody, 4326),
