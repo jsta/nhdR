@@ -21,5 +21,5 @@ vpu <- find_vpu(sunapee$pnt)
 sunapee_network <- extract_network(lon = sunapee_meta$Lon, lat = sunapee_meta$Lat,
                                    maxsteps = Inf)
 
-devtools::use_data(sunapee, overwrite = TRUE)
-devtools::use_data(sunapee_network, overwrite = TRUE)
+usethis::use_data(sunapee, overwrite = TRUE)
+usethis::use_data(sunapee_network, overwrite = TRUE)
