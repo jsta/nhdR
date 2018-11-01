@@ -7,6 +7,7 @@
 #' @param lon numeric decimal degree longitude
 #' @param lat numeric decimal degree latitude
 #' @param network sf lines collection
+#' @param lakepoly sf polygon
 #' @param buffer_dist numeric buffer around lat-lon point in dec. deg.
 #' @param lakewise logical return waterbody exit of all in-network lakes?
 #' @param lakesize_threshold numeric above which to count as a lake (ha)
@@ -21,6 +22,9 @@
 #' @examples \dontrun{
 #' library(sf)
 #' library(mapview)
+#'
+#' coords  <- data.frame(lat = 42.96628 , lon = -89.25264)
+#' t_reach <- terminal_reaches(coords$lon, coords$lat)
 #'
 #' coords  <- data.frame(lat = 20.79722, lon = -156.47833)
 #' t_reach <- terminal_reaches(coords$lon, coords$lat)
@@ -42,7 +46,7 @@
 #' mapview(t_reach_lake, color = "green")
 #' }
 terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
-                             network = NA, lakewise = FALSE,
+                             network = NA, lakepoly = NA, lakewise = FALSE,
                              lakesize_threshold = 4, approve_all_dl = FALSE, ...){
 
   if(all(is.na(network))){
@@ -96,7 +100,6 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
 
   }
 
-
   # find nodes with no downstream connections.
   res    <- dplyr::filter(network_table,
                        !(network_table$tocomid %in% network_table$fromcomid))
@@ -106,6 +109,9 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
     up_one <- network_table[network_table$tocomid  %in% res$fromcomid,]
     res    <- res[which(up_one$fromcomid != 0),]
   }
+
+  # find nodes with an upstream reach with ftype == ArtificialPath?
+  # browser()
 
   # find nodes with no downstream and at least one upstream conn.
   dplyr::filter(network_lines, .data$comid %in% res$fromcomid)
@@ -219,7 +225,8 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
                                      .data$fromcomid %in% lines$comid)
   }
 
-  t_reaches     <- terminal_reaches(lon, lat, buffer_dist = buffer_dist)
+  t_reaches     <- terminal_reaches(lon, lat, buffer_dist = buffer_dist,
+                                    lakewise = TRUE)
   temp_reaches  <- neighbors(t_reaches$comid, network_table, direction = "up")
   res_reaches   <- temp_reaches
 

@@ -4,8 +4,9 @@
 \alias{terminal_reaches}
 \title{Return terminal reaches from collection intersecting lake}
 \usage{
-terminal_reaches(lon = NA, lat = NA, buffer_dist = 0.01, network = NA,
-  lakewise = FALSE, lakesize_threshold = 4, approve_all_dl = FALSE, ...)
+terminal_reaches(lon = NA, lat = NA, buffer_dist = 0.01,
+  network = NA, lakepoly = NA, lakewise = FALSE,
+  lakesize_threshold = 4, approve_all_dl = FALSE, ...)
 }
 \arguments{
 \item{lon}{numeric decimal degree longitude}
@@ -15,6 +16,8 @@ terminal_reaches(lon = NA, lat = NA, buffer_dist = 0.01, network = NA,
 \item{buffer_dist}{numeric buffer around lat-lon point in dec. deg.}
 
 \item{network}{sf lines collection}
+
+\item{lakepoly}{sf polygon}
 
 \item{lakewise}{logical return waterbody exit of all in-network lakes?}
 
@@ -33,6 +36,9 @@ terminal reach is a flowline that exits the intersecting surface waterbody.
 \dontrun{
 library(sf)
 library(mapview)
+
+coords  <- data.frame(lat = 42.96628 , lon = -89.25264)
+t_reach <- terminal_reaches(coords$lon, coords$lat)
 
 coords  <- data.frame(lat = 20.79722, lon = -156.47833)
 t_reach <- terminal_reaches(coords$lon, coords$lat)

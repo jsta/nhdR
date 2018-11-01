@@ -56,3 +56,22 @@ NULL
 #' @keywords datasets
 #' @name mendota_network
 NULL
+
+#' sunappe
+#'
+#' @title List of simple features lake polygons and flowlines within a buffer
+#' around Lake Sunappe.
+#' @description Data from NHD Plus
+#' @docType data
+#' @keywords datasets
+#' @name sunappe
+NULL
+
+#' sunappe_network
+#'
+#' @title Upstream flowlines connected to Lake Sunappe.
+#' @description Data from NHD Plus
+#' @docType data
+#' @keywords datasets
+#' @name sunappe_network
+NULL

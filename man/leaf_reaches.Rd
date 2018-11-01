@@ -4,7 +4,8 @@
 \alias{leaf_reaches}
 \title{Return leaf reaches from a network or query intersecting lake}
 \usage{
-leaf_reaches(lon = NA, lat = NA, network = NA, approve_all_dl = FALSE)
+leaf_reaches(lon = NA, lat = NA, network = NA,
+  approve_all_dl = FALSE)
 }
 \arguments{
 \item{lon}{numeric decimal degree longitude}

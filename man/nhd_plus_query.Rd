@@ -4,8 +4,8 @@
 \alias{nhd_plus_query}
 \title{Select NHDplus features via polygon or circular buffer of coordinate pair}
 \usage{
-nhd_plus_query(lon = NA, lat = NA, poly = NA, dsn, buffer_dist = 0.05,
-  approve_all_dl = FALSE, ...)
+nhd_plus_query(lon = NA, lat = NA, poly = NA, dsn,
+  buffer_dist = 0.05, approve_all_dl = FALSE, ...)
 }
 \arguments{
 \item{lon}{numeric longitude. optional}
