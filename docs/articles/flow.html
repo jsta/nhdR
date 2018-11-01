@@ -88,7 +88,7 @@
       <h1>Querying flow information</h1>
                         <h4 class="author">Joseph Stachelek</h4>
             
-            <h4 class="date">2018-07-05</h4>
+            <h4 class="date">2018-11-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jsta/nhdR/blob/master/vignettes/flow.Rmd"><code>vignettes/flow.Rmd</code></a></small>
       <div class="hidden name"><code>flow.Rmd</code></div>
@@ -98,52 +98,52 @@
     
     
 <p>Let’s get some flow data for the NHDPlus subset included with <code>nhdR</code> package. Our goal is to adjust the color and size of each reach by their average flow.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(nhdR)
-<span class="kw">library</span>(dplyr)
-<span class="kw">library</span>(ggplot2)
-<span class="kw">library</span>(sf)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggsf">geom_sf</a></span>(<span class="dt">data =</span> gull<span class="op">$</span>sp<span class="op">$</span>NHDWaterbody) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggsf">geom_sf</a></span>(<span class="dt">data =</span> gull<span class="op">$</span>sp<span class="op">$</span>NHDFlowLine)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(nhdR)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">library</span>(sf)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="dt">data =</span> gull<span class="op">$</span>sp<span class="op">$</span>NHDWaterbody) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="dt">data =</span> gull<span class="op">$</span>sp<span class="op">$</span>NHDFlowLine)</a></code></pre></div>
 <p><img src="flow_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-gull_sf &lt;-<span class="st"> </span>gull<span class="op">$</span>sp<span class="op">$</span>NHDFlowLine</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">gull_sf &lt;-<span class="st"> </span>gull<span class="op">$</span>sp<span class="op">$</span>NHDFlowLine</a></code></pre></div>
 <p>NHDPlus includes two estimates of flow:</p>
 <div id="enhanced-unit-runoff-method-erom" class="section level2">
 <h2 class="hasAnchor">
 <a href="#enhanced-unit-runoff-method-erom" class="anchor"></a>Enhanced Unit Runoff Method (EROM)</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">eromflow  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nhd_plus_load.html">nhd_plus_load</a></span>(<span class="dv">4</span>, <span class="st">"EROMExtension"</span>, <span class="st">"EROM_MA0001"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(ComID <span class="op">%in%</span><span class="st"> </span>gull<span class="op">$</span>sp<span class="op">$</span>NHDFlowLine<span class="op">$</span>COMID) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(ComID, Q0001F)
-
-gull_sf &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(gull_sf, eromflow, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"COMID"</span> =<span class="st"> "ComID"</span>))</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">eromflow  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nhd_plus_load.html">nhd_plus_load</a></span>(<span class="dv">4</span>, <span class="st">"EROMExtension"</span>, <span class="st">"EROM_MA0001"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(ComID <span class="op">%in%</span><span class="st"> </span>gull<span class="op">$</span>sp<span class="op">$</span>NHDFlowLine<span class="op">$</span>COMID) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(ComID, Q0001F)</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">gull_sf &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(gull_sf, eromflow, <span class="dt">by =</span> <span class="kw">c</span>(<span class="st">"COMID"</span> =<span class="st"> "ComID"</span>))</a></code></pre></div>
 </div>
 <div id="vogel-flow-estimation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#vogel-flow-estimation" class="anchor"></a>Vogel Flow Estimation</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vogelflow  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nhd_plus_load.html">nhd_plus_load</a></span>(<span class="dv">4</span>, <span class="st">"VogelExtension"</span>, <span class="st">"vogelflow"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(COMID <span class="op">%in%</span><span class="st"> </span>gull<span class="op">$</span>sp<span class="op">$</span>NHDFlowLine<span class="op">$</span>COMID, 
-         MAFLOWV <span class="op">!=</span><span class="st"> </span><span class="fl">-9999.00000</span>) 
-
-gull_sf &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(gull_sf, vogelflow, <span class="dt">by =</span> <span class="st">"COMID"</span>)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">vogelflow  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nhd_plus_load.html">nhd_plus_load</a></span>(<span class="dv">4</span>, <span class="st">"VogelExtension"</span>, <span class="st">"vogelflow"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(COMID <span class="op">%in%</span><span class="st"> </span>gull<span class="op">$</span>sp<span class="op">$</span>NHDFlowLine<span class="op">$</span>COMID, </a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">         MAFLOWV <span class="op">!=</span><span class="st"> </span><span class="fl">-9999.00000</span>) </a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">gull_sf &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(gull_sf, vogelflow, <span class="dt">by =</span> <span class="st">"COMID"</span>)</a></code></pre></div>
 </div>
 <div id="visualization" class="section level2">
 <h2 class="hasAnchor">
 <a href="#visualization" class="anchor"></a>Visualization</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gull_sf &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(gull_sf, <span class="op">!</span><span class="kw">is.na</span>(Q0001F)) 
-gull_sf <span class="op">%&gt;%</span><span class="st">  </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggsf">geom_sf</a></span>(<span class="dt">data =</span> gull<span class="op">$</span>sp<span class="op">$</span>NHDWaterbody) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggsf">geom_sf</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">color =</span> gull_sf<span class="op">$</span>Q0001F), <span class="dt">size =</span> gull_sf<span class="op">$</span>Q0001F <span class="op">/</span><span class="st"> </span><span class="dv">20</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">labs</a></span>(<span class="dt">color =</span> <span class="st">"EROM Flow (cms)"</span>)</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">gull_sf &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(gull_sf, <span class="op">!</span><span class="kw">is.na</span>(Q0001F)) </a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">gull_sf <span class="op">%&gt;%</span><span class="st">  </span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="dt">data =</span> gull<span class="op">$</span>sp<span class="op">$</span>NHDWaterbody) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="kw"><a href="ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">color =</span> gull_sf<span class="op">$</span>Q0001F), <span class="dt">size =</span> gull_sf<span class="op">$</span>Q0001F <span class="op">/</span><span class="st"> </span><span class="dv">20</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="dt">color =</span> <span class="st">"EROM Flow (cms)"</span>)</a></code></pre></div>
 <p><img src="flow_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-gull_sf &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(gull_sf, <span class="op">!</span><span class="kw">is.na</span>(MAFLOWV))
-gull_sf <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggsf">geom_sf</a></span>(<span class="dt">data =</span> gull<span class="op">$</span>sp<span class="op">$</span>NHDWaterbody) <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggsf">geom_sf</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">color =</span> gull_sf<span class="op">$</span>MAFLOWV), <span class="dt">size =</span> gull_sf<span class="op">$</span>MAFLOWV <span class="op">/</span><span class="st"> </span><span class="dv">20</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">labs</a></span>(<span class="dt">color =</span> <span class="st">"Vogel Flow (cms)"</span>)</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">gull_sf &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(gull_sf, <span class="op">!</span><span class="kw">is.na</span>(MAFLOWV))</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">gull_sf <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="dt">data =</span> gull<span class="op">$</span>sp<span class="op">$</span>NHDWaterbody) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="kw"><a href="ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">color =</span> gull_sf<span class="op">$</span>MAFLOWV), <span class="dt">size =</span> gull_sf<span class="op">$</span>MAFLOWV <span class="op">/</span><span class="st"> </span><span class="dv">20</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="dt">color =</span> <span class="st">"Vogel Flow (cms)"</span>)</a></code></pre></div>
 <p><img src="flow_files/figure-html/unnamed-chunk-6-2.png" width="700"></p>
 </div>
   </div>

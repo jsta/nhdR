@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Re-project to appropriate UTM zone — toUTM • nhdR</title>
+<title>Upstream flowlines connected to Lake Sunappe. — sunappe_network • nhdR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,9 +28,9 @@
 
 
 
-<meta property="og:title" content="Re-project to appropriate UTM zone — toUTM" />
+<meta property="og:title" content="Upstream flowlines connected to Lake Sunappe. — sunappe_network" />
 
-<meta property="og:description" content="Re-project to appropriate UTM zone" />
+<meta property="og:description" content="Data from NHD Plus" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -115,46 +115,30 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Re-project to appropriate UTM zone</h1>
-    <small class="dont-index">Source: <a href='https://github.com/jsta/nhdR/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
-    <div class="hidden name"><code>toUTM.Rd</code></div>
+    <h1>Upstream flowlines connected to Lake Sunappe.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/jsta/nhdR/blob/master/R/nhdR-package.R'><code>R/nhdR-package.R</code></a></small>
+    <div class="hidden name"><code>sunappe_network.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Re-project to appropriate UTM zone</p>
+    <p>Data from NHD Plus</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>toUTM</span>(<span class='no'>sf_object</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>sf_object</th>
-      <td><p>an sf object</p></td>
-    </tr>
-    </table>
+        
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>sunappe_network</p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'>data</span>(<span class='no'>gull</span>)
-<span class='no'>gull_</span> <span class='kw'>&lt;-</span> <span class='no'>gull</span>$<span class='no'>sp</span>$<span class='no'>NHDWaterbody</span>
-<span class='fu'>st_crs</span>(<span class='no'>gull_</span>)
-<span class='no'>gull_</span> <span class='kw'>&lt;-</span> <span class='fu'>st_transform</span>(<span class='no'>gull_</span>, <span class='fl'>4326</span>)
-<span class='fu'>st_crs</span>(<span class='no'>gull_</span>)
-<span class='fu'>st_crs</span>(<span class='fu'>toUTM</span>(<span class='no'>gull_</span>[<span class='fl'>1</span>,]))
-<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-            
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+      
+      <li><a href="#details">Details</a></li>
+          </ul>
 
   </div>
 </div>

@@ -88,7 +88,7 @@
       <h1>Pull stream network associated with a waterbody catchment</h1>
                         <h4 class="author">Joseph Stachelek</h4>
             
-            <h4 class="date">2018-07-05</h4>
+            <h4 class="date">2018-11-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jsta/nhdR/blob/master/vignettes/network.Rmd"><code>vignettes/network.Rmd</code></a></small>
       <div class="hidden name"><code>network.Rmd</code></div>
@@ -98,26 +98,26 @@
     
     
 <p>The goal of this vignette is to demonstrate how to pull the stream network associated with a waterbody catchment. We will use the <code>extract_network</code> function to accomplish this task using the built-in <code>mendota</code> dataset.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(nhdR)
-<span class="kw">library</span>(dplyr)
-<span class="kw">library</span>(ggplot2)
-<span class="kw">library</span>(sf)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(nhdR)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">library</span>(sf)</a></code></pre></div>
 <p>Let’s start by pulling the coordinates associated with Lake Mendota, which will be the largest object (by area) in the waterbody object.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(mendota)
-
-largest_waterbody &lt;-<span class="st"> </span><span class="kw">which.max</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/geos_measures">st_area</a></span>(mendota<span class="op">$</span>sp<span class="op">$</span>NHDWaterbody))
-mendota_lake      &lt;-<span class="st"> </span>mendota<span class="op">$</span>sp<span class="op">$</span>NHDWaterbody[largest_waterbody,]
-mendota_lake      &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/st_transform">st_transform</a></span>(mendota_lake, <span class="dt">crs =</span> <span class="dv">4326</span>)
-mendota_centroid  &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/st_coordinates">st_coordinates</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/geos_unary">st_centroid</a></span>(mendota_lake))</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">data</span>(mendota)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">largest_waterbody &lt;-<span class="st"> </span><span class="kw">which.max</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/geos_measures">st_area</a></span>(mendota<span class="op">$</span>sp<span class="op">$</span>NHDWaterbody))</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">mendota_lake      &lt;-<span class="st"> </span>mendota<span class="op">$</span>sp<span class="op">$</span>NHDWaterbody[largest_waterbody,]</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">mendota_lake      &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/st_transform">st_transform</a></span>(mendota_lake, <span class="dt">crs =</span> <span class="dv">4326</span>)</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">mendota_centroid  &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/st_coordinates">st_coordinates</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/sf/topics/geos_unary">st_centroid</a></span>(mendota_lake))</a></code></pre></div>
 <p>Next, we can use the <code>extract_network</code> function to pull the stream network associated with Lake Mendota. Notice that we have set the <code>maxsteps</code> parameter to <strong>Inf</strong>. If the network is anticipated to be very large it can be a good idea to set this to a discrete (lower) number to avoid returning very large lines objects.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mendota_network &lt;-<span class="st"> </span><span class="kw"><a href="../reference/extract_network.html">extract_network</a></span>(<span class="dt">lon =</span> mendota_centroid[<span class="dv">1</span>], 
-                                <span class="dt">lat =</span> mendota_centroid[<span class="dv">2</span>], 
-                                <span class="dt">maxsteps =</span> <span class="ot">Inf</span>)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">mendota_network &lt;-<span class="st"> </span><span class="kw"><a href="../reference/extract_network.html">extract_network</a></span>(<span class="dt">lon =</span> mendota_centroid[<span class="dv">1</span>], </a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">                                <span class="dt">lat =</span> mendota_centroid[<span class="dv">2</span>], </a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">                                <span class="dt">maxsteps =</span> <span class="ot">Inf</span>)</a></code></pre></div>
 <p>Finally, we compare the stream network from a geometric buffer around Lake Mendota against the output of <code>extract_network</code> to make sure everything is working properly.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>() <span class="op">+</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggsf">geom_sf</a></span>(<span class="dt">data =</span> mendota<span class="op">$</span>sp<span class="op">$</span>NHDFlowLine) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggsf">geom_sf</a></span>(<span class="dt">data =</span> mendota_lake, <span class="dt">fill =</span> <span class="st">"cyan"</span>) <span class="op">+</span>
-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggsf">geom_sf</a></span>(<span class="dt">data =</span> mendota_network, <span class="dt">color =</span> <span class="st">"blue"</span>)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="dt">data =</span> mendota<span class="op">$</span>sp<span class="op">$</span>NHDFlowLine) <span class="op">+</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="dt">data =</span> mendota_lake, <span class="dt">fill =</span> <span class="st">"cyan"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="dt">data =</span> mendota_network, <span class="dt">color =</span> <span class="st">"blue"</span>)</a></code></pre></div>
 <p><img src="network_files/figure-html/mapping-1.png" width="700"></p>
   </div>
 

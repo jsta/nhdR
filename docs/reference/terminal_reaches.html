@@ -130,8 +130,9 @@ terminal reach is a flowline that exits the intersecting surface waterbody.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>terminal_reaches</span>(<span class='kw'>lon</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>buffer_dist</span> <span class='kw'>=</span> <span class='fl'>0.01</span>, <span class='kw'>network</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>lakewise</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>lakesize_threshold</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>approve_all_dl</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>terminal_reaches</span>(<span class='kw'>lon</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>lat</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>buffer_dist</span> <span class='kw'>=</span> <span class='fl'>0.01</span>,
+  <span class='kw'>network</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>lakepoly</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>lakewise</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>lakesize_threshold</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>approve_all_dl</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -151,6 +152,10 @@ terminal reach is a flowline that exits the intersecting surface waterbody.</p>
     <tr>
       <th>network</th>
       <td><p>sf lines collection</p></td>
+    </tr>
+    <tr>
+      <th>lakepoly</th>
+      <td><p>sf polygon</p></td>
     </tr>
     <tr>
       <th>lakewise</th>
@@ -175,6 +180,9 @@ terminal reach is a flowline that exits the intersecting surface waterbody.</p>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='fu'>library</span>(<span class='no'>sf</span>)
 <span class='fu'>library</span>(<span class='no'>mapview</span>)
+
+<span class='no'>coords</span>  <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>lat</span> <span class='kw'>=</span> <span class='fl'>42.96628</span> , <span class='kw'>lon</span> <span class='kw'>=</span> -<span class='fl'>89.25264</span>)
+<span class='no'>t_reach</span> <span class='kw'>&lt;-</span> <span class='fu'>terminal_reaches</span>(<span class='no'>coords</span>$<span class='no'>lon</span>, <span class='no'>coords</span>$<span class='no'>lat</span>)
 
 <span class='no'>coords</span>  <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>lat</span> <span class='kw'>=</span> <span class='fl'>20.79722</span>, <span class='kw'>lon</span> <span class='kw'>=</span> -<span class='fl'>156.47833</span>)
 <span class='no'>t_reach</span> <span class='kw'>&lt;-</span> <span class='fu'>terminal_reaches</span>(<span class='no'>coords</span>$<span class='no'>lon</span>, <span class='no'>coords</span>$<span class='no'>lat</span>)

@@ -88,7 +88,7 @@
       <h1>Creating simple maps using nhdR</h1>
                         <h4 class="author">Joseph Stachelek</h4>
             
-            <h4 class="date">2018-07-05</h4>
+            <h4 class="date">2018-11-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jsta/nhdR/blob/master/vignettes/demo.Rmd"><code>vignettes/demo.Rmd</code></a></small>
       <div class="hidden name"><code>demo.Rmd</code></div>
@@ -97,15 +97,15 @@
 
     
     
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(wikilake)
-<span class="kw">library</span>(nhdR)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gull_meta  &lt;-<span class="st"> </span>wikilake<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/wikilake/topics/lake_wiki">lake_wiki</a></span>(<span class="st">"Gull Lake (Michigan)"</span>)
-gull &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nhd_plus_query.html">nhd_plus_query</a></span>(gull_meta<span class="op">$</span>Lon, gull_meta<span class="op">$</span>Lat,
-              <span class="dt">dsn =</span> <span class="kw">c</span>(<span class="st">"NHDWaterbody"</span>, <span class="st">"NHDFlowLine"</span>), <span class="dt">buffer_dist =</span> <span class="fl">0.05</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(gull<span class="op">$</span>sp<span class="op">$</span>NHDWaterbody<span class="op">$</span>geometry, <span class="dt">col =</span> <span class="st">"blue"</span>, <span class="dt">main =</span> <span class="st">"Gull Lake (Michigan)"</span>)
-<span class="kw">plot</span>(gull<span class="op">$</span>sp<span class="op">$</span>NHDFlowLine<span class="op">$</span>geometry, <span class="dt">col =</span> <span class="st">"cyan"</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)
-<span class="kw">plot</span>(gull<span class="op">$</span>pnt, <span class="dt">col =</span> <span class="st">"red"</span>, <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)
-<span class="kw">axis</span>(<span class="dv">1</span>); <span class="kw">axis</span>(<span class="dv">2</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(wikilake)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(nhdR)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">gull_meta  &lt;-<span class="st"> </span>wikilake<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/wikilake/topics/lake_wiki">lake_wiki</a></span>(<span class="st">"Gull Lake (Michigan)"</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">gull &lt;-<span class="st"> </span><span class="kw"><a href="../reference/nhd_plus_query.html">nhd_plus_query</a></span>(gull_meta<span class="op">$</span>Lon, gull_meta<span class="op">$</span>Lat,</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">              <span class="dt">dsn =</span> <span class="kw">c</span>(<span class="st">"NHDWaterbody"</span>, <span class="st">"NHDFlowLine"</span>), <span class="dt">buffer_dist =</span> <span class="fl">0.05</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">plot</span>(gull<span class="op">$</span>sp<span class="op">$</span>NHDWaterbody<span class="op">$</span>geometry, <span class="dt">col =</span> <span class="st">"blue"</span>, <span class="dt">main =</span> <span class="st">"Gull Lake (Michigan)"</span>)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">plot</span>(gull<span class="op">$</span>sp<span class="op">$</span>NHDFlowLine<span class="op">$</span>geometry, <span class="dt">col =</span> <span class="st">"cyan"</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw">plot</span>(gull<span class="op">$</span>pnt, <span class="dt">col =</span> <span class="st">"red"</span>, <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="kw">axis</span>(<span class="dv">1</span>); <span class="kw">axis</span>(<span class="dv">2</span>)</a></code></pre></div>
 <p><img src="demo_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;"></p>
   </div>
 

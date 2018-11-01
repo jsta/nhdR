@@ -168,6 +168,11 @@
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>extract_network</span>(<span class='no'>coords</span>$<span class='no'>lon</span>, <span class='no'>coords</span>$<span class='no'>lat</span>, <span class='kw'>maxsteps</span> <span class='kw'>=</span> <span class='fl'>9</span>)
 
 <span class='fu'><a href='http://www.rdocumentation.org/packages/mapview/topics/mapView'>mapview</a></span>(<span class='no'>res</span>)
+
+<span class='co'># works even if the "network" is a single reach</span>
+<span class='no'>coords</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>lat</span> <span class='kw'>=</span> <span class='fl'>42.96523</span>, <span class='kw'>lon</span> <span class='kw'>=</span> -<span class='fl'>89.2527</span>)
+<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>extract_network</span>(<span class='no'>coords</span>$<span class='no'>lon</span>, <span class='no'>coords</span>$<span class='no'>lat</span>, <span class='kw'>maxsteps</span> <span class='kw'>=</span> <span class='fl'>9</span>)
+
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
