@@ -83,11 +83,7 @@ nhd_plus_get <- function(vpu = NA, component = "NHDSnapshot", force_dl = FALSE){
   destfile <- file.path(destdir, basename(url))
 
   if(get_if_not_exists(url, destfile, force_dl = force_dl)){
-    if(Sys.info()["sysname"] == "Windows"){
-      system(paste0("7za.exe e ", destfile, " -o", destsubdir))
-    }else{
-      system(paste0("7z e ", destfile, " -o", destsubdir))
-    }
+    system(paste0(has_7z()$path, " e ", destfile, " -o", destsubdir))
   }
 }
 

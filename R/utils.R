@@ -191,11 +191,12 @@ bbox2poly <- function(bbox){
 has_7z <- function(){
   paths_7z <- c("7z",
                 "~/usr/bin/7z",
-                "C:\\PROGRA~1\\7-Zip\\7za")
+                "C:\\PROGRA~1\\7-Zip\\7za",
+                "C:\\PROGRAM FILES\\7-Zip\\7z.exe")
   if(!any(nchar(Sys.which(paths_7z)) > 0)){
-    FALSE
+    list(yes = FALSE, path = NA)
   }else{
-    TRUE
+    list(yes = TRUE, path = paths_7z[nchar(Sys.which(paths_7z)) > 0])
   }
 }
 
