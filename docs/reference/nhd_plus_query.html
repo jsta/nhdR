@@ -181,14 +181,14 @@
 <span class='fu'>axis</span>(<span class='fl'>1</span>); <span class='fu'>axis</span>(<span class='fl'>2</span>)
 
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
-<span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>qry</span>$<span class='no'>sp</span>$<span class='no'>NHDWaterbody</span>) + <span class='fu'><a href='ggplot2.tidyverse.org/reference/ggsf.html'>geom_sf</a></span>()
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>(<span class='no'>qry</span>$<span class='no'>sp</span>$<span class='no'>NHDWaterbody</span>) + <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggsf.html'>geom_sf</a></span>()
 
 <span class='no'>wbd</span> <span class='kw'>&lt;-</span> <span class='no'>qry</span>$<span class='no'>sp</span>$<span class='no'>NHDWaterbody</span>[<span class='fu'>which.max</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/sf/topics/geos_measures'>st_area</a></span>(<span class='no'>qry</span>$<span class='no'>sp</span>$<span class='no'>NHDWaterbody</span>)),]
 <span class='no'>qry_lines</span> <span class='kw'>&lt;-</span> <span class='fu'>nhd_plus_query</span>(<span class='kw'>poly</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/sf/topics/st_as_sfc'>st_as_sfc</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/sf/topics/st_bbox'>st_bbox</a></span>(<span class='no'>wbd</span>)),
                             <span class='kw'>dsn</span> <span class='kw'>=</span> <span class='st'>"NHDFlowLine"</span>)
-<span class='fu'><a href='ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>() +
-  <span class='fu'><a href='ggplot2.tidyverse.org/reference/ggsf.html'>geom_sf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>qry</span>$<span class='no'>sp</span>$<span class='no'>NHDWaterbody</span>) +
-  <span class='fu'><a href='ggplot2.tidyverse.org/reference/ggsf.html'>geom_sf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>qry_lines</span>$<span class='no'>sp</span>$<span class='no'>NHDFlowLine</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>)
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span>() +
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggsf.html'>geom_sf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>qry</span>$<span class='no'>sp</span>$<span class='no'>NHDWaterbody</span>) +
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggsf.html'>geom_sf</a></span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>qry_lines</span>$<span class='no'>sp</span>$<span class='no'>NHDFlowLine</span>, <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"red"</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
