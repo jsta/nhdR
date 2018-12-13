@@ -192,7 +192,7 @@ has_7z <- function(){
   paths_7z <- c("7z",
                 "~/usr/bin/7z",
                 "C:\\PROGRA~1\\7-Zip\\7za",
-                "C:\\PROGRAM FILES\\7-Zip\\7z.exe")
+                "C:\\PROGRA~1\\7-Zip\\7z.exe")
   if(!any(nchar(Sys.which(paths_7z)) > 0)){
     list(yes = FALSE, path = NA)
   }else{
