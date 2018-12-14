@@ -86,10 +86,12 @@ nhd_plus_get <- function(vpu = NA, component = "NHDSnapshot", force_dl = FALSE,
   destfile <- file.path(destdir, basename(url))
 
   if(force_unzip & !force_dl){
-    system(paste0(has_7z()$path, " e ", destfile, " -o", shQuote(destsubdir)))
+    system(paste0(has_7z()$path, " e ", shQuote(destfile),
+                  " -o", shQuote(destsubdir)))
   }
   if(get_if_not_exists(url, destfile, force_dl = force_dl)){
-    system(paste0(has_7z()$path, " e ", destfile, " -o", shQuote(destsubdir)))
+    system(paste0(has_7z()$path, " e ", shQuote(destfile),
+                  " -o", shQuote(destsubdir)))
   }
 }
 
