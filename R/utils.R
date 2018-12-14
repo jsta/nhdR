@@ -190,13 +190,13 @@ bbox2poly <- function(bbox){
 # https://stackoverflow.com/a/14965990/3362993
 has_7z <- function(){
   paths_7z <- c("7z",
-                "~/usr/bin/7z",
+                path.expand("~/usr/bin/7z"),
                 "C:\\PROGRA~1\\7-Zip\\7za",
                 "C:\\PROGRA~1\\7-Zip\\7z.exe")
   if(!any(nchar(Sys.which(paths_7z)) > 0)){
     list(yes = FALSE, path = NA)
   }else{
-    list(yes = TRUE, path = paths_7z[nchar(Sys.which(paths_7z)) > 0])
+    list(yes = TRUE, path = paths_7z[nchar(Sys.which(paths_7z)) > 0][1])
   }
 }
 
