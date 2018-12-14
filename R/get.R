@@ -41,6 +41,7 @@ nhd_get <- function(state = NA){
 #' @param vpu numeric vector processing unit
 #' @param component character component name
 #' @param force_dl logical force a re-download of the requested data
+#' @param force_unzip logical force an unzip of downloaded data
 #' @export
 #' @importFrom utils unzip
 #' @importFrom rvest html_nodes html_attrs
@@ -55,7 +56,8 @@ nhd_get <- function(state = NA){
 #' nhd_plus_get(vpu = "National", component = "V1_To_V2_Crosswalk")
 #' nhd_plus_get(vpu = 4, component = "EROMExtension")
 #' }
-nhd_plus_get <- function(vpu = NA, component = "NHDSnapshot", force_dl = FALSE){
+nhd_plus_get <- function(vpu = NA, component = "NHDSnapshot", force_dl = FALSE,
+                         force_unzip = FALSE){
 
   if(!curl::has_internet()){
     stop("This function requires internet access.")
@@ -82,6 +84,9 @@ nhd_plus_get <- function(vpu = NA, component = "NHDSnapshot", force_dl = FALSE){
   dir.create(destsubdir, showWarnings = FALSE)
   destfile <- file.path(destdir, basename(url))
 
+  if(force_unzip & !force_dl){
+    system(paste0(has_7z()$path, " e ", destfile, " -o", destsubdir))
+  }
   if(get_if_not_exists(url, destfile, force_dl = force_dl)){
     system(paste0(has_7z()$path, " e ", destfile, " -o", destsubdir))
   }
