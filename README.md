@@ -1,14 +1,22 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-nhdR
-====
 
-[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/nhdR)](https://cran.r-project.org/package=nhdR) [![Travis-CI Build Status](https://travis-ci.org/jsta/nhdR.svg?branch=master)](https://travis-ci.org/jsta/nhdR) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/jsta/nhdR?branch=master&svg=true)](https://ci.appveyor.com/project/jsta/nhdR)
+# nhdR
 
-The goal of nhdR is to provide R tools for interacting with the [National Hydrography Dataset](https://nhd.usgs.gov/) and [NHDPlus](http://www.horizon-systems.com/nhdplus/).
+[![Project Status: Active - The project has reached a stable, usable
+state and is being actively
+developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/nhdR)](https://cran.r-project.org/package=nhdR)
+[![Travis-CI Build
+Status](https://travis-ci.org/jsta/nhdR.svg?branch=master)](https://travis-ci.org/jsta/nhdR)
+[![AppVeyor Build
+Status](https://ci.appveyor.com/api/projects/status/github/jsta/nhdR?branch=master&svg=true)](https://ci.appveyor.com/project/jsta/nhdR)
 
-Installation
-------------
+The goal of nhdR is to provide R tools for interacting with the
+[National Hydrography Dataset](https://nhd.usgs.gov/) and
+[NHDPlus](http://www.horizon-systems.com/nhdplus/).
+
+## Installation
 
 You can install nhdR from github with:
 
@@ -17,10 +25,11 @@ You can install nhdR from github with:
 devtools::install_github("jsta/nhdR")
 ```
 
-This package also requires an installation of [7-zip](http://www.7-zip.org/) that can be called via the command line using `7z` or `7za.exe`.
+This package also requires an installation of
+[7-zip](http://www.7-zip.org/) that can be called via the command line
+using `7z` or `7za.exe`.
 
-Usage
------
+## Usage
 
 ### Load package
 
@@ -30,9 +39,12 @@ library(nhdR)
 
 ### NHD Plus
 
-NHD-Plus exports are organized by vector processing unit (vpu). See below for a low resolution vpu map (also `nhdR::vpu_shp`). A hi-res version can be found [here](http://www.horizon-systems.com/NHDPlus/NHDPlusV2_data.php).
+NHD-Plus exports are organized by vector processing unit (vpu). See
+below for a low resolution vpu map (also `nhdR::vpu_shp`). A hi-res
+version can be found
+[here](http://www.horizon-systems.com/NHDPlus/NHDPlusV2_data.php).
 
-![](images/unnamed-chunk-3-1.png)
+![](images/unnamed-chunk-3-1.png)<!-- -->
 
 ``` r
 # get a vpu export
