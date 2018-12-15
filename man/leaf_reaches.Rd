@@ -8,11 +8,11 @@ leaf_reaches(lon = NA, lat = NA, network = NA,
   approve_all_dl = FALSE)
 }
 \arguments{
-\item{lon}{numeric decimal degree longitude}
+\item{lon}{numeric decimal degree longitude. optional. See Details section.}
 
-\item{lat}{numeric decimal degree latitude}
+\item{lat}{numeric decimal degree latitude. optional. See Details section.}
 
-\item{network}{sf lines collection}
+\item{network}{sf lines collection. optional. See Details section.}
 
 \item{approve_all_dl}{logical blanket approval to download all missing data}
 }

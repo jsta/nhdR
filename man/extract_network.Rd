@@ -23,6 +23,11 @@ extract_network(lon = NA, lat = NA, lines = NA, buffer_dist = 0.01,
 \description{
 Return nhd plus stream network upstream of a waterbody
 }
+\details{
+The lon and lat arguments are used for querying the corresponding
+lake polygon layer which is then used to climb its intersecting stream
+network.
+}
 \examples{
 \dontrun{
 library(mapview)

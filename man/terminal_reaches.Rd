@@ -9,17 +9,18 @@ terminal_reaches(lon = NA, lat = NA, buffer_dist = 0.01,
   lakesize_threshold = 4, approve_all_dl = FALSE, ...)
 }
 \arguments{
-\item{lon}{numeric decimal degree longitude}
+\item{lon}{numeric decimal degree longitude. optional. See Details section.}
 
-\item{lat}{numeric decimal degree latitude}
+\item{lat}{numeric decimal degree latitude. optional. See Details section.}
 
 \item{buffer_dist}{numeric buffer around lat-lon point in dec. deg.}
 
-\item{network}{sf lines collection}
+\item{network}{sf lines collection. optional. See Details section.}
 
-\item{lakepoly}{sf polygon}
+\item{lakepoly}{sf polygon.  optional. See Details section.}
 
-\item{lakewise}{logical return waterbody exit of all in-network lakes?}
+\item{lakewise}{logical. If TRUE, return the terminal reaches of all lakes
+in the stream network rather than a single terminal reach of the focal lake.}
 
 \item{lakesize_threshold}{numeric above which to count as a lake (ha)}
 
@@ -31,6 +32,18 @@ terminal_reaches(lon = NA, lat = NA, buffer_dist = 0.01,
 In the case of a network query, a terminal reach is a stream flowline that
 has no downstream reaches in-network. In the case of a point query, a
 terminal reach is a flowline that exits the intersecting surface waterbody.
+}
+\details{
+There are multiple ways to execture \code{\link{terminal_reaches}}:
+\itemize{
+ \item Only providing lon + lat arguments - this will query the
+ corresponding lake polygon layer and find the terminal reach of the lake
+ intersecting the specified buffer distance.
+ \item Only providing a lake polygon - this is essestinally the same as
+ above except there is no preliminary lake polygon query.
+ \item Only providing a network of stream lines - this provides the most
+ downstream reach irrespective of lakes.
+}
 }
 \examples{
 \dontrun{

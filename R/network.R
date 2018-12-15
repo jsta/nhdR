@@ -4,12 +4,25 @@
 #' has no downstream reaches in-network. In the case of a point query, a
 #' terminal reach is a flowline that exits the intersecting surface waterbody.
 #'
-#' @param lon numeric decimal degree longitude
-#' @param lat numeric decimal degree latitude
-#' @param network sf lines collection
-#' @param lakepoly sf polygon
+#' @details
+#' There are multiple ways to execture \code{\link{terminal_reaches}}:
+#' \itemize{
+#'  \item Only providing lon + lat arguments - this will query the
+#'  corresponding lake polygon layer and find the terminal reach of the lake
+#'  intersecting the specified buffer distance.
+#'  \item Only providing a lake polygon - this is essestinally the same as
+#'  above except there is no preliminary lake polygon query.
+#'  \item Only providing a network of stream lines - this provides the most
+#'  downstream reach irrespective of lakes.
+#' }
+#'
+#' @param lon numeric decimal degree longitude. optional. See Details section.
+#' @param lat numeric decimal degree latitude. optional. See Details section.
+#' @param network sf lines collection. optional. See Details section.
+#' @param lakepoly sf polygon.  optional. See Details section.
 #' @param buffer_dist numeric buffer around lat-lon point in dec. deg.
-#' @param lakewise logical return waterbody exit of all in-network lakes?
+#' @param lakewise logical. If TRUE, return the terminal reaches of all lakes
+#' in the stream network rather than a single terminal reach of the focal lake.
 #' @param lakesize_threshold numeric above which to count as a lake (ha)
 #' @param approve_all_dl logical blanket approval to download all missing data
 #' @param ... parameters passed on to sf::st_read
@@ -186,6 +199,12 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
 
 #' Return nhd plus stream network upstream of a waterbody
 #'
+#' @details The lon and lat arguments are used for querying the corresponding
+#' lake polygon layer which is then used to climb its intersecting stream
+#' network.
+#'
+#' @param lon numeric decimal degree longitude
+#' @param lat numeric decimal degree latitude
 #' @inheritParams terminal_reaches
 #' @param maxsteps maximum number of stream climbing iterations
 #' @param lines sf spatial lines object to limit the extent of the network search
