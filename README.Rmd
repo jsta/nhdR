@@ -81,7 +81,7 @@ nhd_plus_get(vpu = 4, "NHDPlusAttributes")
 nhd_plus_get(vpu = 4, "NHDPlusCatchment")
 ```
 
-```{r }
+```{r eval=FALSE}
 # list layers
 nhd_plus_list(vpu = 4, "NHDSnapshot")
 nhd_plus_list(vpu = 4, "NHDPlusAttributes")
@@ -93,13 +93,13 @@ nhd_plus_list(vpu = 4, "NHDPlusCatchment")
 nhd_plus_info(vpu = 4, "NHDSnapshot", "NHDWaterbody")
 ```
 
-```{r echo=FALSE}
+```{r eval=FALSE, echo=FALSE}
 info <- capture.output(nhd_plus_info(vpu = 4, "NHDSnapshot", "NHDWaterbody"))
 # gsub("/home/jose", "~", info)
 info[2:length(info)]
 ```
 
-```{r }
+```{r eval=FALSE}
 # load layer
 dt <- nhd_plus_load(vpu = 4, "NHDSnapshot", "NHDWaterbody")
 ```
@@ -112,14 +112,14 @@ NHD exports are organized by US state.
 nhd_get(state = c("DC", "HI"))
 ```
 
-```{r }
+```{r eval=FALSE}
 nhd_list(state = "DC")
 ```
 
-```{r }
+```{r eval=FALSE}
 nhd_info(state = "DC", dsn = "NHDWaterbody")
 ```
 
-```{r }
+```{r eval=FALSE}
 head(nhd_load(state = "DC", dsn = "NHDWaterbody"))
 ```
