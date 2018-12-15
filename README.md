@@ -44,7 +44,7 @@ below for a low resolution vpu map (also `nhdR::vpu_shp`). A hi-res
 version can be found
 [here](http://www.horizon-systems.com/NHDPlus/NHDPlusV2_data.php).
 
-![](images/unnamed-chunk-3-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-3-1.png)<!-- -->
 
 ``` r
 # get a vpu export
