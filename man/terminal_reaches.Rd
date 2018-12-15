@@ -34,11 +34,11 @@ has no downstream reaches in-network. In the case of a point query, a
 terminal reach is a flowline that exits the intersecting surface waterbody.
 }
 \details{
-There are multiple ways to execture \code{\link{terminal_reaches}}:
+There are multiple ways to execute \code{\link{terminal_reaches}}:
 \itemize{
  \item Only providing lon + lat arguments - this will query the
  corresponding lake polygon layer and find the terminal reach of the lake
- intersecting the specified buffer distance.
+ intersecting a buffer around the specified point.
  \item Only providing a lake polygon - this is essestinally the same as
  above except there is no preliminary lake polygon query.
  \item Only providing a network of stream lines - this provides the most
