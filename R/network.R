@@ -82,6 +82,8 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
     vpu <- find_vpu(st_centroid(st_union(network_lines)))
   }
 
+  network_lines <- dplyr::filter(network_lines, FTYPE != "Coastline")
+
   network_table <- nhd_plus_load(vpu = vpu, "NHDPlusAttributes",
                                  "PlusFlow", approve_all_dl = approve_all_dl, ...)
   names(network_table) <- tolower(names(network_table))

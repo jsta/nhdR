@@ -45,7 +45,7 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
   if(all(!is.na(c(lon, lat)))){
     pnt         <- st_sfc(st_point(c(lon, lat)))
     st_crs(pnt) <- st_crs(nhdR::vpu_shp)
-    vpu         <- find_vpu(pnt)
+    vpu         <- find_vpu(sf::st_buffer(pnt, buffer_dist))
 
     sp <- lapply(dsn, function(x) nhd_plus_load(vpu = vpu, dsn = x,
                                           approve_all_dl = approve_all_dl, ...))
