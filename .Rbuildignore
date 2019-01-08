@@ -10,3 +10,5 @@ images
 data-raw
 docs
 postgis_vs_shp.R
+rosm.cache
+.V8history

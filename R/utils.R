@@ -6,7 +6,7 @@ nhd_path <- function(){
 }
 
 gdb_path <- function(state){
-  paste0(nhd_path(), .Platform$file.sep, "NHDH_", state, ".gdb")
+  paste0(nhd_path(), .Platform$file.sep, "NHD_H_", stateabb2name(state), "_State_GDB.gdb")
 }
 
 gdb_plus_path <- function(){
@@ -46,6 +46,13 @@ zero_pad <- function(x, digits){
   }else{
     x
   }
+}
+
+get_remotepath <- function(state, baseurl){
+  # state  <- "Missouri"
+  filename <- paste0("NHD_H_", state, "_State_GDB.zip")
+  url      <- paste0(baseurl, "GDB/", filename)
+  list(filename = filename, url = url)
 }
 
 get_plus_remotepath <- function(vpu, component = "NHDSnapshot"){
@@ -155,6 +162,7 @@ toUTM <- function(sf_object){
 }
 
 compile_gpkg <- function(state){
+  # state = "DC"
   gdalUtils::ogr2ogr(
     src_datasource_name = gdb_path(state),
     dst_datasource_name = gsub(".gdb", ".gpkg", gdb_path(state)),
@@ -203,4 +211,16 @@ has_7z <- function(){
 get_utm_zone <- function(crs){
   crs <- as.character(crs)
   stringr::str_extract(crs[2], "(?!\\+zone=)(\\d+)(?=\\s\\+datum)")
+}
+
+stateabb2name <- function(abb){
+  # state <- "DC"
+  key <- data.frame(sabb = c(datasets::state.abb, "DC"),
+                    sname =
+                      gsub(" ", "_",
+                           c(datasets::state.name, "District of Columbia")),
+                    stringsAsFactors = FALSE)
+
+  res <- dplyr::filter(key, rlang::.data$sabb == abb)
+  res$sname
 }

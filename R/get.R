@@ -1,6 +1,7 @@
 #' Download and cache NHD data by state
 #'
 #' @param state character state abbrevation includes "DC", "PR", and "VI"
+#' @inheritParams nhd_plus_get
 #' @export
 #' @importFrom utils unzip
 #' @import maps
@@ -8,10 +9,9 @@
 #' nhd_get(state = c("DC"))
 #' nhd_get(state = c("RI", "CT"))
 #' }
-nhd_get <- function(state = NA){
+nhd_get <- function(state = NA, force_dl = FALSE, force_unzip = FALSE){
 
-  baseurl <- paste0("ftp://nhdftp.usgs.gov/DataSets/Staged/",
-                    "States/FileGDB/HighResolution/")
+  baseurl <- paste0("https://prd-tnm.s3.amazonaws.com/StagedProducts/Hydrography/NHD/State/HighResolution/")
 
   nhd_get_state <- function(state){
 
@@ -20,12 +20,14 @@ nhd_get <- function(state = NA){
       stop(paste0(state, " is not a valid state abbreviation"))
     }
 
-    filename <- paste0("NHDH_", state, "_931v220.zip")
-    url      <- paste0(baseurl, filename)
-    destfile <- file.path(nhd_path(), filename)
+    # state <- "DC"
+    state_name      <- stateabb2name(state)
+    remotepath <- get_remotepath(state_name, baseurl)
+    url        <- remotepath$url
+    filename   <- remotepath$filename
+    destfile   <- file.path(nhd_path(), filename)
 
-    get_if_not_exists(url, destfile)
-
+    get_if_not_exists(url, destfile, force_dl = force_dl)
     unzip(destfile, exdir = nhd_path())
 
     if(is_gpkg_installed()){

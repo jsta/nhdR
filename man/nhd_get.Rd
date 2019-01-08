@@ -4,10 +4,14 @@
 \alias{nhd_get}
 \title{Download and cache NHD data by state}
 \usage{
-nhd_get(state = NA)
+nhd_get(state = NA, force_dl = FALSE, force_unzip = FALSE)
 }
 \arguments{
 \item{state}{character state abbrevation includes "DC", "PR", and "VI"}
+
+\item{force_dl}{logical force a re-download of the requested data}
+
+\item{force_unzip}{logical force an unzip of downloaded data}
 }
 \description{
 Download and cache NHD data by state
