@@ -221,6 +221,6 @@ stateabb2name <- function(abb){
                            c(datasets::state.name, "District of Columbia")),
                     stringsAsFactors = FALSE)
 
-  res <- dplyr::filter(key, rlang::.data$sabb == abb)
+  res <- dplyr::filter(key, .data$sabb == abb)
   res$sname
 }
