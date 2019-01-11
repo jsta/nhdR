@@ -79,7 +79,7 @@ is_spatial <- function(filename){
 #'
 #' @param pnt sf object
 #'
-#' @importFrom sf st_transform st_crs st_join
+#' @importFrom sf st_transform st_crs st_join st_distance
 #' @importFrom dplyr select
 #' @export
 #'
@@ -106,7 +106,7 @@ find_vpu <- function(pnt){
   res <- st_join(sf::st_sf(pnt), vpu)$UnitID
 
   if(all(is.na(res))){ # pnt is slightly outside of the vpu extent
-    res <- vpu[which.min(st_distance(vpu, pnt)),]$UnitID
+    res <- vpu[which.min(sf::st_distance(vpu, pnt)),]$UnitID
   }
 
   as.character(res)
@@ -235,9 +235,39 @@ albers_conic <- function(){
   "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +datum=NAD83 +units=m +no_defs"
 }
 
-great_lakes <- function(){
-  data.frame(
+#' Data and spatial polygons of the Great Lakes
+#'
+#' @importFrom purrr transpose
+#' @importFrom sf st_as_sf
+#' @export
+#' @param spatial logical, return Great Lakes polygons?
+#' @examples
+#' gl <- great_lakes()
+#' \dontrun{
+#' gl <- great_lakes(spatial = TRUE)
+#' }
+great_lakes <- function(spatial = FALSE){
+  res <- data.frame(
     GNIS_NAME = c("Lake Michigan", "Lake Erie", "Lake Huron", "Lake Ontario",
                   "Lake Superior"),
+    lon_dd = c(-87.0, -81.2, -82.4, -77.9, -87.5),
+    lat_dd = c(44.0, 42.2, 44.8, 43.7, 47.0),
     stringsAsFactors = FALSE)
+
+  if(spatial){
+    sp <- lapply(purrr::transpose(res), function(x){
+      res <- nhd_plus_query(
+        x$lon_dd,
+        x$lat_dd,
+        dsn = "NHDWaterbody", buffer_dist = 0.3)$sp$NHDWaterbody
+
+      if(nrow(res) > 0){
+        res <- st_transform(res, albers_conic())
+      }
+      })
+    sp  <- do.call(what = rbind, args = sp)
+    res <- st_as_sf(dplyr::left_join(res, sp, by = "GNIS_NAME"))
+  }
+
+  res
 }
