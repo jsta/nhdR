@@ -16,6 +16,11 @@
 #' pnt <- st_transform(pnt, st_crs(vpu_shp))
 #' # nhd_plus_list(nhdR::find_vpu(pnt))
 #'
+#' # set a non-geographic buffer size
+#' qry <- nhd_plus_query(wk$Lon, wk$Lat,
+#'         dsn = c("NHDWaterbody", "NHDFlowLine"),
+#'         buffer_dist = units::as_units(5, "km"))
+#'
 #' qry <- nhd_plus_query(wk$Lon, wk$Lat,
 #'          dsn = c("NHDWaterbody", "NHDFlowLine"), buffer_dist = 0.05)
 #'
@@ -42,10 +47,21 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
     stop("Must specify either lon and lat or poly but not both.")
   }
 
+  crs_code <- 4326
+  if(inherits(buffer_dist, "units")){
+    crs_code <- st_crs(albers_conic())
+  }
+
   if(all(!is.na(c(lon, lat)))){
     pnt         <- st_sfc(st_point(c(lon, lat)))
-    st_crs(pnt) <- st_crs(nhdR::vpu_shp)
-    vpu         <- find_vpu(sf::st_buffer(pnt, buffer_dist))
+    st_crs(pnt) <- 4326
+    vpu         <- find_vpu(
+      st_transform(
+        sf::st_buffer(
+          st_transform(pnt, crs_code),
+          buffer_dist),
+        st_crs(nhdR::vpu_shp)))
+    pnt <- st_transform(pnt, crs_code)
 
     sp <- lapply(dsn, function(x) nhd_plus_load(vpu = vpu, dsn = x,
                                           approve_all_dl = approve_all_dl, ...))
@@ -129,7 +145,9 @@ select_point_overlay <- function(pnt, sp, buffer_dist = 0.05){
   pnt_buff  <- sf::st_sfc(sf::st_buffer(pnt, dist = buffer_dist))
   sf::st_crs(pnt_buff) <- sf::st_crs(pnt) # <- sf::st_crs(nhdR::vpu_shp)
 
-  utm_zone <- long2UTM(sf::st_coordinates(pnt)[1])
+  utm_zone <- long2UTM(sf::st_coordinates(
+    sf::st_transform(pnt, 4326))[1])
+
   crs <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
 
   pnt      <- sf::st_transform(pnt, crs = crs)
@@ -166,7 +184,9 @@ select_point_overlay <- function(pnt, sp, buffer_dist = 0.05){
 #'
 select_poly_overlay <- function(poly, sp){
 
-  utm_zone <- long2UTM(sf::st_coordinates(poly)[1])
+  utm_zone <- long2UTM(
+    sf::st_coordinates(
+      st_transform(poly, 4326))[1])
   crs      <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
 
   poly      <- st_transform(poly, crs = crs)
