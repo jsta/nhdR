@@ -73,7 +73,8 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
     poly <- nhd_plus_query(lon, lat, dsn = "NHDWaterbody",
                            buffer_dist = buffer_dist,
                            approve_all_dl = approve_all_dl, ...)$sp$NHDWaterbody
-    if(all(poly$GNIS_NAME %in% great_lakes()$GNIS_NAME)){ # exclude great lakes
+    # exclude great lakes
+    if(all(poly$GNIS_NAME %in% great_lakes()$GNIS_NAME) & nrow(poly) > 0){
       stop(paste0("This point intersects one of the Great Lakes. ",
            "NHD doesn't support finding their terminal reach."))
     }
@@ -226,6 +227,10 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
 #' @examples \dontrun{
 #' library(mapview)
 #' library(sf)
+#'
+#'
+#' coords <- data.frame(lat = 43.62453, lon = -85.47164 )
+#' res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
 #'
 #' coords <- data.frame(lat = 20.79722, lon = -156.47833)
 #' res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
