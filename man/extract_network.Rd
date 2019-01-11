@@ -36,6 +36,9 @@ library(sf)
 coords <- data.frame(lat = 20.79722, lon = -156.47833)
 res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
 
+coords <- data.frame(lat = 44.6265, lon = -86.23121)
+res <- extract_network(coords$lon, coords$lat, maxsteps = 3)
+
 mapview(res)
 
 # works even if the "network" is a single reach
