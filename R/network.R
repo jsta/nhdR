@@ -36,6 +36,9 @@
 #' library(sf)
 #' library(mapview)
 #'
+#' coords  <- data.frame(lat = 44.6265, lon = -86.23121)
+#' t_reach <- terminal_reaches(coords$lon, coords$lat, lakewise = TRUE)
+#'
 #' coords  <- data.frame(lat = 42.96628 , lon = -89.25264)
 #' t_reach <- terminal_reaches(coords$lon, coords$lat)
 #'
@@ -70,7 +73,12 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
     poly <- nhd_plus_query(lon, lat, dsn = "NHDWaterbody",
                            buffer_dist = buffer_dist,
                            approve_all_dl = approve_all_dl, ...)$sp$NHDWaterbody
+    if(all(poly$GNIS_NAME %in% great_lakes()$GNIS_NAME)){ # exclude great lakes
+      stop(paste0("This point intersects one of the Great Lakes. ",
+           "NHD doesn't support finding their terminal reach."))
+    }
     poly <- poly[which.max(st_area(poly)),] # find lake polygon
+
 
     if(nrow(poly) == 0){
       stop("No lake polygon found at query point")
@@ -82,8 +90,8 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
     vpu <- find_vpu(st_centroid(st_union(network_lines)))
   }
 
-  network_lines <- dplyr::filter(network_lines,
-                                 rlang::.data$FTYPE != "Coastline")
+  # network_lines <- dplyr::filter(network_lines,
+  #                                rlang::.data$FTYPE != "Coastline")
 
   network_table <- nhd_plus_load(vpu = vpu, "NHDPlusAttributes",
                                  "PlusFlow", approve_all_dl = approve_all_dl, ...)
@@ -174,7 +182,8 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
                                     dsn = "NHDFlowline")$sp$NHDFlowline
   }else{
     network_lines <- network
-    vpu <- find_vpu(st_centroid(st_union(network_lines)))
+    vpu <- find_vpu(
+      st_centroid(st_union(network_lines)))
   }
 
   network_table <- nhd_plus_load(vpu = vpu, "NHDPlusAttributes",
@@ -220,6 +229,9 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
 #'
 #' coords <- data.frame(lat = 20.79722, lon = -156.47833)
 #' res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
+#'
+#' coords <- data.frame(lat = 44.6265, lon = -86.23121)
+#' res <- extract_network(coords$lon, coords$lat, maxsteps = 3)
 #'
 #' mapview(res)
 #'

@@ -104,6 +104,11 @@ find_vpu <- function(pnt){
   }
 
   res <- st_join(sf::st_sf(pnt), vpu)$UnitID
+
+  if(all(is.na(res))){ # pnt is slightly outside of the vpu extent
+    res <- vpu[which.min(st_distance(vpu, pnt)),]$UnitID
+  }
+
   as.character(res)
 }
 
@@ -228,4 +233,11 @@ stateabb2name <- function(abb){
 albers_conic <- function(){
   # Albers Equal Area Conic
   "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +datum=NAD83 +units=m +no_defs"
+}
+
+great_lakes <- function(){
+  data.frame(
+    GNIS_NAME = c("Lake Michigan", "Lake Erie", "Lake Huron", "Lake Ontario",
+                  "Lake Superior"),
+    stringsAsFactors = FALSE)
 }
