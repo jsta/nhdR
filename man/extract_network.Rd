@@ -33,6 +33,12 @@ network.
 library(mapview)
 library(sf)
 
+coords <- data.frame(lat = 46.32711, lon = -89.58893)
+res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
+
+coords <- data.frame(lat = 43.62453, lon = -85.47164)
+res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
+
 coords <- data.frame(lat = 20.79722, lon = -156.47833)
 res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
 

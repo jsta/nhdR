@@ -36,6 +36,9 @@
 #' library(sf)
 #' library(mapview)
 #'
+#' coords <- data.frame(lat = 46.32711, lon = -89.58893)
+#' t_reach <- terminal_reaches(coords$lon, coords$lat)
+#'
 #' coords  <- data.frame(lat = 44.6265, lon = -86.23121)
 #' t_reach <- terminal_reaches(coords$lon, coords$lat, lakewise = TRUE)
 #'
@@ -71,21 +74,26 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
     vpu         <- find_vpu(pnt)
 
     poly <- nhd_plus_query(lon, lat, dsn = "NHDWaterbody",
-                           buffer_dist = buffer_dist,
+                           buffer_dist = 0.01,
                            approve_all_dl = approve_all_dl, ...)$sp$NHDWaterbody
     # exclude great lakes
     if(all(poly$GNIS_NAME %in% great_lakes()$GNIS_NAME) & nrow(poly) > 0){
       stop(paste0("This point intersects one of the Great Lakes. ",
            "NHD doesn't support finding their terminal reach."))
     }
-    poly <- poly[which.max(st_area(poly)),] # find lake polygon
 
+    poly <- poly[poly$FTYPE != "SwampMarsh",]
+    poly <- poly[which.max(st_area(poly)),] # find lake polygon
 
     if(nrow(poly) == 0){
       stop("No lake polygon found at query point")
     }
     network_lines <- nhd_plus_query(poly = poly,
                                     dsn = "NHDFlowline", ...)$sp$NHDFlowline
+
+    if(nrow(network_lines) == 0){
+      stop("No streams intersect this lake polygon")
+    }
   }else{
     network_lines <- network
     vpu <- find_vpu(st_centroid(st_union(network_lines)))
@@ -228,8 +236,10 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
 #' library(mapview)
 #' library(sf)
 #'
+#' coords <- data.frame(lat = 46.32711, lon = -89.58893)
+#' res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
 #'
-#' coords <- data.frame(lat = 43.62453, lon = -85.47164 )
+#' coords <- data.frame(lat = 43.62453, lon = -85.47164)
 #' res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
 #'
 #' coords <- data.frame(lat = 20.79722, lon = -156.47833)
@@ -269,8 +279,9 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
   temp_reaches  <- neighbors(t_reaches$comid, network_table, direction = "up")
   res_reaches   <- temp_reaches
 
-  if(nrow(t_reaches) == 0){
-    NA # lake is not connected to stream network
+  if(nrow(t_reaches) == 0 | nrow(res_reaches) == 0){
+    message("lake is not connected to stream network or any upnetwork streams")
+    return(NA)
   }else{
     all_terminal <- FALSE
     steps        <- 0
@@ -299,6 +310,7 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
     crs      <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
 
     res <- dplyr::filter(lines, .data$comid %in% res_reaches$tocomid)
+
     if(nrow(res) > 0){
       res <- st_transform(res, crs = crs)
     }else{ # the 'network' is a single reach

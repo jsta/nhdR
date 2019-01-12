@@ -50,6 +50,9 @@ There are multiple ways to execute \code{\link{terminal_reaches}}:
 library(sf)
 library(mapview)
 
+coords <- data.frame(lat = 46.32711, lon = -89.58893)
+t_reach <- terminal_reaches(coords$lon, coords$lat)
+
 coords  <- data.frame(lat = 44.6265, lon = -86.23121)
 t_reach <- terminal_reaches(coords$lon, coords$lat, lakewise = TRUE)
 
