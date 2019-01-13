@@ -74,10 +74,17 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
     vpu         <- find_vpu(pnt)
 
     poly <- nhd_plus_query(lon, lat, dsn = "NHDWaterbody",
-                           buffer_dist = 0.01,
+                           buffer_dist = buffer_dist,
                            approve_all_dl = approve_all_dl, ...)$sp$NHDWaterbody
-    # exclude great lakes
-    if(all(poly$GNIS_NAME %in% great_lakes()$GNIS_NAME) & nrow(poly) > 0){
+
+    # exclude great lakes --
+
+    # is GNIS_NAME sometimes mixed case caps? Yes :(
+    names(poly)[grep("GNIS_N", names(poly))] <- toupper(
+      names(poly)[grep("GNIS_N", names(poly))])
+
+    if(all(poly$GNIS_NAME %in% great_lakes()$GNIS_NAME) &
+       nrow(poly) > 0){
       stop(paste0("This point intersects one of the Great Lakes. ",
            "NHD doesn't support finding their terminal reach."))
     }
@@ -236,23 +243,25 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
 #' library(mapview)
 #' library(sf)
 #'
+#' # headwater lakes have no upstream network
 #' coords <- data.frame(lat = 46.32711, lon = -89.58893)
 #' res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
 #'
+#' # fails if no lake nhdp lake found within the buffer at the query point
 #' coords <- data.frame(lat = 43.62453, lon = -85.47164)
 #' res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
 #'
 #' coords <- data.frame(lat = 20.79722, lon = -156.47833)
 #' res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
 #'
+#' # no upstream network for lakes intersecting the Great Lakes
 #' coords <- data.frame(lat = 44.6265, lon = -86.23121)
 #' res <- extract_network(coords$lon, coords$lat, maxsteps = 3)
 #'
-#' mapview(res)
-#'
-#' # works even if the "network" is a single reach
 #' coords <- data.frame(lat = 42.96523, lon = -89.2527)
 #' res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
+#'
+#' mapview(res)
 #'
 #' }
 extract_network <- function(lon = NA, lat = NA, lines = NA,
