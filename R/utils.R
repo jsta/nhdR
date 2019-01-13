@@ -271,3 +271,19 @@ great_lakes <- function(spatial = FALSE){
 
   res
 }
+
+#' @importFrom utils capture.output
+st_read_custom <- function(x, pretty = FALSE, ...){
+  if(isTRUE(pretty)){
+    msg <- capture.output(res <- sf::st_read(x, ...))
+    msg <-
+      stringr::str_extract(msg[1],
+                                "([?:`].*)(?=' from data source)")
+    msg <- substring(msg, 2, nchar(msg))
+    message(paste0("Reading layer '", msg, "'"))
+    res
+  }else{
+    sf::st_read(x, ...)
+    # do.call(sf::st_read, c("dsn" = x, arguments))
+  }
+}

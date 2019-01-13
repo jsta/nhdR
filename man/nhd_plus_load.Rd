@@ -5,7 +5,7 @@
 \title{Load NHDplus layers into current session}
 \usage{
 nhd_plus_load(vpu, component = "NHDSnapshot", dsn, file_ext = NA,
-  approve_all_dl = FALSE, force_dl = FALSE, ...)
+  approve_all_dl = FALSE, force_dl = FALSE, pretty = FALSE, ...)
 }
 \arguments{
 \item{vpu}{numeric vector processing unit}
@@ -20,6 +20,8 @@ nhd_plus_load(vpu, component = "NHDSnapshot", dsn, file_ext = NA,
 \item{approve_all_dl}{logical blanket approval to download all missing data}
 
 \item{force_dl}{logical force a re-download of the requested data}
+
+\item{pretty}{more minimal pretty printing st_read relative to "quiet"}
 
 \item{...}{parameters passed on to sf::st_read}
 }
@@ -36,10 +38,15 @@ unless approve_all_dl is set to TRUE.
 \examples{
 \dontrun{
 # Spatial
-dt <- nhd_plus_load(4, "NHDSnapshot", "NHDWaterbody")
+dt <- nhd_plus_load(4, "NHDSnapshot", "NHDWaterbody")#'
 dt <- nhd_plus_load(c(1,2), "NHDSnapshot", "NHDWaterbody")
 dt <- nhd_plus_load(4, "NHDSnapshot", "NHDFlowline")
 dt <- nhd_plus_load(4, "NHDPlusCatchment", "Catchment")
+
+# Quieter printing
+dt <- nhd_plus_load(4, "NHDSnapshot", "NHDWaterbody", pretty = TRUE)
+# Quietest printing
+dt <- nhd_plus_load(4, "NHDSnapshot", "NHDWaterbody", quiet = TRUE)
 
 # Non-spatial
 dt <- nhd_plus_load(1, "NHDPlusAttributes", "PlusFlow")
