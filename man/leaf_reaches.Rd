@@ -5,7 +5,7 @@
 \title{Return leaf reaches from a network or query intersecting lake}
 \usage{
 leaf_reaches(lon = NA, lat = NA, network = NA,
-  approve_all_dl = FALSE)
+  approve_all_dl = FALSE, ...)
 }
 \arguments{
 \item{lon}{numeric decimal degree longitude. optional. See Details section.}
@@ -15,6 +15,8 @@ leaf_reaches(lon = NA, lat = NA, network = NA,
 \item{network}{sf lines collection. optional. See Details section.}
 
 \item{approve_all_dl}{logical blanket approval to download all missing data}
+
+\item{...}{parameters passed on to sf::st_read}
 }
 \description{
 A leaf reach is a stream flowline that has upstream connections but is

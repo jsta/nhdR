@@ -183,7 +183,7 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
 #' plot(l_reach$geometry, col = "red", add = TRUE)
 #' }
 leaf_reaches <- function(lon = NA, lat = NA, network = NA,
-                         approve_all_dl = FALSE){
+                         approve_all_dl = FALSE, ...){
 
   if(all(is.na(network))){
     pnt <- sf::st_sfc(sf::st_point(c(lon, lat)))
@@ -192,10 +192,10 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
 
     poly <- nhd_plus_query(lon, lat, dsn = "NHDWaterbody",
                     buffer_dist = 0.01,
-                    approve_all_dl = approve_all_dl)$sp$NHDWaterbody
+                    approve_all_dl = approve_all_dl, ...)$sp$NHDWaterbody
     poly          <- poly[which.max(st_area(poly)),] # find lake polygon
     network_lines <- nhd_plus_query(poly = poly,
-                                    dsn = "NHDFlowline")$sp$NHDFlowline
+                                    dsn = "NHDFlowline", ...)$sp$NHDFlowline
   }else{
     network_lines <- network
     vpu <- find_vpu(
@@ -284,7 +284,7 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
   }
 
   t_reaches     <- terminal_reaches(lon, lat, buffer_dist = buffer_dist,
-                                    lakewise = TRUE)
+                                    lakewise = TRUE, pretty = TRUE)
   temp_reaches  <- neighbors(t_reaches$comid, network_table, direction = "up")
   res_reaches   <- temp_reaches
 
@@ -311,7 +311,8 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
     #                             file_ext = "shp")
     # lines_file <- lines_file[grep("NHDFlowline", lines_file)]
     if(all(is.na(lines))){
-      lines        <- nhd_plus_load(vpu, "NHDSnapshot", "NHDFlowline")
+      lines        <- nhd_plus_load(vpu, "NHDSnapshot", "NHDFlowline",
+                                    pretty = TRUE)
       names(lines) <- tolower(names(lines))
     }
 
@@ -327,7 +328,7 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
     }
 
     # pull first order streams
-    l_reach <- leaf_reaches(network = res)
+    l_reach <- leaf_reaches(network = res, pretty = TRUE)
     if(nrow(l_reach) > 0){
       first_order_reaches <- neighbors(l_reach$comid, network_table,
                                         direction = "up")
