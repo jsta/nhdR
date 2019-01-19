@@ -3,7 +3,6 @@ context("nhd_plus_query")
 test_that("nhd_plus_query handles vpu boundaries well", {
   skip_on_cran()
   skip_on_travis()
-  skip_on_appveyor()
 
   coords <- data.frame(nhd_long = -89.21884, nhd_lat = 46.2052)
   lines  <- nhdR::nhd_plus_query(lat = coords$nhd_lat,
@@ -23,7 +22,6 @@ test_that("nhd_plus_query handles vpu boundaries well", {
 test_that("nhd_plus_query fails well", {
   skip_on_cran()
   skip_on_travis()
-  skip_on_appveyor()
 
   coords <- data.frame(lat = c(20.79722, 42.96523),
                        lon = c(-156.47833, -89.2527))

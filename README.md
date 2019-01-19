@@ -9,8 +9,6 @@ developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repo
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/nhdR)](https://cran.r-project.org/package=nhdR)
 [![Travis-CI Build
 Status](https://travis-ci.org/jsta/nhdR.svg?branch=master)](https://travis-ci.org/jsta/nhdR)
-[![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/jsta/nhdR?branch=master&svg=true)](https://ci.appveyor.com/project/jsta/nhdR)
 [![Codecov test
 coverage](https://codecov.io/gh/jsta/nhdR/branch/master/graph/badge.svg)](https://codecov.io/gh/jsta/nhdR?branch=master)
 
