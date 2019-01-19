@@ -42,7 +42,8 @@
 #' }
 
 nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
-                           dsn, buffer_dist = 0.05, approve_all_dl = FALSE, ...){
+                           dsn, buffer_dist = 0.05, approve_all_dl = FALSE,
+                           ...){
 
   if(all(!is.na(c(lon, lat, poly)))){
     stop("Must specify either lon and lat or poly but not both.")
@@ -51,6 +52,10 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
   # ! in default buffer size for query or extract
   if(!is.na(poly) & !(buffer_dist %in% c(0.01, 0.05))){
     stop("Passing a polygon object returns only polygon-intersecting lines and disregards any buffer_dist setting.")
+  }
+
+  if(length(lon) > 1 | length(lat) > 1){
+    stop("nhd_plus_query only accepts a single lon-lat pair.")
   }
 
   crs_code <- 4326
@@ -70,7 +75,8 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
     pnt <- st_transform(pnt, crs_code)
 
     sp <- lapply(dsn, function(x) nhd_plus_load(vpu = vpu, dsn = x,
-                                          approve_all_dl = approve_all_dl, ...))
+                                          approve_all_dl = approve_all_dl,
+                                          ...))
     names(sp) <- dsn
 
     sp_sub <- select_point_overlay(pnt = pnt, sp = sp,
@@ -84,7 +90,8 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
     vpu  <- find_vpu(poly)
 
     sp <- lapply(dsn, function(x) nhd_plus_load(vpu = vpu, dsn = x,
-                                          approve_all_dl = approve_all_dl, ...))
+                                          approve_all_dl = approve_all_dl,
+                                          ...))
     names(sp) <- dsn
 
     sp_sub <- select_poly_overlay(poly = poly, sp = sp)
