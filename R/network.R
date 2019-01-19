@@ -268,6 +268,10 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
                             buffer_dist = 0.01, maxsteps = 3,
                             approve_all_dl = FALSE){
 
+  if(length(lon) > 1 | length(lat) > 1){
+    stop("extract_network only accepts a single lon-lat pair.")
+  }
+
   # retrieve network table
   pnt             <- st_sfc(st_point(c(lon, lat)))
   st_crs(pnt)     <- st_crs(nhdR::vpu_shp)
