@@ -48,7 +48,8 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
     stop("Must specify either lon and lat or poly but not both.")
   }
 
-  if(!is.na(poly) & buffer_dist != 0.05){
+  # ! in default buffer size for query or extract
+  if(!is.na(poly) & !(buffer_dist %in% c(0.01, 0.05))){
     stop("Passing a polygon object returns only polygon-intersecting lines and disregards any buffer_dist setting.")
   }
 
