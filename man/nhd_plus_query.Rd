@@ -34,7 +34,7 @@ pnt <- st_as_sf(wk, coords = c("Lon", "Lat"), crs = 4326)
 pnt <- st_transform(pnt, st_crs(vpu_shp))
 # nhd_plus_list(nhdR::find_vpu(pnt))
 
-# set a non-geographic buffer size
+# set a non-geographic (projected) buffer size
 qry <- nhd_plus_query(wk$Lon, wk$Lat,
         dsn = c("NHDWaterbody", "NHDFlowLine"),
         buffer_dist = units::as_units(5, "km"))
@@ -50,6 +50,7 @@ axis(1); axis(2)
 library(ggplot2)
 ggplot(qry$sp$NHDWaterbody) + geom_sf()
 
+# query with a polygon
 wbd <- qry$sp$NHDWaterbody[which.max(st_area(qry$sp$NHDWaterbody)),]
 qry_lines <- nhd_plus_query(poly = st_as_sfc(st_bbox(wbd)),
                             dsn = "NHDFlowLine")

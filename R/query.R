@@ -16,7 +16,7 @@
 #' pnt <- st_transform(pnt, st_crs(vpu_shp))
 #' # nhd_plus_list(nhdR::find_vpu(pnt))
 #'
-#' # set a non-geographic buffer size
+#' # set a non-geographic (projected) buffer size
 #' qry <- nhd_plus_query(wk$Lon, wk$Lat,
 #'         dsn = c("NHDWaterbody", "NHDFlowLine"),
 #'         buffer_dist = units::as_units(5, "km"))
@@ -32,6 +32,7 @@
 #' library(ggplot2)
 #' ggplot(qry$sp$NHDWaterbody) + geom_sf()
 #'
+#' # query with a polygon
 #' wbd <- qry$sp$NHDWaterbody[which.max(st_area(qry$sp$NHDWaterbody)),]
 #' qry_lines <- nhd_plus_query(poly = st_as_sfc(st_bbox(wbd)),
 #'                             dsn = "NHDFlowLine")
@@ -45,6 +46,10 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
 
   if(all(!is.na(c(lon, lat, poly)))){
     stop("Must specify either lon and lat or poly but not both.")
+  }
+
+  if(!is.na(poly) & buffer_dist != 0.05){
+    stop("Passing a polygon object returns only polygon-intersecting lines and disregards any buffer_dist setting.")
   }
 
   crs_code <- 4326
@@ -184,11 +189,10 @@ select_point_overlay <- function(pnt, sp, buffer_dist = 0.05){
 #'
 select_poly_overlay <- function(poly, sp){
 
-  utm_zone <- long2UTM(
+  utm_zone  <- long2UTM(
     sf::st_coordinates(
       st_transform(poly, 4326))[1])
-  crs      <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
-
+  crs       <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
   poly      <- st_transform(poly, crs = crs)
 
   if(all(class(sp) == "list")){
