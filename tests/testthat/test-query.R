@@ -5,8 +5,9 @@ test_that("nhd_plus_query handles vpu boundaries well", {
   skip_on_travis()
   skip_on_appveyor()
 
-  coords           <- data.frame(nhd_long = -89.21884, nhd_lat = 46.2052)
-  point <- sf::st_sfc(sf::st_point(c(coords$nhd_long, coords$nhd_lat)), crs = 4326)
+  coords <- data.frame(nhd_long = -89.21884, nhd_lat = 46.2052)
+  point  <- sf::st_sfc(sf::st_point(c(coords$nhd_long, coords$nhd_lat)),
+                       crs = 4326)
   lines <- nhdR::nhd_plus_query(lat = coords$nhd_lat,
                                            lon = coords$nhd_long,
                                            dsn = "NHDFlowLine",
