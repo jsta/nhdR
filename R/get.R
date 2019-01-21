@@ -1,6 +1,6 @@
 #' Download and cache NHD data by state
 #'
-#' @param state character state abbrevation includes "DC", "PR", and "VI"
+#' @param state character state abbreviation includes "DC", "PR", and "VI"
 #' @inheritParams nhd_plus_get
 #' @export
 #' @importFrom utils unzip

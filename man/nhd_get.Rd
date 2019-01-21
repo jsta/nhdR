@@ -7,7 +7,7 @@
 nhd_get(state = NA, force_dl = FALSE, force_unzip = FALSE)
 }
 \arguments{
-\item{state}{character state abbrevation includes "DC", "PR", and "VI"}
+\item{state}{character state abbreviation includes "DC", "PR", and "VI"}
 
 \item{force_dl}{logical force a re-download of the requested data}
 

@@ -10,7 +10,7 @@
 #'  \item Only providing lon + lat arguments - this will query the
 #'  corresponding lake polygon layer and find the terminal reach of the lake
 #'  intersecting a buffer around the specified point.
-#'  \item Only providing a lake polygon - this is essestinally the same as
+#'  \item Only providing a lake polygon - this is essentially the same as
 #'  above except there is no preliminary lake polygon query.
 #'  \item Only providing a network of stream lines - this provides the most
 #'  downstream reach irrespective of lakes.
