@@ -88,10 +88,16 @@ nhd_plus_get <- function(vpu = NA, component = "NHDSnapshot", force_dl = FALSE,
   destfile <- file.path(destdir, basename(url))
 
   if(force_unzip & !force_dl){
+    if(!has_7z()$yes){
+      stop("The 7-zip program is needed to unpack NHD downloads (http://www.7-zip.org/).")
+    }
     system(paste0(has_7z()$path, " e ", shQuote(destfile),
                   " -o", shQuote(destsubdir)))
   }else{
     if(get_if_not_exists(url, destfile, force_dl = force_dl)){
+      if(!has_7z()$yes){
+        stop("The 7-zip program is needed to unpack NHD downloads (http://www.7-zip.org/).")
+      }
       system(paste0(has_7z()$path, " e ", shQuote(destfile),
                     " -o", shQuote(destsubdir)))
     }

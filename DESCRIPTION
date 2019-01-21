@@ -39,7 +39,8 @@ Suggests:
     sp,
     rgeos,
     testthat,
-    covr
+    covr,
+    RCurl
 VignetteBuilder: knitr
 SystemRequirements: 7-zip command line tool (7z)
 Language: en-US

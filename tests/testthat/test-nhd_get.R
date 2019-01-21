@@ -10,7 +10,8 @@ test_that("nhd_plus_get fails well", {
                "100 is not a valid vpu")
 })
 
-test_that("remote urls are contructed correctly", {
+#' @importFrom RCurl url.exists
+test_that("remote urls are constructed correctly", {
   skip_on_cran()
   skip_on_travis()
 
