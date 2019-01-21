@@ -1,8 +1,11 @@
 Package: nhdR
-Title: R tools for working with the National Hydrography Dataset
-Version: 0.4
+Title: Tools for working with the National Hydrography Dataset
+Version: 0.5.0
 Authors@R: person("Joseph", "Stachelek", email = "stachel2@msu.edu", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-5924-2464"))
-Description: R tools for working with the National Hydrography Dataset.
+Description: Tools for working with the National Hydrography Dataset, with 
+    functions for querying, downloading, and networking both the NHD 
+    <https://www.usgs.gov/core-science-systems/ngp/national-hydrography> 
+    and NHDPlus <http://www.horizon-systems.com/nhdplus> datasets. 
 URL: https://github.com/jsta/nhdR
 BugReports: https://github.com/jsta/nhdR/issues
 Depends:
@@ -37,6 +40,6 @@ Suggests:
     rgeos,
     testthat,
     covr
-Remotes: tidyverse/ggplot2
 VignetteBuilder: knitr
 SystemRequirements: 7-zip command line tool (7z)
+Language: en-US
