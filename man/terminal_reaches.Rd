@@ -19,12 +19,12 @@ terminal_reaches(lon = NA, lat = NA, buffer_dist = 0.01,
 
 \item{lakepoly}{sf polygon.  optional. See Details section.}
 
-\item{lakewise}{logical. If TRUE, return the terminal reaches of all lakes
+\item{lakewise}{logical. If TRUE, return the terminal reaches of all lakes.
 in the stream network rather than a single terminal reach of the focal lake.}
 
-\item{lakesize_threshold}{numeric above which to count as a lake (ha)}
+\item{lakesize_threshold}{numeric above which to count as a lake (ha).}
 
-\item{approve_all_dl}{logical blanket approval to download all missing data}
+\item{approve_all_dl}{logical blanket approval to download all missing data. Defaults to TRUE if sesson is non-interactive.}
 
 \item{...}{parameters passed on to sf::st_read}
 }

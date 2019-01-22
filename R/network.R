@@ -21,10 +21,10 @@
 #' @param network sf lines collection. optional. See Details section.
 #' @param lakepoly sf polygon.  optional. See Details section.
 #' @param buffer_dist numeric buffer around lat-lon point in dec. deg.
-#' @param lakewise logical. If TRUE, return the terminal reaches of all lakes
+#' @param lakewise logical. If TRUE, return the terminal reaches of all lakes.
 #' in the stream network rather than a single terminal reach of the focal lake.
-#' @param lakesize_threshold numeric above which to count as a lake (ha)
-#' @param approve_all_dl logical blanket approval to download all missing data
+#' @param lakesize_threshold numeric above which to count as a lake (ha).
+#' @param approve_all_dl logical blanket approval to download all missing data. Defaults to TRUE if sesson is non-interactive.
 #' @param ... parameters passed on to sf::st_read
 #'
 #' @export
@@ -67,6 +67,10 @@
 terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
                              network = NA, lakepoly = NA, lakewise = FALSE,
                              lakesize_threshold = 4, approve_all_dl = FALSE, ...){
+
+  if(!interactive()){
+    approve_all_dl = TRUE
+  }
 
   if(all(is.na(network))){
     pnt         <- st_sfc(st_point(c(lon, lat)))
@@ -185,6 +189,10 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
 leaf_reaches <- function(lon = NA, lat = NA, network = NA,
                          approve_all_dl = FALSE, ...){
 
+  if(!interactive()){
+    approve_all_dl = TRUE
+  }
+
   if(all(is.na(network))){
     pnt <- sf::st_sfc(sf::st_point(c(lon, lat)))
     sf::st_crs(pnt) <- sf::st_crs(nhdR::vpu_shp)
@@ -267,6 +275,10 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
 extract_network <- function(lon = NA, lat = NA, lines = NA,
                             buffer_dist = 0.01, maxsteps = 3,
                             approve_all_dl = FALSE){
+
+  if(!interactive()){
+    approve_all_dl = TRUE
+  }
 
   if(length(lon) > 1 | length(lat) > 1){
     stop("extract_network only accepts a single lon-lat pair.")

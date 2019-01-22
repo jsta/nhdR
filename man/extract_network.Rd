@@ -18,7 +18,7 @@ extract_network(lon = NA, lat = NA, lines = NA, buffer_dist = 0.01,
 
 \item{maxsteps}{maximum number of stream climbing iterations}
 
-\item{approve_all_dl}{logical blanket approval to download all missing data}
+\item{approve_all_dl}{logical blanket approval to download all missing data. Defaults to TRUE if sesson is non-interactive.}
 }
 \description{
 Return nhd plus stream network upstream of a waterbody

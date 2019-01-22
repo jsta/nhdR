@@ -17,7 +17,7 @@ nhd_plus_load(vpu, component = "NHDSnapshot", dsn, file_ext = NA,
 \item{file_ext}{character choice of "shp" for spatial data and
 "dbf" for non-spatial. optional}
 
-\item{approve_all_dl}{logical blanket approval to download all missing data}
+\item{approve_all_dl}{logical blanket approval to download all missing data. Defaults to TRUE if sesson is non-interactive}
 
 \item{force_dl}{logical force a re-download of the requested data}
 
