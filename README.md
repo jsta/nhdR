@@ -11,6 +11,7 @@ developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repo
 Status](https://travis-ci.org/jsta/nhdR.svg?branch=master)](https://travis-ci.org/jsta/nhdR)
 [![Codecov test
 coverage](https://codecov.io/gh/jsta/nhdR/branch/master/graph/badge.svg)](https://codecov.io/gh/jsta/nhdR?branch=master)
+[![DOI](https://zenodo.org/badge/75339263.svg)](https://zenodo.org/badge/latestdoi/75339263)
 
 The goal of nhdR is to provide R tools for interacting with the
 [National Hydrography Dataset](https://nhd.usgs.gov/) and
