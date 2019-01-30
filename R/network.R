@@ -99,15 +99,17 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
     if(nrow(poly) == 0){
       stop("No lake polygon found at query point")
     }
+
     network_lines <- nhd_plus_query(poly = poly,
-                                    dsn = "NHDFlowline", ...)$sp$NHDFlowline
+                                    dsn = "NHDFlowline",
+                                    buffer_dist = buffer_dist, ...)$sp$NHDFlowline
 
     if(nrow(network_lines) == 0){
       stop("No streams intersect this lake polygon")
     }
   }else{
     network_lines <- network
-    vpu <- find_vpu(st_centroid(st_union(network_lines)))
+    vpu           <- find_vpu(st_centroid(st_union(network_lines)))
   }
 
   # network_lines <- dplyr::filter(network_lines,
