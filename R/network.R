@@ -279,7 +279,7 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
                             approve_all_dl = FALSE){
 
   if(!interactive()){
-    approve_all_dl = TRUE
+    approve_all_dl <- TRUE
   }
 
   if(length(lon) > 1 | length(lat) > 1){
@@ -302,7 +302,8 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
   }
 
   t_reaches     <- terminal_reaches(lon, lat, buffer_dist = buffer_dist,
-                                    lakewise = TRUE, pretty = TRUE)
+                                    lakewise = TRUE, pretty = TRUE,
+                                    approve_all_dl = approve_all_dl)
   temp_reaches  <- neighbors(t_reaches$comid, network_table, direction = "up")
   res_reaches   <- temp_reaches
 
@@ -330,7 +331,7 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
     # lines_file <- lines_file[grep("NHDFlowline", lines_file)]
     if(all(is.na(lines))){
       lines        <- nhd_plus_load(vpu, "NHDSnapshot", "NHDFlowline",
-                                    pretty = TRUE)
+                                    pretty = TRUE, approve_all_dl = approve_all_dl)
       names(lines) <- tolower(names(lines))
     }
 
@@ -346,7 +347,7 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
     }
 
     # pull first order streams
-    l_reach <- leaf_reaches(network = res, pretty = TRUE)
+    l_reach <- leaf_reaches(network = res, pretty = TRUE, approve_all_dl = approve_all_dl)
     if(nrow(l_reach) > 0){
       first_order_reaches <- neighbors(l_reach$comid, network_table,
                                         direction = "up")
