@@ -251,6 +251,7 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
 #' @inheritParams terminal_reaches
 #' @param maxsteps maximum number of stream climbing iterations
 #' @param lines sf spatial lines object to limit the extent of the network search
+#' @param ... parameters passed on to sf::st_read
 #'
 #' @export
 #'
@@ -286,7 +287,7 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
 #' }
 extract_network <- function(lon = NA, lat = NA, lines = NA,
                             buffer_dist = 0.01, maxsteps = 3,
-                            approve_all_dl = FALSE){
+                            approve_all_dl = FALSE, ...){
 
   if(!interactive()){
     approve_all_dl <- TRUE
@@ -313,7 +314,7 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
 
   t_reaches     <- terminal_reaches(lon, lat, buffer_dist = buffer_dist,
                                     lakewise = TRUE, pretty = TRUE,
-                                    approve_all_dl = approve_all_dl)
+                                    approve_all_dl = approve_all_dl, ...)
   temp_reaches  <- neighbors(t_reaches$comid, network_table, direction = "up")
   res_reaches   <- temp_reaches
 
@@ -341,7 +342,7 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
     # lines_file <- lines_file[grep("NHDFlowline", lines_file)]
     if(all(is.na(lines))){
       lines        <- nhd_plus_load(vpu, "NHDSnapshot", "NHDFlowline",
-                                    pretty = TRUE, approve_all_dl = approve_all_dl)
+                                    pretty = TRUE, approve_all_dl = approve_all_dl, ...)
       names(lines) <- tolower(names(lines))
     }
 
