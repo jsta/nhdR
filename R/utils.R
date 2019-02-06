@@ -103,7 +103,7 @@ find_vpu <- function(pnt){
     pnt <- pnt[,!(names(pnt) %in% "UnitID")]
   }
 
-  res <- st_join(sf::st_sf(pnt), vpu)$UnitID
+  res <- suppressMessages(st_join(sf::st_sf(pnt), vpu)$UnitID)
 
   if(all(is.na(res))){ # pnt is slightly outside of the vpu extent
     res <- vpu[which.min(sf::st_distance(vpu, pnt)),]$UnitID

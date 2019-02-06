@@ -53,6 +53,11 @@ library(mapview)
 coords <- data.frame(lat = 46.32711, lon = -89.58893)
 t_reach <- terminal_reaches(coords$lon, coords$lat)
 
+coords <- data.frame(lat = 20.79722, lon = -156.47833)
+# use a non-geographic (projected) buffer size
+t_reach <- terminal_reaches(coords$lon, coords$lat,
+        buffer_dist = units::as_units(5, "km"))
+
 coords  <- data.frame(lat = 44.6265, lon = -86.23121)
 t_reach <- terminal_reaches(coords$lon, coords$lat, lakewise = TRUE)
 

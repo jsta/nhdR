@@ -39,6 +39,11 @@
 #' coords <- data.frame(lat = 46.32711, lon = -89.58893)
 #' t_reach <- terminal_reaches(coords$lon, coords$lat)
 #'
+#' coords <- data.frame(lat = 20.79722, lon = -156.47833)
+#' # use a non-geographic (projected) buffer size
+#' t_reach <- terminal_reaches(coords$lon, coords$lat,
+#'         buffer_dist = units::as_units(5, "km"))
+#'
 #' coords  <- data.frame(lat = 44.6265, lon = -86.23121)
 #' t_reach <- terminal_reaches(coords$lon, coords$lat, lakewise = TRUE)
 #'
@@ -102,9 +107,9 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
 
     network_lines <- nhd_plus_query(poly = poly,
                                     dsn = "NHDFlowline",
-                                    buffer_dist = buffer_dist, ...)$sp$NHDFlowline
+                                    ...)$sp$NHDFlowline
 
-    if(nrow(network_lines) == 0){
+    if(nrow(network_lines) == 0 | length(network_lines) == 0){
       stop("No streams intersect this lake polygon")
     }
   }else{
@@ -139,7 +144,7 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
                  units::as_units(lakesize_threshold, "ha"),]
 
     intersecting_reaches <- network_lines[unlist(lapply(
-      st_intersects(network_lines, poly), function(x) length(x) > 0)),]
+      suppressMessages(st_intersects(network_lines, poly)), function(x) length(x) > 0)),]
 
     network_table <- dplyr::filter(network_table,
                                    .data$fromcomid %in% intersecting_reaches$comid)
@@ -262,6 +267,11 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
 #' res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
 #'
 #' coords <- data.frame(lat = 20.79722, lon = -156.47833)
+#' # use a non-geographic (projected) buffer size
+#' res <- extract_network(coords$lon, coords$lat, maxsteps = 9,
+#'         buffer_dist = units::as_units(5, "km"))
+#'
+#' # use a projected buffer size
 #' res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
 #'
 #' # no upstream network for lakes intersecting the Great Lakes

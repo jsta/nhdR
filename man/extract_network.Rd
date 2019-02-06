@@ -42,6 +42,11 @@ coords <- data.frame(lat = 43.62453, lon = -85.47164)
 res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
 
 coords <- data.frame(lat = 20.79722, lon = -156.47833)
+# use a non-geographic (projected) buffer size
+res <- extract_network(coords$lon, coords$lat, maxsteps = 9,
+        buffer_dist = units::as_units(5, "km"))
+
+# use a projected buffer size
 res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
 
 # no upstream network for lakes intersecting the Great Lakes
