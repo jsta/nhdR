@@ -1,6 +1,7 @@
 context("nhd_plus_query")
 
 test_that("nhd_plus_query handles vpu boundaries well", {
+  skip("This test is very long-running. Probably only suitable for manual execution.")
   skip_on_cran()
   skip_on_travis()
 
