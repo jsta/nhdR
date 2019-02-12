@@ -44,13 +44,7 @@
 #' t_reach <- terminal_reaches(coords$lon, coords$lat,
 #'         buffer_dist = units::as_units(5, "km"))
 #'
-#' coords  <- data.frame(lat = 44.6265, lon = -86.23121)
-#' t_reach <- terminal_reaches(coords$lon, coords$lat, lakewise = TRUE)
-#'
 #' coords  <- data.frame(lat = 42.96628 , lon = -89.25264)
-#' t_reach <- terminal_reaches(coords$lon, coords$lat)
-#'
-#' coords  <- data.frame(lat = 20.79722, lon = -156.47833)
 #' t_reach <- terminal_reaches(coords$lon, coords$lat)
 #'
 #' coords  <- data.frame(lat = 41.42217, lon = -73.24189)
@@ -66,12 +60,13 @@
 #' t_reach_lake <- terminal_reaches(network = network, lakewise = TRUE,
 #'                                  lakesize_threshold = 1)
 #'
-#' mapview(poly) + mapview(network) + mapview(t_reach, color = "red") +
-#' mapview(t_reach_lake, color = "green")
+#' mapview(network) + mapview(t_reach_lake, color = "green") +
+#'     mapview(t_reach, color = "red")
 #' }
 terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
                              network = NA, lakepoly = NA, lakewise = FALSE,
-                             lakesize_threshold = 4, approve_all_dl = FALSE, ...){
+                             lakesize_threshold = 4, approve_all_dl = FALSE,
+                             ...){
 
   if(!interactive()){
     approve_all_dl = TRUE
@@ -206,7 +201,7 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
     vpu <- find_vpu(pnt)
 
     poly <- nhd_plus_query(lon, lat, dsn = "NHDWaterbody",
-                    buffer_dist = 0.01,
+                    buffer_dist = units::as_units(0.5, "km"),
                     approve_all_dl = approve_all_dl, ...)$sp$NHDWaterbody
     poly          <- poly[which.max(st_area(poly)),] # find lake polygon
     network_lines <- nhd_plus_query(poly = poly,
