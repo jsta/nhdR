@@ -11,4 +11,9 @@ test_that("info functions work", {
   res <- nhd_info("DC", "NHDWaterbody")
   expect_equal(length(res$iteminfo$name),
                       13)
+
+  # works with dbf layers
+  expect_equal(
+    class(nhd_plus_info(vpu = 1, component = "NHDPlusAttributes", dsn = "PlusFlow")),
+    "table")
 })
