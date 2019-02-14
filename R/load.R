@@ -142,7 +142,7 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
 #' @importFrom foreign read.dbf
 #' @importFrom curl has_internet
 #' @importFrom stringr str_extract
-#' @importFrom memoise memoise
+#' @importFrom memoise memoise cache_memory
 #'
 #' @export
 #'
@@ -254,4 +254,4 @@ nhd_plus_load <- memoise::memoise(function(vpu, component = "NHDSnapshot", dsn,
   }
 
   res
-})
+}, cache = memoise::cache_memory())
