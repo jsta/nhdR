@@ -33,7 +33,8 @@ Load NHDplus layers into current session
 }
 \details{
 This function will ask the user to approve downloading missing data
-unless approve_all_dl is set to TRUE.
+unless approve_all_dl is set to TRUE. Output of this function is saved in
+active memory (memoized) to speed up repeated function calls.
 }
 \examples{
 \dontrun{
