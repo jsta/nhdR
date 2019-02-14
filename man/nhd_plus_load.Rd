@@ -38,7 +38,7 @@ unless approve_all_dl is set to TRUE.
 \examples{
 \dontrun{
 # Spatial
-dt <- nhd_plus_load(4, "NHDSnapshot", "NHDWaterbody")#'
+dt <- nhd_plus_load(4, "NHDSnapshot", "NHDWaterbody")
 dt <- nhd_plus_load(c(1,2), "NHDSnapshot", "NHDWaterbody")
 dt <- nhd_plus_load(4, "NHDSnapshot", "NHDFlowline")
 dt <- nhd_plus_load(4, "NHDPlusCatchment", "Catchment")
