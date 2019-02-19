@@ -1,7 +1,7 @@
 nhd_path <- function(){
   path <- file.path(rappdirs::user_data_dir(appname = "nhdR",
                                       appauthor = "nhdR"))
-  dir.create(path, showWarnings = FALSE)
+  dir.create(path, showWarnings = FALSE, recursive = TRUE)
   path
 }
 
