@@ -1,4 +1,10 @@
-# nhdR 0.5
+# nhdR 0.5.1
+
+* Critical bug fix for `nhd_get` recursive folder creation (# 56)
+* Bug fixes for `extract_network` enabling propagation of `approve_all_dl` flag
+* Improved documentation of non-geographic buffer extraction
+
+# nhdR 0.5.0
 
 * Improve `extract_network` to handle headwater lakes 
 * Add function to return Great Lakes polygons
