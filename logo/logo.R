@@ -15,6 +15,7 @@ library(AOI)
 library(sf)
 library(ggplot2)
 library(dplyr)
+library(magick)
 
 data("gull")
 
@@ -49,6 +50,7 @@ if(!file.exists("logo/elev_raster.tif")){
 }
 elev_raster <- raster::raster("logo/elev_raster.tif")
 
+# ---- remove detail ----
 big_lakes <- lakes %>%
   dplyr::filter(st_area(lakes) > units::as_units(2000000, "m2"))
 
@@ -65,7 +67,9 @@ big_raster <- elev_raster %>%
   raster::mask(huc_8) %>%
   as.data.frame(xy = TRUE)
 
-gg1<-  ggplot() +
+# ---- initial plotting ----
+
+gg1 <-  ggplot() +
     geom_sf(data = huc_8, size = 1.2) +
     geom_sf(data = big_streams, color = "cyan") +
     geom_sf(data = big_lakes, fill = "cyan", color = "blue") +
@@ -85,40 +89,56 @@ gg3 <- ggplot() +
     coord_sf(datum = NA) +
     cowplot::theme_nothing()
 
-# ---- distort perspective ----
-library(magick)
-
 ggsave("gg1.png", gg1)
+ggsave("gg2.png", gg2)
+ggsave("gg3.png", gg3)
 
-outpath <- "test.png"
-finalpath <- "test2.png"
+# ---- distort perspective ----
+distort_perspective <- function(inpath, outpath){
 
-i_trim <- magick::image_read("gg1.png") %>%
-  magick::image_trim()
+magick::image_read(inpath) %>%
+  magick::image_trim() %>%
+  {
+    . ->> i_trim
+  } %>%
+magick::image_write(outpath)
 dims   <- magick::image_info(i_trim)[c("width", "height")]
 
-magick::image_write(i_trim, outpath)
-
 # https://www.imagemagick.org/Usage/distorts/#perspective
-# 1st, left to right, width: 1869
-# 2nd, top to bottom, height: 1671
-# topleft topright bottomleft bottomright
-
-affine_mat <-
-  "'0,0,415,1114  1869,0,1453,1169  0,1671,103,1170  1869,1671,1765,1634'"
+# 1st, left to right, width
+# 2nd, top to bottom, height
 
 affine_mat <-
 paste0(
+  # topleft
   paste0("'0,0,", 0.22 * dims[1], ",", 0.66 * dims[2]),
-  paste0(" ", dims[1], ",0,", 0.77 * dims[1], ",", 0.7  * dims[2]),
-  paste0(" ", "0,", dims[2], ",", 0.055  * dims[1], ",", 0.7 * dims[2]),
-  paste0(" ", dims[1], ",", dims[2], ",", 0.944 * dims[1], ",", 0.978 * dims[2], "'")
+  # topright
+  paste0("  ", dims[1], ",0,", 0.77 * dims[1], ",", 0.7  * dims[2]),
+  # bottomleft
+  paste0("  ", "0,", dims[2], ",", 0.055  * dims[1], ",", 0.7 * dims[2]),
+  # bottomright
+  paste0("  ", dims[1], ",", dims[2], ",", 0.944 * dims[1], ",", 0.978 * dims[2], "'")
   )
-im_str <- paste0("convert ", outpath, " -distort Perspective ", affine_mat,
-                 " ", finalpath)
-
+im_str <- paste0("convert ", outpath, " -mattecolor White -virtual-pixel background -background White -distort Perspective ", affine_mat,
+                 " ", outpath)
 system(im_str)
 
+magick::image_read(outpath) %>%
+  magick::image_trim() %>%
+  magick::image_write(outpath)
+}
+
+distort_perspective("gg1.png", "test1.png")
+distort_perspective("gg2.png", "test2.png")
+distort_perspective("gg3.png", "test3.png")
+
+image_append(
+  c(image_read("test1.png"),
+  image_read("test2.png"),
+  image_read("test3.png")),
+  stack = TRUE
+  ) %>%
+  image_write("test.png")
 
 # convert gg2.png -distort Perspective '0,0,415,1114  1869,0,1453,1169  0,1671,103,1170  1869,1671,1765,1634' checks_horizon.png
 #
