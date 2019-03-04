@@ -65,20 +65,75 @@ big_raster <- elev_raster %>%
   raster::mask(huc_8) %>%
   as.data.frame(xy = TRUE)
 
-cowplot::plot_grid(
-  ggplot() +
+gg1<-  ggplot() +
     geom_sf(data = huc_8, size = 1.2) +
     geom_sf(data = big_streams, color = "cyan") +
     geom_sf(data = big_lakes, fill = "cyan", color = "blue") +
     coord_sf(datum = NA) +
-    cowplot::theme_nothing(),
-  ggplot() +
+    cowplot::theme_nothing()
+
+gg2 <- ggplot() +
     geom_sf(data = huc_8, size = 1.2) +
-    geom_sf(data = huc_10, size = 0.5),
-  ggplot() +
+    geom_sf(data = huc_10, size = 0.5) +
+    coord_sf(datum = NA) +
+    cowplot::theme_nothing()
+
+gg3 <- ggplot() +
     geom_raster(data = big_raster, aes(x = x, y = y, fill = elev_raster)) +
     geom_sf(data = huc_8, size = 1.2, alpha = 0) +
     scale_fill_viridis_c(na.value = "white") +
     coord_sf(datum = NA) +
     cowplot::theme_nothing()
-)
+
+# ---- distort perspective ----
+library(magick)
+
+ggsave("gg1.png", gg1)
+
+outpath <- "test.png"
+finalpath <- "test2.png"
+
+i_trim <- magick::image_read("gg1.png") %>%
+  magick::image_trim()
+dims   <- magick::image_info(i_trim)[c("width", "height")]
+
+magick::image_write(i_trim, outpath)
+
+# https://www.imagemagick.org/Usage/distorts/#perspective
+# 1st, left to right, width: 1869
+# 2nd, top to bottom, height: 1671
+# topleft topright bottomleft bottomright
+
+affine_mat <-
+  "'0,0,415,1114  1869,0,1453,1169  0,1671,103,1170  1869,1671,1765,1634'"
+
+affine_mat <-
+paste0(
+  paste0("'0,0,", 0.22 * dims[1], ",", 0.66 * dims[2]),
+  paste0(" ", dims[1], ",0,", 0.77 * dims[1], ",", 0.7  * dims[2]),
+  paste0(" ", "0,", dims[2], ",", 0.055  * dims[1], ",", 0.7 * dims[2]),
+  paste0(" ", dims[1], ",", dims[2], ",", 0.944 * dims[1], ",", 0.978 * dims[2], "'")
+  )
+im_str <- paste0("convert ", outpath, " -distort Perspective ", affine_mat,
+                 " ", finalpath)
+
+system(im_str)
+
+
+# convert gg2.png -distort Perspective '0,0,415,1114  1869,0,1453,1169  0,1671,103,1170  1869,1671,1765,1634' checks_horizon.png
+#
+# '0,0,0,0  0,1671,0,1671  1869,0,1896,464  1869,1671,1869,1206'
+#
+# '0,0,415,1114  1869,0,1453,1169  0,1671,103,1170  1869,1671,1765,1634'
+#
+# topleft        topright		bottomleft	 bottomright
+# '0,0,200,1114  1669,0,1869,1114  0,1671,0,1634  1869,1671,1869,1634'
+#
+# 1st, left to right, width: 1869
+# 2nd, top to bottom, height: 1671
+
+
+
+
+
+# usethis::use_logo()
