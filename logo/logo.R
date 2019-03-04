@@ -1,12 +1,5 @@
+# ---- setup ----
 library(hexSticker)
-
-hexSticker::sticker("logo/logo_base.png", s_x = 1, s_y = 0.84, s_width = 0.8,
-                    package = "nhdR", filename = "logo/logo.png", p_size = 20,
-                    p_y = 1.5, h_fill = "#ffffff", h_color = "#000000",
-                    p_color = "#000000" ,
-                    url = "https://github.com/jsta/nhdR")
-
-
 library(nhdR)
 library(elevatr)
 library(HydroData)
@@ -113,9 +106,9 @@ paste0(
   # topleft
   paste0("'0,0,", 0.22 * dims[1], ",", 0.66 * dims[2]),
   # topright
-  paste0("  ", dims[1], ",0,", 0.77 * dims[1], ",", 0.7  * dims[2]),
+  paste0("  ", dims[1], ",0,", 0.77 * dims[1], ",", 0.85  * dims[2]),
   # bottomleft
-  paste0("  ", "0,", dims[2], ",", 0.055  * dims[1], ",", 0.7 * dims[2]),
+  paste0("  ", "0,", dims[2], ",", 0.1  * dims[1], ",", 0.85 * dims[2]),
   # bottomright
   paste0("  ", dims[1], ",", dims[2], ",", 0.944 * dims[1], ",", 0.978 * dims[2], "'")
   )
@@ -140,20 +133,12 @@ image_append(
   ) %>%
   image_write("test.png")
 
-# convert gg2.png -distort Perspective '0,0,415,1114  1869,0,1453,1169  0,1671,103,1170  1869,1671,1765,1634' checks_horizon.png
-#
-# '0,0,0,0  0,1671,0,1671  1869,0,1896,464  1869,1671,1869,1206'
-#
-# '0,0,415,1114  1869,0,1453,1169  0,1671,103,1170  1869,1671,1765,1634'
-#
-# topleft        topright		bottomleft	 bottomright
-# '0,0,200,1114  1669,0,1869,1114  0,1671,0,1634  1869,1671,1869,1634'
-#
-# 1st, left to right, width: 1869
-# 2nd, top to bottom, height: 1671
-
-
-
-
+# ---- wrapup ----
+# manually create logo_gen.png
+hexSticker::sticker("logo/logo_gen.png", s_x = 0.9, s_y = 0.84, s_width = 0.74,
+                    package = "nhdR", filename = "logo/logo.png", p_size = 20,
+                    p_y = 1.5, h_fill = "#ffffff", h_color = "#000000",
+                    p_color = "#000000" ,
+                    url = "https://github.com/jsta/nhdR")
 
 # usethis::use_logo()
