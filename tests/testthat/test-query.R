@@ -40,14 +40,13 @@ test_that("nhd_plus_query handles mismatched column names.", {
   skip_on_travis()
 
   # https://github.com/jsta/nhdR/issues/57
-  box <- st_bbox(c(xmin = -105.93003, xmax = -104.91784,
+  box <- sf::st_bbox(c(xmin = -105.93003, xmax = -104.91784,
                    ymin = 40.41176, ymax = 41.21014),
                 crs = st_crs(4326)) %>%
-    st_as_sfc()
-
-  testthat::expect_success(
+    sf::st_as_sfc()
   poudre_flow <- nhd_plus_query(poly = box,
-                                dsn = c('NHDFlowLine'))
-  )
+                                dsn = c('NHDFlowLine'),
+                                quiet = TRUE)
 
+  expect_s3_class(poudre_flow$sp$NHDFlowLine, "sf")
 })

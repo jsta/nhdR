@@ -291,3 +291,15 @@ st_read_custom <- function(x, pretty = FALSE, ...){
     # do.call(sf::st_read, c("dsn" = x, arguments))
   }
 }
+
+align_names <- function(to, from){
+  res <- rep(NA, length(to))
+  for(i in seq_along(to)){
+    if(tolower(to[i]) %in% tolower(from)){
+      res[i] <- from[which(tolower(to[i]) == tolower(from))]
+    }else{
+      res[i] <- to[i]
+    }
+  }
+  res
+}

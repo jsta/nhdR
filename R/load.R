@@ -244,6 +244,18 @@ nhd_plus_load <- memoise::memoise(function(vpu, component = "NHDSnapshot", dsn,
                        component = component, dsn = dsn, pretty = pretty,
                        ...)
   is_spatial <- unlist(lapply(res, function(x) x$is_spatial))
+
+  # resolve common names among vpus (https://github.com/jsta/nhdR/issues/57)
+  names_template <- which.min(unlist(
+    lapply(res, function(x) length(names(x$res)))))
+  names_template <- names(res[[names_template]]$res)
+
+  res <- lapply(res, function(x){
+    names(x$res) <- align_names(names(x$res), names_template)
+    x$res <- x$res[,names_template]
+    x
+    })
+
   res        <- do.call("rbind", lapply(res, function(x) x$res))
 
   if(any(is_spatial)){
