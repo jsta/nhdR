@@ -61,11 +61,12 @@ test_that("leaf_reaches works", {
   coords <- data.frame(lat = 20.79722, lon = -156.47833)
   network <- nhd_plus_query(lon = coords$lon, lat = coords$lat,
                              dsn = "NHDFlowline",
-                            buffer_dist = units::as_units(2, "km"))
+                            buffer_dist = units::as_units(2, "km"),
+                            quiet = TRUE)
   network <- network$sp$NHDFlowline
   expect_s3_class(leaf_reaches(network = network), "sf")
 
-  expect_s3_class(leaf_reaches(coords$lon, coords$lat), "sf")
+  expect_s3_class(leaf_reaches(coords$lon, coords$lat, quiet = TRUE), "sf")
 })
 
 
