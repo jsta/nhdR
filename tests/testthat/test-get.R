@@ -1,4 +1,4 @@
-context("nhd_get")
+context("get")
 
 test_that("nhd_get fails well", {
   expect_error(nhd_get(state = "gibberish"),
