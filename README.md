@@ -1,25 +1,30 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# nhdR
-
-[![Project Status: Active - The project has reached a stable, usable
-state and is being actively
-developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![Lifecycle:
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/nhdR)](https://cran.r-project.org/package=nhdR)
 [![Travis-CI Build
 Status](https://travis-ci.org/jsta/nhdR.svg?branch=master)](https://travis-ci.org/jsta/nhdR)
-[![Codecov test
-coverage](https://codecov.io/gh/jsta/nhdR/branch/master/graph/badge.svg)](https://codecov.io/gh/jsta/nhdR?branch=master)
 [![DOI](https://zenodo.org/badge/75339263.svg)](https://zenodo.org/badge/latestdoi/75339263)
 
-The goal of nhdR is to provide R tools for interacting with the
-[National Hydrography Dataset](https://nhd.usgs.gov/) and
-[NHDPlus](http://www.horizon-systems.com/nhdplus/).
+# nhdR
+
+<!-- # nhdR <img src="man/figures/logo.png" align="right" height=140/> -->
+
+Tools for querying, downloading, and networking both the [National
+Hydrography Dataset (NHD)](https://nhd.usgs.gov/) and
+[NHDPlus](http://www.horizon-systems.com/nhdplus/) datasets.
 
 ## Installation
 
-You can install nhdR from github with:
+### Stable version from CRAN
+
+``` r
+install.packages("nhdR")
+```
+
+### or development version from GitHub
 
 ``` r
 # install.packages("devtools")
@@ -28,7 +33,8 @@ devtools::install_github("jsta/nhdR")
 
 This package also requires an installation of
 [7-zip](http://www.7-zip.org/) that can be called via the command line
-using `7z` or `7za.exe`.
+using `7z` or `7za.exe` (check if your machine is good to go with
+`nhdR::has_7z()`).
 
 ## Usage
 
@@ -45,7 +51,7 @@ below for a low resolution vpu map (also `nhdR::vpu_shp`). A hi-res
 version can be found
 [here](http://www.horizon-systems.com/NHDPlus/NHDPlusV2_data.php).
 
-![](man/figures/README-unnamed-chunk-3-1.png)<!-- -->
+![](man/figures/README-unnamed-chunk-4-1.png)<!-- -->
 
 ``` r
 # get a vpu export
