@@ -1,3 +1,7 @@
+# nhdR 0.5.2
+
+* Bug fix for multi-vpu data loading with mismatched columns (#57)
+
 # nhdR 0.5.1
 
 * Critical bug fix for `nhd_get` recursive folder creation (# 56)
