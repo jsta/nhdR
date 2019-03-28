@@ -37,11 +37,11 @@ glyph_sf <- function(char, bbox, scale_factor = 3700){
   ncg   <- st_geometry(n)
   cntrd <- st_centroid(ncg)
   ncg2  <- (ncg - cntrd) * scale_factor + cntrd
-  st_sfc(ncg2, crs = st_crs(hu12))
+  st_sfc(ncg2, crs = st_crs(bbox))
 }
 
 # mapview(st_transform(hu12, 4326)) +
-#   mapview(st_transform(ncg2, 4326))
+#   mapview(st_transform(n, 4326))
 
 # ---- pull_streams ----
 lake_streams <- nhd_plus_query(poly = hu12,
