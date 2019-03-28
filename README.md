@@ -8,9 +8,7 @@ stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://
 Status](https://travis-ci.org/jsta/nhdR.svg?branch=master)](https://travis-ci.org/jsta/nhdR)
 [![DOI](https://zenodo.org/badge/75339263.svg)](https://zenodo.org/badge/latestdoi/75339263)
 
-# nhdR
-
-<!-- # nhdR <img src="man/figures/logo.png" align="right" height=140/> -->
+# nhdR <img src="man/figures/logo.png" align="right" height=140/>
 
 Tools for querying, downloading, and networking both the [National
 Hydrography Dataset (NHD)](https://nhd.usgs.gov/) and
