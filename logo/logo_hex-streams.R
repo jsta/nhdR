@@ -20,7 +20,7 @@ n           <- st_sfc(st_polygon(list(as.matrix(n_raw))), crs = st_crs(hu12))
 ncg   <- st_geometry(n)
 cntrd <- st_centroid(ncg)
 
-ncg2  <- (ncg - cntrd) * 3000 + cntrd
+ncg2  <- (ncg - cntrd) * 3700 + cntrd
 ncg2  <- st_sfc(ncg2, crs = st_crs(hu12))
 
 mapview(st_transform(hu12, 4326)) +
@@ -31,11 +31,13 @@ lake_streams <- nhd_plus_query(poly = hu12,
                                dsn = c("NHDWaterbody", "NHDFlowLine"),
                                quiet = TRUE)
 streams      <- st_transform(lake_streams$sp$NHDFlowLine, st_crs(hu12))
-lakes        <- st_transform(lake_streams$sp$NHDWaterbody, st_crs(huc12))
+lakes        <- st_transform(lake_streams$sp$NHDWaterbody, st_crs(hu12))
 
 # ---- clip streams to font glyph ----
 # http://www.katiejolly.io/blog/2019-01-21/map-cutouts
 
+test <- st_intersection(streams, ncg2)
+mapview(test)
 
 # ---- initial plotting ----
 
