@@ -7,30 +7,57 @@ library(nhdR)
 library(ggplot2)
 library(cowplot)
 library(hexSticker)
+library(sp)
+
+hu12 <- LAGOSNEgis::query_gis("HU4", "ZoneID", "HU4_49")
+
+# generate hexagonal template ----
+
+hex_template <- spsample(as_Spatial(hu12), type = "hexagonal",
+                         cellsize = 20000)
+hex_template <- sp::HexPoints2SpatialPolygons(test)
+hex_template <- st_as_sf(hex_template)
+hex_template <- hex_template[unlist(lapply(
+  st_intersects(hex_template, st_centroid(hu12)), function(x) length(x) > 0)),]
+
 
 #  ---- intersect text glyph with watershed ----
 # https://djnavarro.net/post/in-between.html
 
-hu12 <- LAGOSNEgis::query_gis("HU4", "ZoneID", "HU4_49")
-
-glyph_sf <- function(char, bbox, scale_factor = 3700){
-  # char <- "d"
+glyph_sf <- function(chars, bbox, scale_factor = 3700){
+  # chars <- "nhdR"
   # bbox <- hu12
-  n_raw       <- fontr::glyph_polygon(char)
-  centroid    <- st_centroid(st_as_sfc(st_bbox(bbox)))
-  centroid    <- as.data.frame(st_coordinates(centroid))
-  # multiplication avoids rounding errors
-  n_raw$x     <- (n_raw$x * 10) + centroid$X
-  n_raw$y     <- (n_raw$y * 10) + centroid$Y
+  n_raw_mat <- lapply(strsplit(chars, "")[[1]], function(x){
+    n_raw       <- fontr::glyph_polygon(x)
+    centroid    <- st_centroid(st_as_sfc(st_bbox(bbox)))
+    centroid    <- as.data.frame(st_coordinates(centroid))
+    # multiplication avoids rounding errors
+    n_raw$x     <- (n_raw$x * 10) + centroid$X
+    n_raw$y     <- (n_raw$y * 10) + centroid$Y
 
-  if(any(is.na(n_raw$x))){
-    n_raw_mat <- list(
-      as.matrix(n_raw[1:(which(is.na(n_raw$x)) - 1),]),
-      as.matrix(n_raw[(which(is.na(n_raw$x)) + 1):nrow(n_raw),]))
-  }else{
-    n_raw_mat <- list(as.matrix(n_raw))
+    if(any(is.na(n_raw$x))){
+      list(
+        as.matrix(n_raw[1:(which(is.na(n_raw$x)) - 1),]),
+        as.matrix(n_raw[(which(is.na(n_raw$x)) + 1):nrow(n_raw),]))
+    }else{
+      list(as.matrix(n_raw))
+    }
+  })
+
+  i      <- 0
+  offset <- 5
+  for(counter in seq_along(n_raw_mat)){
+    # counter <- 1
+    char <- n_raw_mat[[counter]]
+    # x <- char[[1]]
+    n_raw_mat[[counter]] <- lapply(char,function(x){
+        x[,1] <- x[,1] + (offset * i)
+        x
+      })
+    i <- i + 1
   }
 
+  n_raw_mat <- purrr::flatten(n_raw_mat)
   n           <- st_sfc(st_polygon(n_raw_mat), crs = st_crs(bbox))
 
   # adjust scale and position (see sf vignette #3)
@@ -61,6 +88,10 @@ d         <- glyph_sf("d", hu12)
 d_streams <- st_intersection(streams, d)
 R         <- glyph_sf("R", hu12)
 R_streams <- st_intersection(streams, R)
+
+# ---- clip streams to hexagon ----
+
+hex_streams <- st_intersection(streams, hex_template)
 
 # ---- initial plotting ----
 
