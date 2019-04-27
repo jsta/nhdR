@@ -9,24 +9,7 @@ library(cowplot)
 library(hexSticker)
 library(sp)
 
-hu12 <- LAGOSNEgis::query_gis("HU4", "ZoneID", "HU4_49")
-
-# generate hexagonal template ----
-
-hex_template <- spsample(as_Spatial(hu12), type = "hexagonal",
-                         cellsize = 20000)
-hex_template <- sp::HexPoints2SpatialPolygons(hex_template)
-hex_template <- st_as_sf(hex_template)
-hex_template <- hex_template[unlist(lapply(
-  st_intersects(hex_template, st_centroid(hu12)), function(x) length(x) > 0)),]
-
-scale_factor_hex     <- 4.2
-ncg                  <- st_geometry(hex_template)
-cntrd                <- st_centroid(ncg)
-hex_template_scaled  <- (ncg - cntrd) * scale_factor_hex + cntrd
-hex_template_scaled  <- st_sfc(hex_template_scaled, crs = st_crs(hex_template))
-
-#  ---- intersect text glyph with watershed ----
+# ---- function to intersect text glyph with watershed ----
 # https://djnavarro.net/post/in-between.html
 
 glyph_sf <- function(chars, bbox, scale_factor = 3700){
@@ -56,14 +39,14 @@ glyph_sf <- function(chars, bbox, scale_factor = 3700){
     char <- n_raw_mat[[counter]]
     # x <- char[[1]]
     n_raw_mat[[counter]] <- lapply(char,function(x){
-        x[,1] <- x[,1] + (offset * i)
-        x
-      })
+      x[,1] <- x[,1] + (offset * i)
+      x
+    })
     i <- i + 1
   }
 
   n <- lapply(n_raw_mat, function(x) st_sfc(st_polygon(x),
-                                       crs = st_crs(bbox)))
+                                            crs = st_crs(bbox)))
   n <- st_geometrycollection(purrr::flatten(n))
 
   # adjust scale and position (see sf vignette #3)
@@ -72,6 +55,19 @@ glyph_sf <- function(chars, bbox, scale_factor = 3700){
   ncg2  <- (ncg - cntrd) * scale_factor + cntrd
   st_sfc(ncg2, crs = st_crs(bbox))
 }
+
+# ---- generate base object ----
+
+hu12 <- LAGOSNEgis::query_gis("HU4", "ZoneID", "HU4_49")
+
+# ---- generate hexagonal template ----
+
+hex_template <- spsample(as_Spatial(hu12), type = "hexagonal",
+                         cellsize = 20000)
+hex_template <- sp::HexPoints2SpatialPolygons(hex_template)
+hex_template <- st_as_sf(hex_template)
+hex_template <- hex_template[unlist(lapply(
+  st_intersects(hex_template, st_centroid(hu12)), function(x) length(x) > 0)),]
 
 # mapview(st_transform(hu12, 4326)) +
 #   mapview(st_transform(n, 4326))
@@ -83,10 +79,18 @@ lake_streams <- nhd_plus_query(poly = hu12,
 streams      <- st_transform(lake_streams$sp$NHDFlowLine, st_crs(hu12))
 lakes        <- st_transform(lake_streams$sp$NHDWaterbody, st_crs(hu12))
 
-# ---- clip streams to font glyph ----
+# ---- clip streams to font glyph and scale ----
 # http://www.katiejolly.io/blog/2019-01-21/map-cutouts
 
-n         <- glyph_sf("nhdR", hu12)
+scale_factor_hex     <- 4.2
+scale_factor_n       <- 3700
+
+ncg                  <- st_geometry(hex_template)
+cntrd                <- st_centroid(ncg)
+hex_template_scaled  <- (ncg - cntrd) * scale_factor_hex + cntrd
+hex_template_scaled  <- st_sfc(hex_template_scaled, crs = st_crs(hex_template))
+
+n         <- glyph_sf("nhdR", hu12, scale_factor = scale_factor_n)
 n_bbox    <- st_intersection(streams, st_as_sfc(st_bbox(n)))
 n_streams <- st_intersection(n_bbox, n)
 
