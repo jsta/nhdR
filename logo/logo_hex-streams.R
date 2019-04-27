@@ -16,7 +16,7 @@ glyph_sf <- function(chars, bbox, scale_factor = 3700, offset_y = 0){
   # chars <- "nhdR"
   # bbox <- hu12
   n_raw_mat <- lapply(strsplit(chars, "")[[1]], function(x){
-    n_raw       <- fontr::glyph_polygon(x)
+    n_raw       <- fontr::glyph_polygon(x, face = "bold")
     centroid    <- st_centroid(st_as_sfc(st_bbox(bbox)))
     centroid    <- as.data.frame(st_coordinates(centroid))
     # multiplication avoids rounding errors
