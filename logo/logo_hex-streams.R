@@ -98,10 +98,9 @@ hex_streams <- st_intersection(streams, hex_template_scaled)
 
 gg_logo <- ggplot() +
     geom_sf(data = hex_template_scaled, fill = "lightgreen") +
-    geom_sf(data = n, size = 0.6, fill = "white") +
     geom_sf(data = hex_streams, size = 0.45, color = "blue") +
-    geom_sf(data = n_streams, size = 0.45, color = "cyan") +
-    geom_sf(data = n, size = 0.6, alpha = 0) +
+    # geom_sf(data = n_streams, size = 0.45, color = "cyan") +
+    geom_sf(data = n, size = 0.6, fill = "white") +
     coord_sf(datum = NA) +
     cowplot::theme_nothing()
 
