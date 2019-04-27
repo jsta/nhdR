@@ -15,11 +15,16 @@ hu12 <- LAGOSNEgis::query_gis("HU4", "ZoneID", "HU4_49")
 
 hex_template <- spsample(as_Spatial(hu12), type = "hexagonal",
                          cellsize = 20000)
-hex_template <- sp::HexPoints2SpatialPolygons(test)
+hex_template <- sp::HexPoints2SpatialPolygons(hex_template)
 hex_template <- st_as_sf(hex_template)
 hex_template <- hex_template[unlist(lapply(
   st_intersects(hex_template, st_centroid(hu12)), function(x) length(x) > 0)),]
 
+scale_factor_hex     <- 4.2
+ncg                  <- st_geometry(hex_template)
+cntrd                <- st_centroid(ncg)
+hex_template_scaled  <- (ncg - cntrd) * scale_factor_hex + cntrd
+hex_template_scaled  <- st_sfc(hex_template_scaled, crs = st_crs(hex_template))
 
 #  ---- intersect text glyph with watershed ----
 # https://djnavarro.net/post/in-between.html
@@ -57,8 +62,9 @@ glyph_sf <- function(chars, bbox, scale_factor = 3700){
     i <- i + 1
   }
 
-  n_raw_mat <- purrr::flatten(n_raw_mat)
-  n           <- st_sfc(st_polygon(n_raw_mat), crs = st_crs(bbox))
+  n <- lapply(n_raw_mat, function(x) st_sfc(st_polygon(x),
+                                       crs = st_crs(bbox)))
+  n <- st_geometrycollection(purrr::flatten(n))
 
   # adjust scale and position (see sf vignette #3)
   ncg   <- st_geometry(n)
@@ -80,42 +86,26 @@ lakes        <- st_transform(lake_streams$sp$NHDWaterbody, st_crs(hu12))
 # ---- clip streams to font glyph ----
 # http://www.katiejolly.io/blog/2019-01-21/map-cutouts
 
-n         <- glyph_sf("n", hu12)
-n_streams <- st_intersection(streams, n)
-h         <- glyph_sf("h", hu12)
-h_streams <- st_intersection(streams, h)
-d         <- glyph_sf("d", hu12)
-d_streams <- st_intersection(streams, d)
-R         <- glyph_sf("R", hu12)
-R_streams <- st_intersection(streams, R)
+n         <- glyph_sf("nhdR", hu12)
+n_bbox    <- st_intersection(streams, st_as_sfc(st_bbox(n)))
+n_streams <- st_intersection(n_bbox, n)
 
 # ---- clip streams to hexagon ----
 
-hex_streams <- st_intersection(streams, hex_template)
+hex_streams <- st_intersection(streams, hex_template_scaled)
 
 # ---- initial plotting ----
 
-gg_logo <- function(n, n_streams){
-  ggplot() +
-    geom_sf(data = n_streams, size = 0.3, color = "blue") +
+gg_logo <- ggplot() +
+    geom_sf(data = hex_template_scaled, fill = "darkgreen") +
+    geom_sf(data = n, size = 0.6, fill = "white") +
+    geom_sf(data = hex_streams, size = 0.6, color = "blue") +
+    geom_sf(data = n_streams, size = 0.45, color = "cyan") +
     geom_sf(data = n, size = 0.6, alpha = 0) +
     coord_sf(datum = NA) +
     cowplot::theme_nothing()
-}
 
-pl <- list(gg_logo(n, n_streams) + theme(plot.margin = margin(0, 0, 0, 0)),
-           gg_logo(h, h_streams),
-           gg_logo(d, d_streams),
-           gg_logo(R, R_streams)
-)
-
-pkg_name <- cowplot::plot_grid(plotlist = pl, nrow = 1,
-                   align = "h",
-                   axis = "b",
-                   scale = c(1, 1, 1, 1))
-                   # scale = c(0.65, 0.7, 0.7, 1))
-
-hexSticker::sticker(pkg_name, s_x = 1, s_y = 1, s_width = 1.7, s_height = 0.7,
+hexSticker::sticker(gg_logo, s_x = 1, s_y = 1, s_width = 2.17, s_height = 2.17,
                     package = "", filename = "logo/logo.png",
                     h_fill = "#ffffff", h_color = "#595959", h_size = 0.8,
                     url = "https://github.com/jsta/nhdR", u_size = 5)
