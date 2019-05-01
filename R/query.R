@@ -6,7 +6,7 @@
 #' @param poly sfc polygon. optional
 #' @param dsn character data source
 #' @param buffer_dist numeric buffer in units of coordinate degrees
-#' @param approve_all_dl logical blanket approval to download all missing data. Defaults to TRUE if sesson is non-interactive.
+#' @param approve_all_dl logical blanket approval to download all missing data. Defaults to TRUE if session is non-interactive.
 #' @param ... parameters passed on to sf::st_read
 #' @examples \dontrun{
 #' library(sf)

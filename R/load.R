@@ -4,7 +4,7 @@
 #' @param dsn character name of a NHD layer
 #' @param file_ext character choice of "shp" for spatial data and
 #' "dbf" or "gpkg" for non-spatial. optional
-#' @param approve_all_dl logical blanket approval to download all missing data. Defaults to TRUE if sesson is non-interactive.
+#' @param approve_all_dl logical blanket approval to download all missing data. Defaults to TRUE if session is non-interactive.
 #' @param ... arguments passed to sf::st_read
 #'
 #' @return Spatial simple features object or data frame depending on the dsn
@@ -132,7 +132,7 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
 #' @param dsn data source name
 #' @param file_ext character choice of "shp" for spatial data and
 #' "dbf" for non-spatial. optional
-#' @param approve_all_dl logical blanket approval to download all missing data. Defaults to TRUE if sesson is non-interactive
+#' @param approve_all_dl logical blanket approval to download all missing data. Defaults to TRUE if session is non-interactive
 #' @param force_dl logical force a re-download of the requested data
 #' @param pretty more minimal pretty printing st_read relative to "quiet"
 #' @param ... parameters passed on to sf::st_read

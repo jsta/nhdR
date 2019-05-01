@@ -24,7 +24,7 @@
 #' @param lakewise logical. If TRUE, return the terminal reaches of all lakes.
 #' in the stream network rather than a single terminal reach of the focal lake.
 #' @param lakesize_threshold numeric above which to count as a lake (ha).
-#' @param approve_all_dl logical blanket approval to download all missing data. Defaults to TRUE if sesson is non-interactive.
+#' @param approve_all_dl logical blanket approval to download all missing data. Defaults to TRUE if session is non-interactive.
 #' @param ... parameters passed on to sf::st_read
 #'
 #' @export
