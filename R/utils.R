@@ -64,9 +64,16 @@ get_plus_remotepath <- function(vpu, component = "NHDSnapshot"){
   }
 
   res <- rvest::html_attrs(rvest::html_nodes(xml2::read_html(baseurl), "a"))
-  res <- unlist(res[grep(component, res)])
-  res <- res[!(seq_len(length(res)) %in% c(grep("FGDB", res), grep(".pdf", res)))][1]
-  res
+
+  if(vpu == "National"){
+    res <- unlist(res[grep(component, res)])
+  }else{
+    res <- unlist(res[grep(paste0(vpu, "_", component), res)])
+  }
+
+  res <- res[!(seq_len(length(res)) %in%
+                 c(grep("FGDB", res), grep(".pdf", res)))]
+  res[1]
 }
 
 is_spatial <- function(filename){

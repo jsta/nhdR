@@ -186,7 +186,6 @@ nhd_plus_load <- memoise::memoise(function(vpu, component = "NHDSnapshot", dsn,
   }
 
   nhd_plus_load_vpu <- function(vpu, component, dsn, pretty, ...){
-
       vpu_path <- list.files(file.path(nhd_path(), "NHDPlus"),
                              include.dirs = TRUE, full.names = TRUE)
 
