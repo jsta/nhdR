@@ -14,7 +14,7 @@ leaf_reaches(lon = NA, lat = NA, network = NA,
 
 \item{network}{sf lines collection. optional. See Details section.}
 
-\item{approve_all_dl}{logical blanket approval to download all missing data. Defaults to TRUE if sesson is non-interactive.}
+\item{approve_all_dl}{logical blanket approval to download all missing data. Defaults to TRUE if session is non-interactive.}
 
 \item{...}{parameters passed on to sf::st_read}
 }

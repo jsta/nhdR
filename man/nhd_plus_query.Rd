@@ -18,7 +18,7 @@ nhd_plus_query(lon = NA, lat = NA, poly = NA, dsn,
 
 \item{buffer_dist}{numeric buffer in units of coordinate degrees}
 
-\item{approve_all_dl}{logical blanket approval to download all missing data. Defaults to TRUE if sesson is non-interactive.}
+\item{approve_all_dl}{logical blanket approval to download all missing data. Defaults to TRUE if session is non-interactive.}
 
 \item{...}{parameters passed on to sf::st_read}
 }
