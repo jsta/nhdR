@@ -40,7 +40,7 @@ Suggests:
     rgeos,
     testthat,
     covr,
-    RCurl
+    crul
 VignetteBuilder: knitr
 SystemRequirements: 7-zip command line tool (7z)
 Language: en-US
