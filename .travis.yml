@@ -43,6 +43,7 @@ addons:
       - libgeos-dev
       - libgdal-dev
       - p7zip-full
+      - pandoc
 
 #env
 env:
