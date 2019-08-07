@@ -90,7 +90,7 @@
       <h1>Pull stream network associated with a waterbody catchment</h1>
                         <h4 class="author">Joseph Stachelek</h4>
             
-            <h4 class="date">2019-05-25</h4>
+            <h4 class="date">2019-08-07</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jsta/nhdR/blob/master/vignettes/network.Rmd"><code>vignettes/network.Rmd</code></a></small>
       <div class="hidden name"><code>network.Rmd</code></div>
@@ -116,10 +116,10 @@
 <a class="sourceLine" id="cb3-2" data-line-number="2">                                <span class="dt">lat =</span> mendota_centroid[<span class="dv">2</span>], </a>
 <a class="sourceLine" id="cb3-3" data-line-number="3">                                <span class="dt">maxsteps =</span> <span class="ot">Inf</span>)</a></code></pre></div>
 <p>Finally, we compare the stream network from a geometric buffer around Lake Mendota against the output of <code>extract_network</code> to make sure everything is working properly.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/ggsf">geom_sf</a></span>(<span class="dt">data =</span> mendota<span class="op">$</span>sp<span class="op">$</span>NHDFlowLine) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/ggsf">geom_sf</a></span>(<span class="dt">data =</span> mendota_lake, <span class="dt">fill =</span> <span class="st">"cyan"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/ggplot2/topics/ggsf">geom_sf</a></span>(<span class="dt">data =</span> mendota_network, <span class="dt">color =</span> <span class="st">"blue"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="dt">data =</span> mendota<span class="op">$</span>sp<span class="op">$</span>NHDFlowLine) <span class="op">+</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="dt">data =</span> mendota_lake, <span class="dt">fill =</span> <span class="st">"cyan"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span>(<span class="dt">data =</span> mendota_network, <span class="dt">color =</span> <span class="st">"blue"</span>)</a></code></pre></div>
 <p><img src="network_files/figure-html/mapping-1.png" width="700"></p>
   </div>
 
