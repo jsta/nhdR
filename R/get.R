@@ -72,9 +72,10 @@ nhd_plus_get <- function(vpu = NA, component = "NHDSnapshot", force_dl = FALSE,
                 "' was not found. Is it misspelled?"))
   }
 
-  if(!vpu %in% c("National", 1:22, "10L", "10U", "03N", "03W", "03S",
-                 paste0("0", 1:9), as.character(nhdR::vpu_shp$UnitID))){
-    stop(paste0(vpu, " is not a valid vpu"))
+  if(!vpu %in% c("National", 1:2, 4:9, 11:22, "10L", "10U", "03N", "03W", "03S",
+                 paste0("0", 1:2), paste0("0", 4:9),
+                 as.character(nhdR::vpu_shp$UnitID))){
+    stop(paste0(vpu, " is not a valid vpu. Are you missing a letter designation? See VPU map."))
   }
 
   url <- get_plus_remotepath(vpu, component = component)

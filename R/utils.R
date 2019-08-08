@@ -41,8 +41,10 @@ get_if_not_exists <- function(url, destfile, force_dl = FALSE){
 }
 
 zero_pad <- function(x, digits){
-  if(nchar(x) < 2){
-    paste0(paste0(rep(0, digits), collapse = ""), x, collapse = "")
+  if(nchar(stringr::str_extract(x, "\\d+")) < 2){
+    paste0(
+      paste0(
+        rep(0, digits), collapse = ""), x, collapse = "")
   }else{
     x
   }
