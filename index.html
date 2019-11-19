@@ -6,9 +6,16 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tools for working with the National Hydrography Dataset • nhdR</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Tools for working with the National Hydrography Dataset">
 <meta property="og:description" content="Tools for working with the National Hydrography Dataset, with 
     functions for querying, downloading, and networking both the NHD 
@@ -22,7 +29,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-article">
+    <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -42,7 +49,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -74,7 +81,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/jsta/nhdR">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -87,13 +94,10 @@
 <!--/.navbar -->
 
       
-      </header><div class="row">
-  <div class="col-md-9 contents">
-    
 
-    
-    
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+      </header><div class="row">
+  <div class="contents col-md-9">
+
 
 <div id="nhdr" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
@@ -106,7 +110,7 @@
 <div id="stable-version-from-cran" class="section level3">
 <h3 class="hasAnchor">
 <a href="#stable-version-from-cran" class="anchor"></a>Stable version from CRAN</h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"nhdR"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"nhdR"</span>)</a></code></pre></div>
 </div>
 <div id="or-development-version-from-github" class="section level3">
 <h3 class="hasAnchor">
@@ -122,13 +126,13 @@
 <div id="load-package" class="section level3">
 <h3 class="hasAnchor">
 <a href="#load-package" class="anchor"></a>Load package</h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(nhdR)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(nhdR)</a></code></pre></div>
 </div>
 <div id="nhd-plus" class="section level3">
 <h3 class="hasAnchor">
 <a href="#nhd-plus" class="anchor"></a>NHD Plus</h3>
 <p>NHD-Plus exports are organized by vector processing unit (vpu). See below for a low resolution vpu map (also <code><a href="reference/vpu_shp.html">nhdR::vpu_shp</a></code>). A hi-res version can be found <a href="http://www.horizon-systems.com/NHDPlus/NHDPlusV2_data.php">here</a>.</p>
-<p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="700"></p>
+<p><img src="reference/figures/README-unnamed-chunk-4-1.png"><!-- --></p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># get a vpu export</span></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="reference/nhd_plus_get.html">nhd_plus_get</a></span>(<span class="dt">vpu =</span> <span class="dv">4</span>, <span class="st">"NHDSnapshot"</span>)</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw"><a href="reference/nhd_plus_get.html">nhd_plus_get</a></span>(<span class="dt">vpu =</span> <span class="dv">4</span>, <span class="st">"NHDPlusAttributes"</span>)</a>
@@ -156,25 +160,25 @@
 <a class="sourceLine" id="cb5-21" data-line-number="21"><span class="co">#&gt; [1] "Catchment.dbf"         "Catchment.shp"         "featureidgridcode.dbf"</span></a></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># get layer info</span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="reference/nhd_plus_info.html">nhd_plus_info</a></span>(<span class="dt">vpu =</span> <span class="dv">4</span>, <span class="st">"NHDSnapshot"</span>, <span class="st">"NHDWaterbody"</span>)</a></code></pre></div>
-<pre><code>#&gt;  [1] "Driver: ESRI Shapefile; number of rows: 31830 "     
-#&gt;  [2] "Feature type: wkbPolygon with 3 dimensions"         
-#&gt;  [3] "Extent: (-93.24332 40.43575) - (-73.61814 48.11344)"
-#&gt;  [4] "CRS: +proj=longlat +datum=NAD83 +no_defs  "         
-#&gt;  [5] "LDID: 87 "                                          
-#&gt;  [6] "Number of fields: 12 "                              
-#&gt;  [7] "         name type length typeName"                 
-#&gt;  [8] "1       COMID    0      9  Integer"                 
-#&gt;  [9] "2       FDATE    9     10     Date"                 
-#&gt; [10] "3  RESOLUTION    4      7   String"                 
-#&gt; [11] "4     GNIS_ID    4     10   String"                 
-#&gt; [12] "5   GNIS_NAME    4     65   String"                 
-#&gt; [13] "6    AREASQKM    2     19     Real"                 
-#&gt; [14] "7   ELEVATION    2     19     Real"                 
-#&gt; [15] "8   REACHCODE    4     14   String"                 
-#&gt; [16] "9       FTYPE    4     24   String"                 
-#&gt; [17] "10      FCODE    0      9  Integer"                 
-#&gt; [18] "11 SHAPE_LENG    2     19     Real"                 
-#&gt; [19] "12 SHAPE_AREA    2     19     Real"</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co">#&gt;  [1] "Driver: ESRI Shapefile; number of rows: 31830 "     </span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt;  [2] "Feature type: wkbPolygon with 3 dimensions"         </span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt;  [3] "Extent: (-93.24332 40.43575) - (-73.61814 48.11344)"</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt;  [4] "CRS: +proj=longlat +datum=NAD83 +no_defs  "         </span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt;  [5] "LDID: 87 "                                          </span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#&gt;  [6] "Number of fields: 12 "                              </span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">#&gt;  [7] "         name type length typeName"                 </span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">#&gt;  [8] "1       COMID    0      9  Integer"                 </span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">#&gt;  [9] "2       FDATE    9     10     Date"                 </span></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">#&gt; [10] "3  RESOLUTION    4      7   String"                 </span></a>
+<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co">#&gt; [11] "4     GNIS_ID    4     10   String"                 </span></a>
+<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">#&gt; [12] "5   GNIS_NAME    4     65   String"                 </span></a>
+<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#&gt; [13] "6    AREASQKM    2     19     Real"                 </span></a>
+<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#&gt; [14] "7   ELEVATION    2     19     Real"                 </span></a>
+<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#&gt; [15] "8   REACHCODE    4     14   String"                 </span></a>
+<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">#&gt; [16] "9       FTYPE    4     24   String"                 </span></a>
+<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#&gt; [17] "10      FCODE    0      9  Integer"                 </span></a>
+<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">#&gt; [18] "11 SHAPE_LENG    2     19     Real"                 </span></a>
+<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">#&gt; [19] "12 SHAPE_AREA    2     19     Real"</span></a></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># load layer</span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">dt &lt;-<span class="st"> </span><span class="kw"><a href="reference/nhd_plus_load.html">nhd_plus_load</a></span>(<span class="dt">vpu =</span> <span class="dv">4</span>, <span class="st">"NHDSnapshot"</span>, <span class="st">"NHDWaterbody"</span>)</a>
 <a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt; Reading layer `NHDWaterbody' from data source `/home/jose/.local/share/nhdR/NHDPlus/GL_04_NHDSnapshot/NHDWaterbody.shp' using driver `ESRI Shapefile'</span></a>
@@ -189,7 +193,7 @@
 <h3 class="hasAnchor">
 <a href="#nhd" class="anchor"></a>NHD</h3>
 <p>NHD exports are organized by US state.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="reference/nhd_get.html">nhd_get</a></span>(<span class="dt">state =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"DC"</span>, <span class="st">"HI"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="reference/nhd_get.html">nhd_get</a></span>(<span class="dt">state =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"DC"</span>, <span class="st">"HI"</span>))</a></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="reference/nhd_list.html">nhd_list</a></span>(<span class="dt">state =</span> <span class="st">"DC"</span>)</a>
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co">#&gt;  [1] "ExternalCrosswalk"           "NHDFCode"                   </span></a>
 <a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt;  [3] "NHDFeatureToMetadata"        "NHDFlow"                    </span></a>
@@ -232,7 +236,7 @@
 <a class="sourceLine" id="cb11-18" data-line-number="18"><span class="co">#&gt; 10                FCode    0      0  Integer</span></a>
 <a class="sourceLine" id="cb11-19" data-line-number="19"><span class="co">#&gt; 11         Shape_Length    2      0     Real</span></a>
 <a class="sourceLine" id="cb11-20" data-line-number="20"><span class="co">#&gt; 12           Shape_Area    2      0     Real</span></a></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="kw"><a href="reference/nhd_load.html">nhd_load</a></span>(<span class="dt">state =</span> <span class="st">"DC"</span>, <span class="dt">dsn =</span> <span class="st">"NHDWaterbody"</span>))</a>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw"><a href="reference/nhd_load.html">nhd_load</a></span>(<span class="dt">state =</span> <span class="st">"DC"</span>, <span class="dt">dsn =</span> <span class="st">"NHDWaterbody"</span>))</a>
 <a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co">#&gt; Reading layer `NHDWaterbody' from data source `/home/jose/.local/share/nhdR/NHDH_DC.gdb' using driver `OpenFileGDB'</span></a>
 <a class="sourceLine" id="cb12-3" data-line-number="3"><span class="co">#&gt; Simple feature collection with 8025 features and 12 fields</span></a>
 <a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">#&gt; geometry type:  MULTIPOLYGON</span></a>
@@ -270,6 +274,7 @@
 </div>
 </div>
 </div>
+
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -290,14 +295,20 @@
 <li>GPL</li>
 </ul>
 </div>
+<div class="citation">
+<h2>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html">Citing nhdR</a></li>
+</ul>
+</div>
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Joseph Stachelek <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-5924-2464" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
+<li>Joseph Stachelek <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-5924-2464" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
 </ul>
 </div>
 
-      <div class="dev-status">
+  <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://www.tidyverse.org/lifecycle/#stable"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a></li>
@@ -307,7 +318,6 @@
 </ul>
 </div>
 </div>
-
 </div>
 
 
@@ -316,12 +326,14 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>
