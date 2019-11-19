@@ -1,0 +1,18 @@
+citHeader("When citing cdlTools, please cite both the package and underlying data sources used:")
+
+citEntry(entry = "Manual",
+         author = personList(
+           as.person("Joseph Stachelek")),
+         title = "Tools for working with the National Hydrography Dataset",
+         year = "2019",
+         url = "https://cran.r-project.org/package=nhdR",
+         textVersion = paste("Stachelek, J. (2019). Tools for working with the National Hydrography Dataset. R package version 0.5.2. https://cran.r-project.org/package=nhdR"))
+
+citEntry(entry = "Manual",
+         author = "USGS",
+         title = "National Hydrography Dataset. Technical Report. United States
+Geological Survey",
+         year = "2019",
+         url = "https://nhd.usgs.gov/",
+         textVersion = paste("USGS. (2019) National Hydrography Dataset. Technical Report. United States
+Geological Survey. https://nhd.usgs.gov"))
