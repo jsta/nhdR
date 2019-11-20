@@ -1,4 +1,4 @@
-citHeader("When citing cdlTools, please cite both the package and underlying data sources used:")
+citHeader("When citing nhdR, please cite both the package and underlying data sources used:")
 
 citEntry(entry = "Manual",
          author = personList(
