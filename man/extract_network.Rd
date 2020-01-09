@@ -4,8 +4,15 @@
 \alias{extract_network}
 \title{Return nhd plus stream network upstream of a waterbody}
 \usage{
-extract_network(lon = NA, lat = NA, lines = NA, buffer_dist = 0.01,
-  maxsteps = 3, approve_all_dl = FALSE, ...)
+extract_network(
+  lon = NA,
+  lat = NA,
+  lines = NA,
+  buffer_dist = 0.01,
+  maxsteps = 3,
+  approve_all_dl = FALSE,
+  ...
+)
 }
 \arguments{
 \item{lon}{numeric decimal degree longitude}

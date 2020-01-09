@@ -4,8 +4,16 @@
 \alias{nhd_plus_load}
 \title{Load NHDplus layers into current session}
 \usage{
-nhd_plus_load(vpu, component = "NHDSnapshot", dsn, file_ext = NA,
-  approve_all_dl = FALSE, force_dl = FALSE, pretty = FALSE, ...)
+nhd_plus_load(
+  vpu,
+  component = "NHDSnapshot",
+  dsn,
+  file_ext = NA,
+  approve_all_dl = FALSE,
+  force_dl = FALSE,
+  pretty = FALSE,
+  ...
+)
 }
 \arguments{
 \item{vpu}{numeric vector processing unit}
