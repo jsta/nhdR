@@ -38,7 +38,7 @@ Suggests:
     wikilake,
     sp,
     rgeos,
-    testthat,
+    testthat (>= 2.1.0),
     covr,
     crul
 VignetteBuilder: knitr
