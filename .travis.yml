@@ -17,6 +17,9 @@ before_install:
  - R -q -e 'remotes::install_github("ropenscilabs/tic")'
  - R -q -e 'tic::prepare_all_stages()'
  - R -q -e 'tic::before_install()'
+
+ - if [ "${TRAVIS_OS_NAME}" == "osx" ]; then brew install p7zip; fi
+
 install: R -q -e 'tic::install()'
 after_install: R -q -e 'tic::after_install()'
 before_script: R -q -e 'tic::before_script()'
