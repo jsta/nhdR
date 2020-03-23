@@ -1,6 +1,7 @@
-# nhdR 0.5.2
+# nhdR 0.5.3
 
 * Update URL endpoint for NHDPlus
+* Fix crs tests for upcoming sf release
 
 # nhdR 0.5.2
 
