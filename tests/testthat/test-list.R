@@ -12,6 +12,7 @@ test_that("list functions work", {
   expect_equal(class(nhd_plus_list(vpu = 4, component = "NHDPlusAttributes")),
                "character")
 
+  nhd_plus_get(vpu = "National", component = "V1_To_V2_Crosswalk")
   expect_equal(length(nhd_plus_list(vpu = "National",
                                     component = "V1_To_V2_Crosswalk")),
                1)
@@ -19,5 +20,6 @@ test_that("list functions work", {
   expect_true(length(nhd_plus_list(vpu = 4, file_ext = "shp")) <
                 length(short_list))
 
-  expect_equal(length(nhd_list("MI")), 29)
+  nhd_get("DC")
+  expect_equal(length(nhd_list("DC")), 29)
 })
