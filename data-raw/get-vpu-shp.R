@@ -1,8 +1,8 @@
 library(sf)
 library(rgdal)
 
-# http://www.horizon-systems.com/NHDPlus/V2GlobalData.php
-remote_path <- "http://www.horizon-systems.com/NHDPlusData/NHDPlusV21/Data/GlobalData/NHDPlusV21_NHDPlusGlobalData_02.7z"
+# https://nhdplus.com/NHDPlus/V2GlobalData.php
+remote_path <- "http://www.horizon-systems.com/NHDPlusData/NHDPlusV21/Data/GlobalData/NHDPlusV21_NHDPlusGlobalData_03.7z"
 temp_dir <- tempdir()
 in_path <- file.path(temp_dir, "nhdglobal.7z")
 # in_path <- "/tmp/RtmpsyMbWy/nhdglobal.7z"

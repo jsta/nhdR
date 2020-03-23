@@ -1,11 +1,11 @@
 Package: nhdR
 Title: Tools for working with the National Hydrography Dataset
-Version: 0.5.2
+Version: 0.5.3
 Authors@R: person("Joseph", "Stachelek", email = "stachel2@msu.edu", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-5924-2464"))
 Description: Tools for working with the National Hydrography Dataset, with 
     functions for querying, downloading, and networking both the NHD 
     <https://www.usgs.gov/core-science-systems/ngp/national-hydrography> 
-    and NHDPlus <http://www.horizon-systems.com/nhdplus> datasets. 
+    and NHDPlus <https://nhdplus.com/NHDPlus/> datasets. 
 URL: https://github.com/jsta/nhdR
 BugReports: https://github.com/jsta/nhdR/issues
 Depends:

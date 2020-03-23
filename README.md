@@ -12,7 +12,7 @@ Status](https://travis-ci.org/jsta/nhdR.svg?branch=master)](https://travis-ci.or
 
 Tools for querying, downloading, and networking both the [National
 Hydrography Dataset (NHD)](https://nhd.usgs.gov/) and
-[NHDPlus](http://www.horizon-systems.com/nhdplus/) datasets.
+[NHDPlus](https://nhdplus.com/NHDPlus/) datasets.
 
 ## Installation
 
