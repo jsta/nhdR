@@ -1,5 +1,9 @@
 # nhdR 0.5.2
 
+* Update URL endpoint for NHDPlus
+
+# nhdR 0.5.2
+
 * Bug fix for multi-vpu data loading with mismatched columns (#57)
 * Bug fix for character VPUs that match multiple remote data sources (#58)
 * Added package logo
