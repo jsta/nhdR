@@ -223,8 +223,8 @@ has_7z <- function(){
 }
 
 get_utm_zone <- function(crs){
-  crs <- as.character(crs)
-  stringr::str_extract(crs[2], "(?!\\+zone=)(\\d+)(?=\\s\\+datum)")
+  crs <- as.character(crs$proj4string)
+  stringr::str_extract(crs, "(?!\\+zone=)(\\d+)(?=\\s\\+datum)")
 }
 
 stateabb2name <- function(abb){
