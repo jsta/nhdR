@@ -21,7 +21,7 @@
 <meta property="og:description" content="Tools for working with the National Hydrography Dataset, with 
     functions for querying, downloading, and networking both the NHD 
     &lt;https://www.usgs.gov/core-science-systems/ngp/national-hydrography&gt; 
-    and NHDPlus &lt;https://nhdplus.com/NHDPlus/&gt; datasets. ">
+    and NHDPlus &lt;https://www.epa.gov/waterdata/nhdplus-national-hydrography-dataset-plus&gt; datasets. ">
 <meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -49,7 +49,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -81,7 +81,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/jsta/nhdR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -99,25 +99,27 @@
   <div class="contents col-md-9">
 
 
-<div id="nhdr" class="section level1">
+<div id="nhdr-" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#nhdr" class="anchor"></a>nhdR <a href="https://jsta.github.io/nhdR"><img src="reference/figures/logo.png" align="right" height="140/"></a>
+<a href="#nhdr-" class="anchor"></a>nhdR <a href="https://jsta.github.io/nhdR/"><img src="reference/figures/logo.png" align="right" height="140/"></a>
 </h1></div>
-<p>Tools for querying, downloading, and networking both the <a href="https://nhd.usgs.gov/">National Hydrography Dataset (NHD)</a> and <a href="https://nhdplus.com/NHDPlus/">NHDPlus</a> datasets.</p>
+<p>Tools for querying, downloading, and networking both the <a href="https://www.usgs.gov/core-science-systems/ngp/national-hydrography">National Hydrography Dataset (NHD)</a> and <a href="https://www.epa.gov/waterdata/nhdplus-national-hydrography-dataset-plus">NHDPlus</a> datasets.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <div id="stable-version-from-cran" class="section level3">
 <h3 class="hasAnchor">
 <a href="#stable-version-from-cran" class="anchor"></a>Stable version from CRAN</h3>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"nhdR"</span>)</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"nhdR"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="or-development-version-from-github" class="section level3">
 <h3 class="hasAnchor">
 <a href="#or-development-version-from-github" class="anchor"></a>or development version from GitHub</h3>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="co"># install.packages("devtools")</span>
-<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu">install_github</span>(<span class="st">"jsta/nhdR"</span>)</pre></div>
-<p>This package also requires an installation of <a href="http://www.7-zip.org/">7-zip</a> that can be called via the command line using <code>7z</code> or <code>7za.exe</code> (check if your machine is good to go with <code>nhdR::has_7z()</code>).</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"jsta/nhdR"</span><span class="op">)</span></code></pre></div>
+<p>This package also requires an installation of <a href="https://www.7-zip.org/">7-zip</a> that can be called via the command line using <code>7z</code> or <code>7za.exe</code> (check if your machine is good to go with <code>nhdR::has_7z()</code>).</p>
 </div>
 </div>
 <div id="usage" class="section level2">
@@ -126,19 +128,22 @@
 <div id="load-package" class="section level3">
 <h3 class="hasAnchor">
 <a href="#load-package" class="anchor"></a>Load package</h3>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">nhdR</span>)</pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jsta/nhdR">nhdR</a></span><span class="op">)</span></code></pre></div>
 </div>
 <div id="nhd-plus" class="section level3">
 <h3 class="hasAnchor">
 <a href="#nhd-plus" class="anchor"></a>NHD Plus</h3>
-<p>NHD-Plus exports are organized by vector processing unit (vpu). See below for a low resolution vpu map (also <code><a href="reference/vpu_shp.html">nhdR::vpu_shp</a></code>). A hi-res version can be found <a href="http://www.horizon-systems.com/NHDPlus/NHDPlusV2_data.php">here</a>.</p>
+<p>NHD-Plus exports are organized by vector processing unit (vpu). See below for a low resolution vpu map (also <code><a href="reference/vpu_shp.html">nhdR::vpu_shp</a></code>). A hi-res version can be found <a href="https://www.epa.gov/waterdata/nhdplus-global-data">here</a>.</p>
 <p><img src="reference/figures/README-unnamed-chunk-4-1.png"><!-- --></p>
-<div class="sourceCode" id="cb4"><pre class="r"><span class="co"># get a vpu export</span>
-<span class="fu"><a href="reference/nhd_plus_get.html">nhd_plus_get</a></span>(<span class="kw">vpu</span> <span class="kw">=</span> <span class="fl">4</span>, <span class="st">"NHDSnapshot"</span>)
-<span class="fu"><a href="reference/nhd_plus_get.html">nhd_plus_get</a></span>(<span class="kw">vpu</span> <span class="kw">=</span> <span class="fl">4</span>, <span class="st">"NHDPlusAttributes"</span>)
-<span class="fu"><a href="reference/nhd_plus_get.html">nhd_plus_get</a></span>(<span class="kw">vpu</span> <span class="kw">=</span> <span class="fl">4</span>, <span class="st">"NHDPlusCatchment"</span>)</pre></div>
-<div class="sourceCode" id="cb5"><pre class="r"><span class="co"># list layers</span>
-<span class="fu"><a href="reference/nhd_plus_list.html">nhd_plus_list</a></span>(<span class="kw">vpu</span> <span class="kw">=</span> <span class="fl">4</span>, <span class="st">"NHDSnapshot"</span>)
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># get a vpu export</span>
+<span class="fu"><a href="reference/nhd_plus_get.html">nhd_plus_get</a></span><span class="op">(</span>vpu <span class="op">=</span> <span class="fl">4</span>, <span class="st">"NHDSnapshot"</span><span class="op">)</span>
+<span class="fu"><a href="reference/nhd_plus_get.html">nhd_plus_get</a></span><span class="op">(</span>vpu <span class="op">=</span> <span class="fl">4</span>, <span class="st">"NHDPlusAttributes"</span><span class="op">)</span>
+<span class="fu"><a href="reference/nhd_plus_get.html">nhd_plus_get</a></span><span class="op">(</span>vpu <span class="op">=</span> <span class="fl">4</span>, <span class="st">"NHDPlusCatchment"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># list layers</span>
+<span class="fu"><a href="reference/nhd_plus_list.html">nhd_plus_list</a></span><span class="op">(</span>vpu <span class="op">=</span> <span class="fl">4</span>, <span class="st">"NHDSnapshot"</span><span class="op">)</span>
 <span class="co">#&gt;  [1] "NHDArea.dbf"                "NHDAreaEventFC.dbf"        </span>
 <span class="co">#&gt;  [3] "NHDAreaEventFC.shp"         "NHDArea.shp"               </span>
 <span class="co">#&gt;  [5] "NHDFCode.dbf"               "NHDFlowline.dbf"           </span>
@@ -149,52 +154,56 @@
 <span class="co">#&gt; [15] "NHDPointEventFC.shp"        "NHDPoint.shp"              </span>
 <span class="co">#&gt; [17] "NHDReachCode_Comid.dbf"     "NHDReachCrossReference.dbf"</span>
 <span class="co">#&gt; [19] "NHDWaterbody.dbf"           "NHDWaterbody.shp"</span>
-<span class="fu"><a href="reference/nhd_plus_list.html">nhd_plus_list</a></span>(<span class="kw">vpu</span> <span class="kw">=</span> <span class="fl">4</span>, <span class="st">"NHDPlusAttributes"</span>)
+<span class="fu"><a href="reference/nhd_plus_list.html">nhd_plus_list</a></span><span class="op">(</span>vpu <span class="op">=</span> <span class="fl">4</span>, <span class="st">"NHDPlusAttributes"</span><span class="op">)</span>
 <span class="co">#&gt;  [1] "CumulativeArea.dbf"              "DivFracMP.dbf"                  </span>
 <span class="co">#&gt;  [3] "elevslope.dbf"                   "HeadwaterNodeArea.dbf"          </span>
 <span class="co">#&gt;  [5] "MegaDiv.dbf"                     "PlusARPointEvent.dbf"           </span>
 <span class="co">#&gt;  [7] "PlusFlowAR.dbf"                  "PlusFlow.dbf"                   </span>
 <span class="co">#&gt;  [9] "PlusFlowlineLakeMorphology.dbf"  "PlusFlowlineVAA.dbf"            </span>
 <span class="co">#&gt; [11] "PlusWaterbodyLakeMorphology.dbf"</span>
-<span class="fu"><a href="reference/nhd_plus_list.html">nhd_plus_list</a></span>(<span class="kw">vpu</span> <span class="kw">=</span> <span class="fl">4</span>, <span class="st">"NHDPlusCatchment"</span>)
-<span class="co">#&gt; [1] "Catchment.dbf"         "Catchment.shp"         "featureidgridcode.dbf"</span></pre></div>
-<div class="sourceCode" id="cb6"><pre class="r"><span class="co"># get layer info</span>
-<span class="fu"><a href="reference/nhd_plus_info.html">nhd_plus_info</a></span>(<span class="kw">vpu</span> <span class="kw">=</span> <span class="fl">4</span>, <span class="st">"NHDSnapshot"</span>, <span class="st">"NHDWaterbody"</span>)</pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co">#&gt;  [1] "Driver: ESRI Shapefile; number of rows: 31830 "     </span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt;  [2] "Feature type: wkbPolygon with 3 dimensions"         </span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt;  [3] "Extent: (-93.24332 40.43575) - (-73.61814 48.11344)"</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt;  [4] "CRS: +proj=longlat +datum=NAD83 +no_defs  "         </span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt;  [5] "LDID: 87 "                                          </span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#&gt;  [6] "Number of fields: 12 "                              </span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">#&gt;  [7] "         name type length typeName"                 </span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">#&gt;  [8] "1       COMID    0      9  Integer"                 </span></a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">#&gt;  [9] "2       FDATE    9     10     Date"                 </span></a>
-<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">#&gt; [10] "3  RESOLUTION    4      7   String"                 </span></a>
-<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co">#&gt; [11] "4     GNIS_ID    4     10   String"                 </span></a>
-<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">#&gt; [12] "5   GNIS_NAME    4     65   String"                 </span></a>
-<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#&gt; [13] "6    AREASQKM    2     19     Real"                 </span></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#&gt; [14] "7   ELEVATION    2     19     Real"                 </span></a>
-<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#&gt; [15] "8   REACHCODE    4     14   String"                 </span></a>
-<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">#&gt; [16] "9       FTYPE    4     24   String"                 </span></a>
-<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#&gt; [17] "10      FCODE    0      9  Integer"                 </span></a>
-<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">#&gt; [18] "11 SHAPE_LENG    2     19     Real"                 </span></a>
-<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">#&gt; [19] "12 SHAPE_AREA    2     19     Real"</span></a></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="r"><span class="co"># load layer</span>
-<span class="no">dt</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/nhd_plus_load.html">nhd_plus_load</a></span>(<span class="kw">vpu</span> <span class="kw">=</span> <span class="fl">4</span>, <span class="st">"NHDSnapshot"</span>, <span class="st">"NHDWaterbody"</span>)
+<span class="fu"><a href="reference/nhd_plus_list.html">nhd_plus_list</a></span><span class="op">(</span>vpu <span class="op">=</span> <span class="fl">4</span>, <span class="st">"NHDPlusCatchment"</span><span class="op">)</span>
+<span class="co">#&gt; [1] "Catchment.dbf"         "Catchment.shp"         "featureidgridcode.dbf"</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># get layer info</span>
+<span class="fu"><a href="reference/nhd_plus_info.html">nhd_plus_info</a></span><span class="op">(</span>vpu <span class="op">=</span> <span class="fl">4</span>, <span class="st">"NHDSnapshot"</span>, <span class="st">"NHDWaterbody"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">#&gt;  [1] "Driver: ESRI Shapefile; number of rows: 31830 "     </span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="co">#&gt;  [2] "Feature type: wkbPolygon with 3 dimensions"         </span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="co">#&gt;  [3] "Extent: (-93.24332 40.43575) - (-73.61814 48.11344)"</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="co">#&gt;  [4] "CRS: +proj=longlat +datum=NAD83 +no_defs  "         </span></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="co">#&gt;  [5] "LDID: 87 "                                          </span></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="co">#&gt;  [6] "Number of fields: 12 "                              </span></span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="co">#&gt;  [7] "         name type length typeName"                 </span></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="co">#&gt;  [8] "1       COMID    0      9  Integer"                 </span></span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="co">#&gt;  [9] "2       FDATE    9     10     Date"                 </span></span>
+<span id="cb7-10"><a href="#cb7-10"></a><span class="co">#&gt; [10] "3  RESOLUTION    4      7   String"                 </span></span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="co">#&gt; [11] "4     GNIS_ID    4     10   String"                 </span></span>
+<span id="cb7-12"><a href="#cb7-12"></a><span class="co">#&gt; [12] "5   GNIS_NAME    4     65   String"                 </span></span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="co">#&gt; [13] "6    AREASQKM    2     19     Real"                 </span></span>
+<span id="cb7-14"><a href="#cb7-14"></a><span class="co">#&gt; [14] "7   ELEVATION    2     19     Real"                 </span></span>
+<span id="cb7-15"><a href="#cb7-15"></a><span class="co">#&gt; [15] "8   REACHCODE    4     14   String"                 </span></span>
+<span id="cb7-16"><a href="#cb7-16"></a><span class="co">#&gt; [16] "9       FTYPE    4     24   String"                 </span></span>
+<span id="cb7-17"><a href="#cb7-17"></a><span class="co">#&gt; [17] "10      FCODE    0      9  Integer"                 </span></span>
+<span id="cb7-18"><a href="#cb7-18"></a><span class="co">#&gt; [18] "11 SHAPE_LENG    2     19     Real"                 </span></span>
+<span id="cb7-19"><a href="#cb7-19"></a><span class="co">#&gt; [19] "12 SHAPE_AREA    2     19     Real"</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># load layer</span>
+<span class="va">dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/nhd_plus_load.html">nhd_plus_load</a></span><span class="op">(</span>vpu <span class="op">=</span> <span class="fl">4</span>, <span class="st">"NHDSnapshot"</span>, <span class="st">"NHDWaterbody"</span><span class="op">)</span>
 <span class="co">#&gt; Reading layer `NHDWaterbody' from data source `/home/jose/.local/share/nhdR/NHDPlus/GL_04_NHDSnapshot/NHDWaterbody.shp' using driver `ESRI Shapefile'</span>
 <span class="co">#&gt; Simple feature collection with 31830 features and 12 fields</span>
 <span class="co">#&gt; geometry type:  POLYGON</span>
 <span class="co">#&gt; dimension:      XYZ</span>
 <span class="co">#&gt; bbox:           xmin: -93.24332 ymin: 40.43575 xmax: -73.61814 ymax: 48.11344</span>
 <span class="co">#&gt; epsg (SRID):    4269</span>
-<span class="co">#&gt; proj4string:    +proj=longlat +datum=NAD83 +no_defs</span></pre></div>
+<span class="co">#&gt; proj4string:    +proj=longlat +datum=NAD83 +no_defs</span></code></pre></div>
 </div>
 <div id="nhd" class="section level3">
 <h3 class="hasAnchor">
 <a href="#nhd" class="anchor"></a>NHD</h3>
 <p>NHD exports are organized by US state.</p>
-<div class="sourceCode" id="cb9"><pre class="r"><span class="fu"><a href="reference/nhd_get.html">nhd_get</a></span>(<span class="kw">state</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"DC"</span>, <span class="st">"HI"</span>))</pre></div>
-<div class="sourceCode" id="cb10"><pre class="r"><span class="fu"><a href="reference/nhd_list.html">nhd_list</a></span>(<span class="kw">state</span> <span class="kw">=</span> <span class="st">"DC"</span>)
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/nhd_get.html">nhd_get</a></span><span class="op">(</span>state <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"DC"</span>, <span class="st">"HI"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/nhd_list.html">nhd_list</a></span><span class="op">(</span>state <span class="op">=</span> <span class="st">"DC"</span><span class="op">)</span>
 <span class="co">#&gt;  [1] "ExternalCrosswalk"           "NHDFCode"                   </span>
 <span class="co">#&gt;  [3] "NHDFeatureToMetadata"        "NHDFlow"                    </span>
 <span class="co">#&gt;  [5] "NHDFlowlineVAA"              "NHDMetadata"                </span>
@@ -215,8 +224,9 @@
 <span class="co">#&gt; attr(,"driver")</span>
 <span class="co">#&gt; [1] "OpenFileGDB"</span>
 <span class="co">#&gt; attr(,"nlayers")</span>
-<span class="co">#&gt; [1] 33</span></pre></div>
-<div class="sourceCode" id="cb11"><pre class="r"><span class="fu"><a href="reference/nhd_info.html">nhd_info</a></span>(<span class="kw">state</span> <span class="kw">=</span> <span class="st">"DC"</span>, <span class="kw">dsn</span> <span class="kw">=</span> <span class="st">"NHDWaterbody"</span>)
+<span class="co">#&gt; [1] 33</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/nhd_info.html">nhd_info</a></span><span class="op">(</span>state <span class="op">=</span> <span class="st">"DC"</span>, dsn <span class="op">=</span> <span class="st">"NHDWaterbody"</span><span class="op">)</span>
 <span class="co">#&gt; Source: "/home/jose/.local/share/nhdR/NHDH_DC.gdb", layer: "NHDWaterbody"</span>
 <span class="co">#&gt; Driver: OpenFileGDB; number of rows: 8025 </span>
 <span class="co">#&gt; Feature type: wkbPolygon with 3 dimensions</span>
@@ -235,8 +245,9 @@
 <span class="co">#&gt; 9                 FType    0      0  Integer</span>
 <span class="co">#&gt; 10                FCode    0      0  Integer</span>
 <span class="co">#&gt; 11         Shape_Length    2      0     Real</span>
-<span class="co">#&gt; 12           Shape_Area    2      0     Real</span></pre></div>
-<div class="sourceCode" id="cb12"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="reference/nhd_load.html">nhd_load</a></span>(<span class="kw">state</span> <span class="kw">=</span> <span class="st">"DC"</span>, <span class="kw">dsn</span> <span class="kw">=</span> <span class="st">"NHDWaterbody"</span>))
+<span class="co">#&gt; 12           Shape_Area    2      0     Real</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="reference/nhd_load.html">nhd_load</a></span><span class="op">(</span>state <span class="op">=</span> <span class="st">"DC"</span>, dsn <span class="op">=</span> <span class="st">"NHDWaterbody"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Reading layer `NHDWaterbody' from data source `/home/jose/.local/share/nhdR/NHDH_DC.gdb' using driver `OpenFileGDB'</span>
 <span class="co">#&gt; Simple feature collection with 8025 features and 12 fields</span>
 <span class="co">#&gt; geometry type:  MULTIPOLYGON</span>
@@ -270,7 +281,7 @@
 <span class="co">#&gt; 3 MULTIPOLYGON (((-77.56942 3...</span>
 <span class="co">#&gt; 4 MULTIPOLYGON (((-77.56947 3...</span>
 <span class="co">#&gt; 5 MULTIPOLYGON (((-77.57644 3...</span>
-<span class="co">#&gt; 6 MULTIPOLYGON (((-77.46933 3...</span></pre></div>
+<span class="co">#&gt; 6 MULTIPOLYGON (((-77.46933 3...</span></code></pre></div>
 </div>
 </div>
 </div>
@@ -313,7 +324,7 @@
 <ul class="list-unstyled">
 <li><a href="https://www.tidyverse.org/lifecycle/#stable"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a></li>
 <li><a href="https://cran.r-project.org/package=nhdR"><img src="http://www.r-pkg.org/badges/version/nhdR" alt="CRAN_Status_Badge"></a></li>
-<li><a href="https://travis-ci.org/jsta/nhdR"><img src="https://travis-ci.org/jsta/nhdR.svg?branch=master" alt="Travis-CI Build Status"></a></li>
+<li><a href="https://github.com/jsta/nhdR/actions"><img src="https://github.com/jsta/nhdR/workflows/tic/badge.svg?branch=master" alt="tic"></a></li>
 <li><a href="https://zenodo.org/badge/latestdoi/75339263"><img src="https://zenodo.org/badge/75339263.svg" alt="DOI"></a></li>
 </ul>
 </div>
@@ -326,7 +337,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

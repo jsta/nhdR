@@ -88,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -120,7 +120,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/jsta/nhdR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -146,7 +146,7 @@
     <p>Re-project to appropriate UTM zone</p>
     </div>
 
-    <pre class="usage"><span class='fu'>toUTM</span>(<span class='no'>sf_object</span>)</pre>
+    <pre class="usage"><span class='fu'>toUTM</span><span class='op'>(</span><span class='va'>sf_object</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -159,14 +159,15 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>gull</span>)
-<span class='no'>gull_</span> <span class='kw'>&lt;-</span> <span class='no'>gull</span>$<span class='no'>sp</span>$<span class='no'>NHDWaterbody</span>
-<span class='fu'>st_crs</span>(<span class='no'>gull_</span>)
-<span class='no'>gull_</span> <span class='kw'>&lt;-</span> <span class='fu'>st_transform</span>(<span class='no'>gull_</span>, <span class='fl'>4326</span>)
-<span class='fu'>st_crs</span>(<span class='no'>gull_</span>)
-<span class='fu'>st_crs</span>(<span class='fu'>toUTM</span>(<span class='no'>gull_</span>[<span class='fl'>1</span>,]))
-}</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>gull</span><span class='op'>)</span>
+<span class='va'>gull_</span> <span class='op'>&lt;-</span> <span class='va'>gull</span><span class='op'>$</span><span class='va'>sp</span><span class='op'>$</span><span class='va'>NHDWaterbody</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_crs.html'>st_crs</a></span><span class='op'>(</span><span class='va'>gull_</span><span class='op'>)</span>
+<span class='va'>gull_</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_transform.html'>st_transform</a></span><span class='op'>(</span><span class='va'>gull_</span>, <span class='fl'>4326</span><span class='op'>)</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_crs.html'>st_crs</a></span><span class='op'>(</span><span class='va'>gull_</span><span class='op'>)</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_crs.html'>st_crs</a></span><span class='op'>(</span><span class='fu'>toUTM</span><span class='op'>(</span><span class='va'>gull_</span><span class='op'>[</span><span class='fl'>1</span>,<span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -182,7 +183,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
