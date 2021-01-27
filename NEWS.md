@@ -1,3 +1,7 @@
+# nhdR 0.5.4
+
+* Update URL endpoint for NHDPlus
+
 # nhdR 0.5.3
 
 * Update URL endpoint for NHDPlus
