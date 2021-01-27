@@ -2,7 +2,7 @@ context("network")
 
 test_that("extract_network fails well if passed multiple coordinates", {
   skip_on_cran()
-  skip_on_travis()
+  skip_on_ci()
 
   coords <- data.frame(lat = c(20.79722, 42.96523),
                        lon = c(-156.47833, -89.2527))
@@ -13,7 +13,7 @@ test_that("extract_network fails well if passed multiple coordinates", {
 
 test_that("extract_network is silent if passed projected buffer extents", {
   skip_on_cran()
-  skip_on_travis()
+  skip_on_ci()
 
   coords <- data.frame(lat = c(20.79722, 42.96523),
                        lon = c(-156.47833, -89.2527))
@@ -25,7 +25,7 @@ test_that("extract_network is silent if passed projected buffer extents", {
 
 test_that("terminal_reaches fails well", {
   skip_on_cran()
-  skip_on_travis()
+  skip_on_ci()
 
   #  if point intersects Great Lakes
   coords  <- data.frame(lat = 44.6265, lon = -86.23121)
@@ -56,7 +56,7 @@ test_that("terminal_reaches fails well", {
 
 test_that("leaf_reaches works", {
   skip_on_cran()
-  skip_on_travis()
+  skip_on_ci()
 
   coords <- data.frame(lat = 20.79722, lon = -156.47833)
   network <- nhd_plus_query(lon = coords$lon, lat = coords$lat,

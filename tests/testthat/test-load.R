@@ -2,7 +2,7 @@ context("load")
 
 test_that("nhd_plus_load works for single digit VPU entries", {
   skip_on_cran()
-  skip_on_travis()
+  skip_on_ci()
 
   x <- nhd_plus_load(vpu = '8', component = "NHDPlusAttributes",
                          dsn = "PlusFlowLineVAA", approve_all_dl = TRUE)
@@ -13,7 +13,7 @@ test_that("nhd_plus_load works for single digit VPU entries", {
 
 test_that("nhd_plus_load handles non-numeric VPU characters", {
   skip_on_cran()
-  skip_on_travis()
+  skip_on_ci()
 
   x = nhd_plus_load(vpu='03S', component='NHDPlusAttributes',
                     dsn='PlusFlowlineVAA', approve_all_dl=TRUE)

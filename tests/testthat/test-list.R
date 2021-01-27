@@ -2,7 +2,7 @@ context("list")
 
 test_that("list functions work", {
   skip_on_cran()
-  skip_on_travis()
+  skip_on_ci()
 
   short_list <- nhd_plus_list(vpu = 4)
   long_list  <- nhd_plus_list(vpu = 4, full.names = TRUE)

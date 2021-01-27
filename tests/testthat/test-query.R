@@ -3,7 +3,7 @@ context("nhd_plus_query")
 test_that("nhd_plus_query handles vpu boundaries well", {
   skip("This test is very long-running. Probably only suitable for manual execution.")
   skip_on_cran()
-  skip_on_travis()
+  skip_on_ci()
 
   coords <- data.frame(nhd_long = -89.21884, nhd_lat = 46.2052)
   lines  <- nhdR::nhd_plus_query(lat = coords$nhd_lat,
@@ -22,7 +22,7 @@ test_that("nhd_plus_query handles vpu boundaries well", {
 
 test_that("nhd_plus_query fails well", {
   skip_on_cran()
-  skip_on_travis()
+  skip_on_ci()
 
   coords <- data.frame(lat = c(20.79722, 42.96523),
                        lon = c(-156.47833, -89.2527))
@@ -37,7 +37,7 @@ test_that("nhd_plus_query fails well", {
 
 test_that("nhd_plus_query handles mismatched column names.", {
   skip_on_cran()
-  skip_on_travis()
+  skip_on_ci()
 
   # https://github.com/jsta/nhdR/issues/57
   box <- sf::st_bbox(c(xmin = -105.93003, xmax = -104.91784,

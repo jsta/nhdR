@@ -2,7 +2,7 @@ context("info")
 
 test_that("info functions work", {
   skip_on_cran()
-  skip_on_travis()
+  skip_on_ci()
 
   res <- nhd_plus_info(vpu = 4, component = "NHDSnapshot", dsn = "NHDWaterbody")
   expect_equal(length(res$iteminfo$name),

@@ -18,7 +18,7 @@ test_that("find_vpu works with numeric vpus", {
 
 test_that("toUTM works", {
   skip_on_cran()
-  skip_on_travis()
+  skip_on_ci()
 
   data(gull)
   data(mendota)
