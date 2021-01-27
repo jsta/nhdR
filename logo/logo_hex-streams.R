@@ -1,6 +1,6 @@
 
 library(LAGOSNEgis)
-library(fontr)
+library(fontr) # install_github("yixuan/fontr")
 library(sf)
 library(mapview)
 library(nhdR)
