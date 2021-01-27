@@ -2,7 +2,7 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 [![Lifecycle:
-stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/nhdR)](https://cran.r-project.org/package=nhdR)
 [![tic](https://github.com/jsta/nhdR/workflows/tic/badge.svg?branch=master)](https://github.com/jsta/nhdR/actions)
 [![DOI](https://zenodo.org/badge/75339263.svg)](https://zenodo.org/badge/latestdoi/75339263)
