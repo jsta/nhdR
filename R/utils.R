@@ -52,20 +52,29 @@ zero_pad <- function(x, digits){
 
 get_remotepath <- function(state, baseurl){
   # state  <- "Missouri"
+  # baseurl <- paste0("https://prd-tnm.s3.amazonaws.com/StagedProducts/Hydrography/NHD/State/HighResolution/")
   filename <- paste0("NHD_H_", state, "_State_GDB.zip")
   url      <- paste0(baseurl, "GDB/", filename)
   list(filename = filename, url = url)
 }
 
+# get_plus_remotepath("9")
+#' @importFrom xml2 read_xml
 get_plus_remotepath <- function(vpu, component = "NHDSnapshot"){
+
   if(vpu == "National"){
-    baseurl <- "https://nhdplus.com/NHDPlus/V2NationalData.php"
+    prefix <- "NHDPlusV21/Data/NationalData/"
   }else{
-    baseurl <- paste0("https://nhdplus.com/NHDPlus/NHDPlusV2_",
-                    zero_pad(vpu, 1), ".php")
+    vpu_key <- readRDS(system.file("vpu_key.rds", package = "nhdR"))
+    prefix <- vpu_key[vpu_key$vpu == zero_pad(vpu, 1), "directory"]
   }
 
-  res <- rvest::html_attrs(rvest::html_nodes(xml2::read_html(baseurl), "a"))
+  baseurl <- paste0(
+    "https://s3.amazonaws.com/edap-nhdplus?delimiter=/&prefix=",
+    prefix)
+  res <- read_xml(baseurl)
+  res <- stringr::str_extract_all(as.character(res),
+                           "(?<=\\<Key>).*(?=<\\/Key>)")[[1]]
 
   if(vpu == "National"){
     res <- unlist(res[grep(component, res)])
@@ -74,8 +83,9 @@ get_plus_remotepath <- function(vpu, component = "NHDSnapshot"){
   }
 
   res <- res[!(seq_len(length(res)) %in%
-                 c(grep("FGDB", res), grep(".pdf", res)))]
-  res[1]
+                 c(grep("FGDB", res), grep(".pdf", res), grep("FileGDB", res)))]
+
+  paste0("https://s3.amazonaws.com/edap-nhdplus/", res[1])
 }
 
 is_spatial <- function(filename){
