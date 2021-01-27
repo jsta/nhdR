@@ -11,3 +11,4 @@ rosm.cache/
 .V8history
 data-raw/get-huc-shp.R
 CRAN-RELEASE
+docs/

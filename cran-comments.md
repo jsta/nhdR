@@ -1,6 +1,6 @@
 ## Test environments
 
-* ubuntu 14.04 (on travis-ci), R 3.6.2
+* ubuntu 20 (on ghactions), R 4.0.3
 * win-builder (devel and release)
 
 ## R CMD check results
