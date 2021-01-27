@@ -4,8 +4,7 @@
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/nhdR)](https://cran.r-project.org/package=nhdR)
-[![Travis-CI Build
-Status](https://travis-ci.org/jsta/nhdR.svg?branch=master)](https://travis-ci.org/jsta/nhdR)
+[![tic](https://github.com/jsta/nhdR/workflows/tic/badge.svg?branch=master)](https://github.com/jsta/nhdR/actions)
 [![DOI](https://zenodo.org/badge/75339263.svg)](https://zenodo.org/badge/latestdoi/75339263)
 
 # nhdR <a href='https://jsta.github.io/nhdR/'><img src="man/figures/logo.png" align="right" height=140/></a>
@@ -48,9 +47,9 @@ library(nhdR)
 ### NHD Plus
 
 NHD-Plus exports are organized by vector processing unit (vpu). See
-below for a low resolution vpu map (also `nhdR::vpu_shp`). A reference
+below for a low resolution vpu map (also `nhdR::vpu_shp`). A hi-res
 version can be found
-[here](https://www.epa.gov/waterdata/get-nhdplus-national-hydrography-dataset-plus-data#NHDPlusV2Map).
+[here](https://www.epa.gov/waterdata/nhdplus-global-data).
 
 ![](man/figures/README-unnamed-chunk-4-1.png)<!-- -->
 
