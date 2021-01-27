@@ -12,7 +12,7 @@ citEntry(entry = "Manual",
          author = "USGS",
          title = "National Hydrography Dataset. Technical Report. United States
 Geological Survey",
-         year = "2019",
-         url = "https://nhd.usgs.gov/",
-         textVersion = paste("USGS. (2019) National Hydrography Dataset. Technical Report. United States
-Geological Survey. https://nhd.usgs.gov"))
+         year = "2021",
+         url = "https://www.usgs.gov/core-science-systems/ngp/national-hydrography",
+         textVersion = paste("USGS. (2021) National Hydrography Dataset. Technical Report. United States
+Geological Survey. https://www.usgs.gov/core-science-systems/ngp/national-hydrography"))

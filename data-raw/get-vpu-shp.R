@@ -1,8 +1,8 @@
 library(sf)
 library(rgdal)
 
-# https://nhdplus.com/NHDPlus/V2GlobalData.php
-remote_path <- "http://www.horizon-systems.com/NHDPlusData/NHDPlusV21/Data/GlobalData/NHDPlusV21_NHDPlusGlobalData_03.7z"
+# https://www.epa.gov/waterdata/nhdplus-global-data
+remote_path <- "https://s3.amazonaws.com/edap-nhdplus/NHDPlusV21/Data/GlobalData/NHDPlusV21_NHDPlusGlobalData_03.7z"
 temp_dir <- tempdir()
 in_path <- file.path(temp_dir, "nhdglobal.7z")
 # in_path <- "/tmp/RtmpsyMbWy/nhdglobal.7z"

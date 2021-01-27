@@ -8,11 +8,14 @@ stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://
 Status](https://travis-ci.org/jsta/nhdR.svg?branch=master)](https://travis-ci.org/jsta/nhdR)
 [![DOI](https://zenodo.org/badge/75339263.svg)](https://zenodo.org/badge/latestdoi/75339263)
 
-# nhdR <a href='https://jsta.github.io/nhdR'><img src="man/figures/logo.png" align="right" height=140/></a>
+# nhdR <a href='https://jsta.github.io/nhdR/'><img src="man/figures/logo.png" align="right" height=140/></a>
 
 Tools for querying, downloading, and networking both the [National
-Hydrography Dataset (NHD)](https://nhd.usgs.gov/) and
-[NHDPlus](https://nhdplus.com/NHDPlus/) datasets.
+Hydrography Dataset
+(NHD)](https://www.usgs.gov/core-science-systems/ngp/national-hydrography)
+and
+[NHDPlus](https://www.epa.gov/waterdata/nhdplus-national-hydrography-dataset-plus)
+datasets.
 
 ## Installation
 
@@ -30,7 +33,7 @@ devtools::install_github("jsta/nhdR")
 ```
 
 This package also requires an installation of
-[7-zip](http://www.7-zip.org/) that can be called via the command line
+[7-zip](https://www.7-zip.org/) that can be called via the command line
 using `7z` or `7za.exe` (check if your machine is good to go with
 `nhdR::has_7z()`).
 
@@ -45,9 +48,9 @@ library(nhdR)
 ### NHD Plus
 
 NHD-Plus exports are organized by vector processing unit (vpu). See
-below for a low resolution vpu map (also `nhdR::vpu_shp`). A hi-res
+below for a low resolution vpu map (also `nhdR::vpu_shp`). A reference
 version can be found
-[here](http://www.horizon-systems.com/NHDPlus/NHDPlusV2_data.php).
+[here](https://www.epa.gov/waterdata/get-nhdplus-national-hydrography-dataset-plus-data#NHDPlusV2Map).
 
 ![](man/figures/README-unnamed-chunk-4-1.png)<!-- -->
 

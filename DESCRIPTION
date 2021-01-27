@@ -5,7 +5,7 @@ Authors@R: person("Joseph", "Stachelek", email = "stachel2@msu.edu", role = c("a
 Description: Tools for working with the National Hydrography Dataset, with 
     functions for querying, downloading, and networking both the NHD 
     <https://www.usgs.gov/core-science-systems/ngp/national-hydrography> 
-    and NHDPlus <https://nhdplus.com/NHDPlus/> datasets. 
+    and NHDPlus <https://www.epa.gov/waterdata/nhdplus-national-hydrography-dataset-plus> datasets. 
 URL: https://github.com/jsta/nhdR
 BugReports: https://github.com/jsta/nhdR/issues
 Depends:
