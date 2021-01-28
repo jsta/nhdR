@@ -1,6 +1,7 @@
 # nhdR 0.5.4
 
 * Update URL endpoint for NHDPlus (#64)
+* Bug fix for `nhd_plus_get` unzipping to enable the `force_unzip` argument
 
 # nhdR 0.5.3
 
