@@ -34,7 +34,7 @@ devtools::install_github("jsta/nhdR")
 This package also requires an installation of
 [7-zip](https://www.7-zip.org/) that can be called via the command line
 using `7z` or `7za.exe` (check if your machine is good to go with
-`nhdR::has_7z()`).
+`nhdR:::has_7z()`).
 
 ## Usage
 
