@@ -12,6 +12,7 @@ nhd_plus_load(
   approve_all_dl = FALSE,
   force_dl = FALSE,
   pretty = FALSE,
+  wkt_filter = NA,
   ...
 )
 }
@@ -30,6 +31,8 @@ nhd_plus_load(
 \item{force_dl}{logical force a re-download of the requested data}
 
 \item{pretty}{more minimal pretty printing st_read relative to "quiet"}
+
+\item{wkt_filter}{character. WKT spatial filter for selection. See sf::st_read}
 
 \item{...}{parameters passed on to sf::st_read}
 }
@@ -67,5 +70,9 @@ eromflow      <- nhd_plus_load(4, "EROMExtension", "EROM_010001")
 
 # Character VPU
 plusflow <- nhd_plus_load(vpu = "10L", "NHDPlusAttributes", "PlusFlow")
+
+# Spatial filtering via wkt_filter
+dt <- nhd_plus_load(4, "NHDSnapshot", "NHDWaterbody", wkt_filter = "POINT (-85.411 42.399)")
+
 }
 }

@@ -12,3 +12,4 @@ rosm.cache/
 data-raw/get-huc-shp.R
 CRAN-RELEASE
 docs/
+test.R

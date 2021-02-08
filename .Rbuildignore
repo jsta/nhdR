@@ -18,3 +18,5 @@ rosm.cache
 logo
 ^\.ccache$
 ^\.github$
+test_file
+test.R

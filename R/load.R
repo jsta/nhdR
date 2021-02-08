@@ -135,6 +135,7 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
 #' @param approve_all_dl logical blanket approval to download all missing data. Defaults to TRUE if session is non-interactive
 #' @param force_dl logical force a re-download of the requested data
 #' @param pretty more minimal pretty printing st_read relative to "quiet"
+#' @param wkt_filter character. WKT spatial filter for selection. See sf::st_read
 #' @param ... parameters passed on to sf::st_read
 #' @return spatial object
 #'
@@ -172,10 +173,14 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
 #'
 #' # Character VPU
 #' plusflow <- nhd_plus_load(vpu = "10L", "NHDPlusAttributes", "PlusFlow")
+#'
+#' # Spatial filtering via wkt_filter
+#' dt <- nhd_plus_load(4, "NHDSnapshot", "NHDWaterbody", wkt_filter = "POINT (-85.411 42.399)")
+#'
 #' }
 nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
                           file_ext = NA, approve_all_dl = FALSE, force_dl = FALSE,
-                          pretty = FALSE, ...){
+                          pretty = FALSE, wkt_filter = NA, ...){
 
   if(!interactive()){
     approve_all_dl = TRUE
@@ -185,7 +190,7 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
     stop(paste0("file_ext must be set to either 'shp' or 'dbf'"))
   }
 
-  nhd_plus_load_vpu <- function(vpu, component, dsn, pretty, ...){
+  nhd_plus_load_vpu <- function(vpu, component, dsn, pretty, wkt_filter, ...){
       vpu_path <- list.files(file.path(nhd_path(), "NHDPlus"),
                              include.dirs = TRUE, full.names = TRUE)
 
@@ -228,7 +233,7 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
       res <- res[grep("shp$", res)]
       res <- sf::st_zm(
         st_read_custom(res, pretty = pretty, stringsAsFactors = FALSE,
-                       ...))
+                       wkt_filter = wkt_filter, ...))
       is_spatial <- TRUE
       list(res = res, is_spatial = is_spatial)
     }else{
@@ -241,7 +246,7 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
 
   res        <- lapply(vpu, nhd_plus_load_vpu,
                        component = component, dsn = dsn, pretty = pretty,
-                       ...)
+                       wkt_filter = wkt_filter, ...)
   is_spatial <- unlist(lapply(res, function(x) x$is_spatial))
 
   # resolve common names among vpus (https://github.com/jsta/nhdR/issues/57)
@@ -258,9 +263,15 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
   res        <- do.call("rbind", lapply(res, function(x) x$res))
 
   if(any(is_spatial)){
-    invisible(prj <- sf::st_crs(nhd_plus_load_vpu(vpu[1],
-                      component = component, dsn = dsn, pretty = FALSE,
-                      quiet = TRUE)$res))
+    # browser()
+    invisible(
+      prj <- sf::st_crs(
+        nhd_plus_load_vpu(vpu[1],
+                        component = component, dsn = dsn, pretty = FALSE,
+                        quiet = TRUE, wkt_filter = wkt_filter,
+                        query = paste0("SELECT * from ", dsn, " LIMIT 1"))$res
+        )
+      )
     sf::st_crs(res) <- prj
   }
 

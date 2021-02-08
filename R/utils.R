@@ -292,7 +292,7 @@ great_lakes <- function(spatial = FALSE){
 }
 
 #' @importFrom utils capture.output
-st_read_custom <- function(x, pretty = FALSE, ...){
+st_read_custom <- function(x, pretty = FALSE, wkt_filter = NA, ...){
   if(isTRUE(pretty)){
     msg <- capture.output(res <- sf::st_read(x, ...))
     if(length(msg) >0){
@@ -306,8 +306,12 @@ st_read_custom <- function(x, pretty = FALSE, ...){
       res
     }
   }else{
-    sf::st_read(x, ...)
-    # do.call(sf::st_read, c("dsn" = x, arguments))
+    if(!is.na(wkt_filter)){
+      sf::st_read(x, wkt_filter = wkt_filter, ...)
+    }else{
+      sf::st_read(x, ...)
+      # do.call(sf::st_read, c("dsn" = x, arguments))
+    }
   }
 }
 
