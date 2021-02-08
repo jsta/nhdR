@@ -33,3 +33,13 @@ test_that("nhd_plus_load handles non-numeric VPU characters", {
     "03 is not a valid vpu. Are you missing a letter designation? See VPU map.",
     fixed = TRUE)
 })
+
+
+test_that("nhd_plus_load works with the wkt_filter argument", {
+  skip_on_cran()
+  skip_on_ci()
+
+  expect_s3_class(
+    nhd_plus_load(4, "NHDSnapshot", "NHDWaterbody", wkt_filter = "POINT (-85.411 42.399)"),
+    "data.frame")
+})

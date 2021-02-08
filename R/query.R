@@ -78,30 +78,58 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
         st_crs(nhdR::vpu_shp)))
     pnt <- st_transform(pnt, crs_code)
 
-    sp <- lapply(dsn, function(x) nhd_plus_load(vpu = vpu, dsn = x,
-                                          approve_all_dl = approve_all_dl,
-                                          ...))
-    names(sp) <- dsn
+    pnt_buff  <- sf::st_sfc(sf::st_buffer(pnt, dist = buffer_dist))
+    sf::st_crs(pnt_buff) <- sf::st_crs(pnt)
+    utm_zone <- long2UTM(sf::st_coordinates(
+      sf::st_transform(pnt, 4326))[1])
+    crs <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
+    pnt      <- sf::st_transform(pnt, crs = crs)
+    pnt_buff <- sf::st_transform(pnt_buff, crs = crs)
+    crs_dsn  <- sf::st_crs(
+        nhd_plus_load_vpu(vpu[[1]], component = "NHDSnapshot",
+                          force_dl = FALSE,
+                          dsn = dsn, pretty = FALSE,
+                          quiet = TRUE, wkt_filter = NA,
+                          approve_all_dl = TRUE,
+                          query = paste0("SELECT * from ", dsn, " LIMIT 1"))$res
+      )
 
-    sp_sub <- select_point_overlay(pnt = pnt, sp = sp,
-                                   buffer_dist = buffer_dist)
-
-    pnt <- st_transform(pnt, sf::st_crs(sp_sub[[1]]))
-    list(pnt = pnt, sp = sp_sub)
+    wkt_filter <- sf::st_as_text(sf::st_transform(sf::st_geometry(pnt_buff), crs_dsn))
   }else{
-
     poly <- st_transform(poly, st_crs(nhdR::vpu_shp))
     vpu  <- find_vpu(poly)
 
-    sp <- lapply(dsn, function(x) nhd_plus_load(vpu = vpu, dsn = x,
-                                          approve_all_dl = approve_all_dl,
-                                          ...))
-    names(sp) <- dsn
-
-    sp_sub <- select_poly_overlay(poly = poly, sp = sp)
-
-    list(sp = sp_sub)
+    utm_zone  <- long2UTM(
+      sf::st_coordinates(
+        st_transform(poly, 4326))[1])
+    crs       <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
+    poly      <- st_transform(poly, crs = crs)
+    crs_dsn  <- sf::st_crs(
+      nhd_plus_load_vpu(vpu[[1]], component = "NHDSnapshot",
+                        force_dl = FALSE,
+                        dsn = dsn, pretty = FALSE,
+                        quiet = TRUE, wkt_filter = NA,
+                        approve_all_dl = approve_all_dl,
+                        query = paste0("SELECT * from ", dsn, " LIMIT 1"))$res
+    )
+    wkt_filter <- sf::st_as_text(sf::st_transform(sf::st_geometry(poly), crs_dsn))
   }
+
+  sp_sub <- lapply(dsn, function(x) nhd_plus_load(vpu = vpu, dsn = x,
+                                                  approve_all_dl = approve_all_dl,
+                                                  wkt_filter = wkt_filter,
+                                                  ...))
+  names(sp_sub) <- dsn
+
+  if(any(unlist(lapply(sp_sub, function(r) length(r$res))) > 0)){
+    if(all(class(sp_sub) == "list")){
+      sp_sub <- lapply(sp_sub, function(x) sf::st_transform(x, crs))
+    }else{
+      sp_sub <- sf::st_transform(sp_sub, crs)
+    }
+  }
+
+  list(sp = sp_sub)
 }
 
 #' Select NHD features clipped by a circular buffer a coordinate pair

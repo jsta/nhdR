@@ -26,12 +26,20 @@ test_that("nhd_plus_query fails well", {
 
   coords <- data.frame(lat = c(20.79722, 42.96523),
                        lon = c(-156.47833, -89.2527))
+  expect_error(
+    nhdR::nhd_plus_query(lat = coords$lat,
+                         lon = coords$lon,
+                         dsn = "NHDFlowLine",
+                         buffer_dist = 0.1),
+    "nhd_plus_query only accepts a single lon-lat pair.")
 
-  expect_error(nhdR::nhd_plus_query(lat = coords$lat,
-                                lon = coords$lon,
-                                dsn = "NHDFlowLine",
-                                buffer_dist = 0.1),
-               "nhd_plus_query only accepts a single lon-lat pair.")
+
+  # query will produce a zero row sf object when appropriate
+  coords <- data.frame(lat = c(42.04133),
+                       lon = c(-71.70511))
+  poly <- nhd_plus_query(coords$lon, coords$lat, dsn = "NHDWaterbody",
+                         buffer_dist = units::as_units(1, "km"))
+  expect_equal(nrow(poly$sp$NHDWaterbody), 0)
 })
 
 
@@ -46,7 +54,8 @@ test_that("nhd_plus_query handles mismatched column names.", {
     sf::st_as_sfc()
   poudre_flow <- nhd_plus_query(poly = box,
                                 dsn = c('NHDFlowLine'),
-                                quiet = TRUE)
+                                quiet = TRUE,
+                                approve_all_dl = TRUE)
 
   expect_s3_class(poudre_flow$sp$NHDFlowLine, "sf")
 })

@@ -190,64 +190,13 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
     stop(paste0("file_ext must be set to either 'shp' or 'dbf'"))
   }
 
-  nhd_plus_load_vpu <- function(vpu, component, dsn, pretty, wkt_filter, ...){
-      vpu_path <- list.files(file.path(nhd_path(), "NHDPlus"),
-                             include.dirs = TRUE, full.names = TRUE)
-
-      file_vpus <- sapply(
-        stringr::str_extract(vpu_path, "_([0-9]{2}[A-z]{0,1})_"),
-        function(x) substring(x, 2, nchar(x) - 1))
-
-      vpu_path <- vpu_path[file_vpus == zero_pad(vpu, 1)]
-
-      vpu_path <- vpu_path[
-        seq_len(length(vpu_path)) %in% grep("7z", vpu_path)]
-      vpu_path <- vpu_path[grep(component, vpu_path)]
-
-    if(any(!file.exists(vpu_path)) | length(vpu_path) == 0 | force_dl){
-
-      if(!approve_all_dl & !force_dl){
-        userconsents <- utils::menu(c("Yes", "No"),
-                  title = paste0(vpu, " vpu file not found. Download it?"))
-      }else{
-        userconsents <- 1
-      }
-
-      if(userconsents == 1){
-        nhd_plus_get(vpu = vpu, component = component, force_dl = force_dl)
-      }else{
-        stop("No file. Cannot load.")
-      }
-    }
-
-    candidate_files <- nhd_plus_list(vpu, component = component,
-                                     full.names = TRUE, file_ext = file_ext)
-    res <- candidate_files[grep(paste0(tolower(dsn), "\\."),
-                                tolower(candidate_files))]
-    if(length(res) == 0){
-      stop(paste0("layer '", dsn, "' not found in component '",
-                  component, "'"))
-    }
-
-    if(length(grep(paste0("shp", "$"), res)) > 0){
-      res <- res[grep("shp$", res)]
-      res <- sf::st_zm(
-        st_read_custom(res, pretty = pretty, stringsAsFactors = FALSE,
-                       wkt_filter = wkt_filter, ...))
-      is_spatial <- TRUE
-      list(res = res, is_spatial = is_spatial)
-    }else{
-      res <- lapply(res, foreign::read.dbf, as.is = TRUE)
-      names(res) <- dsn
-      is_spatial <- FALSE
-      list(res = res[[dsn]], is_spatial = is_spatial)
-    }
-  }
-
   res        <- lapply(vpu, nhd_plus_load_vpu,
-                       component = component, dsn = dsn, pretty = pretty,
+                       component = component, dsn = dsn,
+                       approve_all_dl = approve_all_dl, pretty = pretty,
                        wkt_filter = wkt_filter, ...)
   is_spatial <- unlist(lapply(res, function(x) x$is_spatial))
+  # res        <- res[is_spatial]
+
 
   # resolve common names among vpus (https://github.com/jsta/nhdR/issues/57)
   names_template <- which.min(unlist(
@@ -260,10 +209,13 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
     x
     })
 
-  res        <- do.call("rbind", lapply(res, function(x) x$res))
+  if(nrow(res[[1]]$res) > 0){
+    res        <- do.call("rbind", lapply(res, function(x) x$res))
+  }else{
+    res <- res[[1]]$res
+  }
 
-  if(any(is_spatial)){
-    # browser()
+  if(any(is_spatial) & inherits(res, "data.frame")){
     invisible(
       prj <- sf::st_crs(
         nhd_plus_load_vpu(vpu[1],
@@ -276,4 +228,63 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
   }
 
   res
+}
+
+nhd_plus_load_vpu <- function(vpu, component, dsn, pretty, wkt_filter,
+                              approve_all_dl = FALSE, force_dl = FALSE, file_ext = NA, ...){
+
+  vpu_path <- list.files(file.path(nhd_path(), "NHDPlus"),
+                         include.dirs = TRUE, full.names = TRUE)
+
+  file_vpus <- sapply(
+    stringr::str_extract(vpu_path, "_([0-9]{2}[A-z]{0,1})_"),
+    function(x) substring(x, 2, nchar(x) - 1))
+
+  vpu_path  <- vpu_path[!is.na(file_vpus)]
+  file_vpus <- file_vpus[!is.na(file_vpus)]
+
+  vpu_path <- vpu_path[file_vpus == zero_pad(vpu, 1)]
+
+  vpu_path <- vpu_path[
+    seq_len(length(vpu_path)) %in% grep("7z", vpu_path)]
+  vpu_path <- vpu_path[grep(component, vpu_path)]
+
+  if(any(!file.exists(vpu_path)) | length(vpu_path) == 0 | force_dl){
+
+    if(!approve_all_dl & !force_dl){
+      userconsents <- utils::menu(c("Yes", "No"),
+                                  title = paste0(vpu, " vpu file not found. Download it?"))
+    }else{
+      userconsents <- 1
+    }
+
+    if(userconsents == 1){
+      nhd_plus_get(vpu = vpu, component = component, force_dl = force_dl)
+    }else{
+      stop("No file. Cannot load.")
+    }
+  }
+
+  candidate_files <- nhd_plus_list(vpu, component = component,
+                                   full.names = TRUE, file_ext = file_ext)
+  res <- candidate_files[grep(paste0(tolower(dsn), "\\."),
+                              tolower(candidate_files))]
+  if(length(res) == 0){
+    stop(paste0("layer '", dsn, "' not found in component '",
+                component, "'"))
+  }
+
+  if(length(grep(paste0("shp", "$"), res)) > 0){
+    res <- res[grep("shp$", res)]
+    res <- sf::st_zm(
+      st_read_custom(res, pretty = pretty, stringsAsFactors = FALSE,
+                     wkt_filter = wkt_filter, ...))
+    is_spatial <- TRUE
+    list(res = res, is_spatial = is_spatial)
+  }else{
+    res <- lapply(res, foreign::read.dbf, as.is = TRUE)
+    names(res) <- dsn
+    is_spatial <- FALSE
+    list(res = res[[dsn]], is_spatial = is_spatial)
+  }
 }
