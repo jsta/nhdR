@@ -45,6 +45,9 @@ test_that("nhd_plus_load works with the wkt_filter argument", {
 })
 
 test_that("nhd_load works", {
+  skip_on_cran()
+  skip_on_ci()
+
   expect_s3_class(
     nhd_load(c("RI", "DC"), "NHDWaterbody"),
     "data.frame")
