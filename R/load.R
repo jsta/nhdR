@@ -80,13 +80,7 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
             if(!is_gpkg_installed()){
               stop("The geopackage driver is not installed.")
             }
-            gpkg_path <- gsub(".gdb", ".gpkg", gdb_path(state))
-            if(!file.exists(gpkg_path)){
-              compile_gpkg(state)
-            }
-            res <- dplyr::tbl(dplyr::src_sqlite(gpkg_path), dsn)
-            geom <- rlang::quo("geom")
-            data.frame(dplyr::select(res, -geom))
+            suppressWarnings(st_read_custom(gdb_path(state), layer = dsn))
           }else{
             temp_dir <- tempdir()
             gdalUtils::ogr2ogr(gdb_path(state), temp_dir, dsn)
@@ -112,6 +106,7 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
                                 state_exists = yes_dl_vec[i, "state_exists"],
                                 file_ext = file_ext,
                                 ...))
+
   res <- res[!unlist(lapply(res, is.null))]
   res <- do.call("rbind", res)
 
