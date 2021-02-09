@@ -81,8 +81,11 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
                            buffer_dist = buffer_dist,
                            approve_all_dl = approve_all_dl, ...)$sp$NHDWaterbody
 
-    # exclude great lakes --
+    if(nrow(poly) == 0){
+      stop("No lake polygon found at query point")
+    }
 
+    # exclude great lakes --
     # is GNIS_NAME sometimes mixed case caps? Yes :(
     names(poly)[grep("GNIS_N", names(poly))] <- toupper(
       names(poly)[grep("GNIS_N", names(poly))])
@@ -109,7 +112,7 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
     }
   }else{
     network_lines <- network
-    vpu           <- find_vpu(st_centroid(st_union(network_lines)))
+    vpu           <- suppressWarnings(find_vpu(st_centroid(st_union(network_lines))))
   }
 
   # network_lines <- dplyr::filter(network_lines,
@@ -129,14 +132,16 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
     network_lines <- dplyr::filter(network_lines, .data$wbareacomi != 0)
 
     # filter lines to those that intersect a lake larger than size threshold
-    poly <- nhd_plus_query(poly = st_convex_hull(
+    poly <- suppressMessages(
+      nhd_plus_query(poly = st_convex_hull(
       st_union(st_cast(network_lines, "MULTILINESTRING"))),
       dsn = "NHDWaterbody",
       buffer_dist = 0.01,
-      approve_all_dl = approve_all_dl, ...)$sp$NHDWaterbody
+      approve_all_dl = approve_all_dl, ...)$sp$NHDWaterbody)
 
     poly <- poly[st_area(poly) >
                  units::as_units(lakesize_threshold, "ha"),]
+    poly <- st_transform(poly, st_crs(network_lines))
 
     intersecting_reaches <- network_lines[unlist(lapply(
       suppressMessages(st_intersects(network_lines, poly)), function(x) length(x) > 0)),]
@@ -157,7 +162,6 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
   }
 
   # find nodes with an upstream reach with ftype == ArtificialPath?
-  # browser()
 
   # find nodes with no downstream and at least one upstream conn.
   dplyr::filter(network_lines, .data$comid %in% res$fromcomid)
@@ -208,8 +212,10 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
                                     dsn = "NHDFlowline", ...)$sp$NHDFlowline
   }else{
     network_lines <- network
-    vpu <- find_vpu(
-      st_centroid(st_union(network_lines)))
+    vpu <- suppressWarnings(
+      find_vpu(
+        st_centroid(st_union(network_lines)))
+    )
   }
 
   network_table <- nhd_plus_load(vpu = vpu, "NHDPlusAttributes",
