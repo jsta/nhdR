@@ -1,3 +1,8 @@
+# nhdR x.x.x
+
+* Drop automatic conversion to Geopackage for NHD (non-plus) products
+* Massive (~30x) speed improvement for nhd_plus query operations (#63)
+
 # nhdR 0.5.4
 
 * Update URL endpoint for NHDPlus (#64)
