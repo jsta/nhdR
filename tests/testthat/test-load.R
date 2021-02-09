@@ -43,3 +43,9 @@ test_that("nhd_plus_load works with the wkt_filter argument", {
     nhd_plus_load(4, "NHDSnapshot", "NHDWaterbody", wkt_filter = "POINT (-85.411 42.399)"),
     "data.frame")
 })
+
+test_that("nhd_load works", {
+  expect_s3_class(
+    nhd_load(c("RI", "DC"), "NHDWaterbody"),
+    "data.frame")
+})
