@@ -30,9 +30,9 @@ nhd_get <- function(state = NA, force_dl = FALSE, force_unzip = FALSE){
     get_if_not_exists(url, destfile, force_dl = force_dl)
     unzip(destfile, exdir = nhd_path())
 
-    if(is_gpkg_installed()){
-      compile_gpkg(state)
-    }
+    # if(is_gpkg_installed()){
+    #   compile_gpkg(state)
+    # }
   }
 
   invisible(lapply(state, nhd_get_state))

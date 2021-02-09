@@ -40,7 +40,8 @@ Suggests:
     rgeos,
     testthat (>= 2.1.0),
     covr,
-    crul
+    crul,
+    lwgeom
 VignetteBuilder: knitr
 SystemRequirements: 7-zip command line tool (7z)
 Language: en-US
