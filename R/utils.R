@@ -142,9 +142,14 @@ find_state <- function(pnt){
   state
 }
 
-handle_dbf <- function(state, dsn){
+nhd_read_dbf <- function(state, dsn){
   temp_dir <- tempdir()
-  gdalUtils::ogr2ogr(gdb_path(state), temp_dir, dsn)
+  # sf::gdal_utils("info", normalizePath(gdb_path(state)))
+  suppressWarnings(sf::gdal_utils("vectortranslate",
+                                  normalizePath(gdb_path(state)),
+                                  temp_dir,
+                                  options = c("-overwrite")
+  ))
   read.dbf(file.path(temp_dir, paste0(dsn, ".dbf")))
 }
 
@@ -186,10 +191,15 @@ toUTM <- function(sf_object){
 
 compile_gpkg <- function(state){
   # state = "DC"
-  gdalUtils::ogr2ogr(
-    src_datasource_name = gdb_path(state),
-    dst_datasource_name = gsub(".gdb", ".gpkg", gdb_path(state)),
-    f = "GPKG")
+  dest <- suppressWarnings(
+    normalizePath(gsub(".gdb", ".gpkg", gdb_path(state)))
+    )
+  # file.exists(dest)
+  sf::gdal_utils("vectortranslate",
+    source = normalizePath(gdb_path(state)),
+    destination = dest,
+    options = c("-f", "GPKG")
+    )
 }
 
 is_gpkg_installed <- function(){

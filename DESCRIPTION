@@ -21,7 +21,6 @@ Imports:
     xml2,
     foreign,
     ggplot2,
-    gdalUtils,
     rlang,
     dplyr,
     curl,

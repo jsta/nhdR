@@ -9,8 +9,7 @@
 #'
 #' @return Spatial simple features object or data frame depending on the dsn
 #' type and value passed to file_ext
-#' @importFrom sf st_read
-#' @importFrom gdalUtils ogr2ogr
+#' @importFrom sf st_read gdal_utils
 #' @importFrom rlang quo
 #' @importFrom dplyr tbl select src_sqlite
 #' @export
@@ -73,9 +72,7 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
                           stringsAsFactors = FALSE, ...)
               ))},
           error = function(e) {
-            temp_dir <- tempdir()
-            gdalUtils::ogr2ogr(gdb_path(state), temp_dir, dsn)
-            read.dbf(file.path(temp_dir, paste0(dsn, ".dbf")))
+            nhd_read_dbf(state, dsn)
           })
         }else{
           if(file_ext == "gpkg"){
@@ -84,9 +81,7 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
             }
             suppressWarnings(st_read_custom(gdb_path(state), layer = dsn))
           }else{
-            temp_dir <- tempdir()
-            gdalUtils::ogr2ogr(gdb_path(state), temp_dir, dsn)
-            read.dbf(file.path(temp_dir, paste0(dsn, ".dbf")))
+            nhd_read_dbf(state, dsn)
           }
         }
       }

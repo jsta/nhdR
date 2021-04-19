@@ -52,3 +52,14 @@ test_that("nhd_load works", {
     nhd_load(c("RI", "DC"), "NHDWaterbody"),
     "data.frame")
 })
+
+
+test_that("nhd_load(ing) dbf files works", {
+  skip_on_cran()
+  skip_on_ci()
+
+  expect_s3_class(
+    nhd_load("RI", "NHDReachCrossReference"),
+    "data.frame"
+    )
+})
