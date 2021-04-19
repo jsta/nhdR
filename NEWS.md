@@ -1,7 +1,8 @@
 # nhdR x.x.x
 
 * Drop automatic conversion to Geopackage for NHD (non-plus) products
-* Massive (~30x) speed improvement for nhd_plus query operations (#63)
+* Massive (~30x) speed improvement for `nhd_plus` query operations (#63)
+* Bug fix for loading `NHDReachCrossReference` layers (#72)
 
 # nhdR 0.5.4
 
