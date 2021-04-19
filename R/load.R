@@ -68,8 +68,10 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
 
         if(is.na(file_ext) | file_ext == "shp"){
           tryCatch({
-            sf::st_zm(sf::st_read(gdb_path(state), dsn,
-              stringsAsFactors = FALSE, ...))},
+            sf::st_zm(
+              sf::st_read(gdb_path(state), dsn,
+                          stringsAsFactors = FALSE, ...)
+              )},
           error = function(e) {
             temp_dir <- tempdir()
             gdalUtils::ogr2ogr(gdb_path(state), temp_dir, dsn)
