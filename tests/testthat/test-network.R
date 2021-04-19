@@ -17,6 +17,10 @@ test_that("extract_network is silent if passed projected buffer extents", {
 
   coords <- data.frame(lat = c(20.79722, 42.96523),
                        lon = c(-156.47833, -89.2527))
+
+  # call twice to avoid GDAL loading message
+  res <- extract_network(coords$lon[1], coords$lat[1], maxsteps = 9,
+                         buffer_dist = units::as_units(5, "km"), quiet = TRUE)
   expect_silent(
     res <- extract_network(coords$lon[1], coords$lat[1], maxsteps = 9,
                   buffer_dist = units::as_units(5, "km"), quiet = TRUE)
