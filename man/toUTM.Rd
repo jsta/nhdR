@@ -19,6 +19,6 @@ gull_ <- gull$sp$NHDWaterbody
 st_crs(gull_)
 gull_ <- st_transform(gull_, 4326)
 st_crs(gull_)
-st_crs(toUTM(gull_[1,]))
+st_crs(toUTM(gull_[1, ]))
 }
 }

@@ -20,8 +20,8 @@ wk <- wikilake::lake_wiki("Gull Lake (Michigan)")
 pnt <- st_as_sf(wk, coords = c("Lon", "Lat"), crs = 4326)
 pnt <- st_transform(pnt, st_crs(vpu_shp))
 qry <- nhd_plus_query(wk$Lon, wk$Lat,
-         dsn = c("NHDWaterbody"), buffer_dist = 0.05)
-wbd <- qry$sp$NHDWaterbody[which.max(st_area(qry$sp$NHDWaterbody)),]
+  dsn = c("NHDWaterbody"), buffer_dist = 0.05)
+wbd <- qry$sp$NHDWaterbody[which.max(st_area(qry$sp$NHDWaterbody)), ]
 bbox2poly(st_bbox(wbd))
 }
 }
