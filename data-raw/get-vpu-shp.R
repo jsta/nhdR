@@ -9,9 +9,9 @@ in_path <- file.path(temp_dir, "nhdglobal.7z")
 # temp_dir <- "/tmp/RtmpsyMbWy"
 curl::curl_download(remote_path, in_path)
 
-if(Sys.info()["sysname"] == "Windows"){
+if (Sys.info()["sysname"] == "Windows") {
   system(paste0("7za.exe e ", in_path, " -o", temp_dir))
-}else{
+} else {
   system(paste0("7z -y e ", in_path, " -o", temp_dir))
 }
 
