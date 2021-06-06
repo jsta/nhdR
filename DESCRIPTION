@@ -40,7 +40,8 @@ Suggests:
     testthat (>= 2.1.0),
     covr,
     crul,
-    lwgeom
+    lwgeom,
+    s2
 VignetteBuilder: knitr
 SystemRequirements: 7-zip command line tool (7z)
 Language: en-US
