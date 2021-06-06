@@ -96,9 +96,9 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Creating simple maps using nhdR</h1>
-                        <h4 class="author">Joseph Stachelek</h4>
+                        <h4 class="author">Jemma Stachelek</h4>
             
-            <h4 class="date">2021-04-19</h4>
+            <h4 class="date">2021-06-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jsta/nhdR/blob/master/vignettes/demo.Rmd"><code>vignettes/demo.Rmd</code></a></small>
       <div class="hidden name"><code>demo.Rmd</code></div>
@@ -113,12 +113,13 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gull_meta</span>  <span class="op">&lt;-</span> <span class="fu">wikilake</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/wikilake/man/lake_wiki.html">lake_wiki</a></span><span class="op">(</span><span class="st">"Gull Lake (Michigan)"</span><span class="op">)</span>
 <span class="va">gull</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nhd_plus_query.html">nhd_plus_query</a></span><span class="op">(</span><span class="va">gull_meta</span><span class="op">$</span><span class="va">Lon</span>, <span class="va">gull_meta</span><span class="op">$</span><span class="va">Lat</span>,
-              dsn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"NHDWaterbody"</span>, <span class="st">"NHDFlowLine"</span><span class="op">)</span>, buffer_dist <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></code></pre></div>
+  dsn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"NHDWaterbody"</span>, <span class="st">"NHDFlowLine"</span><span class="op">)</span>, buffer_dist <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://r-spatial.github.io/sf/reference/plot.html">plot</a></span><span class="op">(</span><span class="va">gull</span><span class="op">$</span><span class="va">sp</span><span class="op">$</span><span class="va">NHDWaterbody</span><span class="op">$</span><span class="va">geometry</span>, col <span class="op">=</span> <span class="st">"blue"</span>, main <span class="op">=</span> <span class="st">"Gull Lake (Michigan)"</span><span class="op">)</span>
 <span class="fu"><a href="https://r-spatial.github.io/sf/reference/plot.html">plot</a></span><span class="op">(</span><span class="va">gull</span><span class="op">$</span><span class="va">sp</span><span class="op">$</span><span class="va">NHDFlowLine</span><span class="op">$</span><span class="va">geometry</span>, col <span class="op">=</span> <span class="st">"cyan"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://r-spatial.github.io/sf/reference/plot.html">plot</a></span><span class="op">(</span><span class="va">gull</span><span class="op">$</span><span class="va">pnt</span>, col <span class="op">=</span> <span class="st">"red"</span>, pch <span class="op">=</span> <span class="fl">19</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
 <p><img src="demo_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;"></p>
   </div>
 
@@ -131,7 +132,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Joseph Stachelek.</p>
+  <p>Developed by Jemma Stachelek.</p>
 </div>
 
 <div class="pkgdown">
