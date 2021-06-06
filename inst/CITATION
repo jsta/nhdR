@@ -2,7 +2,7 @@ citHeader("When citing nhdR, please cite both the package and underlying data so
 
 citEntry(entry = "Manual",
          author = personList(
-           as.person("Joseph Stachelek")),
+           as.person("Jemma Stachelek")),
          title = "Tools for working with the National Hydrography Dataset",
          year = "2019",
          url = "https://cran.r-project.org/package=nhdR",
