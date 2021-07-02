@@ -1,7 +1,7 @@
 ## Test environments
 
 * ubuntu 20 (on ghactions), R 4.1.0
-* win-builder (devel and release)
+* rhub (devel and release)
 
 ## R CMD check results
 
