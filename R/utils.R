@@ -213,6 +213,7 @@ is_gpkg_installed <- function() {
 #'
 #' @importFrom sf st_as_sfc
 #' @export
+#' @return An sfc object from the sf package
 #' @examples \dontrun{
 #' library(sf)
 #' wk <- wikilake::lake_wiki("Gull Lake (Michigan)")
@@ -334,4 +335,18 @@ align_names <- function(to, from) {
     }
   }
   res
+}
+
+# https://github.com/r-spatial/s2/issues/99#issuecomment-827776431
+make_valid_geom_s2 <- function(sf_object) {
+  sf_s2 <- s2::s2_rebuild(
+    s2::as_s2_geography(sf_object, check = FALSE),
+    options = s2::s2_options(
+      edge_type = "undirected", split_crossing_edges = TRUE, validate = TRUE
+    )
+  )
+  # all(s2::s2_is_valid(vpu_s2))
+
+  sf::st_geometry(sf_object) <- sf::st_as_sfc(sf_s2)
+  sf_object
 }

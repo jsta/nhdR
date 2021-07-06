@@ -1,5 +1,6 @@
 library(sf)
 library(rgdal)
+library(nhdR)
 
 # https://www.epa.gov/waterdata/nhdplus-global-data
 remote_path <- "https://s3.amazonaws.com/edap-nhdplus/NHDPlusV21/Data/GlobalData/NHDPlusV21_NHDPlusGlobalData_03.7z"
@@ -20,16 +21,6 @@ system(paste0("ogr2ogr -simplify 0.06 ", out_path, " ", file.path(temp_dir, "Bou
 
 vpu_shp <- sf::st_read(out_path)
 
-# https://github.com/r-spatial/s2/issues/99#issuecomment-827776431
-vpu_s2 <- s2::s2_rebuild(
-  s2::as_s2_geography(vpu_shp, check = FALSE),
-  options = s2::s2_options(
-    edge_type = "undirected", split_crossing_edges = TRUE, validate = TRUE
-  )
-)
-# all(s2::s2_is_valid(vpu_s2))
-
-st_geometry(vpu_shp) <- sf::st_as_sfc(vpu_s2)
-# all(s2::s2_is_valid(vpu_shp))
+vpu_shp <- make_valid_geom_s2(vpu_shp)
 
 usethis::use_data(vpu_shp, overwrite = TRUE)

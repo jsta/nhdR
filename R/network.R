@@ -76,7 +76,7 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
     pnt         <- st_sfc(st_point(c(lon, lat)))
     st_crs(pnt) <- st_crs(nhdR::vpu_shp)
     vpu         <- find_vpu(pnt)
-
+    
     poly <- nhd_plus_query(lon, lat, dsn = "NHDWaterbody",
       buffer_dist = buffer_dist,
       approve_all_dl = approve_all_dl, ...)$sp$NHDWaterbody
@@ -97,6 +97,8 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
     }
 
     poly <- poly[poly$FTYPE != "SwampMarsh", ]
+    poly <- poly[!(poly$GNIS_NAME %in% great_lakes()$GNIS_NAME), ]
+    poly <- make_valid_geom_s2(poly)
     poly <- poly[which.max(st_area(poly)), ] # find lake polygon
 
     if (nrow(poly) == 0) {
