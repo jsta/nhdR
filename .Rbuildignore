@@ -20,3 +20,4 @@ logo
 ^\.github$
 test_file
 test.R
+.vscode
