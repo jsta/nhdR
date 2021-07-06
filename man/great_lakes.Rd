@@ -9,6 +9,10 @@ great_lakes(spatial = FALSE)
 \arguments{
 \item{spatial}{logical, return Great Lakes polygons?}
 }
+\value{
+A data frame of North America Great Lakes with
+ optional geometry column
+}
 \description{
 Data and spatial polygons of the Great Lakes
 }

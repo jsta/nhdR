@@ -29,6 +29,9 @@ extract_network(
 
 \item{...}{parameters passed on to sf::st_read}
 }
+\value{
+An sf data frame with LINESTRING geometries
+}
 \description{
 Return nhd plus stream network upstream of a waterbody
 }
@@ -53,7 +56,7 @@ res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
 coords <- data.frame(lat = 20.79722, lon = -156.47833)
 # use a non-geographic (projected) buffer size
 res <- extract_network(coords$lon, coords$lat, maxsteps = 9,
-        buffer_dist = units::as_units(5, "km"))
+  buffer_dist = units::as_units(5, "km"))
 
 # use a projected buffer size
 res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
@@ -66,6 +69,5 @@ coords <- data.frame(lat = 42.96523, lon = -89.2527)
 res <- extract_network(coords$lon, coords$lat, maxsteps = 9)
 
 mapview(res)
-
 }
 }

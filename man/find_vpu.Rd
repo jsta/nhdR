@@ -9,6 +9,9 @@ find_vpu(pnt)
 \arguments{
 \item{pnt}{sf object}
 }
+\value{
+A character vector of vpu ids
+}
 \description{
 Find Vector Processing Unit from sf object
 }

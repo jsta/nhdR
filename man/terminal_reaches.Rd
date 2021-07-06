@@ -64,25 +64,25 @@ t_reach <- terminal_reaches(coords$lon, coords$lat)
 coords <- data.frame(lat = 20.79722, lon = -156.47833)
 # use a non-geographic (projected) buffer size
 t_reach <- terminal_reaches(coords$lon, coords$lat,
-        buffer_dist = units::as_units(5, "km"))
+  buffer_dist = units::as_units(5, "km"))
 
-coords  <- data.frame(lat = 42.96628 , lon = -89.25264)
+coords  <- data.frame(lat = 42.96628, lon = -89.25264)
 t_reach <- terminal_reaches(coords$lon, coords$lat)
 
 coords  <- data.frame(lat = 41.42217, lon = -73.24189)
 t_reach <- terminal_reaches(coords$lon, coords$lat)
 
 mapview(st_as_sf(coords, coords = c("lon", "lat"), crs = 4326)) +
-mapview(t_reach$geometry, color = "red")
+  mapview(t_reach$geometry, color = "red")
 
 coords <- data.frame(lat = 41.859080, lon = -71.575422)
 network <- nhd_plus_query(lon = coords$lon, lat = coords$lat,
-                     dsn = "NHDFlowline", buffer_dist = 0.05)$sp$NHDFlowline
+  dsn = "NHDFlowline", buffer_dist = 0.05)$sp$NHDFlowline
 t_reach      <- terminal_reaches(network = network)
 t_reach_lake <- terminal_reaches(network = network, lakewise = TRUE,
-                                 lakesize_threshold = 1)
+  lakesize_threshold = 1)
 
 mapview(network) + mapview(t_reach_lake, color = "green") +
-    mapview(t_reach, color = "red")
+  mapview(t_reach, color = "red")
 }
 }

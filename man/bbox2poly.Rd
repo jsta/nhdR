@@ -9,6 +9,9 @@ bbox2poly(bbox)
 \arguments{
 \item{bbox}{object of class bbox from sf}
 }
+\value{
+An sfc object from the sf package
+}
 \description{
 Convert a bounding box to polygon
 }
