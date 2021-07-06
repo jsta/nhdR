@@ -101,6 +101,7 @@ is_spatial <- function(filename) {
 #' @importFrom sf st_transform st_crs st_join st_distance
 #' @importFrom dplyr select
 #' @export
+#' @return A character vector of vpu ids
 #'
 #' @examples \dontrun{
 #' library(sf)
@@ -270,6 +271,8 @@ albers_conic <- function() {
 #' @importFrom sf st_as_sf
 #' @export
 #' @param spatial logical, return Great Lakes polygons?
+#' @return A data frame of North America Great Lakes with
+#'  optional geometry column
 #' @examples
 #' gl <- great_lakes()
 #' \dontrun{

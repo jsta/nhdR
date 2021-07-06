@@ -76,7 +76,7 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
     pnt         <- st_sfc(st_point(c(lon, lat)))
     st_crs(pnt) <- st_crs(nhdR::vpu_shp)
     vpu         <- find_vpu(pnt)
-    
+
     poly <- nhd_plus_query(lon, lat, dsn = "NHDWaterbody",
       buffer_dist = buffer_dist,
       approve_all_dl = approve_all_dl, ...)$sp$NHDWaterbody
@@ -256,6 +256,7 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
 #' @param lines sf spatial lines object to limit the extent of the network search
 #' @param ... parameters passed on to sf::st_read
 #'
+#' @return An sf data frame with LINESTRING geometries
 #' @export
 #'
 #' @examples \dontrun{
