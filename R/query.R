@@ -18,56 +18,56 @@
 #'
 #' # set a non-geographic (projected) buffer size
 #' qry <- nhd_plus_query(wk$Lon, wk$Lat,
-#'         dsn = c("NHDWaterbody", "NHDFlowLine"),
-#'         buffer_dist = units::as_units(5, "km"))
+#'   dsn = c("NHDWaterbody", "NHDFlowLine"),
+#'   buffer_dist = units::as_units(5, "km"))
 #'
 #' qry <- nhd_plus_query(wk$Lon, wk$Lat,
-#'          dsn = c("NHDWaterbody", "NHDFlowLine"), buffer_dist = 0.05)
+#'   dsn = c("NHDWaterbody", "NHDFlowLine"), buffer_dist = 0.05)
 #'
 #' plot(qry$sp$NHDWaterbody$geometry, col = "blue")
 #' plot(qry$sp$NHDFlowLine$geometry, col = "cyan", add = TRUE)
 #' plot(qry$pnt, col = "red", pch = 19, add = TRUE)
-#' axis(1); axis(2)
+#' axis(1)
+#' axis(2)
 #'
 #' library(ggplot2)
 #' ggplot(qry$sp$NHDWaterbody) + geom_sf()
 #'
 #' # query with a polygon
-#' wbd <- qry$sp$NHDWaterbody[which.max(st_area(qry$sp$NHDWaterbody)),]
+#' wbd <- qry$sp$NHDWaterbody[which.max(st_area(qry$sp$NHDWaterbody)), ]
 #' qry_lines <- nhd_plus_query(poly = st_as_sfc(st_bbox(wbd)),
-#'                             dsn = "NHDFlowLine")
+#'   dsn = "NHDFlowLine")
 #' ggplot() +
 #'   geom_sf(data = qry$sp$NHDWaterbody) +
 #'   geom_sf(data = qry_lines$sp$NHDFlowLine, color = "red")
 #' }
-
 nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
                            dsn, buffer_dist = 0.05, approve_all_dl = FALSE,
-                           ...){
+                           ...) {
 
-  if(!interactive()){
-    approve_all_dl = TRUE
+  if (!interactive()) {
+    approve_all_dl <- TRUE
   }
 
-  if(all(!is.na(c(lon, lat, poly)))){
+  if (all(!is.na(c(lon, lat, poly)))) {
     stop("Must specify either lon and lat or poly but not both.")
   }
 
   # ! in default buffer size for query or extract
-  if(all(!is.na(poly)) & !(buffer_dist %in% c(0.01, 0.05))){
+  if (all(!is.na(poly)) & !(buffer_dist %in% c(0.01, 0.05))) {
     stop("Passing a polygon object returns only polygon-intersecting lines and disregards any buffer_dist setting.")
   }
 
-  if(length(lon) > 1 | length(lat) > 1){
+  if (length(lon) > 1 | length(lat) > 1) {
     stop("nhd_plus_query only accepts a single lon-lat pair.")
   }
 
   crs_code <- 4326
-  if(inherits(buffer_dist, "units")){
+  if (inherits(buffer_dist, "units")) {
     crs_code <- st_crs(albers_conic())
   }
 
-  if(all(!is.na(c(lon, lat)))){
+  if (all(!is.na(c(lon, lat)))) {
     pnt         <- st_sfc(st_point(c(lon, lat)))
     st_crs(pnt) <- 4326
     vpu         <- find_vpu(
@@ -86,16 +86,16 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
     pnt      <- sf::st_transform(pnt, crs = crs)
     pnt_buff <- sf::st_transform(pnt_buff, crs = crs)
     crs_dsn  <- sf::st_crs(
-        nhd_plus_load_vpu(vpu[[1]], component = "NHDSnapshot",
-                          force_dl = FALSE,
-                          dsn = dsn, pretty = FALSE,
-                          quiet = TRUE, wkt_filter = NA,
-                          approve_all_dl = TRUE,
-                          query = paste0("SELECT * from ", dsn, " LIMIT 1"))$res
-      )
+      nhd_plus_load_vpu(vpu[[1]], component = "NHDSnapshot",
+        force_dl = FALSE,
+        dsn = dsn, pretty = FALSE,
+        quiet = TRUE, wkt_filter = NA,
+        approve_all_dl = TRUE,
+        query = paste0("SELECT * from ", dsn, " LIMIT 1"))$res
+    )
 
     wkt_filter <- sf::st_as_text(sf::st_transform(sf::st_geometry(pnt_buff), crs_dsn))
-  }else{
+  } else {
     poly <- st_transform(poly, st_crs(nhdR::vpu_shp))
     vpu  <- find_vpu(poly)
 
@@ -106,25 +106,25 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
     poly      <- st_transform(poly, crs = crs)
     crs_dsn  <- sf::st_crs(
       nhd_plus_load_vpu(vpu[[1]], component = "NHDSnapshot",
-                        force_dl = FALSE,
-                        dsn = dsn, pretty = FALSE,
-                        quiet = TRUE, wkt_filter = NA,
-                        approve_all_dl = approve_all_dl,
-                        query = paste0("SELECT * from ", dsn, " LIMIT 1"))$res
+        force_dl = FALSE,
+        dsn = dsn, pretty = FALSE,
+        quiet = TRUE, wkt_filter = NA,
+        approve_all_dl = approve_all_dl,
+        query = paste0("SELECT * from ", dsn, " LIMIT 1"))$res
     )
     wkt_filter <- sf::st_as_text(sf::st_transform(sf::st_geometry(poly), crs_dsn))
   }
 
   sp_sub <- lapply(dsn, function(x) nhd_plus_load(vpu = vpu, dsn = x,
-                                                  approve_all_dl = approve_all_dl,
-                                                  wkt_filter = wkt_filter,
-                                                  ...))
+    approve_all_dl = approve_all_dl,
+    wkt_filter = wkt_filter,
+    ...))
   names(sp_sub) <- dsn
 
-  if(any(unlist(lapply(sp_sub, function(r) length(r$res))) > 0)){
-    if(all(class(sp_sub) == "list")){
+  if (any(unlist(lapply(sp_sub, function(r) length(r$res))) > 0)) {
+    if (all(class(sp_sub) == "list")) {
       sp_sub <- lapply(sp_sub, function(x) sf::st_transform(x, crs))
-    }else{
+    } else {
       sp_sub <- sf::st_transform(sp_sub, crs)
     }
   }
@@ -147,10 +147,10 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
 #' plot(sf::st_geometry(qry$sp$NHDWaterbody), col = "blue")
 #' plot(sf::st_geometry(qry$sp$NHDFlowline), col = "cyan", add = TRUE)
 #' plot(qry$pnt, col = "red", pch = 19, add = TRUE)
-#' axis(1); axis(2)
+#' axis(1)
+#' axis(2)
 #' }
-
-nhd_query <- function(lon, lat, dsn, buffer_dist = 0.05){
+nhd_query <- function(lon, lat, dsn, buffer_dist = 0.05) {
 
   pnt         <- st_sfc(st_point(c(lon, lat)))
   st_crs(pnt) <- st_crs(nhdR::vpu_shp)
@@ -179,13 +179,12 @@ nhd_query <- function(lon, lat, dsn, buffer_dist = 0.05){
 #' pnt <- sf::st_sfc(sf::st_point(c(wk$Lon, wk$Lat)))
 #' sf::st_crs(pnt) <- 4326
 #' sp <- lapply(c("NHDWaterbody", "NHDFlowLine"),
-#'           function(x) nhd_plus_load(vpu = 4, dsn = x))
+#'   function(x) nhd_plus_load(vpu = 4, dsn = x))
 #' names(sp) <- c("NHDWaterbody", "NHDFlowLine")
 #' qry <- select_point_overlay(pnt = pnt, sp = sp, buffer_dist = 0.05)
 #' plot(qry$NHDWaterbody$geometry)
-#'
-#'}
-select_point_overlay <- function(pnt, sp, buffer_dist = 0.05){
+#' }
+select_point_overlay <- function(pnt, sp, buffer_dist = 0.05) {
 
   pnt_buff  <- sf::st_sfc(sf::st_buffer(pnt, dist = buffer_dist))
   sf::st_crs(pnt_buff) <- sf::st_crs(pnt) # <- sf::st_crs(nhdR::vpu_shp)
@@ -198,22 +197,22 @@ select_point_overlay <- function(pnt, sp, buffer_dist = 0.05){
   pnt      <- sf::st_transform(pnt, crs = crs)
   pnt_buff <- sf::st_transform(pnt_buff, crs = crs)
 
-  if(all(class(sp) == "list")){
+  if (all(class(sp) == "list")) {
     sp    <- lapply(sp, function(x) sf::st_transform(x, crs = crs))
 
     sp_intersecting <- lapply(sp,
-                              function(x) unlist(lapply(
-                                sf::st_intersects(x, pnt_buff), length)) > 0)
+      function(x) unlist(lapply(
+        sf::st_intersects(x, pnt_buff), length)) > 0)
 
     sp_sub <- lapply(seq_len(length(sp_intersecting)),
-                     function(x) sp[[x]][sp_intersecting[[x]],])
+      function(x) sp[[x]][sp_intersecting[[x]], ])
     names(sp_sub) <- names(sp)
-  }else{
+  } else {
     sp <- sf::st_transform(sp, crs = crs)
     sp_intersecting <- unlist(lapply(
-                          sf::st_intersects(sp, pnt_buff), length)) > 0
+      sf::st_intersects(sp, pnt_buff), length)) > 0
 
-    sp_sub <- sp[sp_intersecting,]
+    sp_sub <- sp[sp_intersecting, ]
   }
 
   sp_sub
@@ -227,7 +226,7 @@ select_point_overlay <- function(pnt, sp, buffer_dist = 0.05){
 #' @importFrom sf st_crs st_coordinates st_transform st_intersects
 #' @export
 #'
-select_poly_overlay <- function(poly, sp){
+select_poly_overlay <- function(poly, sp) {
 
   utm_zone  <- long2UTM(
     sf::st_coordinates(
@@ -235,22 +234,22 @@ select_poly_overlay <- function(poly, sp){
   crs       <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
   poly      <- st_transform(poly, crs = crs)
 
-  if(all(class(sp) == "list")){
+  if (all(class(sp) == "list")) {
     sp    <- lapply(sp, function(x) sf::st_transform(x, crs = crs))
 
     sp_intersecting <- lapply(sp,
-                              function(x) unlist(lapply(
-                                sf::st_intersects(x, poly), length)) > 0)
+      function(x) unlist(lapply(
+        sf::st_intersects(x, poly), length)) > 0)
 
     sp_sub <- lapply(seq_len(length(sp_intersecting)),
-                     function(x) sp[[x]][sp_intersecting[[x]],])
+      function(x) sp[[x]][sp_intersecting[[x]], ])
     names(sp_sub) <- names(sp)
-  }else{
+  } else {
     sp <- sf::st_transform(sp, crs = crs)
     sp_intersecting <- unlist(lapply(
       sf::st_intersects(sp, poly), length)) > 0
 
-    sp_sub <- sp[sp_intersecting,]
+    sp_sub <- sp[sp_intersecting, ]
   }
 
   sp_sub
