@@ -1,8 +1,23 @@
-nhd_path <- function() {
-  path <- file.path(rappdirs::user_data_dir(appname = "nhdR",
-    appauthor = "nhdR"))
-  dir.create(path, showWarnings = FALSE, recursive = TRUE)
-  path
+nhd_path <- function(temporary = TRUE) {
+  if (nchar(Sys.getenv("nhdR_path")) != 0) {
+    path <- Sys.getenv("nhdR_path")
+    return(path)
+  }
+
+  if (temporary) {
+    warning(
+      "Recommended: set the 'temporary' argument to FALSE to save data to a
+      persistent rappdirs location.")
+    path <- tempdir()
+    Sys.setenv(nhdR_path = path)
+    return(path)
+  } else {
+    path <- file.path(rappdirs::user_data_dir(appname = "nhdR",
+      appauthor = "nhdR"))
+    dir.create(path, showWarnings = FALSE, recursive = TRUE)
+    Sys.setenv(nhdR_path = path)
+    return(path)
+  }
 }
 
 gdb_path <- function(state) {

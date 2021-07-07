@@ -23,6 +23,13 @@ Tools for querying, downloading, and networking both the [National Hydrography D
 
 ## Installation
 
+CRAN policy is that no package can write to a persistent location by default. As a result, all data is written to a temporary location unless a `temporary = FALSE` argument is passed to the `nhd_plus_get` or `nhd_get` functions. It is recommended to add the following line to your `.Rprofile` to obviate the need for setting the `temporary` argument.
+
+```r
+Sys.setenv(nhdR_path = file.path(rappdirs::user_data_dir(appname = "nhdR",
+      appauthor = "nhdR")))
+```
+
 ### Stable version from CRAN
 
 ```{r, eval=FALSE}

@@ -9,7 +9,7 @@
 #' nhd_get(state = c("DC"))
 #' nhd_get(state = c("RI", "CT"))
 #' }
-nhd_get <- function(state = NA, force_dl = FALSE, force_unzip = FALSE) {
+nhd_get <- function(state = NA, force_dl = FALSE, force_unzip = FALSE, temporary = TRUE) {
 
   baseurl <- paste0("https://prd-tnm.s3.amazonaws.com/StagedProducts/Hydrography/NHD/State/HighResolution/")
 
@@ -21,14 +21,14 @@ nhd_get <- function(state = NA, force_dl = FALSE, force_unzip = FALSE) {
     }
 
     # state <- "DC"
-    state_name      <- stateabb2name(state)
+    state_name <- stateabb2name(state)
     remotepath <- get_remotepath(state_name, baseurl)
     url        <- remotepath$url
     filename   <- remotepath$filename
     destfile   <- file.path(nhd_path(), filename)
 
     get_if_not_exists(url, destfile, force_dl = force_dl)
-    unzip(destfile, exdir = nhd_path())
+    unzip(destfile, exdir = nhd_path(temporary))
 
     # if(is_gpkg_installed()){
     #   compile_gpkg(state)
@@ -44,6 +44,8 @@ nhd_get <- function(state = NA, force_dl = FALSE, force_unzip = FALSE) {
 #' @param component character component name
 #' @param force_dl logical force a re-download of the requested data
 #' @param force_unzip logical force an unzip of downloaded data
+#' @param temporary logical set FALSE to save data to a persistent
+#'  rappdirs location
 #' @export
 #' @importFrom utils unzip
 #' @importFrom rvest html_nodes html_attrs
@@ -59,7 +61,7 @@ nhd_get <- function(state = NA, force_dl = FALSE, force_unzip = FALSE) {
 #' nhd_plus_get(vpu = 4, component = "EROMExtension")
 #' }
 nhd_plus_get <- function(vpu = NA, component = "NHDSnapshot", force_dl = FALSE,
-                         force_unzip = FALSE) {
+                         force_unzip = FALSE, temporary = TRUE) {
 
   if (!curl::has_internet()) {
     stop("This function requires internet access.")
@@ -80,7 +82,7 @@ nhd_plus_get <- function(vpu = NA, component = "NHDSnapshot", force_dl = FALSE,
 
   url <- get_plus_remotepath(vpu, component = component)
 
-  destdir <- file.path(nhd_path(), "NHDPlus")
+  destdir <- file.path(nhd_path(temporary), "NHDPlus")
   destsubdir <- file.path(destdir, paste(
     strsplit(basename(url), "_")[[1]][2:4], collapse = "_"))
 
