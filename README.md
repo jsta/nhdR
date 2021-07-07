@@ -22,12 +22,14 @@ CRAN policy is that no package can write to a persistent location by
 default. As a result, all data is written to a temporary location unless
 a `temporary = FALSE` argument is passed to the `nhd_plus_get` or
 `nhd_get` functions. It is recommended to add the following line to your
-`.Rprofile` to obviate the need for setting the `temporary` argument.
+`.Rprofile` to obviate the need for setting the `temporary` argument:
 
 ``` r
 Sys.setenv(nhdR_path = file.path(rappdirs::user_data_dir(appname = "nhdR",
       appauthor = "nhdR")))
 ```
+
+This can be done with the `usethis::edit_r_profile()` function.
 
 ### Stable version from CRAN
 

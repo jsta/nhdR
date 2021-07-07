@@ -23,12 +23,14 @@ Tools for querying, downloading, and networking both the [National Hydrography D
 
 ## Installation
 
-CRAN policy is that no package can write to a persistent location by default. As a result, all data is written to a temporary location unless a `temporary = FALSE` argument is passed to the `nhd_plus_get` or `nhd_get` functions. It is recommended to add the following line to your `.Rprofile` to obviate the need for setting the `temporary` argument.
+CRAN policy is that no package can write to a persistent location by default. As a result, all data is written to a temporary location unless a `temporary = FALSE` argument is passed to the `nhd_plus_get` or `nhd_get` functions. It is recommended to add the following line to your `.Rprofile` to obviate the need for setting the `temporary` argument:
 
 ```r
 Sys.setenv(nhdR_path = file.path(rappdirs::user_data_dir(appname = "nhdR",
       appauthor = "nhdR")))
 ```
+
+ This can be done with the `usethis::edit_r_profile()` function.
 
 ### Stable version from CRAN
 
@@ -60,22 +62,22 @@ NHD-Plus exports are organized by vector processing unit (vpu). See below for a 
 library(ggplot2)
 library(stringr)
 
-dt <- nhdR::vpu_shp#[,"UnitID"]
-dt <- dt[dt$UnitType == "VPU",]
+dt <- nhdR::vpu_shp # [,"UnitID"]
+dt <- dt[dt$UnitType == "VPU", ]
 
-centroid_xy <- sf::st_as_text(sf::st_geometry(sf::st_centroid(dt[,"UnitID"])))
-extract_coords <- function(messy_centroid){
+centroid_xy <- sf::st_as_text(sf::st_geometry(sf::st_centroid(dt[, "UnitID"])))
+extract_coords <- function(messy_centroid) {
   res <- stringr::str_split(messy_centroid, "\\(", simplify = TRUE)[2]
   res <- stringr::str_split(res, "\\)", simplify = TRUE)[1]
   stringr::str_split(res, " ", simplify = TRUE)
 }
 
 coords <- data.frame(matrix(
-            as.numeric(unlist(lapply(centroid_xy, extract_coords))),
-            ncol = 2, byrow = TRUE), stringsAsFactors = FALSE)
+  as.numeric(unlist(lapply(centroid_xy, extract_coords))),
+  ncol = 2, byrow = TRUE), stringsAsFactors = FALSE)
 names(coords) <- c("x", "y")
 coords$x <- coords$x * -1
-coords$UnitID <- dt[,"UnitID"]$UnitID
+coords$UnitID <- dt[, "UnitID"]$UnitID
 
 ggplot(dt) +
   geom_sf(aes(fill = UnitID), show.legend = FALSE) +
