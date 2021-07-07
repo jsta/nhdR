@@ -150,7 +150,8 @@
   vpu <span class='op'>=</span> <span class='cn'>NA</span>,
   component <span class='op'>=</span> <span class='st'>"NHDSnapshot"</span>,
   force_dl <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  force_unzip <span class='op'>=</span> <span class='cn'>FALSE</span>
+  force_unzip <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  temporary <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -172,8 +173,16 @@
       <th>force_unzip</th>
       <td><p>logical force an unzip of downloaded data</p></td>
     </tr>
+    <tr>
+      <th>temporary</th>
+      <td><p>logical set FALSE to save data to a persistent
+rappdirs location</p></td>
+    </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>An invisible list of file paths to NHDplus data for the specified vpu</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
