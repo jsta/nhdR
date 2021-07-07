@@ -8,7 +8,8 @@ nhd_plus_get(
   vpu = NA,
   component = "NHDSnapshot",
   force_dl = FALSE,
-  force_unzip = FALSE
+  force_unzip = FALSE,
+  temporary = TRUE
 )
 }
 \arguments{
@@ -19,6 +20,12 @@ nhd_plus_get(
 \item{force_dl}{logical force a re-download of the requested data}
 
 \item{force_unzip}{logical force an unzip of downloaded data}
+
+\item{temporary}{logical set FALSE to save data to a persistent
+rappdirs location}
+}
+\value{
+An invisible list of file paths to NHDplus data for the specified vpu
 }
 \description{
 Download and cache NHDplus data by vector processing unit

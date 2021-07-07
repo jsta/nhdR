@@ -4,7 +4,7 @@
 \alias{nhd_get}
 \title{Download and cache NHD data by state}
 \usage{
-nhd_get(state = NA, force_dl = FALSE, force_unzip = FALSE)
+nhd_get(state = NA, force_dl = FALSE, force_unzip = FALSE, temporary = TRUE)
 }
 \arguments{
 \item{state}{character state abbreviation includes "DC", "PR", and "VI"}
@@ -12,6 +12,12 @@ nhd_get(state = NA, force_dl = FALSE, force_unzip = FALSE)
 \item{force_dl}{logical force a re-download of the requested data}
 
 \item{force_unzip}{logical force an unzip of downloaded data}
+
+\item{temporary}{logical set FALSE to save data to a persistent
+rappdirs location}
+}
+\value{
+An invisible list of file paths to NHD data for the specified state
 }
 \description{
 Download and cache NHD data by state
