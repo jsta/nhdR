@@ -36,6 +36,9 @@ in the stream network rather than a single terminal reach of the focal lake.}
 
 \item{...}{parameters passed on to sf::st_read}
 }
+\value{
+An sf data frame with LINESTRING geometries
+}
 \description{
 In the case of a network query, a terminal reach is a stream flowline that
 has no downstream reaches in-network. In the case of a point query, a

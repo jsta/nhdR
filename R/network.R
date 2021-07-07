@@ -26,6 +26,7 @@
 #' @param lakesize_threshold numeric above which to count as a lake (ha).
 #' @param approve_all_dl logical blanket approval to download all missing data. Defaults to TRUE if session is non-interactive.
 #' @param ... parameters passed on to sf::st_read
+#' @return An sf data frame with LINESTRING geometries
 #'
 #' @export
 #' @importFrom sf st_area st_centroid st_union st_crs st_sfc st_point st_crs<- st_cast st_convex_hull
@@ -175,7 +176,7 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
 #' not in the focal set.
 #'
 #' @inheritParams terminal_reaches
-#'
+#' @return An sf data frame with LINESTRING geometries
 #' @export
 #' @importFrom sf st_area st_centroid st_union
 #' @importFrom rlang .data

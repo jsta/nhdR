@@ -16,6 +16,9 @@ nhd_plus_info(vpu, component, dsn, file_ext = NA)
 \item{file_ext}{character choice of "shp" for spatial data and
 "dbf" for non-spatial. optional}
 }
+\value{
+An ogrinfo object from the sf package
+}
 \description{
 Return NHDplus layer metadata and field listing
 }

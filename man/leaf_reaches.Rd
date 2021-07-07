@@ -17,6 +17,9 @@ leaf_reaches(lon = NA, lat = NA, network = NA, approve_all_dl = FALSE, ...)
 
 \item{...}{parameters passed on to sf::st_read}
 }
+\value{
+An sf data frame with LINESTRING geometries
+}
 \description{
 A leaf reach is a stream flowline that has upstream connections but is
 not in the focal set.

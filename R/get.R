@@ -2,6 +2,7 @@
 #'
 #' @param state character state abbreviation includes "DC", "PR", and "VI"
 #' @inheritParams nhd_plus_get
+#' @return An invisible list of file paths to NHD data for the specified state
 #' @export
 #' @importFrom utils unzip
 #' @import maps
@@ -46,6 +47,7 @@ nhd_get <- function(state = NA, force_dl = FALSE, force_unzip = FALSE, temporary
 #' @param force_unzip logical force an unzip of downloaded data
 #' @param temporary logical set FALSE to save data to a persistent
 #'  rappdirs location
+#' @return An invisible list of file paths to NHDplus data for the specified vpu
 #' @export
 #' @importFrom utils unzip
 #' @importFrom rvest html_nodes html_attrs
