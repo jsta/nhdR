@@ -21,6 +21,6 @@ system(paste0("ogr2ogr -simplify 0.06 ", out_path, " ", file.path(temp_dir, "Bou
 
 vpu_shp <- sf::st_read(out_path)
 
-vpu_shp <- make_valid_geom_s2(vpu_shp)
+vpu_shp <- nhdR:::make_valid_geom_s2(vpu_shp)
 
 usethis::use_data(vpu_shp, overwrite = TRUE)
