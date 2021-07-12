@@ -7,16 +7,16 @@ test_that("nhd_plus_query handles vpu boundaries well", {
 
   coords <- data.frame(nhd_long = -89.21884, nhd_lat = 46.2052)
   lines  <- nhdR::nhd_plus_query(lat = coords$nhd_lat,
-                                           lon = coords$nhd_long,
-                                           dsn = "NHDFlowLine",
-                                           buffer_dist = 0.1,
-                                           quiet = TRUE)$sp$NHDFlowLine
+    lon = coords$nhd_long,
+    dsn = "NHDFlowLine",
+    buffer_dist = 0.1,
+    quiet = TRUE)$sp$NHDFlowLine
 
   # expect lines intersect multiple vpus
   expect_equal(nrow(dplyr::filter(vpu_shp[
     sapply(st_intersects(vpu_shp,
-                         st_transform(lines, st_crs(vpu_shp))),
-           function(x) length(x) > 0),], UnitType == "VPU")), 2)
+      st_transform(lines, st_crs(vpu_shp))),
+    function(x) length(x) > 0), ], UnitType == "VPU")), 2)
 
 })
 
@@ -25,20 +25,20 @@ test_that("nhd_plus_query fails well", {
   skip_on_ci()
 
   coords <- data.frame(lat = c(20.79722, 42.96523),
-                       lon = c(-156.47833, -89.2527))
+    lon = c(-156.47833, -89.2527))
   expect_error(
     nhdR::nhd_plus_query(lat = coords$lat,
-                         lon = coords$lon,
-                         dsn = "NHDFlowLine",
-                         buffer_dist = 0.1),
+      lon = coords$lon,
+      dsn = "NHDFlowLine",
+      buffer_dist = 0.1),
     "nhd_plus_query only accepts a single lon-lat pair.")
 
 
   # query will produce a zero row sf object when appropriate
   coords <- data.frame(lat = c(42.04133),
-                       lon = c(-71.70511))
+    lon = c(-71.70511))
   poly <- nhd_plus_query(coords$lon, coords$lat, dsn = "NHDWaterbody",
-                         buffer_dist = units::as_units(1, "km"))
+    buffer_dist = units::as_units(1, "km"))
   expect_equal(nrow(poly$sp$NHDWaterbody), 0)
 })
 
@@ -49,13 +49,13 @@ test_that("nhd_plus_query handles mismatched column names.", {
 
   # https://github.com/jsta/nhdR/issues/57
   box <- sf::st_bbox(c(xmin = -105.93003, xmax = -104.91784,
-                   ymin = 40.41176, ymax = 41.21014),
-                crs = st_crs(4326)) %>%
+    ymin = 40.41176, ymax = 41.21014),
+  crs = st_crs(4326)) %>%
     sf::st_as_sfc()
   poudre_flow <- nhd_plus_query(poly = box,
-                                dsn = c('NHDFlowLine'),
-                                quiet = TRUE,
-                                approve_all_dl = TRUE)
+    dsn = c("NHDFlowLine"),
+    quiet = TRUE,
+    approve_all_dl = TRUE)
 
   expect_s3_class(poudre_flow$sp$NHDFlowLine, "sf")
 })
