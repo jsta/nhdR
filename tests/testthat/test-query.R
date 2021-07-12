@@ -59,3 +59,13 @@ test_that("nhd_plus_query handles mismatched column names.", {
 
   expect_s3_class(poudre_flow$sp$NHDFlowLine, "sf")
 })
+
+test_that("nhd_query works.", {
+  skip("This test is very long-running. Probably only suitable for manual execution.")
+  skip_on_cran()
+  skip_on_ci()
+
+  wk <- wikilake::lake_wiki("Worden Pond")
+  qry <- nhd_query(wk$Lon, wk$Lat, dsn = c("NHDWaterbody", "NHDFlowline"))
+  testthat::expect_s3_class(qry$sp$NHDWaterbody, "data.frame")
+})

@@ -150,6 +150,7 @@ find_vpu <- function(pnt) {
 find_state <- function(pnt) {
   state_data_sf <- sf::st_as_sf(map("state", plot = FALSE, fill = TRUE))
   res <- sf::st_transform(state_data_sf, sf::st_crs(pnt))
+  res <- make_valid_geom_s2(res)
 
   res_intersects <- sf::st_intersects(res, pnt)
 
