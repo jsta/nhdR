@@ -107,11 +107,11 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>CRAN policy is that no package can write to a persistent location by default. As a result, <code>nhdR</code> writes all data to a temporary location unless a <code>temporary = FALSE</code> argument is passed to the <code>nhd_plus_get</code>/<code>nhd_get</code> functions. Alternatively, <code>nhdR</code> will automatically write data to a persistent location if the <code>nhdR_path</code> environment variable is set. To do this, add the following line to your <code>.Rprofile</code>:</p>
+<p>CRAN policy is that no package can write to a persistent location by default. As a result, all data is written to a temporary location unless a <code>temporary = FALSE</code> argument is passed to the <code>nhd_plus_get</code> or <code>nhd_get</code> functions. It is recommended to add the following line to your <code>.Rprofile</code> to obviate the need for setting the <code>temporary</code> argument:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html">Sys.setenv</a></span><span class="op">(</span>nhdR_path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">rappdirs</span><span class="fu">::</span><span class="fu"><a href="https://rappdirs.r-lib.org/reference/user_data_dir.html">user_data_dir</a></span><span class="op">(</span>appname <span class="op">=</span> <span class="st">"nhdR"</span>,
       appauthor <span class="op">=</span> <span class="st">"nhdR"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>Your <code>.Rprofile</code> file can be edited using the <code><a href="https://usethis.r-lib.org/reference/edit.html">usethis::edit_r_profile()</a></code> function.</p>
+<p>This can be done with the <code><a href="https://usethis.r-lib.org/reference/edit.html">usethis::edit_r_profile()</a></code> function.</p>
 <div id="stable-version-from-cran" class="section level3">
 <h3 class="hasAnchor">
 <a href="#stable-version-from-cran" class="anchor"></a>Stable version from CRAN</h3>
