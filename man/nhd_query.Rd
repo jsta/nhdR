@@ -26,6 +26,7 @@ qry <- nhd_query(wk$Lon, wk$Lat, dsn = c("NHDWaterbody", "NHDFlowline"))
 plot(sf::st_geometry(qry$sp$NHDWaterbody), col = "blue")
 plot(sf::st_geometry(qry$sp$NHDFlowline), col = "cyan", add = TRUE)
 plot(qry$pnt, col = "red", pch = 19, add = TRUE)
-axis(1); axis(2)
+axis(1)
+axis(2)
 }
 }

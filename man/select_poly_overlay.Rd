@@ -11,6 +11,9 @@ select_poly_overlay(poly, sp)
 
 \item{sp}{list of sf data frames}
 }
+\value{
+A list of sf spatial objects
+}
 \description{
 Select features clipped by a polygon
 }

@@ -29,6 +29,9 @@ nhd_plus_query(
 
 \item{...}{parameters passed on to sf::st_read}
 }
+\value{
+A list of sf spatial objects
+}
 \description{
 Select NHDplus features via polygon or circular buffer of coordinate pair
 }
@@ -43,24 +46,25 @@ pnt <- st_transform(pnt, st_crs(vpu_shp))
 
 # set a non-geographic (projected) buffer size
 qry <- nhd_plus_query(wk$Lon, wk$Lat,
-        dsn = c("NHDWaterbody", "NHDFlowLine"),
-        buffer_dist = units::as_units(5, "km"))
+  dsn = c("NHDWaterbody", "NHDFlowLine"),
+  buffer_dist = units::as_units(5, "km"))
 
 qry <- nhd_plus_query(wk$Lon, wk$Lat,
-         dsn = c("NHDWaterbody", "NHDFlowLine"), buffer_dist = 0.05)
+  dsn = c("NHDWaterbody", "NHDFlowLine"), buffer_dist = 0.05)
 
 plot(qry$sp$NHDWaterbody$geometry, col = "blue")
 plot(qry$sp$NHDFlowLine$geometry, col = "cyan", add = TRUE)
 plot(qry$pnt, col = "red", pch = 19, add = TRUE)
-axis(1); axis(2)
+axis(1)
+axis(2)
 
 library(ggplot2)
 ggplot(qry$sp$NHDWaterbody) + geom_sf()
 
 # query with a polygon
-wbd <- qry$sp$NHDWaterbody[which.max(st_area(qry$sp$NHDWaterbody)),]
+wbd <- qry$sp$NHDWaterbody[which.max(st_area(qry$sp$NHDWaterbody)), ]
 qry_lines <- nhd_plus_query(poly = st_as_sfc(st_bbox(wbd)),
-                            dsn = "NHDFlowLine")
+  dsn = "NHDFlowLine")
 ggplot() +
   geom_sf(data = qry$sp$NHDWaterbody) +
   geom_sf(data = qry_lines$sp$NHDFlowLine, color = "red")

@@ -9,6 +9,9 @@ toUTM(sf_object)
 \arguments{
 \item{sf_object}{an sf object}
 }
+\value{
+A transformed sf object
+}
 \description{
 Re-project to appropriate UTM zone
 }

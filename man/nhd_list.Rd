@@ -9,6 +9,9 @@ nhd_list(state)
 \arguments{
 \item{state}{character state abbreviation}
 }
+\value{
+A character vector of NHD layers for the specified state
+}
 \description{
 List available locally cached NHD layers per state
 }

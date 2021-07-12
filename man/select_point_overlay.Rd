@@ -13,6 +13,9 @@ select_point_overlay(pnt, sp, buffer_dist = 0.05)
 
 \item{buffer_dist}{numeric buffer in units of coordinate degrees}
 }
+\value{
+A list of sf spatial objects
+}
 \description{
 Select features clipped by a point buffer around a point
 }
@@ -22,10 +25,9 @@ wk <- wikilake::lake_wiki("Gull Lake (Michigan)")
 pnt <- sf::st_sfc(sf::st_point(c(wk$Lon, wk$Lat)))
 sf::st_crs(pnt) <- 4326
 sp <- lapply(c("NHDWaterbody", "NHDFlowLine"),
-          function(x) nhd_plus_load(vpu = 4, dsn = x))
+  function(x) nhd_plus_load(vpu = 4, dsn = x))
 names(sp) <- c("NHDWaterbody", "NHDFlowLine")
 qry <- select_point_overlay(pnt = pnt, sp = sp, buffer_dist = 0.05)
 plot(qry$NHDWaterbody$geometry)
-
 }
 }

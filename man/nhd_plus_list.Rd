@@ -16,6 +16,9 @@ nhd_plus_list(vpu, component = "NHDSnapshot", file_ext = NA, ...)
 
 \item{...}{arguments passed to list.files. optional.}
 }
+\value{
+A character vector of NHD layers for the specified vpu
+}
 \description{
 List available locally cached NHDplus layers per state
 }
@@ -26,6 +29,5 @@ nhd_plus_list(vpu = 4, full.names = TRUE)
 
 nhd_plus_list(vpu = 1, component = "NHDPlusAttributes")
 nhd_plus_list(vpu = "National", component = "V1_To_V2_Crosswalk")
-
 }
 }

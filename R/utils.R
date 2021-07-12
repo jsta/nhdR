@@ -180,6 +180,7 @@ long2UTM <- function(long) {
 #'
 #' @importFrom sf st_transform st_crs
 #' @export
+#' @return A transformed sf object
 #'
 #' @examples \dontrun{
 #' data(gull)

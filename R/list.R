@@ -3,6 +3,7 @@
 #' @export
 #' @param state character state abbreviation
 #' @importFrom rgdal ogrListLayers
+#' @return A character vector of NHD layers for the specified state
 #'
 #' @examples \dontrun{
 #' nhd_list(state = "DC")
@@ -20,6 +21,7 @@ nhd_list <- function(state) {
 #' "dbf" for non-spatial. optional
 #' @param ... arguments passed to list.files. optional.
 #' @importFrom rgdal ogrListLayers
+#' @return A character vector of NHD layers for the specified vpu
 #'
 #' @examples \dontrun{
 #' nhd_plus_list(vpu = 4)
