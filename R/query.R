@@ -96,7 +96,8 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
         query = paste0("SELECT * from ", dsn, " LIMIT 1"))$res
     )
 
-    wkt_filter <- sf::st_as_text(sf::st_transform(sf::st_geometry(pnt_buff), crs_dsn))
+    wkt_filter <- sf::st_as_text(
+      sf::st_transform(sf::st_geometry(pnt_buff), crs_dsn))
   } else {
     poly <- st_transform(poly, st_crs(nhdR::vpu_shp))
     vpu  <- find_vpu(poly)
@@ -114,7 +115,8 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
         approve_all_dl = approve_all_dl,
         query = paste0("SELECT * from ", dsn, " LIMIT 1"))$res
     )
-    wkt_filter <- sf::st_as_text(sf::st_transform(sf::st_geometry(poly), crs_dsn))
+    wkt_filter <- sf::st_as_text(
+      sf::st_transform(sf::st_geometry(poly), crs_dsn))
   }
 
   sp_sub <- lapply(dsn, function(x) nhd_plus_load(vpu = vpu, dsn = x,
@@ -163,7 +165,8 @@ nhd_query <- function(lon, lat, dsn, buffer_dist = 0.05) {
   sp        <- lapply(dsn, function(x) nhd_load(state = state_abb, dsn = x))
   names(sp) <- dsn
 
-  sp_sub    <- select_point_overlay(pnt = pnt, sp = sp, buffer_dist = buffer_dist)
+  sp_sub    <- select_point_overlay(
+    pnt = pnt, sp = sp, buffer_dist = buffer_dist)
 
   pnt       <- st_transform(pnt, sf::st_crs(sp_sub[[1]]))
 
