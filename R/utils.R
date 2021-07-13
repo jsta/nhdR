@@ -131,8 +131,13 @@ is_spatial <- function(filename) {
 #' find_vpu(nhdR::gull$sp$NHDWaterbody)
 #' }
 find_vpu <- function(pnt) {
-  pnt <- sf::st_transform(pnt, sf::st_crs(nhdR::vpu_shp))
-  vpu <- nhdR::vpu_shp[nhdR::vpu_shp$UnitType == "VPU", ]
+  # fix for older proj versions (solaris)
+  # https://stackoverflow.com/a/62268361/3362993
+  vpu <- nhdR::vpu_shp
+  sf::st_crs(vpu$geometry) <- 4326
+
+  pnt <- sf::st_transform(pnt, sf::st_crs(vpu))
+  vpu <- vpu[vpu$UnitType == "VPU", ]
 
   if (any(names(pnt) == "UnitID")) {
     pnt <- pnt[, !(names(pnt) %in% "UnitID")]
