@@ -94,7 +94,7 @@ jobs:
 
       - name: "[Custom block] [Linux] Install spatial libraries"
         if: runner.os == 'Linux'
-        run: sudo apt-get install libgdal-dev libproj-dev=4.8.\* libgeos-dev libudunits2-dev
+        run: sudo apt-get install libgdal-dev libproj-dev libgeos-dev libudunits2-dev
 
       - name: "[Stage] Install"
         if: matrix.config.os != 'macOS-latest' || matrix.config.r != 'devel'
