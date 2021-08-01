@@ -98,7 +98,7 @@
       <h1 data-toc-skip>Pull stream network associated with a waterbody catchment</h1>
                         <h4 class="author">Jemma Stachelek</h4>
             
-            <h4 class="date">2021-07-13</h4>
+            <h4 class="date">2021-08-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/jsta/nhdR/blob/master/vignettes/network.Rmd"><code>vignettes/network.Rmd</code></a></small>
       <div class="hidden name"><code>network.Rmd</code></div>
@@ -118,7 +118,13 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">mendota</span><span class="op">)</span>
 
 <span class="va">largest_waterbody</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/geos_measures.html">st_area</a></span><span class="op">(</span><span class="va">mendota</span><span class="op">$</span><span class="va">sp</span><span class="op">$</span><span class="va">NHDWaterbody</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
+<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
+<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
+<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="va">mendota_lake</span>      <span class="op">&lt;-</span> <span class="va">mendota</span><span class="op">$</span><span class="va">sp</span><span class="op">$</span><span class="va">NHDWaterbody</span><span class="op">[</span><span class="va">largest_waterbody</span>, <span class="op">]</span>
+<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
+<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
 <span class="va">mendota_lake</span>      <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html">st_transform</a></span><span class="op">(</span><span class="va">mendota_lake</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span>
 <span class="va">mendota_centroid</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_coordinates.html">st_coordinates</a></span><span class="op">(</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/geos_unary.html">st_centroid</a></span><span class="op">(</span><span class="va">mendota_lake</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Next, we can use the <code>extract_network</code> function to pull the stream network associated with Lake Mendota. Notice that we have set the <code>maxsteps</code> parameter to <strong>Inf</strong>. If the network is anticipated to be very large it can be a good idea to set this to a discrete (lower) number to avoid returning very large lines objects.</p>
@@ -131,7 +137,10 @@
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mendota</span><span class="op">$</span><span class="va">sp</span><span class="op">$</span><span class="va">NHDFlowLine</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mendota_lake</span>, fill <span class="op">=</span> <span class="st">"cyan"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mendota_network</span>, color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mendota_network</span>, color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span>
+<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
+<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span>
+<span class="co">#&gt; old-style crs object detected; please recreate object with a recent sf::st_crs()</span></code></pre></div>
 <p><img src="network_files/figure-html/mapping-1.png" width="700"></p>
   </div>
 
