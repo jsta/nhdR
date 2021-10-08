@@ -1,15 +1,19 @@
-## tic GitHub Actions template: linux-macos-windows-deploy
-## revision date: 2020-12-11
+# For help debugging build failures open an issue on the RStudio community with the 'github-actions' tag.
+# https://community.rstudio.com/new-topic?category=Package%20development&tags=github-actions
 on:
-  workflow_dispatch:
   push:
+    branches:
+      - main
+      - master
   pull_request:
-  # for now, CRON jobs only run on the default branch of the repo (i.e. usually on master)
+    branches:
+      - main
+      - master
 
-name: tic
+name: R-CMD-check
 
 jobs:
-  all:
+  R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
@@ -17,115 +21,70 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        config:
-          # use a different tic template type if you do not want to build on all listed platforms
-          - { os: ubuntu-latest, r: "release", pkgdown: "true" }
+        config:          
+          - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}          
 
     env:
-      # otherwise remotes::fun() errors cause the build to fail. Example: Unavailability of binaries
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-      CRAN: ${{ matrix.config.cran }}
-      # make sure to run `tic::use_ghactions_deploy()` to set up deployment
-      TIC_DEPLOY_KEY: ${{ secrets.TIC_DEPLOY_KEY }}
-      # prevent rgl issues because no X11 display is available
-      RGL_USE_NULL: true
-      # if you use bookdown or blogdown, replace "PKGDOWN" by the respective
-      # capitalized term. This also might need to be done in tic.R
-      BUILD_PKGDOWN: ${{ matrix.config.pkgdown }}
-      # macOS >= 10.15.4 linking
-      SDKROOT: /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
-      # use GITHUB_TOKEN from GitHub to workaround rate limits in {remotes}
+      RSPM: ${{ matrix.config.rspm }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v2
 
-      - uses: r-lib/actions/setup-r@master
+      - uses: r-lib/actions/setup-r@v1
         with:
           r-version: ${{ matrix.config.r }}
-          Ncpus: 4
 
-      # LaTeX. Installation time:
-      # Linux: ~ 1 min
-      # macOS: ~ 1 min 30s
-      # Windows: never finishes
-      - uses: r-lib/actions/setup-tinytex@master
-        if: matrix.config.latex == 'true'
+      - uses: r-lib/actions/setup-pandoc@v1
 
-      - uses: r-lib/actions/setup-pandoc@master
+      - name: Query dependencies
+        run: |
+          install.packages('remotes')
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
+        shell: Rscript {0}
 
-      # set date/week for use in cache creation
-      # https://github.community/t5/GitHub-Actions/How-to-set-and-access-a-Workflow-variable/m-p/42970
-      # - cache R packages daily
-      - name: "[Cache] Prepare daily timestamp for cache"
+      - name: Cache R packages
         if: runner.os != 'Windows'
-        id: date
-        run: echo "::set-output name=date::$(date '+%d-%m')"
-
-      - name: "[Cache] Cache R packages"
-        if: runner.os != 'Windows'
-        uses: pat-s/always-upload-cache@v2.1.3
+        uses: actions/cache@v2
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
-          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-${{steps.date.outputs.date}}
+          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
 
-      # for some strange Windows reason this step and the next one need to be decoupled
-      - name: "[Stage] Prepare"
-        run: |
-          Rscript -e "if (!requireNamespace('remotes')) install.packages('remotes', type = 'source')"
-          Rscript -e "if (getRversion() < '3.2' && !requireNamespace('curl')) install.packages('curl', type = 'source')"
-
-      - name: "[Stage] [Linux] Install curl and libgit2"
+      - name: Install system dependencies
         if: runner.os == 'Linux'
-        run: sudo apt install libcurl4-openssl-dev libgit2-dev
-
-      - name: "[Stage] [macOS] Install libgit2"
-        if: runner.os == 'macOS'
-        run: brew install libgit2
-
-      - name: "[Stage] [macOS] Install system libs for pkgdown"
-        if: runner.os == 'macOS' && matrix.config.pkgdown != ''
-        run: brew install harfbuzz fribidi
-
-      - name: "[Stage] [Linux] Install system libs for pkgdown"
-        if: runner.os == 'Linux' && matrix.config.pkgdown != ''
-        run: sudo apt install libharfbuzz-dev libfribidi-dev
-
-      - name: "[Custom block] [Linux] Install spatial libraries"
-        if: runner.os == 'Linux'
-        run: sudo apt-get install libgdal-dev libproj-dev libgeos-dev libudunits2-dev
-
-      - name: "[Stage] Install"
-        if: matrix.config.os != 'macOS-latest' || matrix.config.r != 'devel'
-        run: Rscript -e "remotes::install_github('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
-
-      # macOS devel needs its own stage because we need to work with an option to suppress the usage of binaries
-      - name: "[Stage] Prepare & Install (macOS-devel)"
-        if: matrix.config.os == 'macOS-latest' && matrix.config.r == 'devel'
         run: |
-          echo -e 'options(Ncpus = 4, pkgType = "source", repos = structure(c(CRAN = "https://cloud.r-project.org/")))' > $HOME/.Rprofile
-          Rscript -e "remotes::install_github('ropensci/tic')" -e "print(tic::dsl_load())" -e "tic::prepare_all_stages()" -e "tic::before_install()" -e "tic::install()"
+          while read -r cmd
+          do
+            eval sudo $cmd
+          done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
 
-      - name: "[Stage] Script"
-        run: Rscript -e 'tic::script()'
+      - name: Install Python dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get upgrade
+          sudo apt-get install python3-virtualenv
+          sudo apt-get install python3-venv
+        shell: /bin/bash {0}
 
-      - name: "[Stage] After Success"
-        if: matrix.config.os == 'macOS-latest' && matrix.config.r == 'release'
-        run: Rscript -e "tic::after_success()"
+      - name: Install dependencies
+        run: |
+          remotes::install_deps(dependencies = TRUE)
+          remotes::install_cran("rcmdcheck")
+        shell: Rscript {0}
 
-      - name: "[Stage] Upload R CMD check artifacts"
+      - name: Check
+        env:
+          _R_CHECK_CRAN_INCOMING_REMOTE_: false
+        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
+        shell: Rscript {0}
+
+      - name: Upload check results
         if: failure()
-        uses: actions/upload-artifact@v2.2.1
+        uses: actions/upload-artifact@main
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
-      - name: "[Stage] Before Deploy"
-        run: |
-          Rscript -e "tic::before_deploy()"
-
-      - name: "[Stage] Deploy"
-        run: Rscript -e "tic::deploy()"
-
-      - name: "[Stage] After Deploy"
-        run: Rscript -e "tic::after_deploy()"
