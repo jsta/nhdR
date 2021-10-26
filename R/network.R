@@ -21,10 +21,11 @@
 #' @param network sf lines collection. optional. See Details section.
 #' @param lakepoly sf polygon.  optional. See Details section.
 #' @param buffer_dist numeric buffer around lat-lon point in dec. deg.
-#' @param lakewise logical. If TRUE, return the terminal reaches of all lakes.
+#' @param lakewise logical. If TRUE, return the terminal reaches of all lakes
 #' in the stream network rather than a single terminal reach of the focal lake.
 #' @param lakesize_threshold numeric above which to count as a lake (ha).
-#' @param approve_all_dl logical blanket approval to download all missing data. Defaults to TRUE if session is non-interactive.
+#' @param approve_all_dl logical blanket approval to download all missing data.
+#' Defaults to TRUE if session is non-interactive.
 #' @param ... parameters passed on to sf::st_read
 #' @return An sf data frame with LINESTRING geometries
 #'
@@ -115,7 +116,7 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
     }
   } else {
     network_lines <- network
-    vpu           <- suppressWarnings(find_vpu(st_centroid(st_union(network_lines))))
+    vpu <- suppressWarnings(find_vpu(st_centroid(st_union(network_lines))))
   }
 
   # network_lines <- dplyr::filter(network_lines,
@@ -147,7 +148,8 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
     poly <- st_transform(poly, st_crs(network_lines))
 
     intersecting_reaches <- network_lines[unlist(lapply(
-      suppressMessages(st_intersects(network_lines, poly)), function(x) length(x) > 0)), ]
+      suppressMessages(st_intersects(network_lines, poly)),
+      function(x) length(x) > 0)), ]
 
     network_table <- dplyr::filter(network_table,
       .data$fromcomid %in% intersecting_reaches$comid)
@@ -232,7 +234,8 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
       .data$tocomid %in% network_lines$comid)
 
   # find nodes with upstream connections but not in the focal set
-  up_one <- network_table[network_table$tocomid  %in% network_table_focal$fromcomid, ]
+  up_one <- network_table[
+    network_table$tocomid  %in% network_table_focal$fromcomid, ]
   res <- up_one[!(up_one$fromcomid %in% network_table_focal$tocomid), ]
 
   res <- res[which(res$tocomid != 0 & res$fromcomid != 0), ]
@@ -254,7 +257,7 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
 #' @param lat numeric decimal degree latitude
 #' @inheritParams terminal_reaches
 #' @param maxsteps maximum number of stream climbing iterations
-#' @param lines sf spatial lines object to limit the extent of the network search
+#' @param lines sf spatial lines object to limit extent of the network search
 #' @param ... parameters passed on to sf::st_read
 #'
 #' @return An sf data frame with LINESTRING geometries
@@ -312,8 +315,8 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
   if (all(!is.na(lines))) {
     names(lines) <- tolower(names(lines))
     # filter network table by line comids
-    network_table <- dplyr::filter(network_table, .data$tocomid %in% lines$comid |
-      .data$fromcomid %in% lines$comid)
+    network_table <- dplyr::filter(network_table,
+      .data$tocomid %in% lines$comid | .data$fromcomid %in% lines$comid)
   }
 
   t_reaches     <- terminal_reaches(lon, lat, buffer_dist = buffer_dist,
@@ -362,7 +365,8 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
     }
 
     # pull first order streams
-    l_reach <- leaf_reaches(network = res, pretty = TRUE, approve_all_dl = approve_all_dl)
+    l_reach <- leaf_reaches(
+      network = res, pretty = TRUE, approve_all_dl = approve_all_dl)
     if (nrow(l_reach) > 0) {
       first_order_reaches <- neighbors(l_reach$comid, network_table,
         direction = "up")
