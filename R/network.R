@@ -185,6 +185,10 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
 #'
 #' @examples \dontrun{
 #' coords <- data.frame(lat = 20.79722, lon = -156.47833)
+#' # nhd_plus_get(
+#' #  nhdR::find_vpu(
+#' #    sf::st_as_sf(coords, coords = c("lon", "lat"), crs = 4326)),
+#' # temporary = FALSE)
 #' leaf_reaches(coords$lon, coords$lat)
 #'
 #' coords  <- data.frame(lat = 41.42217, lon = -73.24189)
