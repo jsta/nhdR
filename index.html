@@ -123,7 +123,7 @@
 <a href="#or-development-version-from-github" class="anchor"></a>or development version from GitHub</h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"jsta/nhdR"</span><span class="op">)</span></code></pre></div>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"jsta/nhdR"</span><span class="op">)</span></code></pre></div>
 <p>This package also requires an installation of <a href="https://www.7-zip.org/">7-zip</a> that can be called via the command line using <code>7z</code> or <code>7za.exe</code> (check if your machine is good to go with <code>nhdR:::has_7z()</code>).</p>
 </div>
 </div>
@@ -171,25 +171,25 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># get layer info</span>
 <span class="fu"><a href="reference/nhd_plus_info.html">nhd_plus_info</a></span><span class="op">(</span>vpu <span class="op">=</span> <span class="fl">4</span>, <span class="st">"NHDSnapshot"</span>, <span class="st">"NHDWaterbody"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">#&gt;  [1] "Driver: ESRI Shapefile; number of rows: 31830 "     </span></span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="co">#&gt;  [2] "Feature type: wkbPolygon with 3 dimensions"         </span></span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="co">#&gt;  [3] "Extent: (-93.24332 40.43575) - (-73.61814 48.11344)"</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="co">#&gt;  [4] "CRS: +proj=longlat +datum=NAD83 +no_defs  "         </span></span>
-<span id="cb8-5"><a href="#cb8-5"></a><span class="co">#&gt;  [5] "LDID: 87 "                                          </span></span>
-<span id="cb8-6"><a href="#cb8-6"></a><span class="co">#&gt;  [6] "Number of fields: 12 "                              </span></span>
-<span id="cb8-7"><a href="#cb8-7"></a><span class="co">#&gt;  [7] "         name type length typeName"                 </span></span>
-<span id="cb8-8"><a href="#cb8-8"></a><span class="co">#&gt;  [8] "1       COMID    0      9  Integer"                 </span></span>
-<span id="cb8-9"><a href="#cb8-9"></a><span class="co">#&gt;  [9] "2       FDATE    9     10     Date"                 </span></span>
-<span id="cb8-10"><a href="#cb8-10"></a><span class="co">#&gt; [10] "3  RESOLUTION    4      7   String"                 </span></span>
-<span id="cb8-11"><a href="#cb8-11"></a><span class="co">#&gt; [11] "4     GNIS_ID    4     10   String"                 </span></span>
-<span id="cb8-12"><a href="#cb8-12"></a><span class="co">#&gt; [12] "5   GNIS_NAME    4     65   String"                 </span></span>
-<span id="cb8-13"><a href="#cb8-13"></a><span class="co">#&gt; [13] "6    AREASQKM    2     19     Real"                 </span></span>
-<span id="cb8-14"><a href="#cb8-14"></a><span class="co">#&gt; [14] "7   ELEVATION    2     19     Real"                 </span></span>
-<span id="cb8-15"><a href="#cb8-15"></a><span class="co">#&gt; [15] "8   REACHCODE    4     14   String"                 </span></span>
-<span id="cb8-16"><a href="#cb8-16"></a><span class="co">#&gt; [16] "9       FTYPE    4     24   String"                 </span></span>
-<span id="cb8-17"><a href="#cb8-17"></a><span class="co">#&gt; [17] "10      FCODE    0      9  Integer"                 </span></span>
-<span id="cb8-18"><a href="#cb8-18"></a><span class="co">#&gt; [18] "11 SHAPE_LENG    2     19     Real"                 </span></span>
-<span id="cb8-19"><a href="#cb8-19"></a><span class="co">#&gt; [19] "12 SHAPE_AREA    2     19     Real"</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1] "Driver: ESRI Shapefile; number of rows: 31830 "     </span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [2] "Feature type: wkbPolygon with 3 dimensions"         </span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [3] "Extent: (-93.24332 40.43575) - (-73.61814 48.11344)"</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [4] "CRS: +proj=longlat +datum=NAD83 +no_defs  "         </span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [5] "LDID: 87 "                                          </span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [6] "Number of fields: 12 "                              </span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [7] "         name type length typeName"                 </span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [8] "1       COMID    0      9  Integer"                 </span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [9] "2       FDATE    9     10     Date"                 </span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [10] "3  RESOLUTION    4      7   String"                 </span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [11] "4     GNIS_ID    4     10   String"                 </span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [12] "5   GNIS_NAME    4     65   String"                 </span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [13] "6    AREASQKM    2     19     Real"                 </span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [14] "7   ELEVATION    2     19     Real"                 </span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [15] "8   REACHCODE    4     14   String"                 </span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [16] "9       FTYPE    4     24   String"                 </span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [17] "10      FCODE    0      9  Integer"                 </span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [18] "11 SHAPE_LENG    2     19     Real"                 </span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [19] "12 SHAPE_AREA    2     19     Real"</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># load layer</span>
 <span class="va">dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/nhd_plus_load.html">nhd_plus_load</a></span><span class="op">(</span>vpu <span class="op">=</span> <span class="fl">4</span>, <span class="st">"NHDSnapshot"</span>, <span class="st">"NHDWaterbody"</span><span class="op">)</span>
@@ -329,7 +329,7 @@
 <ul class="list-unstyled">
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html#stable"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a></li>
 <li><a href="https://cran.r-project.org/package=nhdR"><img src="http://www.r-pkg.org/badges/version/nhdR" alt="CRAN_Status_Badge"></a></li>
-<li><a href="https://github.com/jsta/nhdR/actions"><img src="https://github.com/jsta/nhdR/workflows/tic/badge.svg?branch=master" alt="tic"></a></li>
+<li><a href="https://github.com/jsta/nhdR/actions/workflows/R-CMD-check.yml"><img src="https://github.com/jsta/nhdR/actions/workflows/R-CMD-check.yml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://zenodo.org/badge/latestdoi/75339263"><img src="https://zenodo.org/badge/75339263.svg" alt="DOI"></a></li>
 </ul>
 </div>
