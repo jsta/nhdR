@@ -39,7 +39,8 @@ test_that("nhd_plus_load works with the wkt_filter argument", {
   skip_on_cran()
   skip_on_ci()
 
-  res <- nhd_plus_load(4, "NHDSnapshot", "NHDWaterbody", wkt_filter = "POINT (-85.411 42.399)")  
+  res <- nhd_plus_load(4, "NHDSnapshot", "NHDWaterbody", wkt_filter = "POINT (-85.411 42.399)")
+  expect_gt(nrow(res), 0)
   expect_s3_class(res, "data.frame")
 })
 

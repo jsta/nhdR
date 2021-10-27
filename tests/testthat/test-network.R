@@ -68,7 +68,9 @@ test_that("leaf_reaches works", {
     buffer_dist = units::as_units(2, "km"),
     quiet = TRUE)
   network <- network$sp$NHDFlowline
-  expect_s3_class(leaf_reaches(network = network), "sf")
+  res <- leaf_reaches(network = network)
+  expect_gt(nrow(res), 0)
+  expect_s3_class(res, "sf")
 
   expect_s3_class(leaf_reaches(coords$lon, coords$lat, quiet = TRUE), "sf")
 })

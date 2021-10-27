@@ -33,6 +33,10 @@ test_that("nhd_plus_query fails well", {
       buffer_dist = 0.1),
     "nhd_plus_query only accepts a single lon-lat pair.")
 
+  expect_error(
+    nhdR::nhd_plus_query(dsn = "NHDWaterbody", wkt_filter = "POINT (-85.411 42.399)"),
+    "Must specify either lon and lat or poly but not both.")
+
 
   # query will produce a zero row sf object when appropriate
   coords <- data.frame(lat = c(42.04133),

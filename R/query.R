@@ -51,7 +51,7 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
     approve_all_dl <- TRUE
   }
 
-  if (all(!is.na(c(lon, lat, poly)))) {
+  if (all(!is.na(c(lon, lat, poly))) | all(is.na(c(lon, lat, poly)))) {
     stop("Must specify either lon and lat or poly but not both.")
   }
 
