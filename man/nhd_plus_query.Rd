@@ -11,6 +11,7 @@ nhd_plus_query(
   dsn,
   buffer_dist = 0.05,
   approve_all_dl = FALSE,
+  temporary = TRUE,
   ...
 )
 }
@@ -25,7 +26,11 @@ nhd_plus_query(
 
 \item{buffer_dist}{numeric buffer in units of coordinate degrees}
 
-\item{approve_all_dl}{logical blanket approval to download all missing data. Defaults to TRUE if session is non-interactive.}
+\item{approve_all_dl}{logical blanket approval to download all missing data. 
+Defaults to TRUE if session is non-interactive.}
+
+\item{temporary}{logical set FALSE to save data to a persistent
+rappdirs location}
 
 \item{...}{parameters passed on to sf::st_read}
 }

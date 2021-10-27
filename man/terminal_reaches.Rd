@@ -13,6 +13,7 @@ terminal_reaches(
   lakewise = FALSE,
   lakesize_threshold = 4,
   approve_all_dl = FALSE,
+  temporary = TRUE,
   ...
 )
 }
@@ -27,12 +28,16 @@ terminal_reaches(
 
 \item{lakepoly}{sf polygon.  optional. See Details section.}
 
-\item{lakewise}{logical. If TRUE, return the terminal reaches of all lakes.
+\item{lakewise}{logical. If TRUE, return the terminal reaches of all lakes
 in the stream network rather than a single terminal reach of the focal lake.}
 
 \item{lakesize_threshold}{numeric above which to count as a lake (ha).}
 
-\item{approve_all_dl}{logical blanket approval to download all missing data. Defaults to TRUE if session is non-interactive.}
+\item{approve_all_dl}{logical blanket approval to download all missing data.
+Defaults to TRUE if session is non-interactive.}
+
+\item{temporary}{logical set FALSE to save data to a persistent
+rappdirs location}
 
 \item{...}{parameters passed on to sf::st_read}
 }

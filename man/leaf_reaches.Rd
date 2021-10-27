@@ -4,7 +4,14 @@
 \alias{leaf_reaches}
 \title{Return leaf reaches from a network or query intersecting lake}
 \usage{
-leaf_reaches(lon = NA, lat = NA, network = NA, approve_all_dl = FALSE, ...)
+leaf_reaches(
+  lon = NA,
+  lat = NA,
+  network = NA,
+  approve_all_dl = FALSE,
+  temporary = TRUE,
+  ...
+)
 }
 \arguments{
 \item{lon}{numeric decimal degree longitude. optional. See Details section.}
@@ -13,7 +20,11 @@ leaf_reaches(lon = NA, lat = NA, network = NA, approve_all_dl = FALSE, ...)
 
 \item{network}{sf lines collection. optional. See Details section.}
 
-\item{approve_all_dl}{logical blanket approval to download all missing data. Defaults to TRUE if session is non-interactive.}
+\item{approve_all_dl}{logical blanket approval to download all missing data.
+Defaults to TRUE if session is non-interactive.}
+
+\item{temporary}{logical set FALSE to save data to a persistent
+rappdirs location}
 
 \item{...}{parameters passed on to sf::st_read}
 }
@@ -27,6 +38,10 @@ not in the focal set.
 \examples{
 \dontrun{
 coords <- data.frame(lat = 20.79722, lon = -156.47833)
+# nhd_plus_get(
+#  nhdR::find_vpu(
+#    sf::st_as_sf(coords, coords = c("lon", "lat"), crs = 4326)),
+# temporary = FALSE)
 leaf_reaches(coords$lon, coords$lat)
 
 coords  <- data.frame(lat = 41.42217, lon = -73.24189)

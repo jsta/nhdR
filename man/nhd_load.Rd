@@ -4,7 +4,14 @@
 \alias{nhd_load}
 \title{Load NHD layers into current session}
 \usage{
-nhd_load(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...)
+nhd_load(
+  state,
+  dsn,
+  file_ext = NA,
+  approve_all_dl = FALSE,
+  temporary = FALSE,
+  ...
+)
 }
 \arguments{
 \item{state}{character state abbreviation}
@@ -14,7 +21,11 @@ nhd_load(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...)
 \item{file_ext}{character choice of "shp" for spatial data and
 "dbf" or "gpkg" for non-spatial. optional}
 
-\item{approve_all_dl}{logical blanket approval to download all missing data. Defaults to TRUE if session is non-interactive.}
+\item{approve_all_dl}{logical blanket approval to download all missing data.
+Defaults to TRUE if session is non-interactive.}
+
+\item{temporary}{logical set FALSE to save data to a persistent
+rappdirs location}
 
 \item{...}{arguments passed to sf::st_read}
 }

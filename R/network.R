@@ -26,6 +26,8 @@
 #' @param lakesize_threshold numeric above which to count as a lake (ha).
 #' @param approve_all_dl logical blanket approval to download all missing data.
 #' Defaults to TRUE if session is non-interactive.
+#' @param temporary logical set FALSE to save data to a persistent
+#'  rappdirs location
 #' @param ... parameters passed on to sf::st_read
 #' @return An sf data frame with LINESTRING geometries
 #'
@@ -68,6 +70,7 @@
 terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
                              network = NA, lakepoly = NA, lakewise = FALSE,
                              lakesize_threshold = 4, approve_all_dl = FALSE,
+                             temporary = TRUE,
                              ...) {
 
   if (!interactive()) {
@@ -81,7 +84,8 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
 
     poly <- nhd_plus_query(lon, lat, dsn = "NHDWaterbody",
       buffer_dist = buffer_dist,
-      approve_all_dl = approve_all_dl, ...)$sp$NHDWaterbody
+      approve_all_dl = approve_all_dl, 
+      temporary = temporary, ...)$sp$NHDWaterbody
 
     if (nrow(poly) == 0) {
       stop("No lake polygon found at query point")
@@ -123,7 +127,7 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
   #                                rlang::.data$FTYPE != "Coastline")
 
   network_table <- nhd_plus_load(vpu = vpu, "NHDPlusAttributes",
-    "PlusFlow", approve_all_dl = approve_all_dl, ...)
+    "PlusFlow", approve_all_dl = approve_all_dl, temporary = temporary, ...)
   names(network_table) <- tolower(names(network_table))
   names(network_lines) <- tolower(names(network_lines))
 
@@ -141,7 +145,9 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
         st_union(st_cast(network_lines, "MULTILINESTRING"))),
       dsn = "NHDWaterbody",
       buffer_dist = 0.01,
-      approve_all_dl = approve_all_dl, ...)$sp$NHDWaterbody)
+      approve_all_dl = approve_all_dl, 
+      temporary = temporary,
+      ...)$sp$NHDWaterbody)
 
     poly <- poly[st_area(poly) >
       units::as_units(lakesize_threshold, "ha"), ]
@@ -202,7 +208,7 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
 #' plot(l_reach$geometry, col = "red", add = TRUE)
 #' }
 leaf_reaches <- function(lon = NA, lat = NA, network = NA,
-                         approve_all_dl = FALSE, ...) {
+                         approve_all_dl = FALSE, temporary = TRUE, ...) {
 
   if (!interactive()) {
     approve_all_dl <- TRUE
@@ -215,7 +221,8 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
 
     poly <- nhd_plus_query(lon, lat, dsn = "NHDWaterbody",
       buffer_dist = units::as_units(0.5, "km"),
-      approve_all_dl = approve_all_dl, ...)$sp$NHDWaterbody
+      approve_all_dl = approve_all_dl,
+      temporary = temporary, ...)$sp$NHDWaterbody
     poly          <- poly[which.max(st_area(poly)), ] # find lake polygon
     network_lines <- nhd_plus_query(poly = poly,
       dsn = "NHDFlowline", ...)$sp$NHDFlowline
@@ -228,7 +235,7 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
   }
 
   network_table <- nhd_plus_load(vpu = vpu, "NHDPlusAttributes",
-    "PlusFlow", approve_all_dl = approve_all_dl)
+    "PlusFlow", approve_all_dl = approve_all_dl, temporary = temporary)
   names(network_table) <- tolower(names(network_table))
   names(network_lines) <- tolower(names(network_lines))
 
@@ -298,7 +305,7 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
 #' }
 extract_network <- function(lon = NA, lat = NA, lines = NA,
                             buffer_dist = 0.01, maxsteps = 3,
-                            approve_all_dl = FALSE, ...) {
+                            approve_all_dl = FALSE, temporary = TRUE, ...) {
 
   if (!interactive()) {
     approve_all_dl <- TRUE
@@ -313,7 +320,7 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
   st_crs(pnt)     <- st_crs(nhdR::vpu_shp)
   vpu             <- find_vpu(pnt)
   network_table   <- nhd_plus_load(vpu = vpu, "NHDPlusAttributes",
-    "PlusFlow", approve_all_dl = approve_all_dl)
+    "PlusFlow", approve_all_dl = approve_all_dl, temporary = temporary)
   names(network_table) <- tolower(names(network_table))
 
   if (all(!is.na(lines))) {
@@ -325,7 +332,8 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
 
   t_reaches     <- terminal_reaches(lon, lat, buffer_dist = buffer_dist,
     lakewise = TRUE, pretty = TRUE,
-    approve_all_dl = approve_all_dl, ...)
+    approve_all_dl = approve_all_dl, 
+    temporary = temporary, ...)
   temp_reaches  <- neighbors(t_reaches$comid, network_table, direction = "up")
   res_reaches   <- temp_reaches
 
@@ -353,7 +361,7 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
     # lines_file <- lines_file[grep("NHDFlowline", lines_file)]
     if (all(is.na(lines))) {
       lines        <- nhd_plus_load(vpu, "NHDSnapshot", "NHDFlowline",
-        pretty = TRUE, approve_all_dl = approve_all_dl, ...)
+        pretty = TRUE, approve_all_dl = approve_all_dl, temporary = temporary, ...)
       names(lines) <- tolower(names(lines))
     }
 
@@ -370,7 +378,7 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
 
     # pull first order streams
     l_reach <- leaf_reaches(
-      network = res, pretty = TRUE, approve_all_dl = approve_all_dl)
+      network = res, pretty = TRUE, approve_all_dl = approve_all_dl, temporary = temporary)
     if (nrow(l_reach) > 0) {
       first_order_reaches <- neighbors(l_reach$comid, network_table,
         direction = "up")

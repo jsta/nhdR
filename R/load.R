@@ -4,7 +4,10 @@
 #' @param dsn character name of a NHD layer
 #' @param file_ext character choice of "shp" for spatial data and
 #' "dbf" or "gpkg" for non-spatial. optional
-#' @param approve_all_dl logical blanket approval to download all missing data. Defaults to TRUE if session is non-interactive.
+#' @param approve_all_dl logical blanket approval to download all missing data.
+#'  Defaults to TRUE if session is non-interactive.
+#' @param temporary logical set FALSE to save data to a persistent
+#'  rappdirs location
 #' @param ... arguments passed to sf::st_read
 #'
 #' @return Spatial simple features object or data frame depending on the dsn
@@ -26,7 +29,8 @@
 #' dt <- nhd_load("RI", "NHDWaterbody", file_ext = "dbf")
 #' dt <- nhd_load(c("RI", "DC"), "NHDWaterbody", file_ext = "gpkg")
 #' }
-nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
+nhd_load <- function(state, dsn, file_ext = NA, 
+  approve_all_dl = FALSE, temporary = FALSE, ...){
 
   if(!interactive()){
     approve_all_dl = TRUE
@@ -61,7 +65,7 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
   nhd_dl_state <- function(state, state_exists, yes_dl, file_ext, ...){
 
       if(as.logical(yes_dl)){
-        nhd_get(state = state)
+        nhd_get(state = state, temporary = temporary)
       }
       if(as.logical(state_exists) | as.logical(yes_dl)){
 
@@ -124,10 +128,14 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
 #' @param dsn data source name
 #' @param file_ext character choice of "shp" for spatial data and
 #' "dbf" for non-spatial. optional
-#' @param approve_all_dl logical blanket approval to download all missing data. Defaults to TRUE if session is non-interactive
+#' @param approve_all_dl logical blanket approval to download all missing data.
+#'  Defaults to TRUE if session is non-interactive
 #' @param force_dl logical force a re-download of the requested data
+#' @param temporary logical set FALSE to save data to a persistent
+#'  rappdirs location
 #' @param pretty more minimal pretty printing st_read relative to "quiet"
-#' @param wkt_filter character. WKT spatial filter for selection. See sf::st_read
+#' @param wkt_filter character. WKT spatial filter for selection.
+#'  See sf::st_read
 #' @param ... parameters passed on to sf::st_read
 #' @return spatial object
 #'
@@ -171,8 +179,9 @@ nhd_load <- function(state, dsn, file_ext = NA, approve_all_dl = FALSE, ...){
 #'
 #' }
 nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
-                          file_ext = NA, approve_all_dl = FALSE, force_dl = FALSE,
-                          pretty = FALSE, wkt_filter = NA, ...){
+                          file_ext = NA, approve_all_dl = FALSE, 
+                          force_dl = FALSE, temporary = FALSE, pretty = FALSE,
+                          wkt_filter = NA, ...){
 
   if(!interactive()){
     approve_all_dl = TRUE
@@ -185,6 +194,7 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
   res        <- lapply(vpu, nhd_plus_load_vpu,
                        component = component, dsn = dsn,
                        approve_all_dl = approve_all_dl, pretty = pretty,
+                       temporary = temporary,
                        wkt_filter = wkt_filter, ...)
   is_spatial <- unlist(lapply(res, function(x) x$is_spatial))
   # res        <- res[is_spatial]
@@ -223,7 +233,8 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
 }
 
 nhd_plus_load_vpu <- function(vpu, component, dsn, pretty, wkt_filter,
-                              approve_all_dl = FALSE, force_dl = FALSE, file_ext = NA, ...){
+                              approve_all_dl = FALSE, force_dl = FALSE, 
+                              temporary = FALSE, file_ext = NA, ...){
 
   vpu_path <- list.files(file.path(nhd_path(), "NHDPlus"),
                          include.dirs = TRUE, full.names = TRUE)
@@ -245,13 +256,15 @@ nhd_plus_load_vpu <- function(vpu, component, dsn, pretty, wkt_filter,
 
     if(!approve_all_dl & !force_dl){
       userconsents <- utils::menu(c("Yes", "No"),
-                                  title = paste0(vpu, " vpu file not found. Download it?"))
+                                  title = paste0(vpu, 
+                                  " vpu file not found. Download it?"))
     }else{
       userconsents <- 1
     }
 
     if(userconsents == 1){
-      nhd_plus_get(vpu = vpu, component = component, force_dl = force_dl)
+      nhd_plus_get(vpu = vpu, component = component, 
+        force_dl = force_dl, temporary = temporary)
     }else{
       stop("No file. Cannot load.")
     }

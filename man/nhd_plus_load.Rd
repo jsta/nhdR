@@ -11,6 +11,7 @@ nhd_plus_load(
   file_ext = NA,
   approve_all_dl = FALSE,
   force_dl = FALSE,
+  temporary = FALSE,
   pretty = FALSE,
   wkt_filter = NA,
   ...
@@ -26,13 +27,18 @@ nhd_plus_load(
 \item{file_ext}{character choice of "shp" for spatial data and
 "dbf" for non-spatial. optional}
 
-\item{approve_all_dl}{logical blanket approval to download all missing data. Defaults to TRUE if session is non-interactive}
+\item{approve_all_dl}{logical blanket approval to download all missing data.
+Defaults to TRUE if session is non-interactive}
 
 \item{force_dl}{logical force a re-download of the requested data}
 
+\item{temporary}{logical set FALSE to save data to a persistent
+rappdirs location}
+
 \item{pretty}{more minimal pretty printing st_read relative to "quiet"}
 
-\item{wkt_filter}{character. WKT spatial filter for selection. See sf::st_read}
+\item{wkt_filter}{character. WKT spatial filter for selection.
+See sf::st_read}
 
 \item{...}{parameters passed on to sf::st_read}
 }
