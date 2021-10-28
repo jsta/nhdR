@@ -150,6 +150,7 @@
   lon <span class='op'>=</span> <span class='cn'>NA</span>,
   lat <span class='op'>=</span> <span class='cn'>NA</span>,
   lines <span class='op'>=</span> <span class='cn'>NA</span>,
+  lines_network <span class='op'>=</span> <span class='cn'>TRUE</span>,
   buffer_dist <span class='op'>=</span> <span class='fl'>0.01</span>,
   maxsteps <span class='op'>=</span> <span class='fl'>3</span>,
   approve_all_dl <span class='op'>=</span> <span class='cn'>FALSE</span>,
@@ -171,6 +172,12 @@
     <tr>
       <th>lines</th>
       <td><p>sf spatial lines object to limit extent of the network search</p></td>
+    </tr>
+    <tr>
+      <th>lines_network</th>
+      <td><p>boolean treat lines as the complete network object.
+If FALSE, simply start network extraction at the terminal reach of the
+lines object.</p></td>
     </tr>
     <tr>
       <th>buffer_dist</th>
