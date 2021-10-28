@@ -159,6 +159,7 @@ terminal reach is a flowline that exits the intersecting surface waterbody.</p>
   lakewise <span class='op'>=</span> <span class='cn'>FALSE</span>,
   lakesize_threshold <span class='op'>=</span> <span class='fl'>4</span>,
   approve_all_dl <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  temporary <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -187,7 +188,7 @@ terminal reach is a flowline that exits the intersecting surface waterbody.</p>
     </tr>
     <tr>
       <th>lakewise</th>
-      <td><p>logical. If TRUE, return the terminal reaches of all lakes.
+      <td><p>logical. If TRUE, return the terminal reaches of all lakes
 in the stream network rather than a single terminal reach of the focal lake.</p></td>
     </tr>
     <tr>
@@ -196,7 +197,13 @@ in the stream network rather than a single terminal reach of the focal lake.</p>
     </tr>
     <tr>
       <th>approve_all_dl</th>
-      <td><p>logical blanket approval to download all missing data. Defaults to TRUE if session is non-interactive.</p></td>
+      <td><p>logical blanket approval to download all missing data.
+Defaults to TRUE if session is non-interactive.</p></td>
+    </tr>
+    <tr>
+      <th>temporary</th>
+      <td><p>logical set FALSE to save data to a persistent
+rappdirs location</p></td>
     </tr>
     <tr>
       <th>...</th>
