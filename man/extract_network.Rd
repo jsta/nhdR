@@ -8,6 +8,7 @@ extract_network(
   lon = NA,
   lat = NA,
   lines = NA,
+  lines_network = TRUE,
   buffer_dist = 0.01,
   maxsteps = 3,
   approve_all_dl = FALSE,
@@ -21,6 +22,10 @@ extract_network(
 \item{lat}{numeric decimal degree latitude}
 
 \item{lines}{sf spatial lines object to limit extent of the network search}
+
+\item{lines_network}{boolean treat lines as the complete network object.
+If FALSE, simply start network extraction at the terminal reach of the
+lines object.}
 
 \item{buffer_dist}{numeric buffer around lat-lon point in dec. deg.}
 

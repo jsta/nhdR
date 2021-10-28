@@ -269,6 +269,9 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
 #' @inheritParams terminal_reaches
 #' @param maxsteps maximum number of stream climbing iterations
 #' @param lines sf spatial lines object to limit extent of the network search
+#' @param lines_network boolean treat lines as the complete network object.
+#'  If FALSE, simply start network extraction at the terminal reach of the
+#'  lines object.
 #' @param ... parameters passed on to sf::st_read
 #'
 #' @return An sf data frame with LINESTRING geometries
@@ -304,8 +307,9 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
 #' mapview(res)
 #' }
 extract_network <- function(lon = NA, lat = NA, lines = NA,
-                            buffer_dist = 0.01, maxsteps = 3,
-                            approve_all_dl = FALSE, temporary = TRUE, ...) {
+                            lines_network = TRUE, buffer_dist = 0.01,
+                            maxsteps = 3, approve_all_dl = FALSE,
+                            temporary = TRUE, ...) {
 
   if (!interactive()) {
     approve_all_dl <- TRUE
@@ -313,6 +317,17 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
 
   if (length(lon) > 1 | length(lat) > 1) {
     stop("extract_network only accepts a single lon-lat pair.")
+  }
+
+  # if coords are na attempt to pull from lines object
+  if (all(is.na(c(lon, lat)))) {
+    # line_sample doesn't allow 4326 operations :(
+    coords <- sf::st_transform(st_cast(
+      sf::st_line_sample(sf::st_transform(lines, 3395), sample = 0),
+      "POINT"), 4326)
+    coords <- st_coordinates(coords)
+    lon <- coords[1]
+    lat <- coords[2]
   }
 
   # retrieve network table
@@ -325,17 +340,24 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
 
   if (all(!is.na(lines))) {
     names(lines) <- tolower(names(lines))
+  }
+
+  if (all(!is.na(lines)) & lines_network) {
     # filter network table by line comids
     network_table <- dplyr::filter(network_table,
       .data$tocomid %in% lines$comid | .data$fromcomid %in% lines$comid)
   }
 
-  # browser()
+  if (lines_network) {
+    t_reaches <- terminal_reaches(lon, lat, buffer_dist = buffer_dist,
+      lakewise = TRUE, pretty = TRUE,
+      approve_all_dl = approve_all_dl,
+      temporary = temporary, ...)
+  } else {
+    t_reaches <- terminal_reaches(network = lines, pretty = TRUE,
+      approve_all_dl = approve_all_dl, temporary = temporary, ...)
+  }
 
-  t_reaches     <- terminal_reaches(lon, lat, buffer_dist = buffer_dist,
-    lakewise = TRUE, pretty = TRUE,
-    approve_all_dl = approve_all_dl,
-    temporary = temporary, ...)
   temp_reaches  <- neighbors(t_reaches$comid, network_table, direction = "up")
   res_reaches   <- temp_reaches
 
@@ -361,7 +383,7 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
     # lines_file <- nhd_plus_list(vpu, "NHDSnapshot", full.names = TRUE,
     #                             file_ext = "shp")
     # lines_file <- lines_file[grep("NHDFlowline", lines_file)]
-    if (all(is.na(lines))) {
+    if (all(is.na(lines)) | !lines_network) {
       lines        <- nhd_plus_load(vpu, "NHDSnapshot", "NHDFlowline",
         pretty = TRUE, approve_all_dl = approve_all_dl, temporary = temporary,
         ...)
