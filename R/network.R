@@ -84,7 +84,7 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
 
     poly <- nhd_plus_query(lon, lat, dsn = "NHDWaterbody",
       buffer_dist = buffer_dist,
-      approve_all_dl = approve_all_dl, 
+      approve_all_dl = approve_all_dl,
       temporary = temporary, ...)$sp$NHDWaterbody
 
     if (nrow(poly) == 0) {
@@ -145,7 +145,7 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
         st_union(st_cast(network_lines, "MULTILINESTRING"))),
       dsn = "NHDWaterbody",
       buffer_dist = 0.01,
-      approve_all_dl = approve_all_dl, 
+      approve_all_dl = approve_all_dl,
       temporary = temporary,
       ...)$sp$NHDWaterbody)
 
@@ -330,9 +330,11 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
       .data$tocomid %in% lines$comid | .data$fromcomid %in% lines$comid)
   }
 
+  # browser()
+
   t_reaches     <- terminal_reaches(lon, lat, buffer_dist = buffer_dist,
     lakewise = TRUE, pretty = TRUE,
-    approve_all_dl = approve_all_dl, 
+    approve_all_dl = approve_all_dl,
     temporary = temporary, ...)
   temp_reaches  <- neighbors(t_reaches$comid, network_table, direction = "up")
   res_reaches   <- temp_reaches
@@ -361,7 +363,8 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
     # lines_file <- lines_file[grep("NHDFlowline", lines_file)]
     if (all(is.na(lines))) {
       lines        <- nhd_plus_load(vpu, "NHDSnapshot", "NHDFlowline",
-        pretty = TRUE, approve_all_dl = approve_all_dl, temporary = temporary, ...)
+        pretty = TRUE, approve_all_dl = approve_all_dl, temporary = temporary,
+        ...)
       names(lines) <- tolower(names(lines))
     }
 
@@ -378,7 +381,8 @@ extract_network <- function(lon = NA, lat = NA, lines = NA,
 
     # pull first order streams
     l_reach <- leaf_reaches(
-      network = res, pretty = TRUE, approve_all_dl = approve_all_dl, temporary = temporary)
+      network = res, pretty = TRUE, approve_all_dl = approve_all_dl,
+      temporary = temporary)
     if (nrow(l_reach) > 0) {
       first_order_reaches <- neighbors(l_reach$comid, network_table,
         direction = "up")
