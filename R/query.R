@@ -47,8 +47,8 @@
 #'   geom_sf(data = qry_lines$sp$NHDFlowLine, color = "red")
 #' }
 nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
-                           dsn, buffer_dist = 0.05, approve_all_dl = FALSE, 
-                           temporary = TRUE, ...) {
+                           dsn, buffer_dist = units::as_units(1, "km"),
+                           approve_all_dl = FALSE, temporary = TRUE, ...) {
 
   if (!interactive()) {
     approve_all_dl <- TRUE
@@ -96,10 +96,10 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
         dsn = dsn, pretty = FALSE,
         quiet = TRUE, wkt_filter = NA,
         approve_all_dl = TRUE,
-        temporary=temporary,
+        temporary = temporary,
         query = paste0("SELECT * from ", dsn, " LIMIT 1"))$res
     )
-
+    
     wkt_filter <- sf::st_as_text(
       sf::st_transform(sf::st_geometry(pnt_buff), crs_dsn))
   } else {
@@ -117,7 +117,7 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
         dsn = dsn, pretty = FALSE,
         quiet = TRUE, wkt_filter = NA,
         approve_all_dl = approve_all_dl,
-        temporary=temporary,
+        temporary = temporary,
         query = paste0("SELECT * from ", dsn, " LIMIT 1"))$res
     )
     wkt_filter <- sf::st_as_text(
@@ -125,7 +125,7 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
   }
 
   sp_sub <- lapply(dsn, function(x) nhd_plus_load(vpu = vpu, dsn = x,
-    approve_all_dl = approve_all_dl, temporary=temporary,
+    approve_all_dl = approve_all_dl, temporary = temporary,
     wkt_filter = wkt_filter,
     ...))
   names(sp_sub) <- dsn

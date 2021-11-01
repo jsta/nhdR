@@ -200,11 +200,14 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
 #' coords  <- data.frame(lat = 41.42217, lon = -73.24189)
 #' l_reach <- leaf_reaches(coords$lon, coords$lat)
 #'
+#' network_focal <- nhd_plus_query(lon = coords$lon, lat = coords$lat,
+#'   dsn = "NHDFlowline", buffer_dist = units::as_units(2, "km"))$sp$NHDFlowline
 #' network <- nhd_plus_query(lon = coords$lon, lat = coords$lat,
-#'   dsn = "NHDFlowline", buffer_dist = 0.02)$sp$NHDFlowline
-#' l_reach <- leaf_reaches(network = network)
+#'   dsn = "NHDFlowline", buffer_dist = units::as_units(5, "km"))$sp$NHDFlowline
+#' l_reach <- leaf_reaches(network = network_focal)
 #'
 #' plot(network$geometry)
+#' plot(network_focal$geometry, col = "darkgreen", add=TRUE)
 #' plot(l_reach$geometry, col = "red", add = TRUE)
 #' }
 leaf_reaches <- function(lon = NA, lat = NA, network = NA,
@@ -212,6 +215,23 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
 
   if (!interactive()) {
     approve_all_dl <- TRUE
+  }
+
+  if (all(is.na(c(lon, lat))) & all(!is.na(network))){
+    if(nrow(network) == 0) {
+    stop("network objects must have at least one linestring.")
+    }
+  }
+
+  # if coords are na attempt to pull from lines object
+  if (all(is.na(c(lon, lat)))) {
+    # line_sample doesn't allow 4326 operations :(
+    coords <- sf::st_transform(st_cast(
+      sf::st_line_sample(sf::st_transform(network, 3395), sample = 0),
+      "POINT"), 4326)
+    coords <- st_coordinates(coords)
+    lon <- coords[1]
+    lat <- coords[2]
   }
 
   if (all(is.na(network))) {

@@ -47,11 +47,14 @@ leaf_reaches(coords$lon, coords$lat)
 coords  <- data.frame(lat = 41.42217, lon = -73.24189)
 l_reach <- leaf_reaches(coords$lon, coords$lat)
 
+network_focal <- nhd_plus_query(lon = coords$lon, lat = coords$lat,
+  dsn = "NHDFlowline", buffer_dist = units::as_units(2, "km"))$sp$NHDFlowline
 network <- nhd_plus_query(lon = coords$lon, lat = coords$lat,
-  dsn = "NHDFlowline", buffer_dist = 0.02)$sp$NHDFlowline
-l_reach <- leaf_reaches(network = network)
+  dsn = "NHDFlowline", buffer_dist = units::as_units(5, "km"))$sp$NHDFlowline
+l_reach <- leaf_reaches(network = network_focal)
 
 plot(network$geometry)
+plot(network_focal$geometry, col = "darkgreen", add=TRUE)
 plot(l_reach$geometry, col = "red", add = TRUE)
 }
 }
