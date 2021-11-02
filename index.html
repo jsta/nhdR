@@ -29,6 +29,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -41,18 +43,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">nhdR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.6</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
@@ -80,7 +76,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/jsta/nhdR/">
+  <a href="https://github.com/jsta/nhdR/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -99,47 +95,47 @@
   <div class="contents col-md-9">
 
 
-<div id="nhdr-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#nhdr-" class="anchor"></a>nhdR <a href="https://jsta.github.io/nhdR/"><img src="reference/figures/logo.png" align="right" height="140/"></a>
+<div class="section level1">
+<div class="page-header"><h1 id="nhdr-">nhdR <a href="https://jsta.github.io/nhdR/" class="external-link"><img src="reference/figures/logo.png" align="right" height="140/"></a>
+<a class="anchor" aria-label="anchor" href="#nhdr-"></a>
 </h1></div>
-<p>Tools for querying, downloading, and networking both the <a href="https://www.usgs.gov/core-science-systems/ngp/national-hydrography">National Hydrography Dataset (NHD)</a> and <a href="https://www.epa.gov/waterdata/nhdplus-national-hydrography-dataset-plus">NHDPlus</a> datasets.</p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<p>Tools for querying, downloading, and networking both the <a href="https://www.usgs.gov/core-science-systems/ngp/national-hydrography" class="external-link">National Hydrography Dataset (NHD)</a> and <a href="https://www.epa.gov/waterdata/nhdplus-national-hydrography-dataset-plus" class="external-link">NHDPlus</a> datasets.</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>CRAN policy is that no package can write to a persistent location by default. As a result, <code>nhdR</code> writes all data to a temporary location unless a <code>temporary = FALSE</code> argument is passed to the <code>nhd_plus_get</code>/<code>nhd_get</code> functions. Alternatively, <code>nhdR</code> will automatically write data to a persistent location if the <code>nhdR_path</code> environment variable is set. To do this, add the following line to your <code>.Rprofile</code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html">Sys.setenv</a></span><span class="op">(</span>nhdR_path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="fu">rappdirs</span><span class="fu">::</span><span class="fu"><a href="https://rappdirs.r-lib.org/reference/user_data_dir.html">user_data_dir</a></span><span class="op">(</span>appname <span class="op">=</span> <span class="st">"nhdR"</span>,
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span>nhdR_path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu">rappdirs</span><span class="fu">::</span><span class="fu"><a href="https://rappdirs.r-lib.org/reference/user_data_dir.html" class="external-link">user_data_dir</a></span><span class="op">(</span>appname <span class="op">=</span> <span class="st">"nhdR"</span>,
       appauthor <span class="op">=</span> <span class="st">"nhdR"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>Your <code>.Rprofile</code> file can be edited using the <code><a href="https://usethis.r-lib.org/reference/edit.html">usethis::edit_r_profile()</a></code> function.</p>
-<div id="stable-version-from-cran" class="section level3">
-<h3 class="hasAnchor">
-<a href="#stable-version-from-cran" class="anchor"></a>Stable version from CRAN</h3>
+<p>Your <code>.Rprofile</code> file can be edited using the <code><a href="https://usethis.r-lib.org/reference/edit.html" class="external-link">usethis::edit_r_profile()</a></code> function.</p>
+<div class="section level3">
+<h3 id="stable-version-from-cran">Stable version from CRAN<a class="anchor" aria-label="anchor" href="#stable-version-from-cran"></a>
+</h3>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"nhdR"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"nhdR"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="or-development-version-from-github" class="section level3">
-<h3 class="hasAnchor">
-<a href="#or-development-version-from-github" class="anchor"></a>or development version from GitHub</h3>
+<div class="section level3">
+<h3 id="or-development-version-from-github">or development version from GitHub<a class="anchor" aria-label="anchor" href="#or-development-version-from-github"></a>
+</h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"jsta/nhdR"</span><span class="op">)</span></code></pre></div>
-<p>This package also requires an installation of <a href="https://www.7-zip.org/">7-zip</a> that can be called via the command line using <code>7z</code> or <code>7za.exe</code> (check if your machine is good to go with <code>nhdR:::has_7z()</code>).</p>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"jsta/nhdR"</span><span class="op">)</span></code></pre></div>
+<p>This package also requires an installation of <a href="https://www.7-zip.org/" class="external-link">7-zip</a> that can be called via the command line using <code>7z</code> or <code>7za.exe</code> (check if your machine is good to go with <code>nhdR:::has_7z()</code>).</p>
 </div>
 </div>
-<div id="usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
-<div id="load-package" class="section level3">
-<h3 class="hasAnchor">
-<a href="#load-package" class="anchor"></a>Load package</h3>
+<div class="section level2">
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h2>
+<div class="section level3">
+<h3 id="load-package">Load package<a class="anchor" aria-label="anchor" href="#load-package"></a>
+</h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jsta/nhdR">nhdR</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jsta/nhdR" class="external-link">nhdR</a></span><span class="op">)</span></code></pre></div>
 </div>
-<div id="nhd-plus" class="section level3">
-<h3 class="hasAnchor">
-<a href="#nhd-plus" class="anchor"></a>NHD Plus</h3>
-<p>NHD-Plus exports are organized by vector processing unit (vpu). See below for a low resolution vpu map (also <code><a href="reference/vpu_shp.html">nhdR::vpu_shp</a></code>). A hi-res version can be found <a href="https://www.epa.gov/waterdata/nhdplus-global-data">here</a>.</p>
+<div class="section level3">
+<h3 id="nhd-plus">NHD Plus<a class="anchor" aria-label="anchor" href="#nhd-plus"></a>
+</h3>
+<p>NHD-Plus exports are organized by vector processing unit (vpu). See below for a low resolution vpu map (also <code><a href="reference/vpu_shp.html">nhdR::vpu_shp</a></code>). A hi-res version can be found <a href="https://www.epa.gov/waterdata/nhdplus-global-data" class="external-link">here</a>.</p>
 <p><img src="reference/figures/README-unnamed-chunk-4-1.png"><!-- --></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># get a vpu export</span>
@@ -201,12 +197,12 @@
 <span class="co">#&gt; epsg (SRID):    4269</span>
 <span class="co">#&gt; proj4string:    +proj=longlat +datum=NAD83 +no_defs</span></code></pre></div>
 </div>
-<div id="nhd" class="section level3">
-<h3 class="hasAnchor">
-<a href="#nhd" class="anchor"></a>NHD</h3>
+<div class="section level3">
+<h3 id="nhd">NHD<a class="anchor" aria-label="anchor" href="#nhd"></a>
+</h3>
 <p>NHD exports are organized by US state.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/nhd_get.html">nhd_get</a></span><span class="op">(</span>state <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"DC"</span>, <span class="st">"HI"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="reference/nhd_get.html">nhd_get</a></span><span class="op">(</span>state <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"DC"</span>, <span class="st">"HI"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/nhd_list.html">nhd_list</a></span><span class="op">(</span>state <span class="op">=</span> <span class="st">"DC"</span><span class="op">)</span>
 <span class="co">#&gt;  [1] "ExternalCrosswalk"           "NHDFCode"                   </span>
@@ -252,7 +248,7 @@
 <span class="co">#&gt; 11         Shape_Length    2      0     Real</span>
 <span class="co">#&gt; 12           Shape_Area    2      0     Real</span></code></pre></div>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="reference/nhd_load.html">nhd_load</a></span><span class="op">(</span>state <span class="op">=</span> <span class="st">"DC"</span>, dsn <span class="op">=</span> <span class="st">"NHDWaterbody"</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="reference/nhd_load.html">nhd_load</a></span><span class="op">(</span>state <span class="op">=</span> <span class="st">"DC"</span>, dsn <span class="op">=</span> <span class="st">"NHDWaterbody"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Reading layer `NHDWaterbody' from data source `/home/jose/.local/share/nhdR/NHDH_DC.gdb' using driver `OpenFileGDB'</span>
 <span class="co">#&gt; Simple feature collection with 8025 features and 12 fields</span>
 <span class="co">#&gt; geometry type:  MULTIPOLYGON</span>
@@ -295,54 +291,58 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=nhdR">https://​cloud.r-project.org/​package=nhdR</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/jsta/nhdR/">https://​github.com/​jsta/​nhdR/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/jsta/nhdR/issues">https://​github.com/​jsta/​nhdR/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=nhdR" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/jsta/nhdR/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/jsta/nhdR/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>GPL</li>
 </ul>
 </div>
+
+
 <div class="citation">
-<h2>Citation</h2>
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
 <li><a href="authors.html">Citing nhdR</a></li>
 </ul>
 </div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Jemma Stachelek <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-5924-2464" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Jemma Stachelek <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-5924-2464" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://lifecycle.r-lib.org/articles/stages.html#stable"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a></li>
-<li><a href="https://cran.r-project.org/package=nhdR"><img src="http://www.r-pkg.org/badges/version/nhdR" alt="CRAN_Status_Badge"></a></li>
-<li><a href="https://github.com/jsta/nhdR/actions/workflows/R-CMD-check.yml"><img src="https://github.com/jsta/nhdR/actions/workflows/R-CMD-check.yml/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://zenodo.org/badge/latestdoi/75339263"><img src="https://zenodo.org/badge/75339263.svg" alt="DOI"></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#stable" class="external-link"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a></li>
+<li><a href="https://cran.r-project.org/package=nhdR" class="external-link"><img src="http://www.r-pkg.org/badges/version/nhdR" alt="CRAN_Status_Badge"></a></li>
+<li><a href="https://github.com/jsta/nhdR/actions/workflows/R-CMD-check.yml" class="external-link"><img src="https://github.com/jsta/nhdR/actions/workflows/R-CMD-check.yml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://zenodo.org/badge/latestdoi/75339263" class="external-link"><img src="https://zenodo.org/badge/75339263.svg" alt="DOI"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Jemma Stachelek.</p>
+  <p></p>
+<p>Developed by Jemma Stachelek.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>
@@ -350,6 +350,8 @@
 
   
 
+
+  
 
   </body>
 </html>

@@ -1,9 +1,9 @@
-pandoc: '2.12'
-pkgdown: 1.6.1
-pkgdown_sha: ~
+pandoc: 2.14.1
+pkgdown: 1.9000.9000.9000
+pkgdown_sha: e2cb76867c0d303cd693705e59f41cc168acdc99
 articles:
   demo: demo.html
   flow: flow.html
   network: network.html
-last_built: 2021-10-28T16:25Z
+last_built: 2021-11-02T16:03Z
 
