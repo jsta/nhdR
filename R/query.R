@@ -6,7 +6,7 @@
 #' @param poly sfc polygon. optional
 #' @param dsn character data source
 #' @param buffer_dist numeric buffer in units of coordinate degrees
-#' @param approve_all_dl logical blanket approval to download all missing data. 
+#' @param approve_all_dl logical blanket approval to download all missing data.
 #'  Defaults to TRUE if session is non-interactive.
 #' @param temporary logical set FALSE to save data to a persistent
 #'  rappdirs location
@@ -47,7 +47,7 @@
 #'   geom_sf(data = qry_lines$sp$NHDFlowLine, color = "red")
 #' }
 nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
-                           dsn, buffer_dist = 0.05, approve_all_dl = FALSE, 
+                           dsn, buffer_dist = 0.05, approve_all_dl = FALSE,
                            temporary = TRUE, ...) {
 
   if (!interactive()) {
@@ -96,7 +96,7 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
         dsn = dsn, pretty = FALSE,
         quiet = TRUE, wkt_filter = NA,
         approve_all_dl = TRUE,
-        temporary=temporary,
+        temporary = temporary,
         query = paste0("SELECT * from ", dsn, " LIMIT 1"))$res
     )
 
@@ -117,7 +117,7 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
         dsn = dsn, pretty = FALSE,
         quiet = TRUE, wkt_filter = NA,
         approve_all_dl = approve_all_dl,
-        temporary=temporary,
+        temporary = temporary,
         query = paste0("SELECT * from ", dsn, " LIMIT 1"))$res
     )
     wkt_filter <- sf::st_as_text(
@@ -125,7 +125,7 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
   }
 
   sp_sub <- lapply(dsn, function(x) nhd_plus_load(vpu = vpu, dsn = x,
-    approve_all_dl = approve_all_dl, temporary=temporary,
+    approve_all_dl = approve_all_dl, temporary = temporary,
     wkt_filter = wkt_filter,
     ...))
   names(sp_sub) <- dsn
