@@ -29,8 +29,7 @@ test_that("nhd_plus_query fails well", {
   expect_error(
     nhdR::nhd_plus_query(lat = coords$lat,
       lon = coords$lon,
-      dsn = "NHDFlowLine",
-      buffer_dist = 0.1),
+      dsn = "NHDFlowLine"),
     "nhd_plus_query only accepts a single lon-lat pair.")
 
   expect_error(

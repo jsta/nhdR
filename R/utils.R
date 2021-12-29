@@ -375,3 +375,9 @@ make_valid_geom_s2 <- function(sf_object) {
   sf::st_geometry(sf_object) <- sf::st_as_sfc(sf_s2)
   sf_object
 }
+
+st_line_sample_4326 <- function(lines){
+  sf::st_transform(st_cast(
+      sf::st_line_sample(sf::st_transform(lines, 3395), sample = 0),
+      "POINT"), 4326)
+}

@@ -144,7 +144,6 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
       nhd_plus_query(poly = st_convex_hull(
         st_union(st_cast(network_lines, "MULTILINESTRING"))),
       dsn = "NHDWaterbody",
-      buffer_dist = 0.01,
       approve_all_dl = approve_all_dl,
       temporary = temporary,
       ...)$sp$NHDWaterbody)
@@ -200,11 +199,14 @@ terminal_reaches <- function(lon = NA, lat = NA, buffer_dist = 0.01,
 #' coords  <- data.frame(lat = 41.42217, lon = -73.24189)
 #' l_reach <- leaf_reaches(coords$lon, coords$lat)
 #'
+#' network_focal <- nhd_plus_query(lon = coords$lon, lat = coords$lat,
+#'   dsn = "NHDFlowline", buffer_dist = units::as_units(2, "km"))$sp$NHDFlowline
 #' network <- nhd_plus_query(lon = coords$lon, lat = coords$lat,
-#'   dsn = "NHDFlowline", buffer_dist = 0.02)$sp$NHDFlowline
-#' l_reach <- leaf_reaches(network = network)
+#'   dsn = "NHDFlowline", buffer_dist = units::as_units(5, "km"))$sp$NHDFlowline
+#' l_reach <- leaf_reaches(network = network_focal)
 #'
 #' plot(network$geometry)
+#' plot(network_focal$geometry, col = "darkgreen", add=TRUE)
 #' plot(l_reach$geometry, col = "red", add = TRUE)
 #' }
 leaf_reaches <- function(lon = NA, lat = NA, network = NA,
@@ -212,6 +214,23 @@ leaf_reaches <- function(lon = NA, lat = NA, network = NA,
 
   if (!interactive()) {
     approve_all_dl <- TRUE
+  }
+
+  if (all(is.na(c(lon, lat))) & all(!is.na(network))){
+    if(nrow(network) == 0) {
+    stop("network objects must have at least one linestring.")
+    }
+  }
+
+  # if coords are na attempt to pull from lines object
+  if (all(is.na(c(lon, lat)))) {
+    # line_sample doesn't allow 4326 operations :(
+    coords <- sf::st_transform(st_cast(
+      sf::st_line_sample(sf::st_transform(network, 3395), sample = 0),
+      "POINT"), 4326)
+    coords <- st_coordinates(coords)
+    lon <- coords[1]
+    lat <- coords[2]
   }
 
   if (all(is.na(network))) {
@@ -425,4 +444,37 @@ neighbors <- function(node, network_table, direction = c("up", "down")) {
     res <- dplyr::filter(network_table, .data$tocomid %in% node)
     dplyr::filter(res, .data$fromcomid != 0)
   }
+}
+
+#' Return tip reaches from a network
+#'
+#' A tip reach is a stream flowline with no upstream connections.
+#'
+#' @inheritParams terminal_reaches
+#' @return An sf data frame with LINESTRING geometries
+#' @export
+#'
+#' @examples \dontrun{
+#'
+#' coords  <- data.frame(lat = 41.42217, lon = -73.24189)
+#' network <- nhd_plus_query(lon = coords$lon, lat = coords$lat,
+#'   dsn = "NHDFlowline", buffer_dist = units::as_units(5, "km"))$sp$NHDFlowline
+#' t_reaches <- tip_reaches(network = network)
+#'
+#' plot(network$geometry)
+#' plot(t_reaches$geometry, col = "red", add = TRUE)
+#' }
+tip_reaches <- function(network = NA) {
+
+  end_points <- sf::st_transform(
+    st_line_sample_4326(network), sf::st_crs(network))
+  end_points <- sf::st_buffer(end_points, dist = 50)
+
+  is_tip_reach <- unlist(lapply(
+    sf::st_intersects(end_points, network), function(x) length(x) == 1))
+
+  candidate_reaches <- lapply(
+    sf::st_intersects(end_points, network),
+    function(x) x)
+  network[unlist(candidate_reaches[is_tip_reach]),]
 }

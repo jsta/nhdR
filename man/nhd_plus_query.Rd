@@ -9,7 +9,7 @@ nhd_plus_query(
   lat = NA,
   poly = NA,
   dsn,
-  buffer_dist = 0.05,
+  buffer_dist = units::as_units(1, "km"),
   approve_all_dl = FALSE,
   temporary = TRUE,
   ...
