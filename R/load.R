@@ -29,93 +29,95 @@
 #' dt <- nhd_load("RI", "NHDWaterbody", file_ext = "dbf")
 #' dt <- nhd_load(c("RI", "DC"), "NHDWaterbody", file_ext = "gpkg")
 #' }
-nhd_load <- function(state, dsn, file_ext = NA, 
-  approve_all_dl = FALSE, temporary = FALSE, ...){
+nhd_load <- function(state, dsn, file_ext = NA,
+                     approve_all_dl = FALSE, temporary = FALSE, ...) {
 
-  if(!interactive()){
-    approve_all_dl = TRUE
+  if (!interactive()) {
+    approve_all_dl <- TRUE
   }
 
-  if(!(file_ext %in% c(NA, "shp", "dbf", "gpkg"))){
+  if (!(file_ext %in% c(NA, "shp", "dbf", "gpkg"))) {
     stop(paste0("file_ext must be set to either 'shp' or 'dbf'"))
   }
 
-  nhd_state_exists <- function(state){
-    if(any(!file.exists(gdb_path(state)))){
+  nhd_state_exists <- function(state) {
+    if (any(!file.exists(gdb_path(state)))) {
       state_exists <- 0
-      if(!approve_all_dl){
+      if (!approve_all_dl) {
         userconsents <- utils::menu(c("Yes", "No"),
-                          title = paste0(state,
-                          " state gdb file not found. Download it?"))
-      }else{
+          title = paste0(state,
+            " state gdb file not found. Download it?"))
+      } else {
         userconsents <- 1
       }
-      if(userconsents == 1){
+      if (userconsents == 1) {
         yes_dl <- 1
-      }else{
+      } else {
         yes_dl <- 0
       }
-    }else{
+    } else {
       state_exists <- 1
       yes_dl <- 0
     }
     data.frame(state_exists = state_exists, yes_dl = yes_dl)
   }
 
-  nhd_dl_state <- function(state, state_exists, yes_dl, file_ext, ...){
+  nhd_dl_state <- function(state, state_exists, yes_dl, file_ext, ...) {
 
-      if(as.logical(yes_dl)){
-        nhd_get(state = state, temporary = temporary)
-      }
-      if(as.logical(state_exists) | as.logical(yes_dl)){
+    if (as.logical(yes_dl)) {
+      nhd_get(state = state, temporary = temporary)
+    }
+    if (as.logical(state_exists) | as.logical(yes_dl)) {
 
-        if(is.na(file_ext) | file_ext == "shp"){
-          tryCatch({
+      if (is.na(file_ext) | file_ext == "shp") {
+        tryCatch(
+          {
             suppressWarnings(sf::st_zm(
               sf::st_read(gdb_path(state), dsn,
-                          stringsAsFactors = FALSE, ...)
-              ))},
+                stringsAsFactors = FALSE, ...)
+            ))
+          },
           error = function(e) {
             nhd_read_dbf(state, dsn)
           })
-        }else{
-          if(file_ext == "gpkg"){
-            if(!is_gpkg_installed()){
-              stop("The geopackage driver is not installed.")
-            }
-            suppressWarnings(st_read_custom(gdb_path(state), layer = dsn))
-          }else{
-            nhd_read_dbf(state, dsn)
+      } else {
+        if (file_ext == "gpkg") {
+          if (!is_gpkg_installed()) {
+            stop("The geopackage driver is not installed.")
           }
+          suppressWarnings(st_read_custom(gdb_path(state), layer = dsn))
+        } else {
+          nhd_read_dbf(state, dsn)
         }
       }
+    }
   }
 
   first_state_exists <- nhd_state_exists(state[1])
 
-  if(length(state) > 1){
+  if (length(state) > 1) {
     yes_dl_vec <- rbind(first_state_exists,
-          do.call("rbind", lapply(state[2:length(state)],
-              nhd_state_exists)))
-  }else{
+      do.call("rbind", lapply(state[2:length(state)],
+        nhd_state_exists)))
+  } else {
     yes_dl_vec <- first_state_exists
   }
 
   res <- lapply(seq_len(nrow(yes_dl_vec)),
-                function(i) nhd_dl_state(state = state[i],
-                                yes_dl = yes_dl_vec[i, "yes_dl"],
-                                state_exists = yes_dl_vec[i, "state_exists"],
-                                file_ext = file_ext,
-                                ...))
+    function(i) nhd_dl_state(state = state[i],
+      yes_dl = yes_dl_vec[i, "yes_dl"],
+      state_exists = yes_dl_vec[i, "state_exists"],
+      file_ext = file_ext,
+      ...))
 
   res <- res[!unlist(lapply(res, is.null))]
   res <- do.call("rbind", res)
 
-  if(!all(class(res) != "data.frame") & any(class(res) == "sf")){
+  if (!all(class(res) != "data.frame") & any(class(res) == "sf")) {
     invisible(prj <- sf::st_crs(nhd_dl_state(state = state[1],
-                        state_exists = first_state_exists[,"state_exists"],
-                        yes_dl = first_state_exists[,"yes_dl"],
-                        quiet = TRUE, file_ext = NA)))
+      state_exists = first_state_exists[, "state_exists"],
+      yes_dl = first_state_exists[, "yes_dl"],
+      quiet = TRUE, file_ext = NA)))
     sf::st_crs(res) <- prj
   }
   res
@@ -154,7 +156,7 @@ nhd_load <- function(state, dsn, file_ext = NA,
 #' @examples \dontrun{
 #' # Spatial
 #' dt <- nhd_plus_load(4, "NHDSnapshot", "NHDWaterbody")
-#' dt <- nhd_plus_load(c(1,2), "NHDSnapshot", "NHDWaterbody")
+#' dt <- nhd_plus_load(c(1, 2), "NHDSnapshot", "NHDWaterbody")
 #' dt <- nhd_plus_load(4, "NHDSnapshot", "NHDFlowline")
 #' dt <- nhd_plus_load(4, "NHDPlusCatchment", "Catchment")
 #'
@@ -166,7 +168,7 @@ nhd_load <- function(state, dsn, file_ext = NA,
 #' # Non-spatial
 #' dt <- nhd_plus_load(1, "NHDPlusAttributes", "PlusFlow")
 #' dt <- nhd_plus_load("National", "V1_To_V2_Crosswalk",
-#'  "NHDPlusV1Network_V2Network_Crosswalk")
+#'   "NHDPlusV1Network_V2Network_Crosswalk")
 #' gridcode      <- nhd_plus_load(1, "NHDPlusCatchment", "featuregridcode")
 #' flowline_vaa  <- nhd_plus_load(1, "NHDPlusAttributes", "PlusFlowlineVAA")
 #' eromflow      <- nhd_plus_load(4, "EROMExtension", "EROM_010001")
@@ -176,26 +178,25 @@ nhd_load <- function(state, dsn, file_ext = NA,
 #'
 #' # Spatial filtering via wkt_filter
 #' dt <- nhd_plus_load(4, "NHDSnapshot", "NHDWaterbody", wkt_filter = "POINT (-85.411 42.399)")
-#'
 #' }
 nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
-                          file_ext = NA, approve_all_dl = FALSE, 
+                          file_ext = NA, approve_all_dl = FALSE,
                           force_dl = FALSE, temporary = FALSE, pretty = FALSE,
-                          wkt_filter = NA, ...){
+                          wkt_filter = NA, ...) {
 
-  if(!interactive()){
-    approve_all_dl = TRUE
+  if (!interactive()) {
+    approve_all_dl <- TRUE
   }
 
-  if(!(file_ext %in% c(NA, "shp", "dbf"))){
+  if (!(file_ext %in% c(NA, "shp", "dbf"))) {
     stop(paste0("file_ext must be set to either 'shp' or 'dbf'"))
   }
 
   res        <- lapply(vpu, nhd_plus_load_vpu,
-                       component = component, dsn = dsn,
-                       approve_all_dl = approve_all_dl, pretty = pretty,
-                       temporary = temporary,
-                       wkt_filter = wkt_filter, ...)
+    component = component, dsn = dsn,
+    approve_all_dl = approve_all_dl, pretty = pretty,
+    temporary = temporary,
+    wkt_filter = wkt_filter, ...)
   is_spatial <- unlist(lapply(res, function(x) x$is_spatial))
   # res        <- res[is_spatial]
 
@@ -205,27 +206,27 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
     lapply(res, function(x) length(names(x$res)))))
   names_template <- names(res[[names_template]]$res)
 
-  res <- lapply(res, function(x){
+  res <- lapply(res, function(x) {
     names(x$res) <- align_names(names(x$res), names_template)
-    x$res <- x$res[,names_template]
+    x$res <- x$res[, names_template]
     x
-    })
+  })
 
-  if(nrow(res[[1]]$res) > 0){
+  if (nrow(res[[1]]$res) > 0) {
     res        <- do.call("rbind", lapply(res, function(x) x$res))
-  }else{
+  } else {
     res <- res[[1]]$res
   }
 
-  if(any(is_spatial) & inherits(res, "data.frame")){
+  if (any(is_spatial) & inherits(res, "data.frame")) {
     invisible(
       prj <- sf::st_crs(
         nhd_plus_load_vpu(vpu[1],
-                        component = component, dsn = dsn, pretty = FALSE,
-                        quiet = TRUE, wkt_filter = wkt_filter,
-                        query = paste0("SELECT * from ", dsn, " LIMIT 1"))$res
-        )
+          component = component, dsn = dsn, pretty = FALSE,
+          quiet = TRUE, wkt_filter = wkt_filter,
+          query = paste0("SELECT * from ", dsn, " LIMIT 1"))$res
       )
+    )
     sf::st_crs(res) <- prj
   }
 
@@ -233,11 +234,11 @@ nhd_plus_load <- function(vpu, component = "NHDSnapshot", dsn,
 }
 
 nhd_plus_load_vpu <- function(vpu, component, dsn, pretty, wkt_filter,
-                              approve_all_dl = FALSE, force_dl = FALSE, 
-                              temporary = FALSE, file_ext = NA, ...){
+                              approve_all_dl = FALSE, force_dl = FALSE,
+                              temporary = FALSE, file_ext = NA, ...) {
 
   vpu_path <- list.files(file.path(nhd_path(), "NHDPlus"),
-                         include.dirs = TRUE, full.names = TRUE)
+    include.dirs = TRUE, full.names = TRUE)
 
   file_vpus <- sapply(
     stringr::str_extract(vpu_path, "_([0-9]{2}[A-z]{0,1})_"),
@@ -252,41 +253,41 @@ nhd_plus_load_vpu <- function(vpu, component, dsn, pretty, wkt_filter,
     seq_len(length(vpu_path)) %in% grep("7z", vpu_path)]
   vpu_path <- vpu_path[grep(component, vpu_path)]
 
-  if(any(!file.exists(vpu_path)) | length(vpu_path) == 0 | force_dl){
+  if (any(!file.exists(vpu_path)) | length(vpu_path) == 0 | force_dl) {
 
-    if(!approve_all_dl & !force_dl){
+    if (!approve_all_dl & !force_dl) {
       userconsents <- utils::menu(c("Yes", "No"),
-                                  title = paste0(vpu, 
-                                  " vpu file not found. Download it?"))
-    }else{
+        title = paste0(vpu,
+          " vpu file not found. Download it?"))
+    } else {
       userconsents <- 1
     }
 
-    if(userconsents == 1){
-      nhd_plus_get(vpu = vpu, component = component, 
+    if (userconsents == 1) {
+      nhd_plus_get(vpu = vpu, component = component,
         force_dl = force_dl, temporary = temporary)
-    }else{
+    } else {
       stop("No file. Cannot load.")
     }
   }
 
   candidate_files <- nhd_plus_list(vpu, component = component,
-                                   full.names = TRUE, file_ext = file_ext)
+    full.names = TRUE, file_ext = file_ext)
   res <- candidate_files[grep(paste0(tolower(dsn), "\\."),
-                              tolower(candidate_files))]
-  if(length(res) == 0){
+    tolower(candidate_files))]
+  if (length(res) == 0) {
     stop(paste0("layer '", dsn, "' not found in component '",
-                component, "'"))
+      component, "'"))
   }
 
-  if(length(grep(paste0("shp", "$"), res)) > 0){
+  if (length(grep(paste0("shp", "$"), res)) > 0) {
     res <- res[grep("shp$", res)]
     res <- sf::st_zm(
       st_read_custom(res, pretty = pretty, stringsAsFactors = FALSE,
-                     wkt_filter = wkt_filter, ...))
+        wkt_filter = wkt_filter, ...))
     is_spatial <- TRUE
     list(res = res, is_spatial = is_spatial)
-  }else{
+  } else {
     res <- lapply(res, foreign::read.dbf, as.is = TRUE)
     names(res) <- dsn
     is_spatial <- FALSE
