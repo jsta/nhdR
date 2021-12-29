@@ -4,14 +4,14 @@
 \alias{select_point_overlay}
 \title{Select features clipped by a point buffer around a point}
 \usage{
-select_point_overlay(pnt, sp, buffer_dist = 0.05)
+select_point_overlay(pnt, sp, buffer_dist = units::as_units(4.75, "km"))
 }
 \arguments{
 \item{pnt}{geographic point of class sfc}
 
 \item{sp}{list of sf data frames}
 
-\item{buffer_dist}{numeric buffer in units of coordinate degrees}
+\item{buffer_dist}{numeric buffer with specified units}
 }
 \value{
 A list of sf spatial objects
@@ -27,7 +27,8 @@ sf::st_crs(pnt) <- 4326
 sp <- lapply(c("NHDWaterbody", "NHDFlowLine"),
   function(x) nhd_plus_load(vpu = 4, dsn = x))
 names(sp) <- c("NHDWaterbody", "NHDFlowLine")
-qry <- select_point_overlay(pnt = pnt, sp = sp, buffer_dist = 0.05)
-plot(qry$NHDWaterbody$geometry)
+qry <- select_point_overlay(pnt = pnt, sp = sp)
+plot(qry$NHDWaterbody$geometry, col = "blue")
+plot(qry$NHDFlowLine$geometry, col = "cyan", add = TRUE)
 }
 }

@@ -4,7 +4,7 @@
 \alias{nhd_query}
 \title{Select NHD features clipped by a circular buffer a coordinate pair}
 \usage{
-nhd_query(lon, lat, dsn, buffer_dist = 0.05)
+nhd_query(lon, lat, dsn, buffer_dist = units::as_units(4.75, "km"))
 }
 \arguments{
 \item{lon}{numeric longitude}
@@ -13,7 +13,7 @@ nhd_query(lon, lat, dsn, buffer_dist = 0.05)
 
 \item{dsn}{character data source}
 
-\item{buffer_dist}{numeric buffer in units of coordinate degrees}
+\item{buffer_dist}{numeric buffer with specified units}
 }
 \description{
 Select NHD features clipped by a circular buffer a coordinate pair

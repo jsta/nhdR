@@ -21,13 +21,8 @@
 #' pnt <- st_transform(pnt, st_crs(vpu_shp))
 #' # nhd_plus_list(nhdR::find_vpu(pnt))
 #'
-#' # set a non-geographic (projected) buffer size
 #' qry <- nhd_plus_query(wk$Lon, wk$Lat,
-#'   dsn = c("NHDWaterbody", "NHDFlowLine"),
-#'   buffer_dist = units::as_units(5, "km"))
-#'
-#' qry <- nhd_plus_query(wk$Lon, wk$Lat,
-#'   dsn = c("NHDWaterbody", "NHDFlowLine"), buffer_dist = 0.05)
+#'   dsn = c("NHDWaterbody", "NHDFlowLine"), buffer_dist = units::as_units(4.75, "km"))
 #'
 #' plot(qry$sp$NHDWaterbody$geometry, col = "blue")
 #' plot(qry$sp$NHDFlowLine$geometry, col = "cyan", add = TRUE)
@@ -47,7 +42,7 @@
 #'   geom_sf(data = qry_lines$sp$NHDFlowLine, color = "red")
 #' }
 nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
-                           dsn, buffer_dist = units::as_units(1, "km"),
+                           dsn, buffer_dist = units::as_units(4.75, "km"),
                            approve_all_dl = FALSE, temporary = TRUE, ...) {
 
   if (!interactive()) {
@@ -59,7 +54,7 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
   }
 
   # ! in default buffer size for query or extract
-  if (all(!is.na(poly)) & !(buffer_dist == units::as_units(1, "km"))) {
+  if (all(!is.na(poly)) & !(buffer_dist == units::as_units(4.75, "km"))) {
     stop("Passing a polygon object returns only polygon-intersecting lines and disregards any buffer_dist setting.")
   }
 
@@ -148,7 +143,7 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
 #' @param lon numeric longitude
 #' @param lat numeric latitude
 #' @param dsn character data source
-#' @param buffer_dist numeric buffer in units of coordinate degrees
+#' @param buffer_dist numeric buffer with specified units
 #' @examples \dontrun{
 #' wk <- wikilake::lake_wiki("Worden Pond")
 #' qry <- nhd_query(wk$Lon, wk$Lat, dsn = c("NHDWaterbody", "NHDFlowline"))
@@ -159,7 +154,7 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
 #' axis(1)
 #' axis(2)
 #' }
-nhd_query <- function(lon, lat, dsn, buffer_dist = 0.05) {
+nhd_query <- function(lon, lat, dsn, buffer_dist = units::as_units(4.75, "km")) {
 
   pnt         <- st_sfc(st_point(c(lon, lat)))
   st_crs(pnt) <- st_crs(nhdR::vpu_shp)
@@ -182,7 +177,7 @@ nhd_query <- function(lon, lat, dsn, buffer_dist = 0.05) {
 #'
 #' @param pnt geographic point of class sfc
 #' @param sp list of sf data frames
-#' @param buffer_dist numeric buffer in units of coordinate degrees
+#' @param buffer_dist numeric buffer with specified units
 #' @return A list of sf spatial objects
 #' @export
 #' @examples \dontrun{
@@ -192,10 +187,11 @@ nhd_query <- function(lon, lat, dsn, buffer_dist = 0.05) {
 #' sp <- lapply(c("NHDWaterbody", "NHDFlowLine"),
 #'   function(x) nhd_plus_load(vpu = 4, dsn = x))
 #' names(sp) <- c("NHDWaterbody", "NHDFlowLine")
-#' qry <- select_point_overlay(pnt = pnt, sp = sp, buffer_dist = 0.05)
-#' plot(qry$NHDWaterbody$geometry)
+#' qry <- select_point_overlay(pnt = pnt, sp = sp)
+#' plot(qry$NHDWaterbody$geometry, col = "blue")
+#' plot(qry$NHDFlowLine$geometry, col = "cyan", add = TRUE)
 #' }
-select_point_overlay <- function(pnt, sp, buffer_dist = 0.05) {
+select_point_overlay <- function(pnt, sp, buffer_dist = units::as_units(4.75, "km")) {
 
   pnt_buff  <- sf::st_sfc(sf::st_buffer(pnt, dist = buffer_dist))
   sf::st_crs(pnt_buff) <- sf::st_crs(pnt) # <- sf::st_crs(nhdR::vpu_shp)

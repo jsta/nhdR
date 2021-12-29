@@ -9,7 +9,7 @@ nhd_plus_query(
   lat = NA,
   poly = NA,
   dsn,
-  buffer_dist = units::as_units(1, "km"),
+  buffer_dist = units::as_units(4.75, "km"),
   approve_all_dl = FALSE,
   temporary = TRUE,
   ...
@@ -26,7 +26,7 @@ nhd_plus_query(
 
 \item{buffer_dist}{numeric buffer in units of coordinate degrees}
 
-\item{approve_all_dl}{logical blanket approval to download all missing data. 
+\item{approve_all_dl}{logical blanket approval to download all missing data.
 Defaults to TRUE if session is non-interactive.}
 
 \item{temporary}{logical set FALSE to save data to a persistent
@@ -49,13 +49,8 @@ pnt <- st_as_sf(wk, coords = c("Lon", "Lat"), crs = 4326)
 pnt <- st_transform(pnt, st_crs(vpu_shp))
 # nhd_plus_list(nhdR::find_vpu(pnt))
 
-# set a non-geographic (projected) buffer size
 qry <- nhd_plus_query(wk$Lon, wk$Lat,
-  dsn = c("NHDWaterbody", "NHDFlowLine"),
-  buffer_dist = units::as_units(5, "km"))
-
-qry <- nhd_plus_query(wk$Lon, wk$Lat,
-  dsn = c("NHDWaterbody", "NHDFlowLine"), buffer_dist = 0.05)
+  dsn = c("NHDWaterbody", "NHDFlowLine"), buffer_dist = units::as_units(4.75, "km"))
 
 plot(qry$sp$NHDWaterbody$geometry, col = "blue")
 plot(qry$sp$NHDFlowLine$geometry, col = "cyan", add = TRUE)
