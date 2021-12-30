@@ -214,7 +214,7 @@ nhd_query <- function(lon = NA, lat = NA, poly = NA,
     crs       <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
     poly      <- st_transform(poly, crs = crs)
 
-    browser()
+    # browser()
     crs_dsn  <- sf::st_crs(
       nhd_load(state[[1]],
         force_dl = FALSE,
@@ -222,7 +222,7 @@ nhd_query <- function(lon = NA, lat = NA, poly = NA,
         quiet = TRUE, wkt_filter = NA,
         query = paste0("SELECT * from ", dsn, " LIMIT 1"))
     )
-    browser()
+    # browser()
     wkt_filter <- sf::st_as_text(
       sf::st_transform(sf::st_geometry(poly), crs_dsn))
 
