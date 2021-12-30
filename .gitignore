@@ -16,3 +16,5 @@ test.R
 .vscode/
 README.html
 *.gpkg
+logo
+pkgdown
