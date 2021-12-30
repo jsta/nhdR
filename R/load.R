@@ -168,7 +168,8 @@ nhd_load <- function(state, dsn, file_ext = NA,
     invisible(prj <- sf::st_crs(nhd_dl_state(state = state[1], dsn = dsn,
       state_exists = first_state_exists[, "state_exists"],
       yes_dl = first_state_exists[, "yes_dl"],
-      quiet = TRUE, file_ext = NA)))
+      quiet = TRUE, file_ext = NA, wkt_filter = wkt_filter,
+      query = paste0("SELECT * from ", dsn, " LIMIT 1"))))
     sf::st_crs(res) <- prj
   }
   res
