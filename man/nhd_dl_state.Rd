@@ -11,8 +11,27 @@ nhd_dl_state(
   file_ext,
   dsn = NA,
   wkt_filter = NA,
+  temporary = FALSE,
   ...
 )
+}
+\arguments{
+\item{state}{state abbreviation}
+
+\item{state_exists}{1 for file exists on disk}
+
+\item{yes_dl}{1 for downloading the state gdb file}
+
+\item{file_ext}{file extension ("gdb", etc)}
+
+\item{dsn}{name of gdb layer}
+
+\item{wkt_filter}{a text string of coordinates see sf::st_read}
+
+\item{temporary}{logical set FALSE to save data to a persistent
+rappdirs location}
+
+\item{\dots}{other arguments passed to sf::st_read}
 }
 \description{
 nhd_dl_state

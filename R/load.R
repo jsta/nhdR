@@ -1,11 +1,21 @@
 #' nhd_dl_state
 #'
+#' @param state state abbreviation
+#' @param state_exists 1 for file exists on disk
+#' @param yes_dl 1 for downloading the state gdb file
+#' @param file_ext file extension ("gdb", etc)
+#' @param dsn name of gdb layer
+#' @param wkt_filter a text string of coordinates see sf::st_read
+#' @param temporary logical set FALSE to save data to a persistent
+#'  rappdirs location
+#' @param \dots other arguments passed to sf::st_read
+#'
 #' @export
 #' @examples \dontrun{
 #' nhd_dl_state("RI", 1, 0, NA, "NHDWaterbody")
 #' }
 nhd_dl_state <- function(state, state_exists, yes_dl, file_ext, dsn = NA,
-                         wkt_filter = NA, ...) {
+                         wkt_filter = NA, temporary = FALSE, ...) {
 
   # print("inner")
   # print(c(state = state, state_exists = state_exists,

@@ -23,3 +23,5 @@ test.R
 .vscode
 README.html
 ^.*\.gpkg$
+pkgdown
+Makefile

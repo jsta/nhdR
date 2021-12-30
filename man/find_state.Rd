@@ -6,6 +6,11 @@
 \usage{
 find_state(pnt, abb = FALSE)
 }
+\arguments{
+\item{pnt}{an sf point object}
+
+\item{abb}{logical return a state abbreviation?}
+}
 \description{
 find_state
 }

@@ -144,11 +144,17 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
 #' @param lat numeric latitude
 #' @param poly sfc polygon. optional
 #' @param dsn character data source
+#' @param approve_all_dl logical blanket approval to download all missing data.
+#'  Defaults to TRUE if session is non-interactive.
 #' @param buffer_dist numeric buffer with specified units
+#' @param temporary logical set FALSE to save data to a persistent
+#'  rappdirs location
+#' @param \dots other arguments passed to sf::st_read
 #' @examples \dontrun{
 #' library(sf)
 #' wk <- wikilake::lake_wiki("Worden Pond")
-#' qry <- nhd_query(wk$Lon, wk$Lat, dsn = c("NHDWaterbody", "NHDFlowLine"), buffer_dist = units::as_units(1, "km"))
+#' qry <- nhd_query(wk$Lon, wk$Lat, dsn = c("NHDWaterbody", "NHDFlowLine"),
+#'   buffer_dist = units::as_units(1, "km"))
 #' qry$sp$NHDWaterbody <- dplyr::filter(qry$sp$NHDWaterbody, FType != 466)
 #'
 #' plot(sf::st_geometry(qry$sp$NHDWaterbody), col = "blue")
@@ -158,7 +164,8 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
 #' axis(2)
 #'
 #' # query with a polygon
-#' wbd <- qry$sp$NHDWaterbody[order(st_area(qry$sp$NHDWaterbody), decreasing = TRUE), ][1, ]
+#' wbd <- qry$sp$NHDWaterbody[
+#'   order(st_area(qry$sp$NHDWaterbody), decreasing = TRUE), ][1, ]
 #' qry_lines <- nhd_query(poly = st_as_sfc(st_bbox(wbd)), dsn = "NHDFlowLine")
 #' library(ggplot2)
 #' ggplot() +
@@ -167,7 +174,8 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
 #' }
 nhd_query <- function(lon = NA, lat = NA, poly = NA,
                       dsn, approve_all_dl = FALSE,
-                      buffer_dist = units::as_units(4.75, "km"), ...) {
+                      buffer_dist = units::as_units(4.75, "km"),
+                      temporary = TRUE, ...) {
 
   if (!interactive()) {
     approve_all_dl <- TRUE

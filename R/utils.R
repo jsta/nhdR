@@ -154,6 +154,8 @@ find_vpu <- function(pnt) {
 
 #' find_state
 #'
+#' @param pnt an sf point object
+#' @param abb logical return a state abbreviation?
 #' @examples \dontrun{
 #' pnt <- st_as_sf(data.frame(Lon = -107.2, Lat = 39.45),
 #'   coords = c("Lon", "Lat"), crs = 4326)
