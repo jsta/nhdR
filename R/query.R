@@ -142,33 +142,105 @@ nhd_plus_query <- function(lon = NA, lat = NA, poly = NA,
 #' @import datasets
 #' @param lon numeric longitude
 #' @param lat numeric latitude
+#' @param poly sfc polygon. optional
 #' @param dsn character data source
 #' @param buffer_dist numeric buffer with specified units
 #' @examples \dontrun{
+#' library(sf)
 #' wk <- wikilake::lake_wiki("Worden Pond")
-#' qry <- nhd_query(wk$Lon, wk$Lat, dsn = c("NHDWaterbody", "NHDFlowline"))
+#' qry <- nhd_query(wk$Lon, wk$Lat, dsn = c("NHDWaterbody", "NHDFlowLine"), buffer_dist = units::as_units(1, "km"))
+#' qry$sp$NHDWaterbody <- dplyr::filter(qry$sp$NHDWaterbody, FType != 466)
 #'
 #' plot(sf::st_geometry(qry$sp$NHDWaterbody), col = "blue")
-#' plot(sf::st_geometry(qry$sp$NHDFlowline), col = "cyan", add = TRUE)
+#' plot(sf::st_geometry(qry$sp$NHDFlowLine), col = "cyan", add = TRUE)
 #' plot(qry$pnt, col = "red", pch = 19, add = TRUE)
 #' axis(1)
 #' axis(2)
+#'
+#' # query with a polygon
+#' wbd <- qry$sp$NHDWaterbody[order(st_area(qry$sp$NHDWaterbody), decreasing = TRUE), ][1, ]
+#' qry_lines <- nhd_query(poly = st_as_sfc(st_bbox(wbd)), dsn = "NHDFlowLine")
+#' library(ggplot2)
+#' ggplot() +
+#'   geom_sf(data = qry$sp$NHDWaterbody) +
+#'   geom_sf(data = qry_lines$sp$NHDFlowLine, color = "red")
 #' }
-nhd_query <- function(lon, lat, dsn, buffer_dist = units::as_units(4.75, "km")) {
+nhd_query <- function(lon = NA, lat = NA, poly = NA,
+                      dsn, approve_all_dl = FALSE,
+                      buffer_dist = units::as_units(4.75, "km"), ...) {
 
-  pnt         <- st_sfc(st_point(c(lon, lat)))
-  st_crs(pnt) <- st_crs(nhdR::vpu_shp)
+  if (!interactive()) {
+    approve_all_dl <- TRUE
+  }
 
-  state     <- find_state(pnt)
-  state_abb <- datasets::state.abb[tolower(datasets::state.name) == state]
+  if (all(!is.na(c(lon, lat, poly))) | all(is.na(c(lon, lat, poly)))) {
+    stop("Must specify either lon and lat or poly but not both.")
+  }
 
-  sp        <- lapply(dsn, function(x) nhd_load(state = state_abb, dsn = x))
-  names(sp) <- dsn
+  # ! in default buffer size for query or extract
+  if (all(!is.na(poly)) & !(buffer_dist == units::as_units(4.75, "km"))) {
+    stop("Passing a polygon object returns only polygon-intersecting lines and disregards any buffer_dist setting.")
+  }
 
-  sp_sub    <- select_point_overlay(
-    pnt = pnt, sp = sp, buffer_dist = buffer_dist)
+  if (length(lon) > 1 | length(lat) > 1) {
+    stop("nhd_plus_query only accepts a single lon-lat pair.")
+  }
 
-  pnt       <- st_transform(pnt, sf::st_crs(sp_sub[[1]]))
+  crs_code <- 4326
+  if (inherits(buffer_dist, "units")) {
+    crs_code <- st_crs(albers_conic())
+  }
+
+  if (all(!is.na(c(lon, lat)))) {
+    pnt         <- st_sfc(st_point(c(lon, lat)))
+    st_crs(pnt) <- st_crs(nhdR::vpu_shp)
+
+    state     <- find_state(pnt)
+    state <- datasets::state.abb[tolower(datasets::state.name) == state]
+
+    sp        <- lapply(dsn, function(x) nhd_load(state = state, dsn = x))
+    names(sp) <- dsn
+
+    sp_sub    <- select_point_overlay(
+      pnt = pnt, sp = sp, buffer_dist = buffer_dist)
+    pnt       <- st_transform(pnt, sf::st_crs(sp_sub[[1]]))
+  } else {
+    poly <- st_transform(poly, st_crs(nhdR::vpu_shp))
+    state  <- find_state(poly, abb = TRUE)
+
+    utm_zone  <- long2UTM(
+      sf::st_coordinates(
+        st_transform(poly, 4326))[1])
+    crs       <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
+    poly      <- st_transform(poly, crs = crs)
+
+    browser()
+    crs_dsn  <- sf::st_crs(
+      nhd_load(state[[1]],
+        force_dl = FALSE,
+        dsn = dsn, pretty = FALSE,
+        quiet = TRUE, wkt_filter = NA,
+        query = paste0("SELECT * from ", dsn, " LIMIT 1"))
+    )
+    browser()
+    wkt_filter <- sf::st_as_text(
+      sf::st_transform(sf::st_geometry(poly), crs_dsn))
+
+    pnt <- NA
+
+    sp_sub <- lapply(dsn, function(x) nhd_load(state = state, dsn = x,
+      approve_all_dl = approve_all_dl, temporary = temporary,
+      wkt_filter = wkt_filter, ...))
+    names(sp_sub) <- dsn
+
+    if (any(unlist(lapply(sp_sub, function(r) length(r$res))) > 0)) {
+      if (all(class(sp_sub) == "list")) {
+        sp_sub <- lapply(sp_sub, function(x) sf::st_transform(x, crs))
+      } else {
+        sp_sub <- sf::st_transform(sp_sub, crs)
+      }
+    }
+  }
 
   list(pnt = pnt, sp = sp_sub)
 }

@@ -72,3 +72,18 @@ test_that("nhd_query works.", {
   qry <- nhd_query(wk$Lon, wk$Lat, dsn = c("NHDWaterbody", "NHDFlowline"))
   testthat::expect_s3_class(qry$sp$NHDWaterbody, "data.frame")
 })
+
+test_that("nhd_query works with polygon inputs", {
+  skip_on_cran()
+  skip_on_ci()
+
+  bbox <- sf::st_bbox(
+    c(xmin = 283389.1, ymin = 4589520.3, xmax = 286345.2, ymax = 4591955.5),
+    crs = "+proj=utm +zone=19 +datum=WGS84")
+  qry <- nhd_query(poly = sf::st_as_sfc(bbox), dsn = c("NHDWaterbody", "NHDFlowLine"))
+  # mapview(bbox) + mapview(qry$sp$NHDWaterbody) + mapview(qry$sp$NHDFlowLine)
+
+  testthat::expect_lt(nrow(qry$sp$NHDWaterbody), 20)
+  testthat::expect_s3_class(qry$sp$NHDWaterbody, "data.frame")
+  testthat::expect_lt(nrow(qry$sp$NHDFlowLine), 20)
+})

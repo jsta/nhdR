@@ -1,3 +1,8 @@
+# nhdR 0.5.7
+
+* `nhd_query` now accepts polygon queries (#85)
+*  Enabled speedier `nhd_load`(ing) with `wkt_filter` and `query` arguments (#85)
+
 # nhdR 0.5.6
 
 * CRAN maintenance release

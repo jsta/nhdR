@@ -1,3 +1,73 @@
+#' nhd_dl_state
+#'
+#' @export
+#' @examples \dontrun{
+#' nhd_dl_state("RI", 1, 0, NA, "NHDWaterbody")
+#' }
+nhd_dl_state <- function(state, state_exists, yes_dl, file_ext, dsn = NA,
+                         wkt_filter = NA, ...) {
+
+  # print("inner")
+  # print(c(state = state, state_exists = state_exists,
+  #   yes_dl = yes_dl, file_ext = file_ext, dsn = dsn,
+  #   wkt_filter = wkt_filter, dots = rlang::dots_list(...)))
+
+  if (as.logical(yes_dl)) {
+    nhd_get(state = state, temporary = temporary)
+  }
+  if (as.logical(state_exists) | as.logical(yes_dl)) {
+    if (is.na(file_ext) | file_ext == "shp") {
+      tryCatch(
+        {
+          if (!is.na(wkt_filter)) {
+            if (length(rlang::dots_list(...)$query) > 0) {
+              # using wkt_filter AND query
+              suppressWarnings(make_valid_geom_s2(sf::st_zm(
+                sf::st_read(gdb_path(state),
+                  stringsAsFactors = FALSE,
+                  wkt_filter = wkt_filter, query = rlang::dots_list(...)$query)
+              )))
+            } else {
+              # using wkt_filter AND no query
+              suppressWarnings(make_valid_geom_s2(sf::st_zm(
+                sf::st_read(gdb_path(state), dsn,
+                  stringsAsFactors = FALSE,
+                  wkt_filter = wkt_filter, ...)
+              )))
+            }
+          } else {
+            if (length(rlang::dots_list(...)$query) > 0) {
+              # using no wkt_filter BUT passing a query
+              suppressWarnings(make_valid_geom_s2(sf::st_zm(
+                sf::st_read(gdb_path(state),
+                  stringsAsFactors = FALSE, query = rlang::dots_list(...)$query)
+              )))
+            } else {
+              # using no wkt_filter AND passing no query
+              suppressWarnings(make_valid_geom_s2(sf::st_zm(
+                sf::st_read(gdb_path(state), dsn,
+                  stringsAsFactors = FALSE, ...)
+              )))
+            }
+          }
+        },
+        error = function(e) {
+          # fall back to reading as non-spatial dbf
+          nhd_read_dbf(state, dsn)
+        })
+    } else {
+      if (file_ext == "gpkg") {
+        if (!is_gpkg_installed()) {
+          stop("The geopackage driver is not installed.")
+        }
+        suppressWarnings(st_read_custom(gdb_path(state), layer = dsn))
+      } else {
+        nhd_read_dbf(state, dsn)
+      }
+    }
+  }
+}
+
 #' Load NHD layers into current session
 #'
 #' @param state character state abbreviation
@@ -8,6 +78,8 @@
 #'  Defaults to TRUE if session is non-interactive.
 #' @param temporary logical set FALSE to save data to a persistent
 #'  rappdirs location
+#' @param wkt_filter character. WKT spatial filter for selection.
+#'  See sf::st_read
 #' @param ... arguments passed to sf::st_read
 #'
 #' @return Spatial simple features object or data frame depending on the dsn
@@ -28,9 +100,14 @@
 #' dt <- nhd_load("RI", "NHDReachCrossReference")
 #' dt <- nhd_load("RI", "NHDWaterbody", file_ext = "dbf")
 #' dt <- nhd_load(c("RI", "DC"), "NHDWaterbody", file_ext = "gpkg")
+#'
+#' dt <- nhd_load("RI", "NHDWaterbody", wkt_filter = "POINT (-71.575 41.438)")
+#'
+#' dt <- nhd_load("RI", "NHDFlowline", pretty = FALSE, quiet = TRUE,
+#'   query = paste0("SELECT * from ", "NHDFlowline", " LIMIT 1"))
 #' }
 nhd_load <- function(state, dsn, file_ext = NA,
-                     approve_all_dl = FALSE, temporary = FALSE, ...) {
+                     approve_all_dl = FALSE, temporary = FALSE, wkt_filter = NA, ...) {
 
   if (!interactive()) {
     approve_all_dl <- TRUE
@@ -62,37 +139,6 @@ nhd_load <- function(state, dsn, file_ext = NA,
     data.frame(state_exists = state_exists, yes_dl = yes_dl)
   }
 
-  nhd_dl_state <- function(state, state_exists, yes_dl, file_ext, ...) {
-
-    if (as.logical(yes_dl)) {
-      nhd_get(state = state, temporary = temporary)
-    }
-    if (as.logical(state_exists) | as.logical(yes_dl)) {
-
-      if (is.na(file_ext) | file_ext == "shp") {
-        tryCatch(
-          {
-            suppressWarnings(sf::st_zm(
-              sf::st_read(gdb_path(state), dsn,
-                stringsAsFactors = FALSE, ...)
-            ))
-          },
-          error = function(e) {
-            nhd_read_dbf(state, dsn)
-          })
-      } else {
-        if (file_ext == "gpkg") {
-          if (!is_gpkg_installed()) {
-            stop("The geopackage driver is not installed.")
-          }
-          suppressWarnings(st_read_custom(gdb_path(state), layer = dsn))
-        } else {
-          nhd_read_dbf(state, dsn)
-        }
-      }
-    }
-  }
-
   first_state_exists <- nhd_state_exists(state[1])
 
   if (length(state) > 1) {
@@ -103,18 +149,23 @@ nhd_load <- function(state, dsn, file_ext = NA,
     yes_dl_vec <- first_state_exists
   }
 
+  # print("outer")
+  # print(c(state = state, state_exists = yes_dl_vec[1, "state_exists"],
+  #   yes_dl = yes_dl_vec[1, "yes_dl"], file_ext = file_ext, dsn = dsn,
+  #   wkt_filter = wkt_filter, dots = rlang::dots_list(...)))
+
   res <- lapply(seq_len(nrow(yes_dl_vec)),
-    function(i) nhd_dl_state(state = state[i],
+    function(i) nhd_dl_state(state = state[i], dsn = dsn,
       yes_dl = yes_dl_vec[i, "yes_dl"],
       state_exists = yes_dl_vec[i, "state_exists"],
-      file_ext = file_ext,
-      ...))
+      file_ext = file_ext, wkt_filter = wkt_filter, ...)
+  )
 
   res <- res[!unlist(lapply(res, is.null))]
   res <- do.call("rbind", res)
 
   if (!all(class(res) != "data.frame") & any(class(res) == "sf")) {
-    invisible(prj <- sf::st_crs(nhd_dl_state(state = state[1],
+    invisible(prj <- sf::st_crs(nhd_dl_state(state = state[1], dsn = dsn,
       state_exists = first_state_exists[, "state_exists"],
       yes_dl = first_state_exists[, "yes_dl"],
       quiet = TRUE, file_ext = NA)))

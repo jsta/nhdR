@@ -152,16 +152,26 @@ find_vpu <- function(pnt) {
   as.character(res)
 }
 
-find_state <- function(pnt) {
+#' find_state
+#'
+#' @examples \dontrun{
+#' pnt <- st_as_sf(data.frame(Lon = -107.2, Lat = 39.45),
+#'   coords = c("Lon", "Lat"), crs = 4326)
+#' }
+find_state <- function(pnt, abb = FALSE) {
   state_data_sf <- sf::st_as_sf(map("state", plot = FALSE, fill = TRUE))
   res <- sf::st_transform(state_data_sf, sf::st_crs(pnt))
   res <- make_valid_geom_s2(res)
 
   res_intersects <- sf::st_intersects(res, pnt)
 
-  state <- res$ID[
-    which(unlist(lapply(res_intersects, length)) > 0)]
-  state
+  res <- res[which(unlist(lapply(res_intersects, length)) > 0), ]
+  state <- res$ID
+
+  if (abb) {
+    return(datasets::state.abb[tolower(datasets::state.name) == state])
+  }
+  return(state)
 }
 
 nhd_read_dbf <- function(state, dsn) {
@@ -203,7 +213,9 @@ toUTM <- function(sf_object) {
   }
 
   if (sf::st_is_longlat(sf_object)) {
-    utm_zone <- suppressWarnings(long2UTM(st_coordinates(st_centroid(st_union(sf_object)))[1]))
+    utm_zone <- suppressWarnings(
+      long2UTM(st_coordinates(st_centroid(st_union(sf_object)))[1])
+    )
     crs      <- paste0("+proj=utm +zone=", utm_zone, " +datum=WGS84")
 
     sf::st_transform(sf_object, crs = crs)
@@ -376,8 +388,8 @@ make_valid_geom_s2 <- function(sf_object) {
   sf_object
 }
 
-st_line_sample_4326 <- function(lines){
+st_line_sample_4326 <- function(lines) {
   sf::st_transform(st_cast(
-      sf::st_line_sample(sf::st_transform(lines, 3395), sample = 0),
-      "POINT"), 4326)
+    sf::st_line_sample(sf::st_transform(lines, 3395), sample = 0),
+    "POINT"), 4326)
 }
