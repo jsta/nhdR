@@ -39,9 +39,20 @@ test_that("nhd_plus_load works with the wkt_filter argument", {
   skip_on_cran()
   skip_on_ci()
 
-  res <- nhd_plus_load(4, "NHDSnapshot", "NHDWaterbody", wkt_filter = "POINT (-85.411 42.399)")
+  res <- nhd_plus_load(4, "NHDSnapshot", "NHDWaterbody",
+    wkt_filter = "POINT (-85.411 42.399)")
   expect_gt(nrow(res), 0)
   expect_s3_class(res, "data.frame")
+})
+
+test_that("nhd_plus_load works with the query argument", {
+  skip_on_cran()
+  skip_on_ci()
+
+  res <- nhd_plus_load(4, "NHDSnapshot", "NHDWaterbody",
+    query = paste0("SELECT * from ", "NHDWaterbody", " LIMIT 1"))
+
+  expect_equal(nrow(res), 1)
 })
 
 test_that("nhd_load works", {
@@ -62,4 +73,23 @@ test_that("nhd_load(ing) dbf files works", {
     nhd_load("RI", "NHDReachCrossReference"),
     "data.frame"
   )
+})
+
+test_that("nhd_load with query works", {
+  skip_on_cran()
+  skip_on_ci()
+
+  expect_equal(
+    nrow(nhd_load("RI", "NHDFlowline",
+      query = paste0("SELECT * from ", "NHDFlowline", " LIMIT 1"))),
+    1)
+})
+
+test_that("nhd_load works with the wkt_filter argument", {
+  skip_on_cran()
+  skip_on_ci()
+
+  res <- nhd_load("MI", "NHDWaterbody",
+    wkt_filter = "POINT (-85.411 42.399)")
+  expect_equal(nrow(res), 1)
 })
