@@ -3,15 +3,14 @@
 
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/nhdR)](https://cran.r-project.org/package=nhdR)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/nhdR)](https://cran.r-project.org/package=nhdR)
 [![R-CMD-check](https://github.com/jsta/nhdR/actions/workflows/R-CMD-check.yml/badge.svg)](https://github.com/jsta/nhdR/actions/workflows/R-CMD-check.yml)
 [![DOI](https://zenodo.org/badge/75339263.svg)](https://zenodo.org/badge/latestdoi/75339263)
 
 # nhdR <a href='https://jsta.github.io/nhdR/'><img src="man/figures/logo.png" align="right" height=140/></a>
 
 Tools for querying, downloading, and networking both the [National
-Hydrography Dataset
-(NHD)](https://www.usgs.gov/core-science-systems/ngp/national-hydrography)
+Hydrography Dataset (NHD)](https://www.usgs.gov/national-hydrography)
 and
 [NHDPlus](https://www.epa.gov/waterdata/nhdplus-national-hydrography-dataset-plus)
 datasets.
