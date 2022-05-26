@@ -3,7 +3,7 @@
 
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/nhdR)](https://cran.r-project.org/package=nhdR)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/nhdR)](https://cran.r-project.org/package=nhdR)
 [![R-CMD-check](https://github.com/jsta/nhdR/actions/workflows/R-CMD-check.yml/badge.svg)](https://github.com/jsta/nhdR/actions/workflows/R-CMD-check.yml)
 [![DOI](https://zenodo.org/badge/75339263.svg)](https://zenodo.org/badge/latestdoi/75339263)
 
@@ -127,13 +127,15 @@ nhd_plus_info(vpu = 4, "NHDSnapshot", "NHDWaterbody")
 ``` r
 # load layer
 dt <- nhd_plus_load(vpu = 4, "NHDSnapshot", "NHDWaterbody")
-#> Reading layer `NHDWaterbody' from data source `/home/jose/.local/share/nhdR/NHDPlus/GL_04_NHDSnapshot/NHDWaterbody.shp' using driver `ESRI Shapefile'
+#> Reading layer `NHDWaterbody' from data source 
+#>   `/home/jemma/.local/share/nhdR/NHDPlus/GL_04_NHDSnapshot/NHDWaterbody.shp' 
+#>   using driver `ESRI Shapefile'
 #> Simple feature collection with 31830 features and 12 fields
-#> geometry type:  POLYGON
-#> dimension:      XYZ
-#> bbox:           xmin: -93.24332 ymin: 40.43575 xmax: -73.61814 ymax: 48.11344
-#> epsg (SRID):    4269
-#> proj4string:    +proj=longlat +datum=NAD83 +no_defs
+#> Geometry type: POLYGON
+#> Dimension:     XYZ
+#> Bounding box:  xmin: -93.24332 ymin: 40.43575 xmax: -73.61814 ymax: 48.11344
+#> z_range:       zmin: 0 zmax: 0
+#> Geodetic CRS:  NAD83
 ```
 
 ### NHD
@@ -171,12 +173,12 @@ nhd_list(state = "DC")
 
 ``` r
 nhd_info(state = "DC", dsn = "NHDWaterbody")
-#> Source: "/home/jose/.local/share/nhdR/NHDH_DC.gdb", layer: "NHDWaterbody"
-#> Driver: OpenFileGDB; number of rows: 8025 
+#> Source: "/home/jemma/.local/share/nhdR/NHD_H_District_of_Columbia_State_GDB.gdb", layer: "NHDWaterbody"
+#> Driver: OpenFileGDB; number of rows: 8011 
 #> Feature type: wkbPolygon with 3 dimensions
 #> Extent: (-78.07095 38.52142) - (-76.82219 39.64683)
-#> CRS: +proj=longlat +datum=NAD83 +no_defs  
-#> Number of fields: 12 
+#> CRS: +proj=longlat +datum=NAD83 +no_defs 
+#> Number of fields: 13 
 #>                    name type length typeName
 #> 1  Permanent_Identifier    4     40   String
 #> 2                 FDate   11      0 DateTime
@@ -188,44 +190,54 @@ nhd_info(state = "DC", dsn = "NHDWaterbody")
 #> 8             ReachCode    4     14   String
 #> 9                 FType    0      0  Integer
 #> 10                FCode    0      0  Integer
-#> 11         Shape_Length    2      0     Real
-#> 12           Shape_Area    2      0     Real
+#> 11     VisibilityFilter    0      0  Integer
+#> 12         Shape_Length    2      0     Real
+#> 13           Shape_Area    2      0     Real
 ```
 
 ``` r
 head(nhd_load(state = "DC", dsn = "NHDWaterbody"))
-#> Reading layer `NHDWaterbody' from data source `/home/jose/.local/share/nhdR/NHDH_DC.gdb' using driver `OpenFileGDB'
-#> Simple feature collection with 8025 features and 12 fields
-#> geometry type:  MULTIPOLYGON
-#> dimension:      XYZ
-#> bbox:           xmin: -78.07095 ymin: 38.52142 xmax: -76.82219 ymax: 39.64683
-#> epsg (SRID):    4269
-#> proj4string:    +proj=longlat +datum=NAD83 +no_defs
-#> Simple feature collection with 6 features and 12 fields
-#> geometry type:  MULTIPOLYGON
-#> dimension:      XY
-#> bbox:           xmin: -77.5767 ymin: 38.68957 xmax: -76.99631 ymax: 39.5882
-#> epsg (SRID):    4269
-#> proj4string:    +proj=longlat +datum=NAD83 +no_defs
+#> Reading layer `NHDWaterbody' from data source 
+#>   `/home/jemma/.local/share/nhdR/NHD_H_District_of_Columbia_State_GDB.gdb' 
+#>   using driver `OpenFileGDB'
+#> Simple feature collection with 8011 features and 13 fields
+#> Geometry type: MULTIPOLYGON
+#> Dimension:     XYZ
+#> Bounding box:  xmin: -78.07095 ymin: 38.52142 xmax: -76.82219 ymax: 39.64683
+#> z_range:       zmin: 0 zmax: 0
+#> Geodetic CRS:  NAD83
+#> Reading query `SELECT * from NHDWaterbody LIMIT 1' from data source `/home/jemma/.local/share/nhdR/NHD_H_District_of_Columbia_State_GDB.gdb' 
+#>   using driver `OpenFileGDB'
+#> Simple feature collection with 1 feature and 13 fields
+#> Geometry type: MULTIPOLYGON
+#> Dimension:     XYZ
+#> Bounding box:  xmin: -76.99652 ymin: 38.68957 xmax: -76.99631 ymax: 38.6897
+#> z_range:       zmin: 0 zmax: 0
+#> Geodetic CRS:  NAD83
+#> Simple feature collection with 6 features and 13 fields
+#> Geometry type: POLYGON
+#> Dimension:     XY
+#> Bounding box:  xmin: -77.5767 ymin: 38.68957 xmax: -76.99631 ymax: 39.5882
+#> Geodetic CRS:  WGS 84
 #>   Permanent_Identifier               FDate Resolution GNIS_ID GNIS_Name
-#> 1             51772167 2002-08-15 01:00:00          2    <NA>      <NA>
-#> 2             46565431 2002-07-22 01:00:00          2    <NA>      <NA>
-#> 3             51767181 2002-08-15 01:00:00          2    <NA>      <NA>
-#> 4             51767223 2002-08-15 01:00:00          2    <NA>      <NA>
-#> 5             51767287 2002-08-15 01:00:00          2    <NA>      <NA>
-#> 6             51767709 2002-08-15 01:00:00          2    <NA>      <NA>
-#>   AreaSqKm Elevation      ReachCode FType FCode Shape_Length   Shape_Area
-#> 1    0.005        NA 02070008004787   436 43624 0.0032275838 5.164066e-07
-#> 2    0.000        NA 02070010004605   436 43624 0.0005402029 1.879174e-08
-#> 3    0.002        NA 02070008004808   390 39004 0.0017289109 1.954519e-07
-#> 4    0.001        NA 02070008004829   390 39004 0.0013369633 1.239613e-07
-#> 5    0.001        NA 02070008004860   390 39004 0.0011083831 8.130533e-08
-#> 6    0.002        NA 02070008005063   390 39004 0.0016429957 1.745505e-07
-#>                            Shape
-#> 1 MULTIPOLYGON (((-77.11382 3...
-#> 2 MULTIPOLYGON (((-76.99631 3...
-#> 3 MULTIPOLYGON (((-77.56942 3...
-#> 4 MULTIPOLYGON (((-77.56947 3...
-#> 5 MULTIPOLYGON (((-77.57644 3...
-#> 6 MULTIPOLYGON (((-77.46933 3...
+#> 1             46565431 2002-07-21 18:00:00          2    <NA>      <NA>
+#> 2             51767181 2002-08-14 18:00:00          2    <NA>      <NA>
+#> 3             51767223 2002-08-14 18:00:00          2    <NA>      <NA>
+#> 4             51767287 2002-08-14 18:00:00          2    <NA>      <NA>
+#> 5             51767709 2002-08-14 18:00:00          2    <NA>      <NA>
+#> 6             51768273 2002-08-14 18:00:00          2    <NA>      <NA>
+#>   AreaSqKm Elevation      ReachCode FType FCode VisibilityFilter Shape_Length
+#> 1    0.000        NA 02070010004605   436 43624                0 0.0005402029
+#> 2    0.002        NA 02070008004808   390 39004            50000 0.0017289109
+#> 3    0.001        NA 02070008004829   390 39004          2000000 0.0013369633
+#> 4    0.001        NA 02070008004860   390 39004            24000 0.0011083831
+#> 5    0.002        NA 02070008005063   390 39004            50000 0.0016429957
+#> 6    0.001        NA 02070008005335   390 39004            24000 0.0012442057
+#>     Shape_Area                          Shape
+#> 1 1.879174e-08 POLYGON ((-76.99631 38.6896...
+#> 2 1.954519e-07 POLYGON ((-77.56946 39.5881...
+#> 3 1.239613e-07 POLYGON ((-77.56954 39.5567...
+#> 4 8.130533e-08 POLYGON ((-77.57658 39.5250...
+#> 5 1.745505e-07 POLYGON ((-77.46919 39.3298...
+#> 6 8.126193e-08 POLYGON ((-77.2087 39.18799...
 ```
