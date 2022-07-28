@@ -85,7 +85,7 @@ get_plus_remotepath <- function(vpu, component = "NHDSnapshot") {
   }
 
   baseurl <- paste0(
-    "https://s3.amazonaws.com/edap-nhdplus?delimiter=/&prefix=",
+    "https://edap-ow-data-commons.s3.amazonaws.com?delimiter=/&prefix=",
     prefix)
   res <- read_xml(baseurl)
   res <- stringr::str_extract_all(as.character(res),
@@ -100,7 +100,7 @@ get_plus_remotepath <- function(vpu, component = "NHDSnapshot") {
   res <- res[!(seq_len(length(res)) %in%
     c(grep("FGDB", res), grep(".pdf", res), grep("FileGDB", res)))]
 
-  paste0("https://s3.amazonaws.com/edap-nhdplus/", res[1])
+  paste0("https://edap-ow-data-commons.s3.amazonaws.com/", res[1])
 }
 
 is_spatial <- function(filename) {
