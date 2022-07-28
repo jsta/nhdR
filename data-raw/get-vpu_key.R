@@ -6,7 +6,7 @@ get_nhdplus_v21_links <- function(){
   }
 
   directory_raw <- read_xml(
-    "https://s3.amazonaws.com/edap-nhdplus?delimiter=/&prefix=NHDPlusV21/Data/")
+    "https://edap-ow-data-commons.s3.amazonaws.com?delimiter=/&prefix=NHDPlusV21/Data/")
 
   top_directories <- xml2::xml_text(directory_raw)
   top_directories <- strsplit(top_directories, "NHDPlusV21")[[1]]
@@ -16,7 +16,7 @@ get_nhdplus_v21_links <- function(){
 
   directories <- lapply(top_directories, function(x){
     raw <- read_xml(paste0(
-      "https://s3.amazonaws.com/edap-nhdplus?delimiter=/&prefix=", x))
+      "https://edap-ow-data-commons.s3.amazonaws.com?delimiter=/&prefix=", x))
 
     if(has_sub_dirs(raw)){
       res <- data.frame(
