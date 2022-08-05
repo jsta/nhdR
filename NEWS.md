@@ -1,3 +1,7 @@
+# nhdR 0.5.8
+
+* Updated nhd and nhdplus downloading endpoints
+
 # nhdR 0.5.7
 
 * `nhd_query` now accepts polygon queries (#85)
