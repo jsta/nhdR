@@ -67,7 +67,7 @@ zero_pad <- function(x, digits) {
 
 get_remotepath <- function(state, baseurl) {
   # state  <- "Missouri"
-  # baseurl <- paste0("https://prd-tnm.s3.amazonaws.com/StagedProducts/Hydrography/NHD/State/HighResolution/")
+  # baseurl <- paste0("https://prd-tnm.s3.amazonaws.com/StagedProducts/Hydrography/NHD/State/")
   filename <- paste0("NHD_H_", state, "_State_GDB.zip")
   url      <- paste0(baseurl, "GDB/", filename)
   list(filename = filename, url = url)

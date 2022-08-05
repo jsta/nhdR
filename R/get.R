@@ -12,7 +12,7 @@
 #' }
 nhd_get <- function(state = NA, force_dl = FALSE, force_unzip = FALSE, temporary = TRUE) {
 
-  baseurl <- paste0("https://prd-tnm.s3.amazonaws.com/StagedProducts/Hydrography/NHD/State/HighResolution/")
+  baseurl <- paste0("https://prd-tnm.s3.amazonaws.com/StagedProducts/Hydrography/NHD/State/")
 
   nhd_get_state <- function(state) {
 
