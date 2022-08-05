@@ -1,7 +1,7 @@
 Package: nhdR
 Title: Tools for Working with the National Hydrography Dataset
-Version: 0.5.7
-Authors@R: person("Jemma", "Stachelek", email = "stachel2@msu.edu", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-5924-2464"))
+Version: 0.5.8
+Authors@R: person("Jemma", "Stachelek", email = "jemma.stachelek@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-5924-2464"))
 Description: Tools for working with the National Hydrography Dataset, with 
     functions for querying, downloading, and networking both the NHD 
     <https://www.usgs.gov/national-hydrography> 
@@ -30,7 +30,7 @@ Imports:
     purrr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
 Suggests: 
     knitr,
     rmarkdown,
