@@ -208,6 +208,7 @@ nhd_load <- function(state, dsn, file_ext = NA,
 #' @importFrom curl has_internet
 #' @importFrom stringr str_extract
 #' @importFrom memoise memoise cache_memory
+#' @importFrom digest digest
 #'
 #' @export
 #'
