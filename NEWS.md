@@ -1,3 +1,7 @@
+# 0.5.9
+
+* Fix upstream dependency issue with the `digest` package (#89) 
+
 # nhdR 0.5.8
 
 * Updated nhd and nhdplus downloading endpoints
