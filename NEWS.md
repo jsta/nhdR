@@ -1,4 +1,4 @@
-# 0.5.9
+# nhdR 0.5.9
 
 * Fix upstream dependency issue with the `digest` package (#89) 
 
