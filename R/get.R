@@ -16,8 +16,7 @@ nhd_get <- function(state = NA, force_dl = FALSE, force_unzip = FALSE, temporary
 
   nhd_get_state <- function(state) {
 
-    if (!state %in% c(as.character(maps::state.fips$abb),
-      "DC", "PR", "VI", "HI")) {
+    if (!state %in% c(datasets::state.abb, "DC", "AS", "GU", "MP", "PR", "VI")) {
       stop(paste0(state, " is not a valid state abbreviation"))
     }
 

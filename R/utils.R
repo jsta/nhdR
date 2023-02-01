@@ -286,10 +286,10 @@ get_utm_zone <- function(crs) {
 
 stateabb2name <- function(abb) {
   # state <- "DC"
-  key <- data.frame(sabb = c(datasets::state.abb, "DC"),
+  key <- data.frame(sabb = c(datasets::state.abb, "DC", "AS", "GU", "MP", "PR", "VI"),
     sname =
       gsub(" ", "_",
-        c(datasets::state.name, "District of Columbia")),
+        c(datasets::state.name, "District of Columbia", "American Samoa", "Guam", "Northern Mariana Islands", "Puerto Rico", "United States Virgin Islands")),
     stringsAsFactors = FALSE)
 
   res <- dplyr::filter(key, .data$sabb == abb)
