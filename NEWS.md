@@ -1,3 +1,7 @@
+## nhdR development version
+
+* Added NHD support for AK, missing territories (#90), thanks @hrecht !
+
 ## nhdR 0.5.9
 
 * Fix upstream dependency issue with the `digest` package (#89)
