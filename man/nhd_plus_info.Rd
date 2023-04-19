@@ -17,7 +17,7 @@ nhd_plus_info(vpu, component, dsn, file_ext = NA)
 "dbf" for non-spatial. optional}
 }
 \value{
-An ogrinfo object from the sf package
+A column-wise summary of an sf/foreign read from the specfied layer
 }
 \description{
 Return NHDplus layer metadata and field listing

@@ -2,14 +2,14 @@
 #'
 #' @export
 #' @param state character state abbreviation
-#' @importFrom rgdal ogrListLayers
+#' @importFrom sf st_layers
 #' @return A character vector of NHD layers for the specified state
 #'
 #' @examples \dontrun{
 #' nhd_list(state = "DC")
 #' }
 nhd_list <- function(state) {
-  rgdal::ogrListLayers(gdb_path(state))
+  sf::st_layers(gdb_path(state))
 }
 
 #' List available locally cached NHDplus layers per state
@@ -20,7 +20,6 @@ nhd_list <- function(state) {
 #' @param file_ext character choice of "shp" for spatial data and
 #' "dbf" for non-spatial. optional
 #' @param ... arguments passed to list.files. optional.
-#' @importFrom rgdal ogrListLayers
 #' @return A character vector of NHD layers for the specified vpu
 #'
 #' @examples \dontrun{

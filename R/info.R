@@ -21,8 +21,7 @@ nhd_info <- function(state, dsn) {
 #' @param file_ext character choice of "shp" for spatial data and
 #' "dbf" for non-spatial. optional
 #' @export
-#' @importFrom rgdal ogrInfo
-#' @return An ogrinfo object from the sf package
+#' @return A column-wise summary of an sf/foreign read from the specfied layer
 #'
 #' @examples \dontrun{
 #' nhd_plus_info(vpu = 4, component = "NHDSnapshot", dsn = "NHDWaterbody")
@@ -38,7 +37,7 @@ nhd_plus_info <- function(vpu, component, dsn, file_ext = NA) {
 
   if (length(grep(paste0("shp", "$"), res)) > 0) {
     res <- res[grep("shp$", res)]
-    rgdal::ogrInfo(res, dsn)
+    summary(sf::st_read(res, quiet = TRUE))
   } else {
     summary(foreign::read.dbf(res))
   }

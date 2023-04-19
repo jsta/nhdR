@@ -14,7 +14,6 @@ Depends:
 License: GPL
 Imports:
     rappdirs,
-    rgdal,
     sf,
     httr,
     rvest,
@@ -31,13 +30,12 @@ Imports:
     digest
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Suggests: 
     knitr,
     rmarkdown,
     wikilake,
     sp,
-    rgeos,
     testthat (>= 2.1.0),
     covr,
     crul,
