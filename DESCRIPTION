@@ -1,6 +1,6 @@
 Package: nhdR
 Title: Tools for Working with the National Hydrography Dataset
-Version: 0.5.9
+Version: 0.6.0
 Authors@R: person("Jemma", "Stachelek", email = "jemma.stachelek@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-5924-2464"))
 Description: Tools for working with the National Hydrography Dataset, with 
     functions for querying, downloading, and networking both the NHD 

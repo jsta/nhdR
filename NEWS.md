@@ -1,4 +1,6 @@
-## nhdR development version
+## nhdR 0.6.0
+
+* Dropped use of the retiring `rgdal` package (#91)
 
 * Added NHD support for AK, missing territories (#90), thanks @hrecht !
 
