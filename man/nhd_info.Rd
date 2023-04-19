@@ -12,7 +12,7 @@ nhd_info(state, dsn)
 \item{dsn}{character}
 }
 \value{
-An ogrinfo object from the sf package
+A column-wise summary of an sf read from the specfied layer
 }
 \description{
 Return NHD layer metadata and field listing

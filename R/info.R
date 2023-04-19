@@ -3,14 +3,13 @@
 #' @param state character
 #' @param dsn character
 #' @export
-#' @importFrom rgdal ogrInfo
-#' @return An ogrinfo object from the sf package
+#' @return A column-wise summary of an sf read from the specfied layer
 #'
 #' @examples \dontrun{
 #' nhd_info("DC", "NHDWaterbody")
 #' }
 nhd_info <- function(state, dsn) {
-  rgdal::ogrInfo(gdb_path(state), dsn)
+  summary(sf::st_read(gdb_path(state), layer = dsn, quiet = TRUE))
 }
 
 #' Return NHDplus layer metadata and field listing
