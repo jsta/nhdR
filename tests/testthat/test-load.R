@@ -69,8 +69,9 @@ test_that("nhd_load(ing) dbf files works", {
   skip_on_cran()
   skip_on_ci()
 
+  res <- nhd_load("RI", "NHDReachCrossReference")
   expect_s3_class(
-    nhd_load("RI", "NHDReachCrossReference"),
+    res,
     "data.frame"
   )
 })
