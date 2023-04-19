@@ -26,3 +26,5 @@ README.html
 pkgdown
 Makefile
 ^CRAN-SUBMISSION$
+^doc$
+^Meta$
