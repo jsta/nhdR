@@ -1,18 +1,18 @@
 citHeader("When citing nhdR, please cite both the package and underlying data sources used:")
 
 citEntry(entry = "Manual",
-         author = personList(
-           as.person("Jemma Stachelek")),
-         title = "Tools for working with the National Hydrography Dataset",
-         year = "2019",
-         url = "https://cran.r-project.org/package=nhdR",
-         textVersion = paste("Stachelek, J. (2019). Tools for working with the National Hydrography Dataset. R package version 0.5.2. https://cran.r-project.org/package=nhdR"))
+  author = personList(
+    as.person("Jemma Stachelek")),
+  title = "Tools for working with the National Hydrography Dataset",
+  year = "2019",
+  url = "https://cran.r-project.org/package=nhdR",
+  textVersion = paste("Stachelek, J. (2019). Tools for working with the National Hydrography Dataset. R package version 0.5.2. https://cran.r-project.org/package=nhdR"))
 
 citEntry(entry = "Manual",
-         author = "USGS",
-         title = "National Hydrography Dataset. Technical Report. United States
+  author = "USGS",
+  title = "National Hydrography Dataset. Technical Report. United States
 Geological Survey",
-         year = "2022",
-         url = "https://www.usgs.gov/national-hydrography",
-         textVersion = paste("USGS. (2022) National Hydrography Dataset. Technical Report. United States
+  year = "2022",
+  url = "https://www.usgs.gov/national-hydrography",
+  textVersion = paste("USGS. (2022) National Hydrography Dataset. Technical Report. United States
 Geological Survey. https://www.usgs.gov/national-hydrography"))
