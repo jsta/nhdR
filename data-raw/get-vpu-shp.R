@@ -3,7 +3,7 @@ library(rgdal)
 library(nhdR)
 
 # https://www.epa.gov/waterdata/nhdplus-global-data
-remote_path <- "https://https://edap-ow-data-commons.s3.amazonaws.com/NHDPlusV21/Data/GlobalData/NHDPlusV21_NHDPlusGlobalData_03.7z"
+remote_path <- "https://https://dmap-data-commons-ow.s3.amazonaws.com/NHDPlusV21/Data/GlobalData/NHDPlusV21_NHDPlusGlobalData_03.7z"
 temp_dir <- tempdir()
 in_path <- file.path(temp_dir, "nhdglobal.7z")
 # in_path <- "/tmp/RtmpsyMbWy/nhdglobal.7z"

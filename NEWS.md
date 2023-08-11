@@ -1,3 +1,7 @@
+## nhdR 0.6.1
+
+* Update nhdplus download endpoint (#92)
+
 ## nhdR 0.6.0
 
 * Dropped use of the retiring `rgdal` package (#91)
