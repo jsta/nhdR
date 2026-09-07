@@ -27,7 +27,9 @@ Imports:
     stringr,
     memoise,
     purrr,
-    digest
+    digest,
+    datasets,
+    utils
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.3
